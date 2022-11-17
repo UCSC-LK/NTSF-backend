@@ -6,7 +6,7 @@
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>user</servlet-name>
-    <servlet-class>com.cs13.ntfs.User</servlet-class>
+    <servlet-class>com.cops.ntsf.User</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>user</servlet-name>
