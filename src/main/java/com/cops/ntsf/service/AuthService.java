@@ -1,14 +1,10 @@
 package com.cops.ntsf.service;
 
 import com.cops.ntsf.constants.UserType;
-import com.cops.ntsf.model.Auth;
 import com.cops.ntsf.model.Driver;
 import org.json.JSONObject;
 
 public class AuthService {
-
-    private Auth auth;
-
     public String getUserIdFromLoginId(UserType userType, String loginId){
         switch (userType){
             case DRIVER:
