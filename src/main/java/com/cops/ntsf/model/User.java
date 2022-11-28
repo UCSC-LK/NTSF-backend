@@ -1,20 +1,18 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.constants.UserType;
+import com.cops.ntsf.dao.UserDAO;
+import java.sql.Blob;
 
-import java.time.LocalDate;
 public class User {
     private String userId;
     private String nic;
+    private String email;
+    private String mobileNo;
+    private UserType userType;
     private String firstName;
     private String lastName;
-    private String address;
-    private String email;
-    private UserType userType;
-    private String gender;
-    private LocalDate dob;
-    private String profilePicture;
-    private String mobileNo;
+    private Blob profilePicture;
 
     public String getUserId() {
         return userId;
@@ -30,30 +28,6 @@ public class User {
 
     public void setNic(String nic) {
         this.nic = nic;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getEmail() {
@@ -72,35 +46,44 @@ public class User {
         this.userType = userType;
     }
 
-    public String getGender() {
-        return gender;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public String getLastName() {
+        return lastName;
     }
 
-    public LocalDate getDob() {
-        return dob;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public String getProfilePicture() {
+    public Blob getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(String profilePicture) {
+    public void setProfilePicture(Blob profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public User(){ }
+
+    public User(String nic, String email, String mobileNo, UserType userType){
+        this.nic = nic;
+        this.email = email;
+        this.userType = userType;
+    }
+
+    public void setUserInfo(){
+        UserDAO userDAO = new UserDAO();
+        userDAO.insertUserInfo(this);
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getMobileNo() {
         return mobileNo;
-    }
-
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
     }
 }
