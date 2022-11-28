@@ -1,7 +1,6 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.constants.UserType;
-import com.cops.ntsf.dao.DriverDAO;
 import com.cops.ntsf.service.AuthService;
 
 import javax.servlet.ServletException;
@@ -17,7 +16,7 @@ public class LoginServlet extends HttpServlet{
         // Get request parameters
         String loginId = req.getParameter("login_id");
         String password = req.getParameter("password");
-        int userType = Integer.parseInt(req.getParameter("user_type"));
+        UserType userType = UserType.values()[Integer.parseInt(req.getParameter("user_type"))];
 
         AuthService authService = new AuthService();
 
@@ -26,7 +25,7 @@ public class LoginServlet extends HttpServlet{
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-        out.write(authService.verifyLogin(loginId, password, UserType.values()[userType]));
+        out.write(authService.verifyLogin(loginId, password, userType));
         out.close();
     }
 }
