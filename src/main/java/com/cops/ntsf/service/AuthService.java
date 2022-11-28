@@ -1,6 +1,7 @@
 package com.cops.ntsf.service;
 
 import com.cops.ntsf.constants.UserType;
+import com.cops.ntsf.model.Auth;
 import com.cops.ntsf.model.Driver;
 import org.json.JSONObject;
 
@@ -17,13 +18,28 @@ public class AuthService {
         }
     }
 
-    public String verifyLogin(String loginId, String password, UserType userType){
+    public String verifyLogin(String loginId, String inputPassword, UserType userType){
         String userId = this.getUserIdFromLoginId(userType, loginId);
 
+        Auth auth = new Auth();
+        auth.setUserId(userId);
+        auth.getAuthFromUserId();
+
         JSONObject loginResponse = new JSONObject();
-        loginResponse.put("loggedIn", true);
+        loginResponse.put("loggedIn", verifyPassword(auth.getPassword(), inputPassword));
         loginResponse.put("userId", userId);
 
         return loginResponse.toString();
+    }
+
+    public Boolean verifyPassword(String password, String inputPassword){
+        System.out.println(password + inputPassword);
+        return password.equals(inputPassword);
+    }
+
+    public Auth getAuthSignedUp(String password){
+        Auth auth = new Auth(password);
+        auth.setPassword();
+        return auth;
     }
 }
