@@ -9,7 +9,8 @@ public class Auth {
     public Auth(){
 
     }
-    public Auth(String password) {
+    public Auth(String userId, String password) {
+        this.userId = userId;
         this.password = password;
     }
 
@@ -34,8 +35,8 @@ public class Auth {
         authDAO.getAuthFromUserId(this);
     }
 
-    public void setPassword() {
+    public void setAuthInfo() {
         AuthDAO authDAO = new AuthDAO();
-        authDAO.insertPassword(this);
+        authDAO.insertAuth(this);
     }
 }

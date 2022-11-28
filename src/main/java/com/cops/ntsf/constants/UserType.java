@@ -1,13 +1,12 @@
 package com.cops.ntsf.constants;
 
 public enum UserType {
-    DRIVER(0),
-    VEHICLE(1),
-    PEDESTRIAN(2);
+    DRIVER,
+    VEHICLE,
+    PEDESTRIAN;
 
-    public final int userType;
-
-    UserType(int userType) {
-        this.userType = userType;
+    public static UserType fromId(int userType) {
+        return UserType.values()[userType - 1];
     }
+
 }

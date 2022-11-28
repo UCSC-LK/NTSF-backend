@@ -23,8 +23,8 @@ public class DriverDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-//                driver.setLicenceExpiryDate(LocalDate.parse(resultSet.getString("licence_expire_date")));
-//                driver.setLicenceIssueDate(LocalDate.parse(resultSet.getString("licence_issue_date")));
+               // driver.setLicenceExpiryDate(LocalDate.parse(resultSet.getString("licence_expire_date")));
+               // driver.setLicenceIssueDate(LocalDate.parse(resultSet.getString("licence_issue_date")));
                 driver.setUserId(resultSet.getString("user_id"));
             }
         } catch (SQLException e) {
@@ -35,12 +35,14 @@ public class DriverDAO {
     public void insertDriverInfo(Driver driver) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "UPDATE driver SET user_id=?, licence_no=? WHERE user_id = ?";
+        String sql = "INSERT INTO driver(user_id, licence_no) VALUES (?, ?)";
 
         try{
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setString(1, driver.getLicenceNo());
+            preparedStatement.setString(1, driver.getUserId());
+            preparedStatement.setString(2, driver.getLicenceNo());
 
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
