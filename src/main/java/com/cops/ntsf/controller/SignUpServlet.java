@@ -36,7 +36,7 @@ public class SignUpServlet extends HttpServlet {
         }
 
         UserService userService = new UserService();
-        User user = userService.getUserSignedUp(userType, nic, email, mobileNo, password);
+        User user = userService.getUserSignedUp(userType, nic, email, mobileNo);
 
         DriverService driverService = new DriverService();
         Driver driver = driverService.getDriverSignedUp(licenceNo);
