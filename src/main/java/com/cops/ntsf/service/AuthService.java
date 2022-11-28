@@ -6,8 +6,8 @@ import com.cops.ntsf.model.Driver;
 import org.json.JSONObject;
 
 public class AuthService {
-    public String getUserIdFromLoginId(UserType userType, String loginId){
-        switch (userType){
+    public String getUserIdFromLoginId(UserType userType, String loginId) {
+        switch (userType) {
             case DRIVER:
                 Driver driver = new Driver();
                 driver.setLicenceNo(loginId);
@@ -18,7 +18,7 @@ public class AuthService {
         }
     }
 
-    public String verifyLogin(String loginId, String inputPassword, UserType userType){
+    public String verifyLogin(String loginId, String inputPassword, UserType userType) {
         String userId = this.getUserIdFromLoginId(userType, loginId);
 
         Auth auth = new Auth();
@@ -32,14 +32,14 @@ public class AuthService {
         return loginResponse.toString();
     }
 
-    public Boolean verifyPassword(String password, String inputPassword){
-        System.out.println(password + inputPassword);
+    public Boolean verifyPassword(String password, String inputPassword) {
+        // System.out.println(password + inputPassword);
         return password.equals(inputPassword);
     }
 
-    public Auth getAuthSignedUp(String password){
-        Auth auth = new Auth(password);
-        auth.setPassword();
-        return auth;
-    }
+//    public Auth setPasswordForUserId(String userId, String password) {
+//        Auth auth = new Auth(userId, password);
+//        auth.setPassword();
+//        return auth;
+//    }
 }

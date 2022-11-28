@@ -32,15 +32,17 @@ public class AuthDAO {
         }
     }
 
-    public void insertPassword(Auth auth) {
+    public void insertAuth(Auth auth) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "UPDATE auth SET user_id = ?, password = ? WHERE user_id = ?";
+        String sql = "INSERT INTO auth(user_id, password) VALUES(?, ?)";
 
         try{
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setString(1, auth.getPassword());
+            preparedStatement.setString(1, auth.getUserId());
+            preparedStatement.setString(2, auth.getPassword());
 
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
