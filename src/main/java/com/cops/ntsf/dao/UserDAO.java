@@ -3,7 +3,10 @@ package com.cops.ntsf.dao;
 import com.cops.ntsf.model.User;
 import com.cops.ntsf.util.Database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 //import java.time.LocalDate;
 
 @SuppressWarnings("ALL")
@@ -48,6 +51,10 @@ public class UserDAO {
 
             while (resultSet.next()) {
                 user.setUserId(resultSet.getString("user_id"));
+                user.setNic(resultSet.getString("nic"));
+                user.setEmail(resultSet.getString("email"));
+                user.setMobileNo(resultSet.getString("mobile_no"));
+                user.setUserType(resultSet.getString("user_type"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
