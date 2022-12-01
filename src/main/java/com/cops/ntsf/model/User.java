@@ -23,6 +23,10 @@ public class User {
         this.userType = userType;
     }
 
+    public User(String userId) {
+        this.userId = userId;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -35,12 +39,24 @@ public class User {
         return nic;
     }
 
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
+
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public UserType getUserType() {
         return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = UserType.valueOf(userType);
     }
 
     public void setUserInfo() {
@@ -50,5 +66,9 @@ public class User {
 
     public String getMobileNo() {
         return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 }
