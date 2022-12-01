@@ -32,13 +32,13 @@ public class UserDAO {
 
             preparedStatement.executeUpdate();
 
-            this.getUserInfo(user);
+            this.fetchUserInfo(user);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void getUserInfo(User user) {
+    public void fetchUserInfo(User user) {
         Connection dbConn = Database.getConnection();
 
         String sql = "SELECT * FROM user WHERE nic = ? && user_type = ?";
