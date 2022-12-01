@@ -71,4 +71,9 @@ public class User {
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
     }
+
+    public void getUserInfo() {
+        UserDAO userDAO = new UserDAO();
+        userDAO.fetchUserInfo(this);
+    }
 }
