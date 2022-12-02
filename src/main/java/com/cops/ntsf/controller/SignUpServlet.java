@@ -16,6 +16,8 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Get request parameters
         UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
+        String name = req.getParameter("name");
+        String address = req.getParameter("address");
         String nic = req.getParameter("nic");
         String email = req.getParameter("email");
         String mobileNo = req.getParameter("mobile_no");
@@ -29,7 +31,7 @@ public class SignUpServlet extends HttpServlet {
         }
 
         UserService userService = new UserService();
-        User user = userService.getUserSignedUp(userType, nic, email, mobileNo, password, loginId);
+        User user = userService.getUserSignedUp(userType, name, address, nic, email, mobileNo, password, loginId);
 
         // Output response
         PrintWriter out = resp.getWriter();
