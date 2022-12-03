@@ -9,14 +9,13 @@ public class User {
     private String email;
     private String mobileNo;
     private UserType userType;
-    // private String firstName;
-    // private String lastName;
+    private String name;
+    private String address;
     // private Blob profilePicture;
 
-    public User() {
-    }
-
-    public User(String nic, String email, String mobileNo, UserType userType) {
+    public User(String name, String address, String nic, String email, String mobileNo, UserType userType) {
+        this.name = name;
+        this.address = address;
         this.nic = nic;
         this.email = email;
         this.mobileNo = mobileNo;
@@ -75,5 +74,21 @@ public class User {
     public void getUserInfo() {
         UserDAO userDAO = new UserDAO();
         userDAO.fetchUserInfo(this);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
