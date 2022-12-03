@@ -7,12 +7,14 @@ import com.cops.ntsf.model.User;
 
 public class UserService {
     public User getUserSignedUp(UserType userType,
+                                String name,
+                                String address,
                                 String nic,
                                 String email,
                                 String mobileNo,
                                 String password,
                                 String loginId) {
-        User user = new User(nic, email, mobileNo, userType);
+        User user = new User(name, address, nic, email, mobileNo, userType);
         user.setUserInfo();
 
         String userId = user.getUserId();
