@@ -5,12 +5,12 @@ import com.cops.ntsf.dao.UserDAO;
 
 public class User {
     private String userId;
+    private String name;
+    private String address;
     private String nic;
     private String email;
     private String mobileNo;
     private UserType userType;
-    private String name;
-    private String address;
     // private Blob profilePicture;
 
     public User(String name, String address, String nic, String email, String mobileNo, UserType userType) {
@@ -20,6 +20,9 @@ public class User {
         this.email = email;
         this.mobileNo = mobileNo;
         this.userType = userType;
+    }
+
+    public User() {
     }
 
     public User(String userId) {
