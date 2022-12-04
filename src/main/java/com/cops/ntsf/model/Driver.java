@@ -6,7 +6,7 @@ public class Driver extends User {
     private String licenceNo;
 
     public Driver(String userId, String licenseNo) {
-        this.setUserId(userId);
+        super(userId);
         this.licenceNo = licenseNo;
     }
 
