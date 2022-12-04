@@ -26,11 +26,11 @@ public class UserDAO {
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(1, user.getAddress());
-            preparedStatement.setString(1, user.getNic());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getMobileNo());
-            preparedStatement.setString(4, user.getUserType().toString());
+            preparedStatement.setString(2, user.getAddress());
+            preparedStatement.setString(3, user.getNic());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getMobileNo());
+            preparedStatement.setString(6, user.getUserType().toString());
 
             preparedStatement.executeUpdate();
 
