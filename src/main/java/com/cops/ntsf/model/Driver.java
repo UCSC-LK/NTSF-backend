@@ -30,4 +30,9 @@ public class Driver extends User {
         DriverDAO driverDAO = new DriverDAO();
         driverDAO.insertDriverInfo(this);
     }
+
+    public void getDriverInfo() {
+        DriverDAO driverDAO = new DriverDAO();
+        driverDAO.fetchDriverLicence(this);
+    }
 }

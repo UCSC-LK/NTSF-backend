@@ -29,6 +29,14 @@ public class User {
         this.userId = userId;
     }
 
+    public User(String name, String address, String nic, String email, String mobileNo) {
+        this.name = name;
+        this.address = address;
+        this.nic = nic;
+        this.email = email;
+        this.mobileNo = mobileNo;
+    }
+
     public String getUserId() {
         return userId;
     }
