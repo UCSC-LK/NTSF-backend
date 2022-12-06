@@ -33,4 +33,29 @@ public class UserService {
         }
         return user;
     }
+
+    public User getUserInfo(UserType userType,
+                            String name,
+                            String address,
+                            String nic,
+                            String email,
+                            String mobileNo,
+                            String loginId) {
+        User user = new User(name, address, nic, email, mobileNo);
+        user.getUserInfo();
+
+        String userId = user.getUserId();
+
+        if (userId != null) {
+            switch (userType) {
+                case DRIVER:
+                    Driver driver = new Driver(userId, loginId);
+                    driver.getDriverInfo();
+                    return user;
+                default:
+                    throw new RuntimeException();
+            }
+        }
+        return user;
+    }
 }
