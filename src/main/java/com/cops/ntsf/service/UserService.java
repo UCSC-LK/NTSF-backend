@@ -34,17 +34,18 @@ public class UserService {
         return user;
     }
 
-    public User getUserInfo(UserType userType,
-                            String name,
+    public User getUserInfo(String name,
                             String address,
                             String nic,
                             String email,
                             String mobileNo,
-                            String loginId) {
+                            String loginId,
+                            String userId,
+                            String userType) {
         User user = new User(name, address, nic, email, mobileNo);
         user.getUserInfo();
 
-        String userId = user.getUserId();
+        userId = user.getUserId();
 
         if (userId != null) {
             switch (userType) {
