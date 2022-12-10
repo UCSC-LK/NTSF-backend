@@ -34,29 +34,29 @@ public class UserService {
         return user;
     }
 
-    public User getUserInfo(String name,
-                            String address,
-                            String nic,
-                            String email,
-                            String mobileNo,
-                            String loginId,
-                            String userId,
-                            String userType) {
-        User user = new User(name, address, nic, email, mobileNo);
-        user.getUserInfo();
-
-        userId = user.getUserId();
-
-        if (userId != null) {
-            switch (userType) {
-                case DRIVER:
-                    Driver driver = new Driver(userId, loginId);
-                    driver.getDriverInfo();
-                    return user;
-                default:
-                    throw new RuntimeException();
-            }
-        }
-        return user;
-    }
+//    public User getUserInfo(String name,
+//                            String address,
+//                            String nic,
+//                            String email,
+//                            String mobileNo,
+//                            String loginId,
+//                            String userId,
+//                            String userType) {
+//        User user = new User(name, address, nic, email, mobileNo);
+//        user.getUserInfo();
+//
+//        userId = user.getUserId();
+//
+//        if (userId != null) {
+//            switch (userType) {
+//                case DRIVER:
+//                    Driver driver = new Driver(userId, loginId);
+//                    driver.getDriverInfo();
+//                    return user;
+//                default:
+//                    throw new RuntimeException();
+//            }
+//        }
+//        return user;
+//    }
 }
