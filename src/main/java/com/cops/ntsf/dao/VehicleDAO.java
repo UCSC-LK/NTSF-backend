@@ -29,4 +29,20 @@ public class VehicleDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void insertVehicleInfo(Vehicle vehicle) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "INSERT INTO vehicle(user_id, vehicle_no) VALUES (?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, vehicle.getUserId());
+            preparedStatement.setString(2, vehicle.getVehicleNo());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
