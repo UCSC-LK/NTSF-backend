@@ -23,4 +23,9 @@ public class Vehicle extends User {
     public void setVehicleNo(String vehicleNo) {
         this.vehicleNo = vehicleNo;
     }
+
+    public void setVehicleInfo() {
+        VehicleDAO vehicleDAO = new VehicleDAO();
+        vehicleDAO.insertVehicleInfo(this);
+    }
 }
