@@ -4,6 +4,7 @@ import com.cops.ntsf.constants.UserType;
 import com.cops.ntsf.model.Auth;
 import com.cops.ntsf.model.Driver;
 import com.cops.ntsf.model.User;
+import com.cops.ntsf.model.Vehicle;
 
 public class UserService {
     public User getUserSignedUp(UserType userType,
@@ -26,6 +27,10 @@ public class UserService {
                 case DRIVER:
                     Driver driver = new Driver(userId, loginId);
                     driver.setDriverInfo();
+                    return user;
+                case VEHICLE:
+                    Vehicle vehicle = new Vehicle(userId, loginId);
+                    vehicle.setVehicleInfo();
                     return user;
                 default:
                     throw new RuntimeException();
