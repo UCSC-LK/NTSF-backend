@@ -4,6 +4,7 @@ import com.cops.ntsf.constants.UserType;
 import com.cops.ntsf.model.Auth;
 import com.cops.ntsf.model.Driver;
 import com.cops.ntsf.model.Pedestrian;
+import com.cops.ntsf.model.Vehicle;
 import org.json.JSONObject;
 
 public class AuthService {
@@ -19,6 +20,11 @@ public class AuthService {
                 pedestrian.setNic(loginId);
                 pedestrian.getPedestrianFromNic();
                 return pedestrian.getUserId();
+            case VEHICLE:
+                Vehicle vehicle = new Vehicle();
+                vehicle.setVehicleNo(loginId);
+                vehicle.getVehicleFromVehicleNo();
+                return vehicle.getUserId();
             default:
                 throw new RuntimeException();
         }
