@@ -1,5 +1,6 @@
 package com.cops.ntsf.model;
 
+import com.cops.ntsf.constants.UserType;
 import com.cops.ntsf.dao.DriverDAO;
 
 public class Driver extends User {
@@ -10,7 +11,8 @@ public class Driver extends User {
         this.licenceNo = licenseNo;
     }
 
-    public Driver() {
+    public Driver(String userId, UserType userType) {
+        super(userId, userType);
     }
 
     public String getLicenceNo() {
