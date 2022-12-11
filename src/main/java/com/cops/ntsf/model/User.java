@@ -22,7 +22,7 @@ public class User {
         this.userType = userType;
     }
 
-    public User() {
+    public User(String userId, UserType userType) {
     }
 
     public User(String userId) {
