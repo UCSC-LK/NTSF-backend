@@ -1,5 +1,6 @@
 package com.cops.ntsf.controller;
 
+import com.cops.ntsf.constants.UserType;
 import com.cops.ntsf.model.User;
 import com.cops.ntsf.service.UserService;
 import com.google.gson.Gson;
@@ -14,16 +15,13 @@ import java.io.PrintWriter;
 public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String loginId = req.getParameter("login_id");
+
+        // Get request parameters
+        UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
         String userId = req.getParameter("user_id");
 
-//        switch (userType) {
-//            case DRIVER:
-//                loginId = req.getParameter("licence_no");
-//        }
-
         UserService userService = new UserService();
-        User user = userService.getUserInfo(userId, loginId);
+        User user = userService.getUserInfo(userId, userType);
 
         // Output response
         PrintWriter out = resp.getWriter();
