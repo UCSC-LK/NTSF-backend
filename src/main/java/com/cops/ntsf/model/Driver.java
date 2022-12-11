@@ -6,6 +6,10 @@ import com.cops.ntsf.dao.DriverDAO;
 public class Driver extends User {
     private String licenceNo;
 
+    public Driver() {
+        super();
+    }
+
     public Driver(String userId, String licenseNo) {
         super(userId);
         this.licenceNo = licenseNo;
