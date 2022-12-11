@@ -11,6 +11,10 @@ public class Vehicle extends User {
         this.vehicleNo = vehicleNo;
     }
 
+    public Vehicle() {
+        super();
+    }
+
     public void getVehicleFromVehicleNo() {
         VehicleDAO vehicleDAO = new VehicleDAO();
         vehicleDAO.getVehicleFromVehicleNo(this);
