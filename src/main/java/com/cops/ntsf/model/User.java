@@ -37,6 +37,9 @@ public class User {
         this.mobileNo = mobileNo;
     }
 
+    public User() {
+    }
+
     public String getUserId() {
         return userId;
     }
