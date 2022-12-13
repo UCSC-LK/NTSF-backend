@@ -6,6 +6,11 @@ public class Pedestrian extends User {
 
     private String nic;
 
+    public Pedestrian(String userId, String nic) {
+        super(userId);
+        this.nic = nic;
+    }
+
     public void getPedestrianFromNic() {
         PedestrianDAO pedestrianDAO = new PedestrianDAO();
         pedestrianDAO.getPedestrianFromNic(this);
@@ -17,5 +22,10 @@ public class Pedestrian extends User {
 
     public void setNic(String nic) {
         this.nic = nic;
+    }
+
+    public void setPedestrianInfo() {
+        PedestrianDAO pedestrianDAO = new PedestrianDAO();
+        pedestrianDAO.insertPedestrianInfo(this);
     }
 }
