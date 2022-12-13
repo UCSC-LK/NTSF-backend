@@ -20,8 +20,6 @@ public class PedestrianDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                // driver.setLicenceExpiryDate(LocalDate.parse(resultSet.getString("licence_expire_date")));
-                // driver.setLicenceIssueDate(LocalDate.parse(resultSet.getString("licence_issue_date")));
                 pedestrian.setUserId(resultSet.getString("user_id"));
             }
         } catch (SQLException e) {
