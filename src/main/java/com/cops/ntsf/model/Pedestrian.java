@@ -11,6 +11,10 @@ public class Pedestrian extends User {
         this.nic = nic;
     }
 
+    public Pedestrian() {
+        super();
+    }
+
     public void getPedestrianFromNic() {
         PedestrianDAO pedestrianDAO = new PedestrianDAO();
         pedestrianDAO.getPedestrianFromNic(this);
