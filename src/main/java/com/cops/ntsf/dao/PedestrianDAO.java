@@ -28,4 +28,20 @@ public class PedestrianDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void insertPedestrianInfo(Pedestrian pedestrian) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "INSERT INTO pedestrian(user_id, nic) VALUES (?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, pedestrian.getUserId());
+            preparedStatement.setString(2, pedestrian.getNic());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
