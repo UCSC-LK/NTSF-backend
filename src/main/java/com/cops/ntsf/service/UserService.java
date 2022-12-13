@@ -1,10 +1,7 @@
 package com.cops.ntsf.service;
 
 import com.cops.ntsf.constants.UserType;
-import com.cops.ntsf.model.Auth;
-import com.cops.ntsf.model.Driver;
-import com.cops.ntsf.model.User;
-import com.cops.ntsf.model.Vehicle;
+import com.cops.ntsf.model.*;
 
 public class UserService {
     public User getUserSignedUp(UserType userType,
@@ -28,6 +25,10 @@ public class UserService {
                     Driver driver = new Driver(userId, loginId);
                     driver.setDriverInfo();
                     return user;
+                case PEDESTRIAN:
+                    Pedestrian pedestrian = new Pedestrian(userId, loginId);
+                    pedestrian.setPedestrianInfo();
+                    return pedestrian;
                 case VEHICLE:
                     Vehicle vehicle = new Vehicle(userId, loginId);
                     vehicle.setVehicleInfo();
