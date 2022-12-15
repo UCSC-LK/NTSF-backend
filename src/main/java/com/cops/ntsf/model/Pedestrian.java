@@ -4,11 +4,9 @@ import com.cops.ntsf.dao.PedestrianDAO;
 
 public class Pedestrian extends User {
 
-    private String nic;
-
     public Pedestrian(String userId, String nic) {
         super(userId);
-        this.nic = nic;
+        this.setNic(nic);
     }
 
     public Pedestrian() {
@@ -20,13 +18,13 @@ public class Pedestrian extends User {
         pedestrianDAO.getPedestrianFromNic(this);
     }
 
-    public String getNic() {
-        return nic;
-    }
+//    public String getNic() {
+//        return nic;
+//    }
 
-    public void setNic(String nic) {
-        this.nic = nic;
-    }
+//    public void setNic(String nic) {
+//        this.nic = nic;
+//    }
 
     public void setPedestrianInfo() {
         PedestrianDAO pedestrianDAO = new PedestrianDAO();
