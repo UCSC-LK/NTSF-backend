@@ -28,10 +28,13 @@ public class SignUpServlet extends HttpServlet {
         switch (userType) {
             case DRIVER:
                 loginId = req.getParameter("licence_no");
+                break;
             case PEDESTRIAN:
                 loginId = req.getParameter("nic");
+                break;
             case VEHICLE:
                 loginId = req.getParameter("vehicle_no");
+                break;
         }
 
         UserService userService = new UserService();
