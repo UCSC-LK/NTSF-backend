@@ -1,4 +1,5 @@
 package com.cops.ntsf.model;
+import com.cops.ntsf.util.DBConnect;
 import com.cops.ntsf.util.Database;
 
 
@@ -13,7 +14,7 @@ public class AddComplaintModel {
         boolean isSuccess = false;
 
         try{
-            dbConnect = Database.getConnection();
+            dbConnect = DBConnect.getConnection();
             Statement stmt = dbConnect.createStatement();
             String sql = "insert into complaint values ('"+title+"', '"+description+"')";
             int rs = stmt.executeUpdate(sql); //returns 1 if insertion is successful
@@ -42,7 +43,7 @@ public class AddComplaintModel {
         boolean isSuccess = false;
 
         try{
-            dbConnect = Database.getConnection();
+            dbConnect = DBConnect.getConnection();
             Statement stmt = dbConnect.createStatement();
             String sql = "update complaint set title='"+title+"', description='"+description+"' " ;
             int rs = stmt.executeUpdate(sql);
