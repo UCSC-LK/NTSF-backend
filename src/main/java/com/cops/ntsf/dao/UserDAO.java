@@ -34,20 +34,28 @@ public class UserDAO {
 
             preparedStatement.executeUpdate();
 
-            this.fetchUserInfo(user);
+            this.fetchUserInfo(user, true);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void fetchUserInfo(User user) {
+    public void fetchUserInfo(User user, boolean isFromMobileNo) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM user WHERE nic = ? && user_type = ?";
+        String sql = "SELECT * FROM user WHERE user_id = ? && user_type = ?";
+
+        if (isFromMobileNo)
+            sql = "SELECT * FROM user WHERE mobile_no = ? && user_type = ?";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setString(1, user.getNic());
+
+            if (isFromMobileNo)
+                preparedStatement.setString(1, user.getMobileNo());
+            else
+                preparedStatement.setString(1, user.getUserId());
+
             preparedStatement.setString(2, user.getUserType().toString());
             ResultSet resultSet = preparedStatement.executeQuery();
 
