@@ -23,6 +23,8 @@ public class User {
     }
 
     public User(String userId, UserType userType) {
+        this.userId = userId;
+        this.userType = userType;
     }
 
     public User(String userId) {
@@ -87,7 +89,7 @@ public class User {
 
     public void getUserInfo() {
         UserDAO userDAO = new UserDAO();
-        userDAO.fetchUserInfo(this);
+        userDAO.fetchUserInfo(this, false);
     }
 
     public String getName() {
