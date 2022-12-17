@@ -5,22 +5,41 @@ import com.cops.ntsf.dao.UserDAO;
 
 public class User {
     private String userId;
+    private String name;
+    private String address;
     private String nic;
     private String email;
     private String mobileNo;
     private UserType userType;
-    // private String firstName;
-    // private String lastName;
     // private Blob profilePicture;
 
-    public User() {
-    }
-
-    public User(String nic, String email, String mobileNo, UserType userType) {
+    public User(String name, String address, String nic, String email, String mobileNo, UserType userType) {
+        this.name = name;
+        this.address = address;
         this.nic = nic;
         this.email = email;
         this.mobileNo = mobileNo;
         this.userType = userType;
+    }
+
+    public User(String userId, UserType userType) {
+        this.userId = userId;
+        this.userType = userType;
+    }
+
+    public User(String userId) {
+        this.userId = userId;
+    }
+
+    public User(String name, String address, String nic, String email, String mobileNo) {
+        this.name = name;
+        this.address = address;
+        this.nic = nic;
+        this.email = email;
+        this.mobileNo = mobileNo;
+    }
+
+    public User() {
     }
 
     public String getUserId() {
@@ -35,12 +54,24 @@ public class User {
         return nic;
     }
 
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
+
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public UserType getUserType() {
         return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = UserType.valueOf(userType);
     }
 
     public void setUserInfo() {
@@ -50,5 +81,30 @@ public class User {
 
     public String getMobileNo() {
         return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
+
+    public void getUserInfo() {
+        UserDAO userDAO = new UserDAO();
+        userDAO.fetchUserInfo(this, false);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

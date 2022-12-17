@@ -3,6 +3,8 @@ package com.cops.ntsf.service;
 import com.cops.ntsf.constants.UserType;
 import com.cops.ntsf.model.Auth;
 import com.cops.ntsf.model.Driver;
+import com.cops.ntsf.model.Pedestrian;
+import com.cops.ntsf.model.Vehicle;
 import org.json.JSONObject;
 
 public class AuthService {
@@ -13,6 +15,16 @@ public class AuthService {
                 driver.setLicenceNo(loginId);
                 driver.getDriverFromLicenseNo();
                 return driver.getUserId();
+            case PEDESTRIAN:
+                Pedestrian pedestrian = new Pedestrian();
+                pedestrian.setNic(loginId);
+                pedestrian.getPedestrianFromNic();
+                return pedestrian.getUserId();
+            case VEHICLE:
+                Vehicle vehicle = new Vehicle();
+                vehicle.setVehicleNo(loginId);
+                vehicle.getVehicleFromVehicleNo();
+                return vehicle.getUserId();
             default:
                 throw new RuntimeException();
         }

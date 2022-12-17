@@ -1,16 +1,22 @@
 package com.cops.ntsf.model;
 
+import com.cops.ntsf.constants.UserType;
 import com.cops.ntsf.dao.DriverDAO;
 
 public class Driver extends User {
     private String licenceNo;
 
+    public Driver() {
+        super();
+    }
+
     public Driver(String userId, String licenseNo) {
-        this.setUserId(userId);
+        super(userId);
         this.licenceNo = licenseNo;
     }
 
-    public Driver() {
+    public Driver(String userId, UserType userType) {
+        super(userId, userType);
     }
 
     public String getLicenceNo() {
@@ -29,5 +35,10 @@ public class Driver extends User {
     public void setDriverInfo() {
         DriverDAO driverDAO = new DriverDAO();
         driverDAO.insertDriverInfo(this);
+    }
+
+    public void getDriverInfo() {
+        DriverDAO driverDAO = new DriverDAO();
+        driverDAO.fetchDriverLicence(this);
     }
 }
