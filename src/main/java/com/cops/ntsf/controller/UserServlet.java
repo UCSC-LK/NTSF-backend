@@ -37,14 +37,14 @@ public class UserServlet extends HttpServlet {
 
         // Get request parameters
         String userId = req.getParameter("user_id");
-        UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
+//        UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
         String mobileNo = req.getParameter("mobile_no");
         String email = req.getParameter("email");
         String name = req.getParameter("name");
         String address = req.getParameter("address");
 
         UserService userService = new UserService();
-        User user = userService.updateUserInfo(userId, userType, mobileNo, email, name, address);
+        User user = userService.updateUserInfo(userId, mobileNo, email, name, address);
 
         // Output response
         PrintWriter out = resp.getWriter();
