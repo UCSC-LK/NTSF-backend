@@ -61,12 +61,11 @@ public class UserService {
     }
 
     public User updateUserInfo(String userId,
-                               UserType userType,
                                String mobileNo,
                                String email,
                                String name,
                                String address) {
-        User user = new User(userId, userType);
+        User user = new User(userId, mobileNo, email, name, address);
         user.updateUserInfo();
 
         return user;
