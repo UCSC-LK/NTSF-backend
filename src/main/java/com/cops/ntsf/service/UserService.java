@@ -59,4 +59,16 @@ public class UserService {
         }
         return user;
     }
+
+    public User updateUserInfo(String userId,
+                               UserType userType,
+                               String mobileNo,
+                               String email,
+                               String name,
+                               String address) {
+        User user = new User(userId, userType);
+        user.updateUserInfo();
+
+        return user;
+    }
 }
