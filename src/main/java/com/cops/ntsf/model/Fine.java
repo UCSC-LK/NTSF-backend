@@ -5,6 +5,7 @@ import com.cops.ntsf.dao.FineDAO;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Fine {
     private String userId;
@@ -16,12 +17,12 @@ public class Fine {
     private String paymentStatus;
 
     public Fine(String userId) {
-
+        this.userId = userId;
     }
 
-    public void getUserFinesInfo() throws SQLException {
+    public ArrayList<Fine> getUserFinesInfo() throws SQLException {
         FineDAO fineDAO = new FineDAO();
-        fineDAO.fetchUserFinesInfo(this);
+        return fineDAO.fetchUserFinesInfo(this);
     }
 
     public String getUserId() {
@@ -83,7 +84,7 @@ public class Fine {
     public Fine getUserFinesInfo(String userId) throws SQLException {
         Fine fine = new Fine(userId);
         fine.getUserFinesInfo();
-        
+
         return fine;
     }
 }
