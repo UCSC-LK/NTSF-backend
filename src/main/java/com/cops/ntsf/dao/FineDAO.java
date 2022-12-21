@@ -7,9 +7,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class FineDAO {
-    public void fetchUserFinesInfo(Fine fine) throws SQLException {
+    public ArrayList<Fine> fetchUserFinesInfo(Fine fine) throws SQLException {
         Connection dbConn = Database.getConnection();
 
         String sql = "SELECT * FROM fine WHERE user_id = ?";
@@ -20,13 +21,20 @@ public class FineDAO {
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
+        ArrayList<Fine> finesList = new ArrayList<Fine>();
+
         while (resultSet.next()) {
-            fine.setTicketNo(Integer.valueOf(resultSet.getString("ticket_no")));
-            fine.setFineNo(Integer.valueOf(resultSet.getString("fine_no")));
-            fine.setDate(resultSet.getDate("date"));
-            fine.setDueDate(resultSet.getDate("due_date"));
-            fine.setFineAmount(resultSet.getBigDecimal("fine_amount"));
-            fine.setPaymentStatus(resultSet.getString("payment_status"));
+            Fine nextFine;
+            nextFine = new Fine(fine.getUserId());
+            nextFine.setTicketNo(Integer.valueOf(resultSet.getString("ticket_no")));
+            nextFine.setFineNo(Integer.valueOf(resultSet.getString("fine_no")));
+            nextFine.setDate(resultSet.getDate("date"));
+            nextFine.setDueDate(resultSet.getDate("due_date"));
+            nextFine.setFineAmount(resultSet.getBigDecimal("fine_amount"));
+            nextFine.setPaymentStatus(resultSet.getString("payment_status"));
+
+            finesList.add(nextFine);
         }
+        return finesList;
     }
 }
