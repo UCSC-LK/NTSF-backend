@@ -14,14 +14,14 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
-  <servlet>
-    <servlet-name>signup</servlet-name>
-    <servlet-class>com.cops.ntsf.controller.SignUpServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>signup</servlet-name>
-    <url-pattern>/signup</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>signup</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.SignUpServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>signup</servlet-name>
+        <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>user</servlet-name>
@@ -32,12 +32,21 @@
         <url-pattern>/user</url-pattern>
     </servlet-mapping>
 
-  <servlet>
-    <servlet-name>AddComplaint</servlet-name>
-    <servlet-class>com.cops.ntsf.controller.AddComplaint</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddComplaint</servlet-name>
-    <url-pattern>/addcomplaint</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>AddComplaint</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.AddComplaint</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddComplaint</servlet-name>
+        <url-pattern>/addcomplaint</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>fine</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.FineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>fine</servlet-name>
+        <url-pattern>/fine</url-pattern>
+    </servlet-mapping>
 </web-app>
