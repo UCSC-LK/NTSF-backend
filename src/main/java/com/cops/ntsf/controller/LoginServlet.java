@@ -23,7 +23,6 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
-        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
 
         out.write(authService.verifyLogin(loginId, password, userType));
         out.close();
