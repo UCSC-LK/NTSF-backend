@@ -24,10 +24,10 @@
            <% for (int i =0; i<complaintList.size(); i++)
            {%>
             <tr>
-                <td>"$<%= complaintList.get(i).getUser_id()%>"</td>
-                <td>"$<%= complaintList.get(i).getTitle()%>"</td>
-                <td>"$<%= complaintList.get(i).getDescription()%>"</td>
-                <td>"$<%= complaintList.get(i).getComplaint_no()%>"</td>
+                <td><%= complaintList.get(i).getUser_id()%></td>
+                <td><%= complaintList.get(i).getTitle()%></td>
+                <td><%= complaintList.get(i).getDescription()%></td>
+                <td><%= complaintList.get(i).getComplaint_no()%></td>
             </tr>
         <% } %>
     </table>
