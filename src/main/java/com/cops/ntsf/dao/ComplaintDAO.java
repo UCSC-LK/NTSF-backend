@@ -72,9 +72,9 @@ public class ComplaintDAO
         try {
 //          int convertedUser_id = Integer.parseInt(user_id);
             dbConnect = DBConnect.getConnection();
-            Statement stmt = dbConnect.createStatement();
+            Statement statement = dbConnect.createStatement();
             String sql = "Select * from complaint";
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = statement.executeQuery(sql);
 
             //next() returns a boolean value of true if the query is false
             while (rs.next()) {
