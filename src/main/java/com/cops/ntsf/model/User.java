@@ -107,4 +107,9 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public void updateUserInfo() {
+        UserDAO userDAO = new UserDAO();
+        userDAO.updateUserInfo(this);
+    }
 }

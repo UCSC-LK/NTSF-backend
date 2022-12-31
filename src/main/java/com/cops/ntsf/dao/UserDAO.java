@@ -72,4 +72,10 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void updateUserInfo(User user) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "UPDATE user WHERE user_id = ? && userType = ?";
+    }
 }
