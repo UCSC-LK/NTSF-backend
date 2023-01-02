@@ -1,17 +1,21 @@
 package com.cops.ntsf.model;
 
 public class Policeman {
-    private String police_station;
-    private String police_id;
     private String name;
+    private String police_id;
     private String nic;
 
-    public Policeman(String police_station, String police_id, String name, String nic)
+    private String rank;
+
+    private String police_station;
+
+    public Policeman(String name, String police_id, String nic, String rank, String police_station)
     {
-        this.police_station = police_station;
-        this.police_id = police_id;
         this.name = name;
+        this.police_id = police_id;
         this.nic = nic;
+        this.rank = rank;
+        this.police_station = police_station;
     }
 
     //getters
@@ -31,6 +35,10 @@ public class Policeman {
         return nic;
     }
 
+    public String getRank() {
+        return rank;
+    }
+
     //setters
 
 
@@ -48,6 +56,10 @@ public class Policeman {
 
     public void setNic(String nic) {
         this.nic = nic;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
     }
 }
 
