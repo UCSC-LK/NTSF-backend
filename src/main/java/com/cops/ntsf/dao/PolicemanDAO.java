@@ -13,7 +13,7 @@ import java.util.List;
 public class PolicemanDAO {
     private static Connection dbConnect = null;
 
-    public static boolean addPoliceman(String name, String police_id, String nic. String rank, String police_station)
+    public static boolean addPoliceman(String name, String police_id, String nic, String rank, String police_station)
     {
         boolean isSuccess = false;
     }
@@ -28,12 +28,13 @@ public class PolicemanDAO {
 
             while (rs.next())
             {
-                String police_station = rs.getString(1);
-                String police_id = rs.getString(2);
-                String name = rs.getString(3);
-                String nic = rs.getString(4);
+               String name = rs.getString(1);
+               String police_id = rs.getString(2);
+               String nic = rs.getString(3);
+               String rank = rs.getString(4);
+               String police_station = rs.getString(5);
 
-                Policeman policemanInfo = new Policeman(police_station, police_id, name, nic);
+                Policeman policemanInfo = new Policeman(name, police_id, nic, rank, police_station);
                 policemanInformation.add(policemanInfo);
 
             }
