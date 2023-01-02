@@ -24,6 +24,7 @@ public class PolicemanDAO {
 
     
     public static List<Policeman> viewPoliceman () {
+
         ArrayList<Policeman> policemanInformation = new ArrayList<>();
 
         try {
