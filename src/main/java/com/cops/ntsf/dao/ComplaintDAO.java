@@ -19,7 +19,7 @@ public class ComplaintDAO
         try {
             dbConnect = DBConnect.getConnection();
             Statement stmt = dbConnect.createStatement();
-            String sql = "insert into complaint values ('" + user_id + "', '" + title + "', '" + description + "', '" + complaint_no + "')";
+            String sql = "insert into complaint values ('" + user_id + "', '" + title + "', '" + description + "', )";
             int rs = stmt.executeUpdate(sql); //returns 1 if insertion is successful(since only 1 row is affected)
 
             if (rs > 0) {
@@ -103,7 +103,9 @@ public class ComplaintDAO
             dbConnect = DBConnect.getConnection();
             Statement stmt = dbConnect.createStatement();
             String sql = "Select * from complaint where user_id ='"+user_id+"'";
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs
+
+                    = stmt.executeQuery(sql);
 
             //next() returns a boolean value of true if the query is false
             while (rs.next()) {
