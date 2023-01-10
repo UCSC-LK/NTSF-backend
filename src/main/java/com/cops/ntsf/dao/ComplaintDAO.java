@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
 //public class ComplaintDAO
 //{
 //    private static Connection dbConnect = null;
@@ -34,6 +35,33 @@ import java.util.List;
 //        return isSuccess;
 //    }
 //
+=======
+public class ComplaintDAO
+{
+    private static Connection dbConnect = null;
+
+    public static boolean addComplaint(String user_id, String title, String description, String complaint_no) {
+        boolean isSuccess = false;
+
+        try {
+            dbConnect = DBConnect.getConnection();
+            Statement stmt = dbConnect.createStatement();
+            String sql = "insert into complaint values ('" + user_id + "', '" + title + "', '" + description + "', )";
+            int rs = stmt.executeUpdate(sql); //returns 1 if insertion is successful(since only 1 row is affected)
+
+            if (rs > 0) {
+                isSuccess = true;
+            } else {
+                isSuccess = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
+    }
+
+>>>>>>> d3f43515e4f6a5b54245bfe222aa7d2828b9c41c
 
 //    public static List<Complaint> viewComplaintByID(String user_id) {
 //        ArrayList<Complaint> complaintInformation = new ArrayList<>();
@@ -103,7 +131,9 @@ import java.util.List;
             dbConnect = DBConnect.getConnection();
             Statement stmt = dbConnect.createStatement();
             String sql = "Select * from complaint where user_id ='"+user_id+"'";
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs
+
+                    = stmt.executeQuery(sql);
 
             //next() returns a boolean value of true if the query is false
             while (rs.next()) {
