@@ -13,8 +13,6 @@ public class ComplaintDAO {
         Connection dbConnect = null;
         try {
             dbConnect = DBConnect.getConnection();
-            String sql = "INSERT into complaint (user_id, title, description, complaint_no) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, complaint.getUser_id());
             preparedStatement.setString(2, complaint.getTitle());
@@ -31,6 +29,7 @@ public class ComplaintDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         finally {
             if (dbConnect != null) try
             {
