@@ -1,5 +1,7 @@
 package com.cops.ntsf.model;
 
+import com.cops.ntsf.dao.PolicemanDAO;
+
 public class Policeman {
     private String name;
     private String police_id;
@@ -41,7 +43,6 @@ public class Policeman {
 
     //setters
 
-
     public void setPolice_station(String police_station) {
         this.police_station = police_station;
     }
@@ -61,5 +62,12 @@ public class Policeman {
     public void setRank(String rank) {
         this.rank = rank;
     }
+
+    public void policemanAdded()
+    {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        policemanDAO.insert(this);
+    }
+
 }
 
