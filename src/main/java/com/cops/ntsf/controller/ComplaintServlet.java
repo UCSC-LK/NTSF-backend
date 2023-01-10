@@ -29,7 +29,16 @@ public class ComplaintServlet extends HttpServlet {
         String description = request.getParameter("description");
         String complaint_no = request.getParameter("complaint_no");
 
+        //remove later
+        System.out.println("Works until Servlet");
+        System.out.println(user_id);
+        System.out.println(title);
+        System.out.println(description);
+        System.out.println(complaint_no);
+
         Complaint complaint = new Complaint(user_id, title, description, complaint_no);
+        complaint.complaintAdded();
+
 
 
         out.write(jsonObject.toString());
