@@ -1,7 +1,5 @@
 package com.cops.ntsf.model;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Complaint {
     private String user_id;
     private String title;
