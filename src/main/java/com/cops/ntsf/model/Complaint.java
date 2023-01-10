@@ -1,5 +1,7 @@
 package com.cops.ntsf.model;
 
+import com.cops.ntsf.dao.ComplaintDAO;
+
 public class Complaint {
     private String user_id;
     private String title;
@@ -44,5 +46,11 @@ public class Complaint {
 
     public void setComplaint_no(String complaint_no) {
         this.complaint_no = complaint_no;
+    }
+
+    public void complaintAdded()
+    {
+        ComplaintDAO complaintDAO = new ComplaintDAO();
+        complaintDAO.insert(this);
     }
 }
