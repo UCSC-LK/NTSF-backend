@@ -15,6 +15,7 @@ public class LoginServlet extends HttpServlet {
         // Get request parameters
         UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
         String loginId = req.getParameter("login_id");
+        String nic = req.getParameter("nic");
         String password = req.getParameter("password");
 
         AuthService authService = new AuthService();
