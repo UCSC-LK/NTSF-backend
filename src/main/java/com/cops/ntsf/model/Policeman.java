@@ -6,9 +6,7 @@ public class Policeman {
     private String name;
     private String police_id;
     private String nic;
-
     private String rank;
-
     private String police_station;
 
     public Policeman(String name, String police_id, String nic, String rank, String police_station)
