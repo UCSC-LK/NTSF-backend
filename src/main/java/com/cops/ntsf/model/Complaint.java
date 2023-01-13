@@ -1,6 +1,7 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.ComplaintDAO;
+import org.json.JSONArray;
 
 public class Complaint {
     private String user_id;
@@ -15,7 +16,7 @@ public class Complaint {
         this.description = description;
         this.complaint_no = complaint_no;
     }
-
+    
     public String getUser_id() {
         return user_id;
     }
@@ -53,4 +54,12 @@ public class Complaint {
         ComplaintDAO complaintDAO = new ComplaintDAO();
         complaintDAO.insert(this);
     }
+
+    public JSONArray getComplaintDetails()
+    {
+        ComplaintDAO complaintDAO = new ComplaintDAO(); 
+        JSONArray ComplaintDetails = complaintDAO.viewComplaintDetails();
+        return ComplaintDetails;
+    }
+
 }
