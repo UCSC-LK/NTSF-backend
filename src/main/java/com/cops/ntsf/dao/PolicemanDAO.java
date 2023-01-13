@@ -12,6 +12,11 @@ import java.util.List;
 
 public class PolicemanDAO {
     private static Connection dbConnect = null;
+
+    public static boolean addPoliceman(String name, String police_id, String nic. String rank, String police_station)
+    {
+        boolean isSuccess = false;
+    }
     public static List<Policeman> viewPoliceman(){
         ArrayList<Policeman> policemanInformation = new ArrayList<>();
 

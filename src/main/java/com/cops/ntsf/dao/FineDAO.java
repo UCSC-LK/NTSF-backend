@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class FineDAO {
+public class  FineDAO {
     public ArrayList<Fine> fetchUserFinesInfo(Fine fine) throws SQLException {
         Connection dbConn = Database.getConnection();
 
