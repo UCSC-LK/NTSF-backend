@@ -1,6 +1,5 @@
 package com.cops.ntsf.controller;
 
-import com.cops.ntsf.constants.UserType;
 import com.cops.ntsf.model.User;
 import com.cops.ntsf.service.UserService;
 import com.google.gson.Gson;
@@ -11,34 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class SignUpServlet extends HttpServlet {
+public class UserSignUpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Get request parameters
-        UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
-        String name = req.getParameter("name");
-        String address = req.getParameter("address");
         String nic = req.getParameter("nic");
         String email = req.getParameter("email");
-        String mobileNo = req.getParameter("mobile_no");
         String password = req.getParameter("password");
 
-        String loginId = null;
-
-        switch (userType) {
-            case DRIVER:
-                loginId = req.getParameter("licence_no");
-                break;
-            case PEDESTRIAN:
-                loginId = req.getParameter("nic");
-                break;
-            case VEHICLE:
-                loginId = req.getParameter("vehicle_no");
-                break;
-        }
-
         UserService userService = new UserService();
-        User user = userService.getUserSignedUp(userType, name, address, nic, email, mobileNo, password, loginId);
+        User user = userService.getUserSignedUp(nic, email, password);
 
         // Output response
         PrintWriter out = resp.getWriter();

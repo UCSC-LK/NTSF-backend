@@ -6,20 +6,16 @@ import com.cops.ntsf.dao.UserDAO;
 public class User {
     private String userId;
     private String name;
-    private String address;
+//    private String address;
     private String nic;
     private String email;
     private String mobileNo;
     private UserType userType;
     // private Blob profilePicture;
 
-    public User(String name, String address, String nic, String email, String mobileNo, UserType userType) {
-        this.name = name;
-        this.address = address;
+    public User(String nic, String email) {
         this.nic = nic;
         this.email = email;
-        this.mobileNo = mobileNo;
-        this.userType = userType;
     }
 
     public User(String userId, UserType userType) {
@@ -29,14 +25,6 @@ public class User {
 
     public User(String userId) {
         this.userId = userId;
-    }
-
-    public User(String name, String address, String nic, String email, String mobileNo) {
-        this.name = name;
-        this.address = address;
-        this.nic = nic;
-        this.email = email;
-        this.mobileNo = mobileNo;
     }
 
     public User() {
@@ -100,18 +88,18 @@ public class User {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
+//    public String getAddress() {
+//        return address;
+//    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+//    public void setAddress(String address) {
+//        this.address = address;
+//    }
 
-    public void updateUserInfo() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.updateUserInfo(this);
-    }
+//    public void updateUserInfo() {
+//        UserDAO userDAO = new UserDAO();
+//        userDAO.updateUserInfo(this);
+//    }
 
     public void getUserFromNic() {
         UserDAO userDAO = new UserDAO();
