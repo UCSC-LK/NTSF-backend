@@ -112,4 +112,9 @@ public class User {
         UserDAO userDAO = new UserDAO();
         userDAO.updateUserInfo(this);
     }
+
+    public void getUserFromNic() {
+        UserDAO userDAO = new UserDAO();
+        userDAO.getUserFromNic(this);
+    }
 }

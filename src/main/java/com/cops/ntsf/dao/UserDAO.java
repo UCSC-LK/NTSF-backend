@@ -78,4 +78,22 @@ public class UserDAO {
 
         String sql = "UPDATE user WHERE user_id = ? && userType = ?";
     }
+
+    public void getUserFromNic(User user) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "SELECT * FROM user WHERE nic = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, user.getNic());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                user.setUserId(resultSet.getString("user_id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
