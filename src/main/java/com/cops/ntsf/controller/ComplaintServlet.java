@@ -40,7 +40,6 @@ public class ComplaintServlet extends HttpServlet {
         complaint.complaintAdded();
 
 
-
         out.write(jsonObject.toString());
         out.close();
 
@@ -54,6 +53,8 @@ public class ComplaintServlet extends HttpServlet {
 
 
 
+
+    //Wrong one
 
 //        String user_id = request.getParameter("user_id");
 //        String title = request.getParameter("title");
