@@ -4,27 +4,29 @@ import com.cops.ntsf.dao.PolicemanDAO;
 
 public class Policeman {
     private String name;
-    private String police_id;
+    private String policeId;
+//    private String police_id;
     private String nic;
     private String rank;
-    private String police_station;
+    private String policeStation;
+//    private String police_station;
 
-    public Policeman(String name, String police_id, String nic, String rank, String police_station)
+    public Policeman(String name, String policeId, String nic, String rank, String policeStation)
     {
         this.name = name;
-        this.police_id = police_id;
+        this.policeId = policeId;
         this.nic = nic;
         this.rank = rank;
-        this.police_station = police_station;
+        this.policeStation = policeStation;
     }
 
     //getters
-    public String getPolice_station() {
-        return police_station;
+    public String getPoliceStation() {
+        return policeId;
     }
 
-    public String getPolice_id() {
-        return police_id;
+    public String getPoliceId() {
+        return policeId;
     }
 
     public String getName() {
@@ -41,12 +43,12 @@ public class Policeman {
 
     //setters
 
-    public void setPolice_station(String police_station) {
-        this.police_station = police_station;
+    public void setPoliceStation(String policeStation) {
+        this.policeStation = policeStation;
     }
 
-    public void setPolice_id(String police_id) {
-        this.police_id = police_id;
+    public void setPoliceId(String policeId) {
+        this.policeId = policeId;
     }
 
     public void setName(String name) {
