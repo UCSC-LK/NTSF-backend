@@ -1,12 +1,11 @@
 package com.cops.ntsf.dao;
 
-import com.cops.ntsf.model.Complaint;
 import com.cops.ntsf.model.Policeman;
+import com.cops.ntsf.model.TrafficPolice;
 import com.cops.ntsf.util.DBConnect;
+import com.cops.ntsf.util.Database;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PolicemanDAO {
     public String insert(Policeman policeman)
@@ -18,10 +17,10 @@ public class PolicemanDAO {
             PreparedStatement preparedStatement = dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, policeman.getName());
-            preparedStatement.setString(2, policeman.getPolice_id());
+            preparedStatement.setString(2, policeman.getPoliceId());
             preparedStatement.setString(3, policeman.getNic());
             preparedStatement.setString(4, policeman.getRank());
-            preparedStatement.setString(5, policeman.getPolice_station());
+            preparedStatement.setString(5, policeman.getPoliceStation());
 
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -39,5 +38,26 @@ public class PolicemanDAO {
             } catch (Exception ignore){}
         }
         return null;
+    }
+
+    public void insertTrafficPoliceInfo(TrafficPolice trafficPolice) {
+        Connection dbConn = Database.getConnection();
+
+//        String sql = "INSERT INTO user (nic, email, mobile_no, user_type) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO taffic_police (name, policeId, nic, rank, policeStation) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, trafficPolice.getName());
+            preparedStatement.setString(2, trafficPolice.getPoliceId());
+            preparedStatement.setString(3,trafficPolice.getNic());
+            preparedStatement.setString(3,trafficPolice.getRank());
+            preparedStatement.setString(3,trafficPolice.getPoliceStation());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
