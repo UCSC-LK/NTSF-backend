@@ -26,6 +26,10 @@ public class PolicemanServlet extends HttpServlet {
         String nic = request.getParameter("nic");
         String rank = request.getParameter("rank");
         String police_station = request.getParameter("police_station");
+//        IsTrafficPolice();
+//        IsInvestigationOfficer();
+//        IsCourtSergeant();
+
 
         System.out.println("Works until Servlet");
         System.out.println(name);

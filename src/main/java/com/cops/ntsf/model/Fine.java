@@ -16,6 +16,7 @@ public class Fine {
     private BigDecimal fineAmount;
     private String paymentStatus;
 
+
     public Fine(String userId) {
         this.userId = userId;
     }
@@ -81,10 +82,10 @@ public class Fine {
         this.paymentStatus = paymentStatus;
     }
 
-    public Fine getUserFinesInfo(String userId) throws SQLException {
-        Fine fine = new Fine(userId);
-        fine.getUserFinesInfo();
-
-        return fine;
-    }
+//    public Fine getUserFinesInfo(String userId) throws SQLException {
+//        Fine fine = new Fine(userId);
+//        fine.getUserFinesInfo();
+//
+//        return fine;
+//    }
 }
