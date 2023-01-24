@@ -35,8 +35,6 @@ public class  FineDAO {
 
             finesList.add(nextFine);
         }
-
         return finesList;
-
     }
 }
