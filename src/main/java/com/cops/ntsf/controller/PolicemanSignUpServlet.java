@@ -1,7 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Policeman;
-import com.cops.ntsf.service.PoliceService;
+import com.cops.ntsf.service.PolicemanService;
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServlet;
@@ -19,7 +19,7 @@ public class PolicemanSignUpServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        PoliceService policeService = new PoliceService();
+        PolicemanService policeService = new PolicemanService();
         Policeman policeman = policeService.getPolicemanSignedUp(policeId, nic, email, password);
 
         // Output response
