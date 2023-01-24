@@ -44,7 +44,7 @@ public class PolicemanDAO {
         Connection dbConn = Database.getConnection();
 
 //        String sql = "INSERT INTO user (nic, email, mobile_no, user_type) VALUES (?, ?, ?, ?)";
-        String sql = "INSERT INTO taffic_police (name, policeId, nic, rank, policeStation) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO taffic_police (name, police_id, nic, rank, police_station) VALUES (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -53,6 +53,24 @@ public class PolicemanDAO {
             preparedStatement.setString(3,trafficPolice.getNic());
             preparedStatement.setString(3,trafficPolice.getRank());
             preparedStatement.setString(3,trafficPolice.getPoliceStation());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void insertPolicemanInfo(Policeman policeman) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "INSERT INTO policeman (police_id, nic, email) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1,policeman.getPoliceId());
+            preparedStatement.setString(2,policeman.getNic());
+            preparedStatement.setString(3,policeman.getEmail());
 
             preparedStatement.executeUpdate();
 
