@@ -2,7 +2,7 @@ package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.PolicemanDAO;
 
-public class Policeman {
+public class Policeman extends User{
     private String name;
     private String policeId;
 //    private String police_id;
@@ -18,6 +18,12 @@ public class Policeman {
         this.nic = nic;
         this.rank = rank;
         this.policeStation = policeStation;
+    }
+
+    public Policeman(String policeId, String nic, String email) {
+        this.policeId = policeId;
+        this.nic = nic;
+        this.setEmail(email);
     }
 
     //getters
@@ -69,5 +75,15 @@ public class Policeman {
         policemanDAO.insert(this);
     }
 
+    public void setTrafficPoliceInfo() {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        policemanDAO.insertTrafficPoliceInfo((TrafficPolice) this);
+
+    }
+
+    public void setPolicemanInfo() {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        policemanDAO.insertPolicemanInfo(this);
+    }
 }
 
