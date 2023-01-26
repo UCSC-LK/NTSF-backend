@@ -82,10 +82,11 @@ public class OffenceDAO {
                 Offence offence=new Offence();
                 offence.setOffenceNo(resultSet.getInt(1));
                 offence.setOffenceType(resultSet.getString(2));
-                offence.setDescription(resultSet.getString(3));
-                offence.setPointWeight(resultSet.getInt(4));
+                offence.setDescription(resultSet.getString(4));
+                offence.setPointWeight(resultSet.getInt(3));
                 offence.setAmount(resultSet.getInt(5));
                 list.add(offence);
+
             }
             dbConn.close();
         }catch(Exception offence){offence.printStackTrace();}
