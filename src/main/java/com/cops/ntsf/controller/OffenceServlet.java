@@ -38,7 +38,35 @@ public class OffenceServlet extends HttpServlet {
         out.write(new Gson().toJson(offence));
         out.close();
     }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    {
+        try {
+            System.out.println("req" + request);
+            System.out.println("res" + response);
+            System.out.println("1");
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println("<a href='index.html'>Add New Offences</a>");
+            out.println("<h1>Offence List</h1>");
 
+            List<Offence> list = OffenceDAO.getAllOffences();
+            for (Offence offence : list) {
+                System.out.println(""+offence.getOffenceNo());
+                          }
+            out.print("<table border='1' width='100%'");
+
+
+            out.print("<tr><th>OffenceNo</th><th>Offence_Type</th><th>Description</th><th>PointWeight</th><th>Amount</th> <th>Edit</th><th>Delete</th></tr>");
+            for (Offence offence : list) {
+                out.print("<tr><td>" + offence.getOffenceNo() + "</td><td>" + offence.getOffenceType() + "</td><td>" + offence.getDescription() + "</td><td>" + offence.getPointWeight() + "</td><td>" + offence.getAmount() + "</td><td><a href='OffenceServlet?offenceNo=" + offence.getOffenceNo() + "'>edit</a></td> <td><a href='DeleteServlet?id=" + offence.getOffenceNo() + "'>delete</a></td></tr>");
+            }
+            out.print("</table>");
+
+            out.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
 
 
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -62,12 +90,13 @@ public class OffenceServlet extends HttpServlet {
 
         int status= OffenceDAO.updateOffenceInfo(offence);
         if(status>0){
-            resp.sendRedirect("ViewServlet");
+            doGet(req,resp);
         }else{
             out.println("Sorry! unable to update record");
         }
         out.close();
     }
+
 
 
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -76,27 +105,7 @@ public class OffenceServlet extends HttpServlet {
         resp.sendRedirect("this");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html");
-        PrintWriter out=response.getWriter();
-        out.println("<a href='index.html'>Add New Offences</a>");
-        out.println("<h1>Offence List</h1>");
 
-        List<Offence> list=OffenceDAO.getAllOffences();
-
-        out.print("<table border='1' width='100%'");
-
-
-
-        out.print("<tr><th>OffenceNo</th><th>Offence_Type</th><th>Description</th><th>PointWeight</th><th>Amount</th> <th>Edit</th><th>Delete</th></tr>");
-        for(Offence offence:list){
-            out.print("<tr><td>"+offence.getOffenceNo()+"</td><td>"+offence.getOffenceType()+"</td><td>"+ offence.getDescription()+"</td><td>"+offence.getPointWeight()+"</td><td>"+offence.getAmount()+"</td><td><a href='OffenceServlet?offenceNo="+offence.getOffenceNo()+"'>edit</a></td> <td><a href='DeleteServlet?id="+offence.getOffenceNo()+"'>delete</a></td></tr>");
-        }
-        out.print("</table>");
-
-        out.close();
-    }
 
 
 
