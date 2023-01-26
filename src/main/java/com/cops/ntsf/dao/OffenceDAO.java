@@ -5,7 +5,10 @@ import com.cops.ntsf.util.Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OffenceDAO {
     public void setOffenceInfo(Offence offence) {
@@ -63,5 +66,33 @@ public class OffenceDAO {
             throw new RuntimeException(e);
         }
     }
+
+
+    public static List<Offence> getAllOffences(){
+        List<Offence> list=new ArrayList<Offence>();
+
+        String sql = "select * from offence";
+
+        try{
+            Connection dbConn = Database.getConnection();
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            ResultSet resultSet=preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Offence offence=new Offence();
+                offence.setOffenceNo(resultSet.getInt(1));
+                offence.setOffenceType(resultSet.getString(2));
+                offence.setDescription(resultSet.getString(3));
+                offence.setPointWeight(resultSet.getInt(4));
+                offence.setAmount(resultSet.getInt(5));
+                list.add(offence);
+            }
+            dbConn.close();
+        }catch(Exception offence){offence.printStackTrace();}
+
+        return list;
+    }
+
+
 
 }
