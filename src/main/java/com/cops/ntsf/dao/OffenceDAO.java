@@ -49,7 +49,7 @@ public class OffenceDAO {
         return 0;
     }
 
-    public void deleteOffenceInfo(int offenceN) {
+    public static void deleteOffenceInfo(int offenceN) {
         Connection dbConn = Database.getConnection();
 
         String sql = "delete from offence where offence_no=?";
