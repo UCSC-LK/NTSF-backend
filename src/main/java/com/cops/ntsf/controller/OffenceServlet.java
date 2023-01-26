@@ -38,6 +38,8 @@ public class OffenceServlet extends HttpServlet {
         out.close();
     }
 
+
+
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 
         resp.setContentType("text/html");
@@ -64,6 +66,13 @@ public class OffenceServlet extends HttpServlet {
             out.println("Sorry! unable to update record");
         }
         out.close();
+    }
+
+
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
+        OffenceDAO.deleteOffenceInfo(Integer.parseInt(String.valueOf(offenceNo)));
+        resp.sendRedirect("ViewServlet");
     }
 
 
