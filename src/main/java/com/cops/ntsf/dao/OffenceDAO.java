@@ -29,13 +29,39 @@ public class OffenceDAO {
     }
 
 
+    public static int updateOffenceInfo(Offence offence) {
+        Connection dbConn = Database.getConnection();
 
+        String sql = "UPDATE offence set  offence_type=?, description=?, point_weight=?, amount=? where offence_no=?";
 
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setInt(1, offence.getOffenceNo());
+            preparedStatement.setString(2, offence.getOffenceType());
+            preparedStatement.setString(3, offence.getDescription());
+            preparedStatement.setInt(4, offence.getPointWeight());
+            preparedStatement.setInt(5, offence.getAmount());
 
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
 
+    public void deleteOffenceInfo(int offenceN) {
+        Connection dbConn = Database.getConnection();
 
-    
+        String sql = "delete from offence where offence_no=?";
 
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setInt(1, offenceN);
 
-    
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
