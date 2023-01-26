@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 
 public class OffenceServlet extends HttpServlet {
@@ -72,8 +73,34 @@ public class OffenceServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
         OffenceDAO.deleteOffenceInfo(Integer.parseInt(String.valueOf(offenceNo)));
-        resp.sendRedirect("ViewServlet");
+        resp.sendRedirect("this");
     }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out=response.getWriter();
+        out.println("<a href='index.html'>Add New Offences</a>");
+        out.println("<h1>Offence List</h1>");
+
+        List<Offence> list=OffenceDAO.getAllOffences();
+
+        out.print("<table border='1' width='100%'");
+
+
+
+        out.print("<tr><th>OffenceNo</th><th>Offence_Type</th><th>Description</th><th>PointWeight</th><th>Amount</th> <th>Edit</th><th>Delete</th></tr>");
+        for(Offence offence:list){
+            out.print("<tr><td>"+offence.getOffenceNo()+"</td><td>"+offence.getOffenceType()+"</td><td>"+ offence.getDescription()+"</td><td>"+offence.getPointWeight()+"</td><td>"+offence.getAmount()+"</td><td><a href='OffenceServlet?offenceNo="+offence.getOffenceNo()+"'>edit</a></td> <td><a href='DeleteServlet?id="+offence.getOffenceNo()+"'>delete</a></td></tr>");
+        }
+        out.print("</table>");
+
+        out.close();
+    }
+
+
+
+
 
 
 
