@@ -61,6 +61,17 @@
     <url-pattern>/complaint</url-pattern>
   </servlet-mapping>
 
+
+  <servlet>
+      <servlet-name>offence</servlet-name>
+      <servlet-class>com.cops.ntsf.controller.OffenceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>offence</servlet-name>
+      <url-pattern>/offence</url-pattern>
+  </servlet-mapping>
+
+
 <!--    <servlet>-->
 <!--        <servlet-name>ViewComplaint</servlet-name>-->
 <!--        <servlet-class>com.cops.ntsf.controller.ViewComplaint</servlet-class>-->
