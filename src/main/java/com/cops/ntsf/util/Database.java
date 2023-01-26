@@ -19,7 +19,7 @@ public class Database
                     try
                     {
                         Class.forName("com.mysql.jdbc.Driver");
-                        INSTANCE = DriverManager.getConnection("jdbc:mysql://localhost:3306/ntsfdatabase", "root", "root");
+                        INSTANCE = DriverManager.getConnection("jdbc:mysql://localhost:3306/ntsfdatabase", "root", "");
                     }
                     catch (SQLException e)
                     {
