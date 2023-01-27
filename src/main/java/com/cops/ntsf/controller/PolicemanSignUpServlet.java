@@ -19,8 +19,8 @@ public class PolicemanSignUpServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        PolicemanService policeService = new PolicemanService();
-        Policeman policeman = policeService.getPolicemanSignedUp(policeId, nic, email, password);
+        PolicemanService policemanService = new PolicemanService();
+        Policeman policeman = policemanService.getPolicemanSignedUp(policeId, nic, email, password);
 
         // Output response
         PrintWriter out = resp.getWriter();
