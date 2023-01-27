@@ -10,17 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
+// Policeman sign up
 public class PolicemanSignUpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Get request parameters
         String policeId = req.getParameter("police_id");
+        String name = req.getParameter("name");
         String nic = req.getParameter("nic");
         String email = req.getParameter("email");
+        String mobileNo = req.getParameter("mobile_no");
         String password = req.getParameter("password");
 
         PolicemanService policemanService = new PolicemanService();
-        Policeman policeman = policemanService.getPolicemanSignedUp(policeId, nic, email, password);
+        Policeman policeman = policemanService.getPolicemanSignedUp(policeId, name, nic, email, mobileNo, password);
 
         // Output response
         PrintWriter out = resp.getWriter();

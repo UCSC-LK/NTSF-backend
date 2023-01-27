@@ -85,10 +85,10 @@ public class Policeman extends User{
 //        policemanDAO.insertTrafficPoliceInfo((TrafficPolice) this);
 //    }
 
-//    public void setPolicemanInfo() {
-//        PolicemanDAO policemanDAO = new PolicemanDAO();
-//        policemanDAO.insertPolicemanInfo(this);
-//    }
+    public void setPolicemanInfo() {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        policemanDAO.insertPolicemanInfo(this);
+    }
 
     public void updatePolicemanRankStation() {
         PolicemanDAO policemanDAO = new PolicemanDAO();

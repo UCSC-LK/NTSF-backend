@@ -4,24 +4,15 @@ import com.cops.ntsf.model.Auth;
 import com.cops.ntsf.model.Policeman;
 
 public class PolicemanService {
-//    public TrafficPolice appointPolicemanAsTrafficOfficer(String name,
-//                                                          String policeId,
-//                                                          String nic,
-//                                                          String rank,
-//                                                          String policeStation) {
-//        TrafficPolice trafficPolice = new TrafficPolice(name, policeId, nic, rank, policeStation);
-//        trafficPolice.setTrafficPoliceInfo();
-//        return trafficPolice;
-//    }
 
     public Policeman getPolicemanSignedUp(String policeId,
+                                          String name,
                                           String nic,
                                           String email,
+                                          String mobileNo,
                                           String password) {
-        Policeman policeman = new Policeman(policeId, nic, email);
+        Policeman policeman = new Policeman(policeId, name, nic, email, mobileNo);
         policeman.setPolicemanInfo();
-
-//        String policeId = policeman.getpoliceId();
 
         if (policeId != null) {
             Auth auth = new Auth(policeId, password);

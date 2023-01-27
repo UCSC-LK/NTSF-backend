@@ -1,7 +1,6 @@
 package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Policeman;
-import com.cops.ntsf.model.TrafficPolice;
 import com.cops.ntsf.util.DBConnect;
 import com.cops.ntsf.util.Database;
 
@@ -40,24 +39,26 @@ public class PolicemanDAO {
         return null;
     }
 
-//    public void insertPolicemanInfo(Policeman policeman) {
-//
-//        Connection dbConn = Database.getConnection();
-//
-//        String sql = "INSERT INTO policeman (police_id, nic, email) VALUES (?, ?, ?, ?, ?)";
-//
-//        try {
-//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-//            preparedStatement.setString(1,policeman.getPoliceId());
-//            preparedStatement.setString(2,policeman.getNic());
-//            preparedStatement.setString(3,policeman.getEmail());
-//
-//            preparedStatement.executeUpdate();
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public void insertPolicemanInfo(Policeman policeman) {
+
+        Connection dbConn = Database.getConnection();
+
+        String sql = "INSERT INTO policeman (police_id, nic, email) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1,policeman.getPoliceId());
+            preparedStatement.setString(2,policeman.getName());
+            preparedStatement.setString(2,policeman.getNic());
+            preparedStatement.setString(3,policeman.getEmail());
+            preparedStatement.setString(4,policeman.getMobileNo());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void updatePolicemanRankStation(Policeman policeman) {
         Connection dbConn = Database.getConnection();
@@ -68,6 +69,7 @@ public class PolicemanDAO {
             PreparedStatement preparedStatement =dbConn.prepareStatement(sql);
             preparedStatement.setString(1,policeman.getRank());
             preparedStatement.setString(2,policeman.getPoliceStation());
+            preparedStatement.setString(3,policeman.getPoliceId());
 
             preparedStatement.executeUpdate();
 
