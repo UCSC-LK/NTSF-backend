@@ -80,12 +80,12 @@
 <!--    </servlet-mapping>-->
 
     <servlet>
-        <servlet-name>AddPoliceman</servlet-name>
+        <servlet-name>policeman</servlet-name>
         <servlet-class>com.cops.ntsf.controller.PolicemanServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>AddPoliceman</servlet-name>
-        <url-pattern>/addPoliceman</url-pattern>
+        <servlet-name>policeman</servlet-name>
+        <url-pattern>/policeman</url-pattern>
     </servlet-mapping>
 
     <servlet>
