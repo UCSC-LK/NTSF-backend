@@ -1,6 +1,5 @@
 package com.cops.ntsf.controller;
 
-import com.cops.ntsf.model.TrafficPolice;
 import com.cops.ntsf.service.PolicemanService;
 import com.google.gson.Gson;
 
@@ -22,14 +21,14 @@ public class TrafficPoliceServlet extends HttpServlet {
         String policeStation = req.getParameter("policeStation");
 
         PolicemanService policemanService = new PolicemanService();
-        TrafficPolice trafficPolice = policemanService.appointPolicemanAsTrafficOfficer(name, policeId, nic, rank,policeStation);
+//        TrafficPolice trafficPolice = policemanService.appointPolicemanAsTrafficOfficer(name, policeId, nic, rank,policeStation);
 
         // Output response
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-        out.write(new Gson().toJson(trafficPolice));
+//        out.write(new Gson().toJson(trafficPolice));
         out.close();
     }
 }
