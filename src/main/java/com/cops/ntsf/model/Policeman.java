@@ -26,6 +26,11 @@ public class Policeman extends User{
         this.setEmail(email);
     }
 
+    public Policeman(String policeId, String rank) {
+        this.policeId=policeId;
+        this.rank=rank;
+    }
+
     //getters
     public String getPoliceStation() {
         return policeId;
@@ -78,12 +83,16 @@ public class Policeman extends User{
     public void setTrafficPoliceInfo() {
         PolicemanDAO policemanDAO = new PolicemanDAO();
         policemanDAO.insertTrafficPoliceInfo((TrafficPolice) this);
-
     }
 
     public void setPolicemanInfo() {
         PolicemanDAO policemanDAO = new PolicemanDAO();
         policemanDAO.insertPolicemanInfo(this);
+    }
+
+    public void updatePolicemanRank() {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        policemanDAO.updatePolicemanRank(this);
     }
 }
 
