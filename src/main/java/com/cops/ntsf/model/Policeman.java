@@ -90,9 +90,9 @@ public class Policeman extends User{
         policemanDAO.insertPolicemanInfo(this);
     }
 
-    public void updatePolicemanRank() {
+    public void updatePolicemanRankStation() {
         PolicemanDAO policemanDAO = new PolicemanDAO();
-        policemanDAO.updatePolicemanRank(this);
+        policemanDAO.updatePolicemanRankStation(this);
     }
 }
 

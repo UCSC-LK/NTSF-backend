@@ -30,10 +30,11 @@ public class PolicemanService {
         return policeman;
     }
 
-    public Policeman updatePolicemanRank(String policeId,
-                                         String rank) {
-        Policeman policeman = new Policeman(policeId,rank);
-        policeman.updatePolicemanRank();
+    public Policeman updatePolicemanRankStation(String policeId,
+                                                String rank,
+                                                String policeStation) {
+        Policeman policeman = new Policeman(policeId,rank,policeStation);
+        policeman.updatePolicemanRankStation();
 
         return policeman;
     }

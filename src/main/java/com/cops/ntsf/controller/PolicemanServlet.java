@@ -1,6 +1,7 @@
 package com.cops.ntsf.controller;
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.service.PolicemanService;
+import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -47,16 +48,17 @@ public class PolicemanServlet extends HttpServlet {
         // Get request parameters
         String policeId = req.getParameter("police_id");
         String rank = req.getParameter("rank");
+        String policeStation = req.getParameter("police_station");
 
         PolicemanService policemanService = new PolicemanService();
-        Policeman policeman = policemanService.updatePolicemanRank(policeId, rank);
+        Policeman policeman = policemanService.updatePolicemanRankStation(policeId, rank, policeStation);
 
         // output Response
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-//        out.write(new Gson().toJson(policeman));
+        out.write(new Gson().toJson(policeman));
         out.close();
     }
 }

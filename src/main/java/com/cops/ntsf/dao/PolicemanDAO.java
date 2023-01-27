@@ -80,15 +80,15 @@ public class PolicemanDAO {
         }
     }
 
-    public void updatePolicemanRank(Policeman policeman) {
-
+    public void updatePolicemanRankStation(Policeman policeman) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "UPDATE policeman SET rank = ? WHERE policeId = ?";
+        String sql = "UPDATE policeman SET rank = ?, police_station = ? WHERE policeId = ?";
 
         try{
             PreparedStatement preparedStatement =dbConn.prepareStatement(sql);
             preparedStatement.setString(1,policeman.getRank());
+            preparedStatement.setString(2,policeman.getPoliceStation());
 
             preparedStatement.executeUpdate();
 
