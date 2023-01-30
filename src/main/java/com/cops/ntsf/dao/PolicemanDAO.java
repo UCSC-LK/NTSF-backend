@@ -2,6 +2,7 @@ package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.util.DBConnect;
+import com.cops.ntsf.util.Database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,11 +11,11 @@ import java.sql.*;
 public class PolicemanDAO {
     public String createPoliceman(Policeman policeman)
     {
-        Connection dbConnect = null;
+        Connection dbConn = null;
         try {
-            dbConnect = DBConnect.getConnection();
+            dbConn = Database.getConnection();
             String sql = "INSERT into policeman (name, police_id, nic, rank, police_station) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, policeman.getName());
             preparedStatement.setString(2, policeman.getPolice_id());
@@ -32,26 +33,26 @@ public class PolicemanDAO {
             e.printStackTrace();
         }
         finally {
-            if (dbConnect != null) try
+            if (dbConn != null) try
             {
-                dbConnect.close();
+                dbConn.close();
             } catch (Exception ignore){}
         }
         return null;
     }
 
     public JSONArray getPolicemanDetailsList() {
-        Connection dbConnect = null;
+        Connection dbConn = null;
 
 //        ArrayList<Policeman> policemanDetails = new ArrayList<>(); //not used
         JSONArray jsonArray = new JSONArray();
 
         try {
-            dbConnect = DBConnect.getConnection();
+            dbConn = Database.getConnection();
 
             String sql = "SELECT * from policeman";
 
-            PreparedStatement preparedStatement = dbConnect.prepareStatement(sql);
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next())
@@ -84,8 +85,8 @@ public class PolicemanDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (dbConnect != null) try {
-                dbConnect.close();
+            if (dbConn != null) try {
+                dbConn.close();
             } catch (Exception ignore) {
             }
         }
@@ -93,15 +94,15 @@ public class PolicemanDAO {
     }
 
     public boolean getPolicemanPolice_IDCheckResult(String police_idCheck) {
-        Connection dbConnect = null;
+        Connection dbConn = null;
 
         boolean alert = false;
         try {
-            dbConnect = DBConnect.getConnection();
+            dbConn = Database.getConnection();
 
             String sql = "SELECT police_id from policeman where police_id =  ?";
 
-            PreparedStatement preparedStatement = dbConnect.prepareStatement(sql);
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, police_idCheck);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -117,8 +118,8 @@ public class PolicemanDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (dbConnect != null) try {
-                dbConnect.close();
+            if (dbConn != null) try {
+                dbConn.close();
             } catch (Exception ignore) {
             }
         }
@@ -126,15 +127,15 @@ public class PolicemanDAO {
     }
 
     public boolean getPolicemanNicCheckResult(String nicCheck) {
-        Connection dbConnect = null;
+        Connection dbConn = null;
 
         boolean alert = false;
         try {
-            dbConnect = DBConnect.getConnection();
+            dbConn = Database.getConnection();
 
             String sql = "SELECT nic from policeman where nic =  ?";
 
-            PreparedStatement preparedStatement = dbConnect.prepareStatement(sql);
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, nicCheck);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -150,8 +151,8 @@ public class PolicemanDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (dbConnect != null) try {
-                dbConnect.close();
+            if (dbConn != null) try {
+                dbConn.close();
             } catch (Exception ignore) {
             }
         }
