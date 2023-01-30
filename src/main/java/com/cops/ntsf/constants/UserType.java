@@ -8,5 +8,4 @@ public enum UserType {
     public static UserType fromId(int userType) {
         return UserType.values()[userType - 1];
     }
-
 }

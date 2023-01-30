@@ -1,6 +1,6 @@
 package com.cops.ntsf.service;
 
-import com.cops.ntsf.model.Auth;
+import com.cops.ntsf.constants.PoliceRank;
 import com.cops.ntsf.model.Policeman;
 
 public class PolicemanService {
@@ -11,21 +11,28 @@ public class PolicemanService {
                                           String email,
                                           String mobileNo,
                                           String password) {
-        Policeman policeman = new Policeman(policeId, name, nic, email, mobileNo);
+        Policeman policeman = new Policeman(policeId, name, nic, email, mobileNo, password);
         policeman.setPolicemanInfo();
 
-        if (policeId != null) {
-            Auth auth = new Auth(policeId, password);
-            auth.setPoliceAuthInfo();
-        }
+//        if (policeId != null) {
+//            Auth auth = new Auth(policeId, password);
+//            auth.setPoliceAuthInfo();
+//        }
         return policeman;
     }
 
     public Policeman updatePolicemanRankStation(String policeId,
-                                                String rank,
+                                                PoliceRank policeRank,
                                                 String policeStation) {
-        Policeman policeman = new Policeman(policeId,rank,policeStation);
+        Policeman policeman = new Policeman(policeId, policeRank,policeStation);
         policeman.updatePolicemanRankStation();
+
+        return policeman;
+    }
+
+    public Policeman getPolicemanInfo(PoliceRank policeRank, String policeId, String password) {
+        Policeman policeman = new Policeman(policeId, policeRank, password);
+        policeman.getPolicemanInfo();
 
         return policeman;
     }

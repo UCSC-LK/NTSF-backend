@@ -38,15 +38,4 @@ public class UserService {
         }
         return user;
     }
-
-//    public User updateUserInfo(String userId,
-//                               String mobileNo,
-//                               String email,
-//                               String name,
-//                               String address) {
-//        User user = new User(userId, mobileNo, email, name, address);
-//        user.updateUserInfo();
-//
-//        return user;
-//    }
 }

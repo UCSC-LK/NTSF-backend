@@ -1,4 +1,5 @@
 package com.cops.ntsf.controller;
+import com.cops.ntsf.constants.PoliceRank;
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.service.PolicemanService;
 import com.google.gson.Gson;
@@ -69,14 +70,35 @@ public class PolicemanServlet extends HttpServlet {
 //        super.doPut(req, resp);
         // Get request parameters
         String policeId = req.getParameter("police_id");
-        String rank = req.getParameter("rank");
+        PoliceRank policeRank = PoliceRank.valueOf(req.getParameter("police_rank"));
         String policeStation = req.getParameter("police_station");
 
         PolicemanService policemanService = new PolicemanService();
-        Policeman policeman = policemanService.updatePolicemanRankStation(policeId, rank, policeStation);
+        Policeman policeman = policemanService.updatePolicemanRankStation(policeId, policeRank, policeStation);
 //        Policeman policeman = policemanService.updatePolicemanRankStation(policeId, policeStation);
 
         // output Response
+        PrintWriter out = resp.getWriter();
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("utf-8");
+
+        out.write(new Gson().toJson(policeman));
+        out.close();
+    }
+
+    // Police Login
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        // Get request parameters
+        PoliceRank policeRank = PoliceRank.fromId(Integer.parseInt(req.getParameter("police_rank")));
+        String policeId = req.getParameter("police_id");
+        String password = req.getParameter("password");
+
+        PolicemanService policemanService = new PolicemanService();
+        Policeman policeman = policemanService.getPolicemanInfo(policeRank, policeId, password);
+
+        // Output response
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
