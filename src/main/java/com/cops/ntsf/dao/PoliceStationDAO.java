@@ -1,6 +1,6 @@
 package com.cops.ntsf.dao;
 
-import com.cops.ntsf.util.DBConnect;
+import com.cops.ntsf.util.Database;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -16,14 +16,14 @@ import java.util.List;*/
 
 public class PoliceStationDAO
 {
-    private static Connection dbConnect = null;
+    private static Connection dbConn = null;
 
     public static boolean AddPoliceStation(/*String station_id,*/ String name) {
         boolean isSuccess = false;
 
         try {
-            dbConnect = DBConnect.getConnection();
-            Statement stmt = dbConnect.createStatement();
+            dbConn = Database.getConnection();
+            Statement stmt = dbConn.createStatement();
             String sql = "insert into complaint values ('" + name + "')";
             int rs = stmt.executeUpdate(sql); //returns 1 if insertion is successful(since only 1 row is affected)
 
