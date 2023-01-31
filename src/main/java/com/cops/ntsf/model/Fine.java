@@ -5,16 +5,23 @@ import com.cops.ntsf.dao.FineDAO;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class Fine {
     private String userId;
     private Integer ticketNo;
+
+    private String fineType;
     private Integer fineNo;
-    private Date date;
+    private Date fineDate;
     private Date dueDate;
-    private BigDecimal fineAmount;
+    private Integer fineAmount;
     private String paymentStatus;
+
+    private Time fineTime;
+
+    private String policeID;
 
     public Fine(String userId) {
         this.userId = userId;
@@ -49,12 +56,12 @@ public class Fine {
         this.fineNo = fineNo;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getFineDate() {
+        return fineDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setFineDate(Date fineDate) {
+        this.fineDate = fineDate;
     }
 
     public Date getDueDate() {
@@ -65,11 +72,11 @@ public class Fine {
         this.dueDate = dueDate;
     }
 
-    public BigDecimal getFineAmount() {
+    public int getFineAmount() {
         return fineAmount;
     }
 
-    public void setFineAmount(BigDecimal fineAmount) {
+    public void setFineAmount(Integer fineAmount) {
         this.fineAmount = fineAmount;
     }
 
@@ -87,4 +94,10 @@ public class Fine {
 
         return fine;
     }
+
+    public String getFineType() {return fineType;}
+
+    public String getPoliceID() {return policeID;}
+
+    public Time getFineTime() {return fineTime;}
 }
