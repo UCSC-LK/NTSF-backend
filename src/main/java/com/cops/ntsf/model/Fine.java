@@ -2,50 +2,45 @@ package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.FineDAO;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.util.ArrayList;
+import java.text.ParseException;
 
 public class Fine {
     private String userId;
-    private Integer ticketNo;
-
     private String fineType;
     private Integer fineNo;
-    private Date fineDate;
-    private Date dueDate;
     private Integer fineAmount;
     private String paymentStatus;
 
-    private Time fineTime;
+    private String policeId;
 
-    private String policeID;
-
-    public Fine(String userId) {
+    public Fine(Integer fineNo, String userId, String id, Integer fineAmount, String paymentStatus, String policeId, String fineType) throws ParseException {
+        this.fineNo = fineNo;
+        this.fineType = fineType;
         this.userId = userId;
+        this.fineAmount = fineAmount;
+        this.paymentStatus = paymentStatus;
+        this.policeId = policeId;
     }
 
-    public ArrayList<Fine> getUserFinesInfo() throws SQLException {
-        FineDAO fineDAO = new FineDAO();
-        return fineDAO.fetchUserFinesInfo(this);
-    }
+//    public ArrayList<Fine> getUserFinesInfo() throws SQLException, ParseException {
+//        FineDAO fineDAO = new FineDAO();
+//        return fineDAO.fetchUserFinesInfo(this);
+//    }
 
     public String getUserId() {
         return userId;
     }
 
+    public void setPoliceId(String policeId) {
+        this.policeId = policeId;
+    }
+
+    public String getPoliceId() {
+        return policeId;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public Integer getTicketNo() {
-        return ticketNo;
-    }
-
-    public void setTicketNo(Integer ticketNo) {
-        this.ticketNo = ticketNo;
     }
 
     public Integer getFineNo() {
@@ -56,21 +51,23 @@ public class Fine {
         this.fineNo = fineNo;
     }
 
-    public Date getFineDate() {
-        return fineDate;
-    }
+//    public Date getFineDate() {
+//        return fineDate;
+//    }
 
-    public void setFineDate(Date fineDate) {
-        this.fineDate = fineDate;
-    }
 
-    public Date getDueDate() {
-        return dueDate;
-    }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
+//    public void setFineDate(Date fineDate) {
+//        this.fineDate = fineDate;
+//    }
+//
+//    public java.sql.Date getDueDate() {
+//        return dueDate;
+//    }
+//
+//    public void setDueDate(Date dueDate) {
+//        this.dueDate = String.valueOf(dueDate);
+//    }
 
     public int getFineAmount() {
         return fineAmount;
@@ -88,16 +85,27 @@ public class Fine {
         this.paymentStatus = paymentStatus;
     }
 
-    public Fine getUserFinesInfo(String userId) throws SQLException {
-        Fine fine = new Fine(userId);
-        fine.getUserFinesInfo();
-
-        return fine;
-    }
+//    public Fine getUserFinesInfo(String userId) throws SQLException, ParseException {
+//        Fine fine = null;
+//        try {
+//            fine = new Fine(fineNo, userId, userId, fineAmount, paymentStatus, policeId);
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+//        fine.getUserFinesInfo();
+//
+//        return fine;
+//    }
 
     public String getFineType() {return fineType;}
 
-    public String getPoliceID() {return policeID;}
+    public String getPoliceID() {return policeId;}
 
-    public Time getFineTime() {return fineTime;}
+//    public Time getFineTime() {return fineTime;}
+
+    public void setFineInfo() {
+        FineDAO fineDAO=new FineDAO();
+        fineDAO.setOffenceInfo(this);
+    }
+
 }
