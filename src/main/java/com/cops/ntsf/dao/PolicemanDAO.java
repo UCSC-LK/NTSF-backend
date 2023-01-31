@@ -32,12 +32,6 @@ public class PolicemanDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            if (dbConn != null) try
-            {
-                dbConn.close();
-            } catch (Exception ignore){}
-        }
         return null;
     }
 
@@ -84,11 +78,6 @@ public class PolicemanDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (dbConn != null) try {
-                dbConn.close();
-            } catch (Exception ignore) {
-            }
         }
         return jsonArray;
     }
@@ -117,11 +106,6 @@ public class PolicemanDAO {
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (dbConn != null) try {
-                dbConn.close();
-            } catch (Exception ignore) {
-            }
         }
         return alert;
     }
@@ -150,11 +134,6 @@ public class PolicemanDAO {
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (dbConn != null) try {
-                dbConn.close();
-            } catch (Exception ignore) {
-            }
         }
         return alert;
     }
