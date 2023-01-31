@@ -36,9 +36,15 @@ public class PolicemanServlet extends HttpServlet {
         System.out.println(rank);
         System.out.println(police_station);
 
-        Policeman policeman = new Policeman(name, police_id, nic, rank, police_station);
-        policeman.policemanAdded();
+        if (checkValidations(name, police_id, nic, rank, police_station))
+        {
+            Policeman policeman = new Policeman(name, police_id, nic, rank, police_station);
+            policeman.policemanAdded();
+        }
+        else
+        {
 
+        }
 
         out.write(jsonObject.toString());
         out.close();
@@ -127,6 +133,78 @@ public class PolicemanServlet extends HttpServlet {
 //        }
 //    }
 
+    private boolean checkValidations(String name, String police_id, String nic, String rank, String police_station) {
+        boolean flag = false; //flag = true means all the validations are passed
+        if(name.trim() == "")
+        {
+            System.out.println("Name is empty");
+            flag = false;
+        }
+        else if (name.trim().length() < 3)
+        {
+            System.out.println("Name is too short");
+            flag = false;
+        }
+        else if (name.trim().length() > 50)
+        {
+            System.out.println("Name is too long");
+            flag = false;
+        }
+        else {
+            System.out.println("Name is valid");
+            flag = true;
+        }
 
+        if (police_id.trim() == "")
+        {
+            System.out.println("Police ID is empty");
+            flag = false;
+        }
+        else if (police_id.trim().matches("[0-9]+") == false)
+        {
+            System.out.println("Police ID should contain only digits");
+            flag = false;
+        }
+        else if (police_id.trim().length() != 10)
+        {
+            System.out.println("Police ID should contain 10 digits");
+            flag = false;
+        }
+        else {
+            System.out.println("Police ID is valid");
+            flag = true;
+        }
+
+        if (nic.trim() == "")
+        {
+            System.out.println("NIC is empty");
+            flag = false;
+        }
+        else {
+            System.out.println("NIC is valid");
+            flag = true;
+        }
+
+        if (rank.trim() == "")
+        {
+            System.out.println("Rank is empty");
+            flag = false;
+        }
+        else {
+            System.out.println("Rank is valid");
+            flag = true;
+        }
+
+        if (police_station.trim() == "")
+        {
+            System.out.println("Police Station is empty");
+            flag = false;
+        }
+        else {
+            System.out.println("Police Station is valid");
+            flag = true;
+        }
+        return flag;
+    }
 
 }
