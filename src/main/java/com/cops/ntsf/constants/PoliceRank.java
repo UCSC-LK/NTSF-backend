@@ -1,7 +1,7 @@
 package com.cops.ntsf.constants;
 
 public enum PoliceRank {
-    IGP;
+    IGP,
     OIC,
     INVESTIGATION_OFFICER,
     COURT_SERGEANT,
