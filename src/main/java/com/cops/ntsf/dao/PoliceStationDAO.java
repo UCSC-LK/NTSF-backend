@@ -1,46 +1,63 @@
 package com.cops.ntsf.dao;
 
+import com.cops.ntsf.model.PoliceStation;
 import com.cops.ntsf.util.Database;
-
-import java.sql.Connection;
-import java.sql.Statement;
-
-/*import com.cops.ntsf.model.Complaint;
-import com.cops.ntsf.util.DBConnect;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;*/
+import java.util.List;
 
 public class PoliceStationDAO
 {
-    private static Connection dbConn = null;
-
-    public static boolean AddPoliceStation(/*String station_id,*/ String name) {
-        boolean isSuccess = false;
-
+    public class PoliceStationDAO {
+    public String insert(PoliceStation PoliceStation) {
+        Connection dbConnect = null;
         try {
-            dbConn = Database.getConnection();
-            Statement stmt = dbConn.createStatement();
-            String sql = "insert into complaint values ('" + name + "')";
-            int rs = stmt.executeUpdate(sql); //returns 1 if insertion is successful(since only 1 row is affected)
+            dbConnect = Database.getConnection();
+            String sql = "INSERT INTO Police_Station(name, station_id) VALUES (?,?)";
+            PreparedStatement preparedStatement = dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            if (rs > 0) {
-                isSuccess = true;
-            } else {
-                isSuccess = false;
-            }
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+            preparedStatement.setString(1, PoliceStation.getStation_id());
+            preparedStatement.setString(2, PoliceStation.getName());
 
-            return isSuccess;
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (dbConnect != null) try {
+                dbConnect.close();
+            } catch (Exception ignore) {
+            }
         }
+        return null;
 
-    /*public static boolean ViewPoliceStation(){
+        public ArrayList<PoliceStation> fetchPoliceStationInfo(PoliceStation policeStation) throws SQLException {
+            Connection dbConn = Database.getConnection();
 
-    }*/
+            String sql = "SELECT * FROM Police_Station WHERE station_id = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            preparedStatement.setString(1, PoliceStation.getStation_id());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ArrayList<PoliceStation> PoliceStationListList = new ArrayList<PoliceStation>();
+
+            while (resultSet.next()) {
+                PoliceStation nextPoliceStation;
+                nextPoliceStation = new PoliceStation(PoliceStation.getStation_id());
+
+                nextPoliceStation.setName(resultSet.getString("name"));
+                nextPoliceStation.setStation_id(resultSet.getString("station_id"));
+
+                PoliceStationList.add(nextPoliceStation);
+            }
+            return PoliceStationList;
+        }
+    }
 }
