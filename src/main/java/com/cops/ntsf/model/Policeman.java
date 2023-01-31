@@ -1,6 +1,8 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.PolicemanDAO;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Policeman {
     private String name;
@@ -18,6 +20,10 @@ public class Policeman {
         this.police_station = police_station;
     }
 
+    public Policeman()
+    {
+
+    }
     //getters
     public String getPolice_station() {
         return police_station;
@@ -64,8 +70,26 @@ public class Policeman {
     public void policemanAdded()
     {
         PolicemanDAO policemanDAO = new PolicemanDAO();
-        policemanDAO.insert(this);
+        policemanDAO.createPoliceman(this);
     }
 
+    public JSONArray getPolicemanDetails()
+    {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        JSONArray policemanDetailsList = policemanDAO.getPolicemanDetailsList();
+        return policemanDetailsList;
+    }
+
+    public boolean policemanPolice_IDCheck(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        boolean policemanPolice_IDCheckResult  = policemanDAO.getPolicemanPolice_IDCheckResult(police_id);
+        return policemanPolice_IDCheckResult;
+    }
+
+    public boolean policemanNicCheck(String nic) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        boolean policemanNicCheckResult  = policemanDAO.getPolicemanNicCheckResult(nic);
+        return policemanNicCheckResult;
+    }
 }
 

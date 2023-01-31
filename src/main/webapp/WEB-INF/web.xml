@@ -61,23 +61,14 @@
     <url-pattern>/complaint</url-pattern>
   </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>ViewComplaint</servlet-name>-->
-<!--        <servlet-class>com.cops.ntsf.controller.ViewComplaint</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>ViewComplaint</servlet-name>-->
-<!--        <url-pattern>/viewComplaint</url-pattern>-->
-<!--    </servlet-mapping>-->
-<!--    -->
-<!--    <servlet>-->
-<!--        <servlet-name>ViewComplaintByID</servlet-name>-->
-<!--        <servlet-class>com.cops.ntsf.controller.ViewComplaintByID</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>ViewComplaintByID</servlet-name>-->
-<!--        <url-pattern>/viewComplaintByID</url-pattern>-->
-<!--    </servlet-mapping>-->
+  <servlet>
+      <servlet-name>offence</servlet-name>
+      <servlet-class>com.cops.ntsf.controller.OffenceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>offence</servlet-name>
+      <url-pattern>/offence</url-pattern>
+  </servlet-mapping>
 
     <servlet>
         <servlet-name>AddPoliceman</servlet-name>
@@ -87,5 +78,14 @@
         <servlet-name>AddPoliceman</servlet-name>
         <url-pattern>/addPoliceman</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ViewPoliceman</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.ViewPoliceman</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewPoliceman</servlet-name>
+        <url-pattern>/viewPoliceman</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

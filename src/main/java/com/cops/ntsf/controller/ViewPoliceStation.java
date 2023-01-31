@@ -16,7 +16,7 @@ public class ViewPoliceStation extends HttpServlet {
         String name = req.getParameter("name");
         ArrayList<PoliceStation> PoliceStationList;
 
-        PoliceStation PoliceStation = new PoliceStation(station_id);
+        PoliceStation policeStation = new PoliceStation(station_id);
         try{
             PoliceStationList = PoliceStation.getPoliceStationInfo();
         } catch (SQLException e) {

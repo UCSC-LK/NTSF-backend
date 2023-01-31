@@ -6,6 +6,18 @@ public class Offence {
 
     private static Integer offenceNo ;
 
+    public Offence() {
+
+    }
+
+    public static void setOffenceNo(Integer offenceNo) {
+        Offence.offenceNo = offenceNo;
+    }
+
+    public void setOffenceType(String offenceType) {
+        this.offenceType = offenceType;
+    }
+
     private  String offenceType;
 
     private static Integer pointWeight;
@@ -60,7 +72,14 @@ public class Offence {
         offenceDAO.setOffenceInfo(this);
     }
 
+    public void updateOffenceInfo() {
+        OffenceDAO offenceDAO=new OffenceDAO();
+        offenceDAO.updateOffenceInfo(this);
+    }
+
     public String getOffenceType() {
         return offenceType;
     }
+
+
 }

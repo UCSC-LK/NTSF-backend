@@ -1,18 +1,18 @@
 package com.cops.ntsf.dao;
 
-import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.model.PoliceStation;
-import com.cops.ntsf.util.DBConnect;
 import com.cops.ntsf.util.Database;
-
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class PoliceStationDAO {
+public class PoliceStationDAO
+{
+    public class PoliceStationDAO {
     public String insert(PoliceStation PoliceStation) {
         Connection dbConnect = null;
         try {
-            dbConnect = DBConnect.getConnection();
+            dbConnect = Database.getConnection();
             String sql = "INSERT INTO Police_Station(name, station_id) VALUES (?,?)";
             PreparedStatement preparedStatement = dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -35,7 +35,7 @@ public class PoliceStationDAO {
         }
         return null;
 
-        public ArrayList<PoliceStation> fetchPoliceStationInfo (PoliceStation PoliceStation) throws SQLException {
+        public ArrayList<PoliceStation> fetchPoliceStationInfo(PoliceStation policeStation) throws SQLException {
             Connection dbConn = Database.getConnection();
 
             String sql = "SELECT * FROM Police_Station WHERE station_id = ?";
