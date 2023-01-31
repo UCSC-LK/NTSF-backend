@@ -6,8 +6,10 @@ import java.sql.DriverManager;
 
 public class DBConnect {
     private static String url = "jdbc:mysql://localhost:3306/ntsfdatabase" ;
-    private static String userName = "root";
-    private static String password = "" ;
+    //private static String userName = "root";
+    private static String userName = "Suchith";
+    //private static String password = "" ;
+    private static String password = "root" ;
     private static Connection dbConnection;
     public static Connection getConnection()
     {
