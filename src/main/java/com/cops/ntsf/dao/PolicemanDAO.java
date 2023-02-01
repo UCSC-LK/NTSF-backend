@@ -56,6 +56,8 @@ public class PolicemanDAO {
                 String name = resultSet.getString("name");
                 String police_id = resultSet.getString("police_id");
                 String nic = resultSet.getString("nic");
+                String mobile_number = resultSet.getString("mobile_number");
+                String email = resultSet.getString("email");
                 String rank = resultSet.getString("rank");
                 String police_station = resultSet.getString("police_station");
 
@@ -63,6 +65,8 @@ public class PolicemanDAO {
                 jsonObject.put("name", name);
                 jsonObject.put("police_id", police_id);
                 jsonObject.put("nic", nic);
+                jsonObject.put("mobile_number", mobile_number);
+                jsonObject.put("email", email);
                 jsonObject.put("rank", rank);
                 jsonObject.put("police_station", police_station);
 
@@ -71,6 +75,8 @@ public class PolicemanDAO {
                 System.out.println(name);
                 System.out.println(police_id);
                 System.out.println(nic);
+                System.out.println(mobile_number);
+                System.out.println(email);
                 System.out.println(rank);
                 System.out.println(police_station);
             }
