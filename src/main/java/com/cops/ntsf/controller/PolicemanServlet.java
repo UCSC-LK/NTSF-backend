@@ -177,6 +177,16 @@ public class PolicemanServlet extends HttpServlet {
             checkPolicemanNic(request, response);
             System.out.println("Hi from NIC Checking servelet");
         }
+        else if (action.equals("checkMobile_Number"))
+        {
+            checkPolicemanMobile_Number(request, response);
+            System.out.println("Hi from Mobile Number Checking servelet");
+        }
+        else if (action.equals("checkEmail"))
+        {
+            checkPolicemanEmail(request, response);
+            System.out.println("Hi from Email Checking servelet");
+        }
     }
 
 //    public void doGet(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException {
