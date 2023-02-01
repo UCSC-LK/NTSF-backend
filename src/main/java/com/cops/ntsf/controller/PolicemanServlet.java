@@ -26,6 +26,8 @@ public class PolicemanServlet extends HttpServlet {
         String name = request.getParameter("name");
         String police_id = request.getParameter("police_id");
         String nic = request.getParameter("nic");
+        String mobile_number = request.getParameter("mobile_number");
+        String email = request.getParameter("email");
         String rank = request.getParameter("rank");
         String police_station = request.getParameter("police_station");
 
@@ -33,10 +35,12 @@ public class PolicemanServlet extends HttpServlet {
         System.out.println(name);
         System.out.println(police_id);
         System.out.println(nic);
+        System.out.println(mobile_number);
+        System.out.println(email);
         System.out.println(rank);
         System.out.println(police_station);
 
-        if (checkValidations(name, police_id, nic, rank, police_station))
+        if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
         {
             Policeman policeman = new Policeman(name, police_id, nic, rank, police_station);
             policeman.policemanAdded();
@@ -133,7 +137,7 @@ public class PolicemanServlet extends HttpServlet {
 //        }
 //    }
 
-    private boolean checkValidations(String name, String police_id, String nic, String rank, String police_station) {
+    private boolean checkValidations(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
         boolean flag = false; //flag = true means all the validations are passed
         if(name.trim() == "")
         {
@@ -182,6 +186,40 @@ public class PolicemanServlet extends HttpServlet {
         }
         else {
             System.out.println("NIC is valid");
+            flag = true;
+        }
+        if (mobile_number.trim() == "")
+        {
+            System.out.println("Mobile Number is empty");
+            flag = false;
+        }
+        else if (mobile_number.trim().matches("[0-9]+") == false)
+        {
+            System.out.println("Mobile Number should contain only digits");
+            flag = false;
+        }
+        else if (mobile_number.trim().length() != 10)
+        {
+            System.out.println("Mobile Number should contain 10 digits");
+            flag = false;
+        }
+        else {
+            System.out.println("Mobile Number is valid");
+            flag = true;
+        }
+
+        if (email.trim() == "")
+        {
+            System.out.println("Email is empty");
+            flag = false;
+        }
+        else if (email.trim().matches("^[A-Za-z0-9+_.-]+@(.+)$") == false)
+        {
+            System.out.println("Email is invalid");
+            flag = false;
+        }
+        else {
+            System.out.println("Email is valid");
             flag = true;
         }
 
