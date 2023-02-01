@@ -14,14 +14,16 @@ public class PolicemanDAO {
         Connection dbConn = null;
         try {
             dbConn = Database.getConnection();
-            String sql = "INSERT into policeman (name, police_id, nic, rank, police_station) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT into policeman (name, police_id, nic, mobile_number, email,  rank, police_station) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, policeman.getName());
             preparedStatement.setString(2, policeman.getPolice_id());
             preparedStatement.setString(3, policeman.getNic());
-            preparedStatement.setString(4, policeman.getRank());
-            preparedStatement.setString(5, policeman.getPolice_station());
+            preparedStatement.setString(4, policeman.getMobile_number());
+            preparedStatement.setString(5, policeman.getEmail());
+            preparedStatement.setString(6, policeman.getRank());
+            preparedStatement.setString(7, policeman.getPolice_station());
 
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
