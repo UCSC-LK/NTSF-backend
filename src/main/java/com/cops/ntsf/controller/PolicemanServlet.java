@@ -42,7 +42,7 @@ public class PolicemanServlet extends HttpServlet {
 
         if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
         {
-            Policeman policeman = new Policeman(name, police_id, nic, rank, police_station);
+            Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station);
             policeman.policemanAdded();
         }
         else
@@ -98,6 +98,58 @@ public class PolicemanServlet extends HttpServlet {
 
             Policeman policeman = new Policeman();
             jsonObject.put("alert",  policeman.policemanNicCheck(nic));
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("error block");
+        }
+
+    }
+
+    protected void checkPolicemanMobile_Number(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+//        HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+
+            String mobile_number = request.getParameter("mobile_number");
+            System.out.println(mobile_number);
+            System.out.println("Came until error duplication in servlet");
+
+            Policeman policeman = new Policeman();
+            jsonObject.put("alert",  policeman.policemanNicCheck(mobile_number));
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("error block");
+        }
+
+    }
+
+    protected void checkPolicemanEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+//        HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+
+            String email = request.getParameter("email");
+            System.out.println(email);
+            System.out.println("Came until error duplication in servlet");
+
+            Policeman policeman = new Policeman();
+            jsonObject.put("alert",  policeman.policemanNicCheck(email));
 
             out.write(jsonObject.toString());
             out.close();

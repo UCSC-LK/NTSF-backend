@@ -112,6 +112,18 @@ public class Policeman {
         return policemanNicCheckResult;
     }
 
+    public boolean policemanMobileNumberCheck(String mobile_number) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        boolean policemanMobileNumberCheckResult  = policemanDAO.getPolicemanMobileNumberCheckResult(mobile_number);
+        return policemanMobileNumberCheckResult;
+    }
+
+    public boolean policemanEmailCheck(String email) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        boolean policemanEmailCheckResult  = policemanDAO.getPolicemanEmailCheckResult(email);
+        return policemanEmailCheckResult;
+    }
+
 
 }
 

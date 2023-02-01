@@ -140,6 +140,64 @@ public class PolicemanDAO {
         return alert;
     }
 
+    public boolean getPolicemanMobileNumberCheckResult(String mobile_numberCheck) {
+        Connection dbConn = null;
+
+        boolean alert = false;
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT mobile_number from policeman where mobile_number =  ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, mobile_numberCheck);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Duplicate Entry!!");
+                alert = true;
+            } else {
+                System.out.println("New Entry!!");
+                alert = false;
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
+    public boolean getPolicemanEmailCheckResult(String emailCheck) {
+        Connection dbConn = null;
+
+        boolean alert = false;
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT email from policeman where email =  ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, emailCheck);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Duplicate Entry!!");
+                alert = true;
+            } else {
+                System.out.println("New Entry!!");
+                alert = false;
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
+
+
 }
 
 
