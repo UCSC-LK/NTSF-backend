@@ -18,7 +18,7 @@ public class PolicemanDAO {
             preparedStatement.setString(1, policeman.getPoliceId());
             preparedStatement.setString(2, policeman.getName());
             preparedStatement.setString(3, policeman.getNic());
-            preparedStatement.setString(4, policeman.getPoliceRank());
+//            preparedStatement.setString(4, policeman.getPoliceRank());
             preparedStatement.setString(5, policeman.getPoliceStation());
 
             preparedStatement.execute();
@@ -69,7 +69,7 @@ public class PolicemanDAO {
         try{
             PreparedStatement preparedStatement =dbConn.prepareStatement(sql);
             preparedStatement.setString(1, policeman.getPoliceId());
-            preparedStatement.setString(2, policeman.getPoliceRank());
+//            preparedStatement.setString(2, policeman.getPoliceRank());
             preparedStatement.setString(3, policeman.getPoliceStation());
 
             preparedStatement.executeUpdate();
@@ -108,5 +108,25 @@ public class PolicemanDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void getPolicemanFromPoliceId(Policeman policeman) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "SELECT * FROM policeman WHERE police_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, policeman.getPoliceId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                policeman.setPassword(resultSet.getString("password"));
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
     }
 }

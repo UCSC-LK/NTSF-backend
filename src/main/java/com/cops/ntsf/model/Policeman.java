@@ -1,6 +1,7 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.constants.PoliceRank;
+import com.cops.ntsf.dao.AuthDAO;
 import com.cops.ntsf.dao.PolicemanDAO;
 
 public class Policeman extends User{
@@ -29,6 +30,10 @@ public class Policeman extends User{
         this.setEmail(email);
         this.setMobileNo(mobileNo);
         this.password=password;
+    }
+
+    public Policeman() {
+
     }
 
 //    public Policeman(String policeId, String nic, String email, String mobileNo, String password) {
@@ -111,8 +116,17 @@ public class Policeman extends User{
         return policeId;
     }
 
-    public String getPoliceRank() {
+    public PoliceRank getPoliceRank() {
         return policeRank;
+    }
+
+    public void getPolicemanFromPoliceId() {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        policemanDAO.getPolicemanFromPoliceId(this);
+    }
+
+    public void setPassword(String password) {
+        this.password=password;
     }
 }
 

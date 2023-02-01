@@ -86,24 +86,24 @@ public class PolicemanServlet extends HttpServlet {
         out.close();
     }
 
-    // Police Login
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        // Get request parameters
-        PoliceRank policeRank = PoliceRank.fromId(Integer.parseInt(req.getParameter("police_rank")));
-        String policeId = req.getParameter("police_id");
-        String password = req.getParameter("password");
-
-        PolicemanService policemanService = new PolicemanService();
-        Policeman policeman = policemanService.getPolicemanInfo(policeRank, policeId, password);
-
-        // Output response
-        PrintWriter out = resp.getWriter();
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("utf-8");
-
-        out.write(new Gson().toJson(policeman));
-        out.close();
-    }
+//    // Police Login
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//        // Get request parameters
+//        PoliceRank policeRank = PoliceRank.fromId(Integer.parseInt(req.getParameter("police_rank")));
+//        String policeId = req.getParameter("police_id");
+//        String password = req.getParameter("password");
+//
+//        PolicemanService policemanService = new PolicemanService();
+//        Policeman policeman = policemanService.getPolicemanInfo(policeRank, policeId, password);
+//
+//        // Output response
+//        PrintWriter out = resp.getWriter();
+//        resp.setContentType("application/json");
+//        resp.setCharacterEncoding("utf-8");
+//
+//        out.write(new Gson().toJson(policeman));
+//        out.close();
+//    }
 }
