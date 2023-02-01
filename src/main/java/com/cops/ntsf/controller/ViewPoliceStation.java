@@ -13,21 +13,21 @@ import java.util.ArrayList;
 
 public class ViewPoliceStation extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        String name = req.getParameter("name");
+        String stationId = req.getParameter("station_id");
         ArrayList<PoliceStation> PoliceStationList;
 
-        PoliceStation policeStation = new PoliceStation(station_id);
+        /*PoliceStation policeStation = new PoliceStation(stationId);
         try{
             PoliceStationList = PoliceStation.getPoliceStationInfo();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-        out.write(new Gson().toJson(PoliceStationList));
+        out.write(new Gson().toJson(PoliceStationDetailsList));
         out.close();
     }
 }

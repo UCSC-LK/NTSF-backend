@@ -1,6 +1,8 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.PoliceStationDAO;
+import com.cops.ntsf.dao.PolicemanDAO;
+import org.json.JSONArray;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,17 +12,25 @@ public class PoliceStation
     private String name;
     private String station_id;
 
-
     public PoliceStation(String station_id, String name)
     {
         this.station_id = station_id;
         this.name = name;
     }
 
-    public ArrayList<PoliceStation> getPoliceStationInfo() throws SQLException {
-        PoliceStationDAO PoliceStationDAO = new PoliceStationDAO();
-        return PoliceStationDAO.fetchPoliceStationInfo(this);
+    public PoliceStation(String station_id) {
+        this.station_id=station_id;
     }
+
+    /*public static ArrayList<PoliceStation> getPoliceStationInfo() {
+        return policeStationInfo;
+    }*/
+
+
+
+    /*public static void setPoliceStationInfo(ArrayList<PoliceStation> policeStationInfo) {
+        PoliceStation.policeStationInfo = policeStationInfo;
+    }*/
 
     public String getStation_id()
     {
@@ -35,10 +45,18 @@ public class PoliceStation
     public void SetStation_id() { this.station_id=station_id; }
     public void SetName() { this.name=name; }
 
-    public void PoliceStationAdded()
+    public JSONArray getPoliceStationDetails()
     {
-        PoliceStationDAO PoliceStationDAO = new PoliceStationDAO();
-        PoliceStationDAO.insert(this);
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        JSONArray PoliceStationDetailsList = policemanDAO.getPolicemanDetailsList();
+        return PoliceStationDetailsList;
     }
 
+    public void setName(String name) {
+
+    }
+
+    public void setStation_id(String stationId) {
+        this.station_id=station_id;
+    }
 }
