@@ -8,14 +8,18 @@ public class Policeman {
     private String name;
     private String police_id;
     private String nic;
+    private String mobile_number;
+    private String email;
     private String rank;
     private String police_station;
 
-    public Policeman(String name, String police_id, String nic, String rank, String police_station)
+    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station)
     {
         this.name = name;
         this.police_id = police_id;
         this.nic = nic;
+        this.mobile_number = mobile_number;
+        this.email = email;
         this.rank = rank;
         this.police_station = police_station;
     }
@@ -41,6 +45,14 @@ public class Policeman {
         return nic;
     }
 
+    public String getMobile_number() {
+        return mobile_number;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public String getRank() {
         return rank;
     }
@@ -61,6 +73,14 @@ public class Policeman {
 
     public void setNic(String nic) {
         this.nic = nic;
+    }
+
+    public void setMobile_number(String mobile_number) {
+        this.mobile_number = mobile_number;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setRank(String rank) {
@@ -91,5 +111,19 @@ public class Policeman {
         boolean policemanNicCheckResult  = policemanDAO.getPolicemanNicCheckResult(nic);
         return policemanNicCheckResult;
     }
+
+    public boolean policemanMobileNumberCheck(String mobile_number) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        boolean policemanMobileNumberCheckResult  = policemanDAO.getPolicemanMobileNumberCheckResult(mobile_number);
+        return policemanMobileNumberCheckResult;
+    }
+
+    public boolean policemanEmailCheck(String email) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        boolean policemanEmailCheckResult  = policemanDAO.getPolicemanEmailCheckResult(email);
+        return policemanEmailCheckResult;
+    }
+
+
 }
 

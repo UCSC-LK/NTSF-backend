@@ -26,6 +26,8 @@ public class PolicemanServlet extends HttpServlet {
         String name = request.getParameter("name");
         String police_id = request.getParameter("police_id");
         String nic = request.getParameter("nic");
+        String mobile_number = request.getParameter("mobile_number");
+        String email = request.getParameter("email");
         String rank = request.getParameter("rank");
         String police_station = request.getParameter("police_station");
 
@@ -33,12 +35,14 @@ public class PolicemanServlet extends HttpServlet {
         System.out.println(name);
         System.out.println(police_id);
         System.out.println(nic);
+        System.out.println(mobile_number);
+        System.out.println(email);
         System.out.println(rank);
         System.out.println(police_station);
 
-        if (checkValidations(name, police_id, nic, rank, police_station))
+        if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
         {
-            Policeman policeman = new Policeman(name, police_id, nic, rank, police_station);
+            Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station);
             policeman.policemanAdded();
         }
         else
@@ -105,6 +109,58 @@ public class PolicemanServlet extends HttpServlet {
         }
 
     }
+
+    protected void checkPolicemanMobile_Number(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+//        HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+
+            String mobile_number = request.getParameter("mobile_number");
+            System.out.println(mobile_number);
+            System.out.println("Came until error duplication in servlet");
+
+            Policeman policeman = new Policeman();
+            jsonObject.put("alert",  policeman.policemanNicCheck(mobile_number));
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("error block");
+        }
+
+    }
+
+    protected void checkPolicemanEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+//        HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+
+            String email = request.getParameter("email");
+            System.out.println(email);
+            System.out.println("Came until error duplication in servlet");
+
+            Policeman policeman = new Policeman();
+            jsonObject.put("alert",  policeman.policemanNicCheck(email));
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("error block");
+        }
+
+    }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
@@ -121,6 +177,16 @@ public class PolicemanServlet extends HttpServlet {
             checkPolicemanNic(request, response);
             System.out.println("Hi from NIC Checking servelet");
         }
+        else if (action.equals("checkMobile_Number"))
+        {
+            checkPolicemanMobile_Number(request, response);
+            System.out.println("Hi from Mobile Number Checking servelet");
+        }
+        else if (action.equals("checkEmail"))
+        {
+            checkPolicemanEmail(request, response);
+            System.out.println("Hi from Email Checking servelet");
+        }
     }
 
 //    public void doGet(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException {
@@ -133,7 +199,7 @@ public class PolicemanServlet extends HttpServlet {
 //        }
 //    }
 
-    private boolean checkValidations(String name, String police_id, String nic, String rank, String police_station) {
+    private boolean checkValidations(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
         boolean flag = false; //flag = true means all the validations are passed
         if(name.trim() == "")
         {
@@ -182,6 +248,40 @@ public class PolicemanServlet extends HttpServlet {
         }
         else {
             System.out.println("NIC is valid");
+            flag = true;
+        }
+        if (mobile_number.trim() == "")
+        {
+            System.out.println("Mobile Number is empty");
+            flag = false;
+        }
+        else if (mobile_number.trim().matches("[0-9]+") == false)
+        {
+            System.out.println("Mobile Number should contain only digits");
+            flag = false;
+        }
+        else if (mobile_number.trim().length() != 10)
+        {
+            System.out.println("Mobile Number should contain 10 digits");
+            flag = false;
+        }
+        else {
+            System.out.println("Mobile Number is valid");
+            flag = true;
+        }
+
+        if (email.trim() == "")
+        {
+            System.out.println("Email is empty");
+            flag = false;
+        }
+        else if (email.trim().matches("^[A-Za-z0-9+_.-]+@(.+)$") == false)
+        {
+            System.out.println("Email is invalid");
+            flag = false;
+        }
+        else {
+            System.out.println("Email is valid");
             flag = true;
         }
 

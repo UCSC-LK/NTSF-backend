@@ -14,14 +14,16 @@ public class PolicemanDAO {
         Connection dbConn = null;
         try {
             dbConn = Database.getConnection();
-            String sql = "INSERT into policeman (name, police_id, nic, rank, police_station) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT into policeman (name, police_id, nic, mobile_number, email,  rank, police_station) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, policeman.getName());
             preparedStatement.setString(2, policeman.getPolice_id());
             preparedStatement.setString(3, policeman.getNic());
-            preparedStatement.setString(4, policeman.getRank());
-            preparedStatement.setString(5, policeman.getPolice_station());
+            preparedStatement.setString(4, policeman.getMobile_number());
+            preparedStatement.setString(5, policeman.getEmail());
+            preparedStatement.setString(6, policeman.getRank());
+            preparedStatement.setString(7, policeman.getPolice_station());
 
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -54,6 +56,8 @@ public class PolicemanDAO {
                 String name = resultSet.getString("name");
                 String police_id = resultSet.getString("police_id");
                 String nic = resultSet.getString("nic");
+                String mobile_number = resultSet.getString("mobile_number");
+                String email = resultSet.getString("email");
                 String rank = resultSet.getString("rank");
                 String police_station = resultSet.getString("police_station");
 
@@ -61,6 +65,8 @@ public class PolicemanDAO {
                 jsonObject.put("name", name);
                 jsonObject.put("police_id", police_id);
                 jsonObject.put("nic", nic);
+                jsonObject.put("mobile_number", mobile_number);
+                jsonObject.put("email", email);
                 jsonObject.put("rank", rank);
                 jsonObject.put("police_station", police_station);
 
@@ -69,6 +75,8 @@ public class PolicemanDAO {
                 System.out.println(name);
                 System.out.println(police_id);
                 System.out.println(nic);
+                System.out.println(mobile_number);
+                System.out.println(email);
                 System.out.println(rank);
                 System.out.println(police_station);
             }
@@ -137,6 +145,64 @@ public class PolicemanDAO {
         }
         return alert;
     }
+
+    public boolean getPolicemanMobileNumberCheckResult(String mobile_numberCheck) {
+        Connection dbConn = null;
+
+        boolean alert = false;
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT mobile_number from policeman where mobile_number =  ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, mobile_numberCheck);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Duplicate Entry!!");
+                alert = true;
+            } else {
+                System.out.println("New Entry!!");
+                alert = false;
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
+    public boolean getPolicemanEmailCheckResult(String emailCheck) {
+        Connection dbConn = null;
+
+        boolean alert = false;
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT email from policeman where email =  ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, emailCheck);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Duplicate Entry!!");
+                alert = true;
+            } else {
+                System.out.println("New Entry!!");
+                alert = false;
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
+
 
 }
 

@@ -2,112 +2,117 @@ package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.PoliceStation;
 import com.cops.ntsf.util.Database;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class PoliceStationDAO {
-    public String insertPoliceStation(PoliceStation PoliceStation) throws SQLException {
-        Connection dbConnect = null;
+    public String createPoliceStation(PoliceStation policeStation) {
+        Connection dbConn = null;
         try {
-            dbConnect = Database.getConnection();
-            String sql = "INSERT INTO Police_Station(name, station_id) VALUES (?,?)";
-            PreparedStatement preparedStatement = dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            dbConn = Database.getConnection();
+            String sql = "INSERT into police_station (branch_name, address, district, province, contact_number, email) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setString(1, PoliceStation.getStation_id());
-            preparedStatement.setString(2, PoliceStation.getName());
+            preparedStatement.setString(1, policeStation.getBranch_name());
+            preparedStatement.setString(2, policeStation.getAddress());
+            preparedStatement.setString(3, policeStation.getDistrict());
+            preparedStatement.setString(4, policeStation.getProvince());
+            preparedStatement.setString(5, policeStation.getContact_number());
+            preparedStatement.setString(6, policeStation.getEmail());
 
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
             resultSet.close();
             preparedStatement.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (dbConnect != null) try {
-                dbConnect.close();
-            } catch (Exception ignore) {
-            }
         }
         return null;
     }
 
-    public JSONArray viewPoliceStationDetailsList() {
+    public boolean getPoliceStationBranch_NameCheckResult(String branch_nameCheck) {
         Connection dbConn = null;
 
-//        ArrayList<Policeman> policemanDetails = new ArrayList<>(); //not used
-        JSONArray jsonArray = new JSONArray();
+        boolean alert = false;
+        try {
+            dbConn = Database.getConnection();
+            String sql = "SELECT branch_name from police_station WHERE branch_name = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, branch_nameCheck);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Duplicate Entry!!");
+                return true;
+            } else {
+                System.out.println("New Entry!!");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
+    public boolean getPoliceStationContact_NumberCheckResult(String contact_numberCheck) {
+        Connection dbConn = null;
+
+        boolean alert = false;
 
         try {
             dbConn = Database.getConnection();
-
-            String sql = "SELECT * from police_Station";
+            String sql = "SELECT contact_number from police_station WHERE contact_number = ?";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, contact_numberCheck);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next())
-            {
-                String name = resultSet.getString("name");
-                String station_id = resultSet.getString("station_id");
+            if (resultSet.next()) {
+                System.out.println("Duplicate Entry!!");
+                alert = true;
+            } else {
+                System.out.println("New Entry!!");
+                alert = false;
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("name", name);
-                jsonObject.put("station_id", station_id);
+    public boolean getPoliceStationEmailCheckResult(String emailCheck) {
+        Connection dbConn = null;
 
-                jsonArray.put(jsonObject);
+        boolean alert = false;
+        try {
+            dbConn = Database.getConnection();
 
-                System.out.println(name);
-                System.out.println(station_id);
+            String sql = "SELECT email from police_station WHERE email = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, emailCheck);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Duplicate Entry!!");
+                alert = true;
+            } else {
+                System.out.println("New Entry!!");
+                alert = false;
             }
 
             resultSet.close();
             preparedStatement.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (dbConn != null) try {
-                dbConn.close();
-            } catch (Exception ignore) {
-            }
         }
-        return jsonArray;
+        return alert;
     }
+
+
 }
-
-        /*public ArrayList<PoliceStation> fetchPoliceStationInfo(PoliceStation policestation) throws SQLException {
-            Connection dbConn = Database.getConnection();
-
-            String sql = "SELECT * FROM Police_Station WHERE station_id = ?";
-
-            PreparedStatement preparedstatement = dbConn.prepareStatement(sql);
-
-            preparedstatement.setString(1, PoliceStation.getStation_id());
-
-            ResultSet resultSet = preparedstatement.executeQuery();
-
-            ArrayList<PoliceStation> PoliceStationListList = new ArrayList<PoliceStation>();
-
-            while (resultSet.next()) {
-                PoliceStation nextPoliceStation;
-                nextPoliceStation = new PoliceStation(PoliceStation.getStation_id());
-
-                nextPoliceStation.setName(resultSet.getString("name"));
-                nextPoliceStation.setStationId(resultSet.getString("station_id"));
-
-                PoliceStationList.add(nextPoliceStation);
-            }
-            return PoliceStationList;
-        }*/
-
