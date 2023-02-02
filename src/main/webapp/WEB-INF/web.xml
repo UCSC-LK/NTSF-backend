@@ -87,5 +87,12 @@
         <url-pattern>/viewPoliceman</url-pattern>
     </servlet-mapping>
 
-
+    <servlet>
+        <servlet-name>PoliceStation</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PoliceStationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PoliceStation</servlet-name>
+        <url-pattern>/policeStation</url-pattern>
+    </servlet-mapping>
 </web-app>
