@@ -5,26 +5,40 @@ import com.cops.ntsf.dao.AuthDAO;
 import com.cops.ntsf.dao.PolicemanDAO;
 
 public class Policeman extends User{
-    private static String policeId;
+    private static String police_id;
+    private String rank;
+
+    public Policeman(String name, String police_id, String nic, String rank, String police_station) {
+        this.name=name;
+        this.police_id=police_id;
+        this.nic=nic;
+        this.rank=rank;
+        this.police_station=police_station;
+    }
+
+    public void setPoliceRank(PoliceRank policeRank) {
+        this.policeRank = policeRank;
+    }
+
     private PoliceRank policeRank;
     private String name;
-//    private String policeId;
+//    private String police_id;
 //    private String police_id;
     private String nic;
 //    private String rank;
-    private String policeStation;
+    private String police_station;
     private String password;
 //    private String police_station;
 
-    public Policeman(String policeId, PoliceRank policeRank, String policeStation)
+    public Policeman(String police_id, PoliceRank policeRank, String police_station)
     {
-        this.policeId = policeId;
+        this.police_id = police_id;
         this.policeRank = policeRank;
-        this.policeStation = policeStation;
+        this.police_station = police_station;
     }
 
-    public Policeman(String policeId, String name, String nic, String email, String mobileNo, String password) {
-        this.policeId=policeId;
+    public Policeman(String police_id, String name, String nic, String email, String mobileNo, String password) {
+        this.police_id=police_id;
         this.name=name;
         this.nic=nic;
         this.setEmail(email);
@@ -36,20 +50,20 @@ public class Policeman extends User{
 
     }
 
-//    public Policeman(String policeId, String nic, String email, String mobileNo, String password) {
-//        this.policeId = policeId;
+//    public Policeman(String police_id, String nic, String email, String mobileNo, String password) {
+//        this.police_id = police_id;
 //        this.nic = nic;
 //        this.setEmail(email);
 //    }
 
-//    public Policeman(String policeId, PoliceRank policeRank) {
-//        this.policeId=policeId;
+//    public Policeman(String police_id, PoliceRank policeRank) {
+//        this.police_id=police_id;
 //        this.policeRank=policeRank;
 //    }
 
     //getters
     public String getPoliceStation() {
-        return policeId;
+        return police_id;
     }
 
 
@@ -67,12 +81,12 @@ public class Policeman extends User{
 
     //setters
 
-    public void setPoliceStation(String policeStation) {
-        this.policeStation = policeStation;
+    public void setPoliceStation(String police_station) {
+        this.police_station = police_station;
     }
 
-    public void setPoliceId(String policeId) {
-        this.policeId = policeId;
+    public void setPoliceId(String police_id) {
+        this.police_id = police_id;
     }
 
     public void setName(String name) {
@@ -87,11 +101,11 @@ public class Policeman extends User{
 //        this.rank = rank;
 //    }
 
-//    public void policemanAdded()
-//    {
-//        PolicemanDAO policemanDAO = new PolicemanDAO();
-//        policemanDAO.insert(this);
-//    }
+    public void policemanAdded()
+    {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        policemanDAO.insert(this);
+    }
 
     public void setPolicemanInfo() {
         PolicemanDAO policemanDAO = new PolicemanDAO();
@@ -113,7 +127,7 @@ public class Policeman extends User{
     }
 
     public String getPoliceId() {
-        return policeId;
+        return police_id;
     }
 
     public PoliceRank getPoliceRank() {
@@ -127,6 +141,10 @@ public class Policeman extends User{
 
     public void setPassword(String password) {
         this.password=password;
+    }
+
+    public String getRank() {
+        return rank;
     }
 }
 

@@ -14,12 +14,12 @@ import java.io.PrintWriter;
 
 public class PolicemanLoginServlet extends HttpServlet {
     // Police Login
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Get request parameters
-        PoliceRank policeRank = PoliceRank.fromId(Integer.parseInt(req.getParameter("police_rank")));
-        String policeId = req.getParameter("police_id");
+//        PoliceRank police_rank = PoliceRank.fromId(Integer.parseInt(req.getParameter("police_rank")));
+        String police_id = req.getParameter("police_id");
         String password = req.getParameter("password");
 
         PolicemanService policemanService = new PolicemanService();
@@ -29,7 +29,7 @@ public class PolicemanLoginServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-        out.write(policemanService.verifyLogin(policeId, password, policeRank));
+        out.write(policemanService.verifyLogin(police_id, password));
         out.close();
     }
 }

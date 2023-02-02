@@ -24,14 +24,14 @@ public class PolicemanSignUpServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         PolicemanService policemanService = new PolicemanService();
-        Policeman policeman = policemanService.getPolicemanSignedUp(policeId, name, nic, email, mobileNo, password);
+//        Policeman policeman = policemanService.getPolicemanSignedUp(policeId, name, nic, email, mobileNo, password);
 
         // Output response
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-        out.write(new Gson().toJson(policeman));
+//        out.write(new Gson().toJson(policeman));
         out.close();
     }
 }

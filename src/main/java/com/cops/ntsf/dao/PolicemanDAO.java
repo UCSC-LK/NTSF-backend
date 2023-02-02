@@ -1,5 +1,6 @@
 package com.cops.ntsf.dao;
 
+import com.cops.ntsf.constants.PoliceRank;
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.util.DBConnect;
 import com.cops.ntsf.util.Database;
@@ -18,7 +19,8 @@ public class PolicemanDAO {
             preparedStatement.setString(1, policeman.getPoliceId());
             preparedStatement.setString(2, policeman.getName());
             preparedStatement.setString(3, policeman.getNic());
-//            preparedStatement.setString(4, policeman.getPoliceRank());
+            preparedStatement.setString(4, policeman.getRank());
+//            preparedStatement.setString(4, String.valueOf(policeman.getPoliceRank()));
             preparedStatement.setString(5, policeman.getPoliceStation());
 
             preparedStatement.execute();
@@ -122,6 +124,7 @@ public class PolicemanDAO {
 
             while(resultSet.next()){
                 policeman.setPassword(resultSet.getString("password"));
+                policeman.setPoliceRank(PoliceRank.valueOf(resultSet.getString("police_rank")));
             }
         }
         catch (SQLException e){
