@@ -213,16 +213,6 @@ public class PolicemanServlet extends HttpServlet {
         }
     }
 
-//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException {
-//        String action = request.getParameter("action");
-//
-//        if (action.equals("checkPoliceman_ID"))
-//        {
-//            checkPolicemanPolice_ID(request, response);
-//            System.out.println("Hi");
-//        }
-//    }
-
     private boolean checkValidations(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
         boolean flagName = false; //flag = true means name validation is passed
         boolean flagPolice_ID = false; //flag = true means Police ID validation is passed
