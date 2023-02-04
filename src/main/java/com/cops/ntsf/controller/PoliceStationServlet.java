@@ -2,6 +2,8 @@ package com.cops.ntsf.controller;
 
 
 import com.cops.ntsf.model.PoliceStation;
+import com.cops.ntsf.model.Policeman;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -55,10 +57,31 @@ public class PoliceStationServlet extends HttpServlet {
     }
     }
 
+    protected void viewPoliceStation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
+
+        HttpSession session = request.getSession(false);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("serverResponse", "Allowed");
+
+        PoliceStation policeStation = new PoliceStation();
+        JSONArray policeStationList = policeStation.getPoliceStationDetails();
+
+        jsonObject.put("List", policeStationList );
+
+        out.write(jsonObject.toString());
+        out.close();
+
+    }
     public  void  doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action.equals("addPoliceStation")) {
             addPoliceStation(request, response);
+        }
+        else if (action.equals("viewPoliceStation")) {
+            viewPoliceStation(request, response);
         }
         else if (action.equals("checkBranch_Name"))
         {

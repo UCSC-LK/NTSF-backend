@@ -1,6 +1,7 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.PoliceStationDAO;
+import org.json.JSONArray;
 
 public class PoliceStation {
     private String branch_name;
@@ -95,4 +96,9 @@ public class PoliceStation {
         return policeStationBranch_NameCheckResult;
     }
 
+    public JSONArray getPoliceStationDetails() {
+        PoliceStationDAO policeStationDAO = new PoliceStationDAO();
+        JSONArray policeStationDetailsList = policeStationDAO.getPoliceStationDetailsList();
+        return policeStationDetailsList;
+    }
 }
