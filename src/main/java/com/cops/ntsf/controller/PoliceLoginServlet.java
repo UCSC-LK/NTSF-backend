@@ -1,12 +1,12 @@
-//package com.cops.ntsf.controller;
-//
-//import com.cops.ntsf.model.Policeman;
-//import com.cops.ntsf.model.PolicemanLogin;
-//
-//import javax.servlet.ServletException;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
+////package com.cops.ntsf.controller;
+////
+////import com.cops.ntsf.model.Policeman;
+////import com.cops.ntsf.model.PolicemanLogin;
+////
+////import javax.servlet.ServletException;
+////import javax.servlet.http.HttpServlet;
+////import javax.servlet.http.HttpServletRequest;
+////import javax.servlet.http.HttpServletResponse;
 //import java.io.IOException;
 //import java.io.PrintWriter;
 //

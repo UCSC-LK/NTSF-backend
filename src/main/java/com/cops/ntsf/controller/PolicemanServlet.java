@@ -1,6 +1,7 @@
 package com.cops.ntsf.controller;
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.dao.PolicemanDAO;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.RequestDispatcher;
@@ -16,6 +17,35 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PolicemanServlet extends HttpServlet {
+
+    protected void login(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String police_id = request.getParameter("username");
+            String password = request.getParameter("password");
+
+            System.out.println("Works until login servlet");
+
+            System.out.println(police_id);
+            System.out.println(password);
+            Policeman policeman = new Policeman();
+            JSONArray loginResponse = policeman.login(police_id, password);
+
+            jsonObject.put("loginResponse", loginResponse);
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try
     {
@@ -63,7 +93,24 @@ public class PolicemanServlet extends HttpServlet {
     }
 
     }
+    protected void viewPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
 
+        HttpSession session = request.getSession(false);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("serverResponse", "Allowed");
+
+        Policeman policeman = new Policeman();
+        JSONArray policemanList = policeman.getPolicemanDetails();
+
+        jsonObject.put("List", policemanList );
+
+        out.write(jsonObject.toString());
+        out.close();
+
+    }
     protected void checkPolicemanPolice_ID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try{
         PrintWriter out = response.getWriter();
@@ -169,8 +216,14 @@ public class PolicemanServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
-        if(action.equals("addPoliceman")) {
+        if (action.equals("login")) {
+            login(request, response);
+        }
+        else if(action.equals("addPoliceman")) {
             addPoliceman(request, response);
+        }
+        else if(action.equals("viewPoliceman")) {
+            viewPoliceman(request, response);
         }
         else if (action.equals("checkPoliceman_ID"))
         {
@@ -193,17 +246,6 @@ public class PolicemanServlet extends HttpServlet {
             System.out.println("Hi from Email Checking servelet");
         }
     }
-
-//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException {
-//        String action = request.getParameter("action");
-//
-//        if (action.equals("checkPoliceman_ID"))
-//        {
-//            checkPolicemanPolice_ID(request, response);
-//            System.out.println("Hi");
-//        }
-//    }
-
     private boolean checkValidations(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
         boolean flag = false; //flag = true means all the validations are passed
         if(name.trim() == "")
