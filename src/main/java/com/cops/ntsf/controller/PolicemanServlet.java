@@ -63,7 +63,7 @@ public class PolicemanServlet extends HttpServlet {
         String rank = request.getParameter("rank");
         String police_station = request.getParameter("police_station");
 
-        System.out.println("Works until Servlet");
+        System.out.println("Works until Policeman Servlet");
         System.out.println(name);
         System.out.println(police_id);
         System.out.println(nic);
@@ -71,6 +71,7 @@ public class PolicemanServlet extends HttpServlet {
         System.out.println(email);
         System.out.println(rank);
         System.out.println(police_station);
+        System.out.println("Printed variables in Policeman Servlet");
 
         if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
         {
@@ -111,6 +112,7 @@ public class PolicemanServlet extends HttpServlet {
         out.close();
 
     }
+
     protected void checkPolicemanPolice_ID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try{
         PrintWriter out = response.getWriter();
@@ -222,7 +224,9 @@ public class PolicemanServlet extends HttpServlet {
         else if(action.equals("addPoliceman")) {
             addPoliceman(request, response);
         }
-        else if(action.equals("viewPoliceman")) {
+
+        else if (action.equals("viewPoliceman"))
+        {
             viewPoliceman(request, response);
         }
         else if (action.equals("checkPoliceman_ID"))
@@ -246,110 +250,128 @@ public class PolicemanServlet extends HttpServlet {
             System.out.println("Hi from Email Checking servelet");
         }
     }
+
     private boolean checkValidations(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
+        boolean flagName = false; //flag = true means name validation is passed
+        boolean flagPolice_ID = false; //flag = true means Police ID validation is passed
+        boolean flagNIC = false; //flag = true means NIC validation is passed
+        boolean flagMobile_Number = false; //flag = true means Mobile Number validation is passed
+        boolean flagEmail = false; //flag = true means Email validation is passed
+        boolean flagRank = false; //flag = true means Rank validation is passed
+        boolean flagPolice_Station = false; //flag = true means Police Station is passed
         boolean flag = false; //flag = true means all the validations are passed
+
+        System.out.println("Came until checkValidation in Policemanservlet");
+
         if(name.trim() == "")
         {
             System.out.println("Name is empty");
-            flag = false;
+            flagName = false;
         }
         else if (name.trim().length() < 3)
         {
             System.out.println("Name is too short");
-            flag = false;
+            flagName = false;
         }
         else if (name.trim().length() > 50)
         {
             System.out.println("Name is too long");
-            flag = false;
+            flagName = false;
         }
         else {
             System.out.println("Name is valid");
-            flag = true;
+            flagName = true;
         }
 
         if (police_id.trim() == "")
         {
             System.out.println("Police ID is empty");
-            flag = false;
+            flagPolice_ID = false;
         }
         else if (police_id.trim().matches("[0-9]+") == false)
         {
             System.out.println("Police ID should contain only digits");
-            flag = false;
+            flagPolice_ID = false;
         }
         else if (police_id.trim().length() != 10)
         {
             System.out.println("Police ID should contain 10 digits");
-            flag = false;
+            flagPolice_ID = false;
         }
         else {
             System.out.println("Police ID is valid");
-            flag = true;
+            flagPolice_ID = true;
         }
 
         if (nic.trim() == "")
         {
             System.out.println("NIC is empty");
-            flag = false;
+            flagNIC = false;
         }
         else {
             System.out.println("NIC is valid");
-            flag = true;
+            flagNIC = true;
         }
         if (mobile_number.trim() == "")
         {
             System.out.println("Mobile Number is empty");
-            flag = false;
+            flagMobile_Number = false;
         }
         else if (mobile_number.trim().matches("[0-9]+") == false)
         {
             System.out.println("Mobile Number should contain only digits");
-            flag = false;
+            flagMobile_Number = false;
         }
         else if (mobile_number.trim().length() != 10)
         {
             System.out.println("Mobile Number should contain 10 digits");
-            flag = false;
+            flagMobile_Number = false;
         }
         else {
             System.out.println("Mobile Number is valid");
-            flag = true;
+            flagMobile_Number = true;
         }
 
         if (email.trim() == "")
         {
             System.out.println("Email is empty");
-            flag = false;
+            flagEmail = false;
         }
         else if (email.trim().matches("^[A-Za-z0-9+_.-]+@(.+)$") == false)
         {
             System.out.println("Email is invalid");
-            flag = false;
+            flagEmail = false;
         }
         else {
             System.out.println("Email is valid");
-            flag = true;
+            flagEmail = true;
         }
 
         if (rank.trim() == "")
         {
             System.out.println("Rank is empty");
-            flag = false;
+            flagRank = false;
         }
         else {
             System.out.println("Rank is valid");
-            flag = true;
+            flagRank = true;
         }
 
         if (police_station.trim() == "")
         {
             System.out.println("Police Station is empty");
-            flag = false;
+            flagPolice_Station = false;
         }
         else {
             System.out.println("Police Station is valid");
+            flagPolice_Station = true;
+        }
+        if (flagName == true && flagPolice_ID == true && flagNIC == true && flagMobile_Number == true && flagEmail == true && flagRank == true && flagPolice_Station == true)
+        {
             flag = true;
+        }
+        else {
+            flag = false;
         }
         return flag;
     }
