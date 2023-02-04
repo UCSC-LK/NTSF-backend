@@ -51,15 +51,15 @@
         <url-pattern>/fine</url-pattern>
     </servlet-mapping>
 
-  <servlet>
-    <servlet-name>AddComplaint</servlet-name>
-    <servlet-class>com.cops.ntsf.controller.ComplaintServlet</servlet-class>
-  </servlet>
-    
-  <servlet-mapping>
-    <servlet-name>AddComplaint</servlet-name>
-    <url-pattern>/complaint</url-pattern>
-  </servlet-mapping>
+<!--  <servlet>-->
+<!--    <servlet-name>AddComplaint</servlet-name>-->
+<!--    <servlet-class>com.cops.ntsf.controller.ComplaintServlet</servlet-class>-->
+<!--  </servlet>-->
+<!--    -->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>AddComplaint</servlet-name>-->
+<!--    <url-pattern>/complaint</url-pattern>-->
+<!--  </servlet-mapping>-->
 
   <servlet>
       <servlet-name>offence</servlet-name>
@@ -87,5 +87,14 @@
     <servlet-mapping>
         <servlet-name>PoliceStation</servlet-name>
         <url-pattern>/policeStation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>complaint</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.ComplaintServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>complaint</servlet-name>
+        <url-pattern>/complaint</url-pattern>
     </servlet-mapping>
 </web-app>
