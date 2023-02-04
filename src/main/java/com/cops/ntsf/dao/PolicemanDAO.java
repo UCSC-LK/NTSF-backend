@@ -203,6 +203,40 @@ public class PolicemanDAO {
         return alert;
     }
 
+    public JSONArray getPolicemanLoginResult(String police_id, String password) {
+        Connection dbConn = null;
+        JSONArray jsonArray = new JSONArray();
+
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT rank from policeman where police_id =  ? and password = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, police_id);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next())
+            {
+                String rank = resultSet.getString("rank");
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("authorization", true);
+                jsonObject.put("rank", rank);
+
+                jsonArray.put(jsonObject);
+                System.out.println(rank);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
 }
 
 

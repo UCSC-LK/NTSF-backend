@@ -17,6 +17,35 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PolicemanServlet extends HttpServlet {
+
+    protected void login(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String police_id = request.getParameter("username");
+            String password = request.getParameter("password");
+
+            System.out.println("Works until login servlet");
+
+            System.out.println(police_id);
+            System.out.println(password);
+            Policeman policeman = new Policeman();
+            JSONArray loginResponse = policeman.login(police_id, password);
+
+            jsonObject.put("loginResponse", loginResponse);
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try
     {
@@ -65,7 +94,6 @@ public class PolicemanServlet extends HttpServlet {
     }
 
     }
-
     protected void viewPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -190,9 +218,13 @@ public class PolicemanServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
-        if(action.equals("addPoliceman")) {
+        if (action.equals("login")) {
+            login(request, response);
+        }
+        else if(action.equals("addPoliceman")) {
             addPoliceman(request, response);
         }
+
         else if (action.equals("viewPoliceman"))
         {
             viewPoliceman(request, response);

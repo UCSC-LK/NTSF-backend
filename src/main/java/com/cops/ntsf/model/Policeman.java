@@ -133,5 +133,10 @@ public class Policeman {
     }
 
 
+    public JSONArray login(String police_id, String password) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        JSONArray policemanLoginResult = policemanDAO.getPolicemanLoginResult(police_id, password);
+        return policemanLoginResult;
+    }
 }
 
