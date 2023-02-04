@@ -6,12 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ComplaintDAO {
-    public String insert(Complaint complaint)
-    {
+    public String insert(Complaint complaint) {
         Connection dbConn = null;
         try {
             dbConn = Database.getConnection();
@@ -30,31 +27,26 @@ public class ComplaintDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-        finally {
-            if (dbConn != null) try
-            {
+        } finally {
+            if (dbConn != null) try {
                 dbConn.close();
-            } catch (Exception ignore){}
+            } catch (Exception ignore) {
+            }
         }
         return null;
     }
 
-    public JSONArray viewComplaintDetails()
-    {
+    public JSONArray viewComplaintDetails() {
         Connection dbConn = null;
         JSONArray jsonArray = new JSONArray();
 
-        try
-        {
+        try {
             dbConn = Database.getConnection();
             String sql = "SELECT * from complaint";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next())
-            {
+            while (resultSet.next()) {
                 String user_id = resultSet.getString("user_id");
                 String title = resultSet.getString("title");
                 String description = resultSet.getString("description");
@@ -71,11 +63,9 @@ public class ComplaintDAO {
             resultSet.close();
             preparedStatement.close();
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (dbConn != null) try {
                 dbConn.close();
             } catch (Exception ignore) {
