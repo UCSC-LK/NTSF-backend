@@ -12,9 +12,9 @@ public class Policeman {
     private String email;
     private String rank;
     private String police_station;
+    private String password;
 
-    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station)
-    {
+    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station, String password) {
         this.name = name;
         this.police_id = police_id;
         this.nic = nic;
@@ -22,8 +22,8 @@ public class Policeman {
         this.email = email;
         this.rank = rank;
         this.police_station = police_station;
+        this.password = password;
     }
-
     public Policeman()
     {
 
@@ -57,6 +57,10 @@ public class Policeman {
         return rank;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     //setters
 
     public void setPolice_station(String police_station) {
@@ -85,6 +89,10 @@ public class Policeman {
 
     public void setRank(String rank) {
         this.rank = rank;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void policemanAdded()

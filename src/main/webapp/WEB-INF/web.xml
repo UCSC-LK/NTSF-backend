@@ -76,15 +76,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AddPoliceman</servlet-name>
-        <url-pattern>/addPoliceman</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>ViewPoliceman</servlet-name>
-        <servlet-class>com.cops.ntsf.controller.ViewPoliceman</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ViewPoliceman</servlet-name>
-        <url-pattern>/viewPoliceman</url-pattern>
+        <url-pattern>/policeman</url-pattern>
     </servlet-mapping>
 
     <servlet>
