@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class FineServlet extends HttpServlet {
     @Override
@@ -17,7 +18,7 @@ public class FineServlet extends HttpServlet {
 
         // Get request parameters
         String userId = req.getParameter("user_id");
-        Fine finesList;
+        ArrayList<Fine> finesList;
 
 //        UserService userService = new UserService();
         Fine fine = new Fine(userId);
