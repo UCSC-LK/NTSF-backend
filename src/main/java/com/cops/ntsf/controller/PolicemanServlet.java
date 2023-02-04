@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PolicemanServlet extends HttpServlet {
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -44,7 +46,10 @@ public class PolicemanServlet extends HttpServlet {
 
         if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
         {
-            Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station);
+            PasswordGenerator passwordGenerator = new PasswordGenerator();
+            String password = passwordGenerator.generatePassword();
+            System.out.println(password);
+            Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, password);
             policeman.policemanAdded();
         }
         else
@@ -338,5 +343,22 @@ public class PolicemanServlet extends HttpServlet {
         }
         return flag;
     }
+
+    public class PasswordGenerator {
+        public String generatePassword() {
+            StringBuilder password = new StringBuilder();
+            Random rnd = new Random();
+            for (int i = 0; i < 10; i++) {
+                int ascii = rnd.nextInt(74) + 48;
+                if ((ascii >= 58 && ascii <= 64) || (ascii >= 91 && ascii <= 96)) {
+                    i--;
+                    continue;
+                }
+                password.append((char) ascii);
+            }
+            return password.toString();
+        }
+    }
+
 
 }

@@ -14,7 +14,7 @@ public class PolicemanDAO {
         Connection dbConn = null;
         try {
             dbConn = Database.getConnection();
-            String sql = "INSERT into policeman (name, police_id, nic, mobile_number, email,  rank, police_station) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT into policeman (name, police_id, nic, mobile_number, email,  rank, police_station, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, policeman.getName());
@@ -24,6 +24,7 @@ public class PolicemanDAO {
             preparedStatement.setString(5, policeman.getEmail());
             preparedStatement.setString(6, policeman.getRank());
             preparedStatement.setString(7, policeman.getPolice_station());
+            preparedStatement.setString(8, policeman.getPassword());
 
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -201,8 +202,6 @@ public class PolicemanDAO {
         }
         return alert;
     }
-
-
 
 }
 
