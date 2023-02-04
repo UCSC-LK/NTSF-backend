@@ -1,37 +1,18 @@
 package com.cops.ntsf.service;
 
-import com.cops.ntsf.constants.UserType;
-import com.cops.ntsf.model.Auth;
-import com.cops.ntsf.model.Driver;
-import com.cops.ntsf.model.Pedestrian;
-import com.cops.ntsf.model.Vehicle;
+import com.cops.ntsf.model.*;
 import org.json.JSONObject;
 
 public class AuthService {
-    public String getUserIdFromLoginId(UserType userType, String loginId) {
-        switch (userType) {
-            case DRIVER:
-                Driver driver = new Driver();
-                driver.setLicenceNo(loginId);
-                driver.getDriverFromLicenseNo();
-                return driver.getUserId();
-            case PEDESTRIAN:
-                Pedestrian pedestrian = new Pedestrian();
-                pedestrian.setNic(loginId);
-                pedestrian.getPedestrianFromNic();
-                return pedestrian.getUserId();
-            case VEHICLE:
-                Vehicle vehicle = new Vehicle();
-                vehicle.setVehicleNo(loginId);
-                vehicle.getVehicleFromVehicleNo();
-                return vehicle.getUserId();
-            default:
-                throw new RuntimeException();
-        }
+    public String getUserIdFromNic(String nic) {
+        User user = new User();
+        user.setNic(nic);
+        user.getUserFromNic();
+        return user.getUserId();
     }
 
-    public String verifyLogin(String loginId, String inputPassword, UserType userType) {
-        String userId = this.getUserIdFromLoginId(userType, loginId);
+    public String verifyLogin(String nic, String inputPassword) {
+        String userId = this.getUserIdFromNic(nic);
 
         Auth auth = new Auth();
         auth.setUserId(userId);
@@ -48,10 +29,4 @@ public class AuthService {
         // System.out.println(password + inputPassword);
         return password.equals(inputPassword);
     }
-
-//    public Auth setPasswordForUserId(String userId, String password) {
-//        Auth auth = new Auth(userId, password);
-//        auth.setPassword();
-//        return auth;
-//    }
 }

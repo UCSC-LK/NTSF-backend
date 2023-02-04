@@ -5,6 +5,7 @@ import com.cops.ntsf.dao.AuthDAO;
 public class Auth {
     private String userId;
     private String password;
+    private String policeId;
 
     public Auth(){
 
@@ -38,5 +39,18 @@ public class Auth {
     public void setAuthInfo() {
         AuthDAO authDAO = new AuthDAO();
         authDAO.insertAuth(this);
+    }
+
+    public void setPoliceAuthInfo() {
+        AuthDAO authDAO = new AuthDAO();
+        authDAO.insertPoliceAuth(this);
+    }
+
+    public String getPoliceId() {
+        return policeId;
+    }
+
+    public void setPoliceId(String policeId) {
+        this.policeId = policeId;
     }
 }

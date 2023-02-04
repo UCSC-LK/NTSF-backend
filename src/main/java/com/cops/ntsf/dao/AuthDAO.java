@@ -47,5 +47,21 @@ public class AuthDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void insertPoliceAuth(Auth auth) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "INSERT INTO auth(police_id, password) VALUES(?, ?)";
+
+        try{
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, auth.getPoliceId());
+            preparedStatement.setString(2, auth.getPassword());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
