@@ -4,25 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Database
-{
+public class Database {
     private static volatile Connection INSTANCE;
 
-    public static Connection getConnection()
-    {
-        if(INSTANCE == null)
-        {
-            synchronized (Database.class)
-            {
-                if(INSTANCE == null)
-                {
-                    try
-                    {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
+    public static Connection getConnection() {
+        if (INSTANCE == null) {
+            synchronized (Database.class) {
+                if (INSTANCE == null) {
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
                         INSTANCE = DriverManager.getConnection("jdbc:mysql://localhost:3306/ntsfdatabase", "root", "");
-                    }
-                    catch (SQLException e)
-                    {
+                    } catch (SQLException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
                         throw new RuntimeException(e);
