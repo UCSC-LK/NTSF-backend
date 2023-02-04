@@ -2,6 +2,8 @@ package com.cops.ntsf.model;
 
 //import com.cops.ntsf.dao.FineDAO;
 
+import com.cops.ntsf.dao.FineDAO;
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -21,10 +23,10 @@ public class Fine {
         this.userId = userId;
     }
 
-//    public ArrayList<Fine> getUserFinesInfo() throws SQLException {
-//        FineDAO fineDAO = new FineDAO();
-//        return fineDAO.fetchUserFinesInfo(this);
-//    }
+    public ArrayList<Fine> getUserFinesInfo() throws SQLException {
+        FineDAO fineDAO = new FineDAO();
+        return fineDAO.fetchUserFinesInfo(this);
+    }
 
     public String getUserId() {
         return userId;
