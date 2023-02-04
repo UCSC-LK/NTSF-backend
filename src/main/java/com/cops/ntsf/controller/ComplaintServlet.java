@@ -15,7 +15,16 @@ import java.io.PrintWriter;
 
 public class ComplaintServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if(action.equals("createComplaint"))
+        {
+            createComplaint(request, response);
+        }
+    }
+
+    protected void createComplaint(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
 
         PrintWriter out = response.getWriter();
@@ -39,43 +48,7 @@ public class ComplaintServlet extends HttpServlet {
         Complaint complaint = new Complaint(user_id, title, description, complaint_no);
         complaint.complaintAdded();
 
-
-
         out.write(jsonObject.toString());
         out.close();
-
     }
-
-
-
-
-
-
-
-
-
-
-//        String user_id = request.getParameter("user_id");
-//        String title = request.getParameter("title");
-//        String description = request.getParameter("description");
-//        String complaint_no = request.getParameter("complaint_no");
-//
-//
-//        boolean isTrue;
-//
-//        isTrue = ComplaintDAO.addComplaint(user_id, title, description, complaint_no);
-//
-//        if (isTrue == true)
-//        {
-//            RequestDispatcher dis = request.getRequestDispatcher("success.jsp");
-//            dis.forward(request, response);
-//        }
-//        else
-//        {
-//            RequestDispatcher dis2 = request.getRequestDispatcher("unsuccess.jsp");
-//            dis2.forward(request, response);
-//        }
-//
-//    }
-
 }

@@ -16,21 +16,21 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>user_login</servlet-name>
-        <servlet-class>com.cops.ntsf.controller.UserLoginServlet</servlet-class>
+        <servlet-name>login</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>user_login</servlet-name>
-        <url-pattern>/user_login</url-pattern>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>user_signup</servlet-name>
-        <servlet-class>com.cops.ntsf.controller.UserSignUpServlet</servlet-class>
+        <servlet-name>signup</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.SignUpServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>user_signup</servlet-name>
-        <url-pattern>/user_signup</url-pattern>
+        <servlet-name>signup</servlet-name>
+        <url-pattern>/signup</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -51,59 +51,50 @@
         <url-pattern>/fine</url-pattern>
     </servlet-mapping>
 
+<!--  <servlet>-->
+<!--    <servlet-name>AddComplaint</servlet-name>-->
+<!--    <servlet-class>com.cops.ntsf.controller.ComplaintServlet</servlet-class>-->
+<!--  </servlet>-->
+<!--    -->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>AddComplaint</servlet-name>-->
+<!--    <url-pattern>/complaint</url-pattern>-->
+<!--  </servlet-mapping>-->
+
   <servlet>
-    <servlet-name>AddComplaint</servlet-name>
-    <servlet-class>com.cops.ntsf.controller.ComplaintServlet</servlet-class>
+      <servlet-name>offence</servlet-name>
+      <servlet-class>com.cops.ntsf.controller.OffenceServlet</servlet-class>
   </servlet>
-    
   <servlet-mapping>
-    <servlet-name>AddComplaint</servlet-name>
-    <url-pattern>/complaint</url-pattern>
+      <servlet-name>offence</servlet-name>
+      <url-pattern>/offence</url-pattern>
   </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>ViewComplaint</servlet-name>-->
-<!--        <servlet-class>com.cops.ntsf.controller.ViewComplaint</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>ViewComplaint</servlet-name>-->
-<!--        <url-pattern>/viewComplaint</url-pattern>-->
-<!--    </servlet-mapping>-->
-<!--    -->
-<!--    <servlet>-->
-<!--        <servlet-name>ViewComplaintByID</servlet-name>-->
-<!--        <servlet-class>com.cops.ntsf.controller.ViewComplaintByID</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>ViewComplaintByID</servlet-name>-->
-<!--        <url-pattern>/viewComplaintByID</url-pattern>-->
-<!--    </servlet-mapping>-->
-
     <servlet>
-        <servlet-name>policeman</servlet-name>
+        <servlet-name>Policeman</servlet-name>
         <servlet-class>com.cops.ntsf.controller.PolicemanServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>policeman</servlet-name>
+        <servlet-name>Policeman</servlet-name>
         <url-pattern>/policeman</url-pattern>
     </servlet-mapping>
 
+
     <servlet>
-        <servlet-name>police_signup</servlet-name>
-        <servlet-class>com.cops.ntsf.controller.PolicemanSignUpServlet</servlet-class>
+        <servlet-name>PoliceStation</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PoliceStationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>police_signup</servlet-name>
-        <url-pattern>/police_signup</url-pattern>
+        <servlet-name>PoliceStation</servlet-name>
+        <url-pattern>/policeStation</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>police_login</servlet-name>
-        <servlet-class>com.cops.ntsf.controller.PolicemanLoginServlet</servlet-class>
+        <servlet-name>complaint</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.ComplaintServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>police_login</servlet-name>
-        <url-pattern>/police_login</url-pattern>
+        <servlet-name>complaint</servlet-name>
+        <url-pattern>/complaint</url-pattern>
     </servlet-mapping>
-
 </web-app>
