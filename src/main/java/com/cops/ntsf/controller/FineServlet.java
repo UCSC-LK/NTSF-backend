@@ -1,7 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Fine;
-import com.cops.ntsf.dao.FineDAO;
+//import com.cops.ntsf.dao.FineDAO;
 import com.cops.ntsf.service.FineService;
 import com.google.gson.Gson;
 
