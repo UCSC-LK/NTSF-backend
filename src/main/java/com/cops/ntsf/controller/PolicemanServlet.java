@@ -46,6 +46,29 @@ public class PolicemanServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+    protected void checkLoginUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+
+            String police_id = request.getParameter("username");
+            System.out.println(police_id);
+            System.out.println("Came until checkLoginUsername duplication in servlet");
+
+            Policeman policeman = new Policeman();
+            jsonObject.put("alert",  policeman.LoginUsernameCheck(police_id));
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try
     {
@@ -221,10 +244,12 @@ public class PolicemanServlet extends HttpServlet {
         if (action.equals("login")) {
             login(request, response);
         }
+        else if (action.equals("checkLoginUsername")){
+            checkLoginUsername(request, response);
+        }
         else if(action.equals("addPoliceman")) {
             addPoliceman(request, response);
         }
-
         else if (action.equals("viewPoliceman"))
         {
             viewPoliceman(request, response);

@@ -138,5 +138,11 @@ public class Policeman {
         JSONArray policemanLoginResult = policemanDAO.getPolicemanLoginResult(police_id, password);
         return policemanLoginResult;
     }
+
+    public boolean LoginUsernameCheck(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        boolean policemanLoginUsernameCheckResult  = policemanDAO.getPolicemanLoginUsernameCheckResult(police_id);
+        return policemanLoginUsernameCheckResult;
+    }
 }
 
