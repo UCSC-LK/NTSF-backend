@@ -2,10 +2,9 @@ package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Complaint;
 import com.cops.ntsf.util.Database;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ComplaintDAO {
     public String insert(Complaint complaint) {
@@ -36,42 +35,67 @@ public class ComplaintDAO {
         return null;
     }
 
-    public JSONArray viewComplaintDetails() {
-        Connection dbConn = null;
-        JSONArray jsonArray = new JSONArray();
+//    public JSONArray viewComplaintDetails() {
+//        Connection dbConn = null;
+//        JSONArray jsonArray = new JSONArray();
+//
+//        try {
+//            dbConn = Database.getConnection();
+//            String sql = "SELECT * from complaint";
+//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            while (resultSet.next()) {
+//                String user_id = resultSet.getString("user_id");
+//                String title = resultSet.getString("title");
+//                String description = resultSet.getString("description");
+//                String complaint_no = resultSet.getString("complaint_no");
+//
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put("user_id", user_id);
+//                jsonObject.put("title", title);
+//                jsonObject.put("description", description);
+//                jsonObject.put("complaint_no", complaint_no);
+//
+//                jsonArray.put(jsonObject);
+//            }
+//            resultSet.close();
+//            preparedStatement.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (dbConn != null) try {
+//                dbConn.close();
+//            } catch (Exception ignore) {
+//                ignore.printStackTrace();
+//            }
+//        }
+//        return jsonArray;
+//    }
 
-        try {
-            dbConn = Database.getConnection();
-            String sql = "SELECT * from complaint";
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
+    public ArrayList<Complaint> fetchUserComplaintInfo(Complaint complaint) throws SQLException {
+        Connection dbConn = Database.getConnection();
 
-            while (resultSet.next()) {
-                String user_id = resultSet.getString("user_id");
-                String title = resultSet.getString("title");
-                String description = resultSet.getString("description");
-                String complaint_no = resultSet.getString("complaint_no");
+        String sql = "SELECT * FROM complaint WHERE user_id = ?";
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("user_id", user_id);
-                jsonObject.put("title", title);
-                jsonObject.put("description", description);
-                jsonObject.put("complaint_no", complaint_no);
+        PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-                jsonArray.put(jsonObject);
-            }
-            resultSet.close();
-            preparedStatement.close();
+        preparedStatement.setString(1, complaint.getUserId());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (dbConn != null) try {
-                dbConn.close();
-            } catch (Exception ignore) {
-                ignore.printStackTrace();
-            }
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        ArrayList<Complaint> complaintsList = new ArrayList<Complaint>();
+
+        while (resultSet.next()) {
+            Complaint nextComplaint;
+            nextComplaint = new Complaint(complaint.getUserId());
+            nextComplaint.setComplaint_no(String.valueOf(Integer.valueOf(resultSet.getString("complaint_no"))));
+            nextComplaint.setTitle(resultSet.getString("title"));
+            nextComplaint.setTitle(resultSet.getString("description"));
+
+            complaintsList.add(nextComplaint);
         }
-        return jsonArray;
+        return complaintsList;
     }
 }
