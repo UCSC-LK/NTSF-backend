@@ -73,4 +73,8 @@ public class Complaint {
     public String getUserId() {
         return user_id;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

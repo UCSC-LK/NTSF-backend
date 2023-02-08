@@ -92,7 +92,7 @@ public class ComplaintDAO {
             nextComplaint = new Complaint(complaint.getUser_id());
             nextComplaint.setComplaint_no(String.valueOf(Integer.valueOf(resultSet.getString("complaint_no"))));
             nextComplaint.setTitle(resultSet.getString("title"));
-            nextComplaint.setTitle(resultSet.getString("description"));
+            nextComplaint.setDescription(resultSet.getString("description"));
 
             complaintsList.add(nextComplaint);
         }
