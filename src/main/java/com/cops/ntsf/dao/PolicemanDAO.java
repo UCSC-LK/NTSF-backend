@@ -1,7 +1,6 @@
 package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Policeman;
-import com.cops.ntsf.util.DBConnect;
 import com.cops.ntsf.util.Database;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -91,6 +90,31 @@ public class PolicemanDAO {
         return jsonArray;
     }
 
+    public boolean deletePoliceman(String police_id){
+        Connection dbConn = null;
+        boolean alert = false;
+        try{
+            dbConn = Database.getConnection();
+            String sql = "DELETE from policeman where police_id = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, police_id);
+
+            int resultSet = preparedStatement.executeUpdate();
+            if (resultSet > 0) {
+                System.out.println("Deleted Policeman!!");
+                alert = true;
+            } else {
+                System.out.println("Failed to delete policeman!!");
+                alert = false;
+            }
+            preparedStatement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
     public boolean getPolicemanPolice_IDCheckResult(String police_idCheck) {
         Connection dbConn = null;
 

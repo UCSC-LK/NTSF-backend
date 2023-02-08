@@ -136,6 +136,27 @@ public class PolicemanServlet extends HttpServlet {
 
     }
 
+    protected void removePoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String police_id = request.getParameter("police_id");
+            System.out.println(police_id);
+            System.out.println("Came until deletePoliceman in servlet");
+
+            Policeman policeman = new Policeman();
+            jsonObject.put("alert",  policeman.deletePolicemanDetails(police_id));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     protected void checkPolicemanPolice_ID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try{
         PrintWriter out = response.getWriter();
@@ -149,7 +170,7 @@ public class PolicemanServlet extends HttpServlet {
         System.out.println("Came until error duplication in servlet");
 
         Policeman policeman = new Policeman();
-        jsonObject.put("alert",  policeman.policemanPolice_IDCheck(police_id));
+        jsonObject.put("alert",  policeman.policemanPolice_IDCheck(police_id)); //if alert is true, deleted
 
         out.write(jsonObject.toString());
         out.close();
@@ -253,6 +274,10 @@ public class PolicemanServlet extends HttpServlet {
         else if (action.equals("viewPoliceman"))
         {
             viewPoliceman(request, response);
+        }
+        else if (action.equals("deletePoliceman"))
+        {
+            removePoliceman(request, response);
         }
         else if (action.equals("checkPoliceman_ID"))
         {

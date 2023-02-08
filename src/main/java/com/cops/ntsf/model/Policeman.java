@@ -144,5 +144,11 @@ public class Policeman {
         boolean policemanLoginUsernameCheckResult  = policemanDAO.getPolicemanLoginUsernameCheckResult(police_id);
         return policemanLoginUsernameCheckResult;
     }
+
+    public boolean deletePolicemanDetails(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        boolean deletePolicemanDetailsResult  = policemanDAO.deletePoliceman(police_id);
+        return deletePolicemanDetailsResult;
+    }
 }
 
