@@ -90,6 +90,41 @@ public class PolicemanDAO {
         return jsonArray;
     }
 
+    public boolean updatePolicemanDetails(Policeman policeman)
+    {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try {
+            dbConn = Database.getConnection();
+            String sql = "UPDATE policeman SET name = ?, nic = ?, mobile_number = ?, email = ?, rank = ?, police_station = ? WHERE police_id = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            preparedStatement.setString(1, policeman.getName());
+            preparedStatement.setString(2, policeman.getNic());
+            preparedStatement.setString(3, policeman.getMobile_number());
+            preparedStatement.setString(4, policeman.getEmail());
+            preparedStatement.setString(5, policeman.getRank());
+            preparedStatement.setString(6, policeman.getPolice_station());
+            preparedStatement.setString(7, policeman.getPolice_id());
+
+            int resultSet = preparedStatement.executeUpdate();
+            if (resultSet > 0) {
+                System.out.println("Updated Policeman!!");
+                alert = true;
+            } else {
+                System.out.println("Failed to update policeman!!");
+                alert = false;
+            }
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
+
     public boolean deletePoliceman(String police_id){
         Connection dbConn = null;
         boolean alert = false;
