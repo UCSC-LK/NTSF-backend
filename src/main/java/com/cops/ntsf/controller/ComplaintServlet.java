@@ -53,11 +53,11 @@ public class ComplaintServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Get request parameters
-        String complaint_no = req.getParameter("complaint_no");
+        String user_id = req.getParameter("user_id");
         ArrayList<Complaint> complaintList;
 
 //        UserService userService = new UserService();
-        Complaint complaint = new Complaint(complaint_no);
+        Complaint complaint = new Complaint(user_id);
         try {
             complaintList = complaint.getUserComplaintInfo();
         } catch (SQLException e) {
