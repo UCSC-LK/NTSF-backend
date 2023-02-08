@@ -81,7 +81,7 @@ public class ComplaintDAO {
 
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-        preparedStatement.setString(1, complaint.getUserId());
+        preparedStatement.setString(1, complaint.getUser_id());
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -89,7 +89,7 @@ public class ComplaintDAO {
 
         while (resultSet.next()) {
             Complaint nextComplaint;
-            nextComplaint = new Complaint(complaint.getUserId());
+            nextComplaint = new Complaint(complaint.getUser_id());
             nextComplaint.setComplaint_no(String.valueOf(Integer.valueOf(resultSet.getString("complaint_no"))));
             nextComplaint.setTitle(resultSet.getString("title"));
             nextComplaint.setTitle(resultSet.getString("description"));
