@@ -57,12 +57,12 @@ public class PoliceStationDAO {
                 String email = resultSet.getString("email");
 
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("name", branch_name);
-                jsonObject.put("police_id", address);
-                jsonObject.put("nic", district);
-                jsonObject.put("mobile_number", province);
-                jsonObject.put("email", contact_number);
-                jsonObject.put("rank", email);
+                jsonObject.put("branch_name", branch_name);
+                jsonObject.put("address", address);
+                jsonObject.put("district", district);
+                jsonObject.put("province", province);
+                jsonObject.put("contact_number", contact_number);
+                jsonObject.put("email", email);
 
                 jsonArray.put(jsonObject);
 

@@ -237,6 +237,33 @@ public class PolicemanDAO {
         }
         return jsonArray;
     }
+
+    public boolean getPolicemanLoginUsernameCheckResult(String police_id) {
+        Connection dbConn = null;
+        boolean alert = false;
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT police_id from policeman where police_id =  ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, police_id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Username entered is valid!!");
+                alert = true;
+            } else {
+                System.out.println("Username entered is invalid!!");
+                alert = false;
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
 }
 
 
