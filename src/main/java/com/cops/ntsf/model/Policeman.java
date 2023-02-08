@@ -150,5 +150,12 @@ public class Policeman {
         boolean deletePolicemanDetailsResult  = policemanDAO.deletePoliceman(police_id);
         return deletePolicemanDetailsResult;
     }
+
+    public JSONArray fetchPolicemanDetails(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        JSONArray fetchedPolicemanDetailsList = policemanDAO.fetchPolicemanDetailsList(police_id);
+        return fetchedPolicemanDetailsList;
+
+    }
 }
 

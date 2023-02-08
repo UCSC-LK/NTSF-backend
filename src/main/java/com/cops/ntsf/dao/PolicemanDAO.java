@@ -124,7 +124,6 @@ public class PolicemanDAO {
         return alert;
     }
 
-
     public boolean deletePoliceman(String police_id){
         Connection dbConn = null;
         boolean alert = false;
@@ -322,6 +321,58 @@ public class PolicemanDAO {
             e.printStackTrace();
         }
         return alert;
+    }
+
+    public JSONArray fetchPolicemanDetailsList(String police_id) {
+        Connection dbConn = null;
+
+        JSONArray jsonArray = new JSONArray();
+
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT * from policeman WHERE police_id = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, police_id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next())
+            {
+                String name = resultSet.getString("name");
+//                String police_id = resultSet.getString("police_id");
+                String nic = resultSet.getString("nic");
+                String mobile_number = resultSet.getString("mobile_number");
+                String email = resultSet.getString("email");
+                String rank = resultSet.getString("rank");
+                String police_station = resultSet.getString("police_station");
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("name", name);
+                jsonObject.put("police_id", police_id);
+                jsonObject.put("nic", nic);
+                jsonObject.put("mobile_number", mobile_number);
+                jsonObject.put("email", email);
+                jsonObject.put("rank", rank);
+                jsonObject.put("police_station", police_station);
+
+                jsonArray.put(jsonObject);
+
+                System.out.println(name);
+                System.out.println(police_id);
+                System.out.println(nic);
+                System.out.println(mobile_number);
+                System.out.println(email);
+                System.out.println(rank);
+                System.out.println(police_station);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
     }
 }
 

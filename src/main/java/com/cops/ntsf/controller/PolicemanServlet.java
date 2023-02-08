@@ -135,7 +135,45 @@ public class PolicemanServlet extends HttpServlet {
         out.close();
 
     }
+    protected void fetchPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
 
+            HttpSession session = request.getSession(false);
+
+            String police_id = request.getParameter("police_id");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            Policeman policeman = new Policeman();
+            JSONArray fetchedpolicemanList = policeman.fetchPolicemanDetails(police_id);
+
+            jsonObject.put("List", fetchedpolicemanList );
+
+            out.write(jsonObject.toString());
+            out.close();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+    protected void editPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     protected void removePoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try{
             PrintWriter out = response.getWriter();
@@ -181,7 +219,6 @@ public class PolicemanServlet extends HttpServlet {
         System.out.println("error block");
     }
     }
-
     protected void checkPolicemanNic(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try{
             PrintWriter out = response.getWriter();
@@ -274,6 +311,14 @@ public class PolicemanServlet extends HttpServlet {
         else if (action.equals("viewPoliceman"))
         {
             viewPoliceman(request, response);
+        }
+        else if (action.equals("fetchPoliceman"))
+        {
+            fetchPoliceman(request, response);
+        }
+        else if (action.equals("updatePoliceman"))
+        {
+            editPoliceman(request, response);
         }
         else if (action.equals("deletePoliceman"))
         {
