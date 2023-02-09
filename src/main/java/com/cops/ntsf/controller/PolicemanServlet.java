@@ -33,12 +33,15 @@ public class PolicemanServlet extends HttpServlet {
             String police_id = request.getParameter("username");
             String password = request.getParameter("password");
 
+            String hashedPassword = hashingPassword(password);
+
             System.out.println("Works until login servlet");
 
             System.out.println(police_id);
             System.out.println(password);
+            System.out.println(hashedPassword);
             Policeman policeman = new Policeman();
-            JSONArray loginResponse = policeman.login(police_id, password);
+            JSONArray loginResponse = policeman.login(police_id, hashedPassword);
 
             jsonObject.put("loginResponse", loginResponse);
 
@@ -103,8 +106,9 @@ public class PolicemanServlet extends HttpServlet {
         {
             PasswordGenerator passwordGenerator = new PasswordGenerator();
             String password = passwordGenerator.generatePassword();
+            String hashedPassword = hashingPassword(password);
             System.out.println(password);
-            Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, password);
+            Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, hashedPassword);
             policeman.policemanAdded();
         }
         else
