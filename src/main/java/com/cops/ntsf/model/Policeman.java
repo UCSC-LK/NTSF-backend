@@ -171,7 +171,7 @@ public class Policeman {
 
     public void policemanEdited() {
         PolicemanDAO policemanDAO = new PolicemanDAO();
-        policemanDAO.updatePoliceman(this)
+        policemanDAO.updatePoliceman(this);
     }
 }
 

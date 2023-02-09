@@ -5,7 +5,9 @@ import com.cops.ntsf.util.Database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
 import java.sql.*;
+import java.util.Base64;
 
 public class PolicemanDAO {
     public String createPoliceman(Policeman policeman)
@@ -398,6 +400,7 @@ public class PolicemanDAO {
             e.printStackTrace();
         }
     }
+
 }
 
 
