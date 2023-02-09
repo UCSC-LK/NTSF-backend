@@ -192,7 +192,7 @@ public class PolicemanServlet extends HttpServlet {
             if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
             {
                 Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station);
-                policeman.policemanAdded();
+                policeman.policemanEdited();
             }
             else
             {

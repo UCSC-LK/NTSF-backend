@@ -168,9 +168,10 @@ public class Policeman {
 
     }
 
-    public void editPolicemanDetails() {
+
+    public void policemanEdited() {
         PolicemanDAO policemanDAO = new PolicemanDAO();
-        policemanDAO.createPoliceman(this);
+        policemanDAO.updatePoliceman(this)
     }
 }
 
