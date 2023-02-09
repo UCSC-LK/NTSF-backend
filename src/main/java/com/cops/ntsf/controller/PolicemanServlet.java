@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -168,6 +169,36 @@ public class PolicemanServlet extends HttpServlet {
             HttpSession session = request.getSession();
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("serverResponse", "Allowed");
+
+            String name = request.getParameter("name");
+            String police_id = request.getParameter("police_id");
+            String nic = request.getParameter("nic");
+            String mobile_number = request.getParameter("mobile_number");
+            String email = request.getParameter("email");
+            String rank = request.getParameter("rank");
+            String police_station = request.getParameter("police_station");
+
+            System.out.println("Came until the editPoliceman Servlet");
+
+            System.out.println(name);
+            System.out.println(police_id);
+            System.out.println(nic);
+            System.out.println(mobile_number);
+            System.out.println(email);
+            System.out.println(rank);
+            System.out.println(police_station);
+            System.out.println("Printed variables in Policeman Servlet");
+
+            if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
+            {
+                Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station);
+                policeman.policemanAdded();
+            }
+            else
+            {
+
+            }
+
             
 
         } catch (Exception e) {

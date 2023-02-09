@@ -28,6 +28,16 @@ public class Policeman {
     {
 
     }
+
+    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station){
+        this.name = name;
+        this.police_id = police_id;
+        this.nic = nic;
+        this.mobile_number = mobile_number;
+        this.email = email;
+        this.rank = rank;
+        this.police_station = police_station;
+    }
     //getters
     public String getPolice_station() {
         return police_station;
@@ -156,6 +166,11 @@ public class Policeman {
         JSONArray fetchedPolicemanDetailsList = policemanDAO.fetchPolicemanDetailsList(police_id);
         return fetchedPolicemanDetailsList;
 
+    }
+
+    public void editPolicemanDetails() {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        policemanDAO.createPoliceman(this);
     }
 }
 
