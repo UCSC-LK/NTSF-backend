@@ -2,12 +2,15 @@ package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.util.Database;
+import com.mysql.cj.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.PasswordAuthentication;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.util.Base64;
+import java.util.Properties;
 
 public class PolicemanDAO {
     public String createPoliceman(Policeman policeman)
@@ -402,6 +405,7 @@ public class PolicemanDAO {
     }
 
 }
+
 
 
 
