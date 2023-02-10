@@ -10,10 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Random;
 
 public class PolicemanServlet extends HttpServlet {
@@ -30,12 +33,15 @@ public class PolicemanServlet extends HttpServlet {
             String police_id = request.getParameter("username");
             String password = request.getParameter("password");
 
+            String hashedPassword = hashingPassword(password);
+
             System.out.println("Works until login servlet");
 
             System.out.println(police_id);
             System.out.println(password);
+            System.out.println(hashedPassword);
             Policeman policeman = new Policeman();
-            JSONArray loginResponse = policeman.login(police_id, password);
+            JSONArray loginResponse = policeman.login(police_id, hashedPassword);
 
             jsonObject.put("loginResponse", loginResponse);
 
@@ -100,8 +106,9 @@ public class PolicemanServlet extends HttpServlet {
         {
             PasswordGenerator passwordGenerator = new PasswordGenerator();
             String password = passwordGenerator.generatePassword();
+            String hashedPassword = hashingPassword(password);
             System.out.println(password);
-            Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, password);
+            Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, hashedPassword);
             policeman.policemanAdded();
         }
         else
@@ -135,6 +142,95 @@ public class PolicemanServlet extends HttpServlet {
         out.close();
 
     }
+    protected void fetchPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession(false);
+
+            String police_id = request.getParameter("police_id");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            Policeman policeman = new Policeman();
+            JSONArray fetchedpolicemanList = policeman.fetchPolicemanDetails(police_id);
+
+            jsonObject.put("List", fetchedpolicemanList );
+
+            out.write(jsonObject.toString());
+            out.close();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+    protected void editPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String name = request.getParameter("name");
+            String police_id = request.getParameter("police_id");
+            String nic = request.getParameter("nic");
+            String mobile_number = request.getParameter("mobile_number");
+            String email = request.getParameter("email");
+            String rank = request.getParameter("rank");
+            String police_station = request.getParameter("police_station");
+
+            System.out.println("Came until the editPoliceman Servlet");
+
+            System.out.println(name);
+            System.out.println(police_id);
+            System.out.println(nic);
+            System.out.println(mobile_number);
+            System.out.println(email);
+            System.out.println(rank);
+            System.out.println(police_station);
+            System.out.println("Printed variables in Policeman Servlet");
+
+            if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
+            {
+                Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station);
+                policeman.policemanEdited();
+            }
+            else
+            {
+
+            }
+
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    protected void removePoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String police_id = request.getParameter("police_id");
+            System.out.println(police_id);
+            System.out.println("Came until deletePoliceman in servlet");
+
+            Policeman policeman = new Policeman();
+            jsonObject.put("alert",  policeman.deletePolicemanDetails(police_id));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     protected void checkPolicemanPolice_ID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try{
@@ -149,7 +245,7 @@ public class PolicemanServlet extends HttpServlet {
         System.out.println("Came until error duplication in servlet");
 
         Policeman policeman = new Policeman();
-        jsonObject.put("alert",  policeman.policemanPolice_IDCheck(police_id));
+        jsonObject.put("alert",  policeman.policemanPolice_IDCheck(police_id)); //if alert is true, deleted
 
         out.write(jsonObject.toString());
         out.close();
@@ -160,7 +256,6 @@ public class PolicemanServlet extends HttpServlet {
         System.out.println("error block");
     }
     }
-
     protected void checkPolicemanNic(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try{
             PrintWriter out = response.getWriter();
@@ -253,6 +348,18 @@ public class PolicemanServlet extends HttpServlet {
         else if (action.equals("viewPoliceman"))
         {
             viewPoliceman(request, response);
+        }
+        else if (action.equals("fetchPoliceman"))
+        {
+            fetchPoliceman(request, response);
+        }
+        else if (action.equals("updatePoliceman"))
+        {
+            editPoliceman(request, response);
+        }
+        else if (action.equals("deletePoliceman"))
+        {
+            removePoliceman(request, response);
         }
         else if (action.equals("checkPoliceman_ID"))
         {
@@ -416,6 +523,17 @@ public class PolicemanServlet extends HttpServlet {
             return password.toString();
         }
     }
+
+    public static String hashingPassword(String password) throws Exception {
+        String originalString = password;
+        System.out.println("Original String to hash: " + originalString);
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(originalString.getBytes("UTF-8"));
+        String encoded = Base64.getEncoder().encodeToString(hash);
+        System.out.println("Hash: " + encoded);
+        return encoded;
+    }
+
 
 
 }

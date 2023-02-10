@@ -1,12 +1,16 @@
 package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Policeman;
-import com.cops.ntsf.util.DBConnect;
 import com.cops.ntsf.util.Database;
+import com.mysql.cj.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.PasswordAuthentication;
+import java.security.MessageDigest;
 import java.sql.*;
+import java.util.Base64;
+import java.util.Properties;
 
 public class PolicemanDAO {
     public String createPoliceman(Policeman policeman)
@@ -91,6 +95,65 @@ public class PolicemanDAO {
         return jsonArray;
     }
 
+    public boolean updatePolicemanDetails(Policeman policeman)
+    {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try {
+            dbConn = Database.getConnection();
+            String sql = "UPDATE policeman SET name = ?, nic = ?, mobile_number = ?, email = ?, rank = ?, police_station = ? WHERE police_id = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            preparedStatement.setString(1, policeman.getName());
+            preparedStatement.setString(2, policeman.getNic());
+            preparedStatement.setString(3, policeman.getMobile_number());
+            preparedStatement.setString(4, policeman.getEmail());
+            preparedStatement.setString(5, policeman.getRank());
+            preparedStatement.setString(6, policeman.getPolice_station());
+            preparedStatement.setString(7, policeman.getPolice_id());
+
+            int resultSet = preparedStatement.executeUpdate();
+            if (resultSet > 0) {
+                System.out.println("Updated Policeman!!");
+                alert = true;
+            } else {
+                System.out.println("Failed to update policeman!!");
+                alert = false;
+            }
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
+    public boolean deletePoliceman(String police_id){
+        Connection dbConn = null;
+        boolean alert = false;
+        try{
+            dbConn = Database.getConnection();
+            String sql = "DELETE from policeman where police_id = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, police_id);
+
+            int resultSet = preparedStatement.executeUpdate();
+            if (resultSet > 0) {
+                System.out.println("Deleted Policeman!!");
+                alert = true;
+            } else {
+                System.out.println("Failed to delete policeman!!");
+                alert = false;
+            }
+            preparedStatement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
     public boolean getPolicemanPolice_IDCheckResult(String police_idCheck) {
         Connection dbConn = null;
 
@@ -264,7 +327,85 @@ public class PolicemanDAO {
         }
         return alert;
     }
+
+    public JSONArray fetchPolicemanDetailsList(String police_id) {
+        Connection dbConn = null;
+
+        JSONArray jsonArray = new JSONArray();
+
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT * from policeman WHERE police_id = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, police_id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next())
+            {
+                String name = resultSet.getString("name");
+//                String police_id = resultSet.getString("police_id");
+                String nic = resultSet.getString("nic");
+                String mobile_number = resultSet.getString("mobile_number");
+                String email = resultSet.getString("email");
+                String rank = resultSet.getString("rank");
+                String police_station = resultSet.getString("police_station");
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("name", name);
+                jsonObject.put("police_id", police_id);
+                jsonObject.put("nic", nic);
+                jsonObject.put("mobile_number", mobile_number);
+                jsonObject.put("email", email);
+                jsonObject.put("rank", rank);
+                jsonObject.put("police_station", police_station);
+
+                jsonArray.put(jsonObject);
+
+                System.out.println(name);
+                System.out.println(police_id);
+                System.out.println(nic);
+                System.out.println(mobile_number);
+                System.out.println(email);
+                System.out.println(rank);
+                System.out.println(police_station);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
+
+    public void updatePoliceman(Policeman policeman) {
+        Connection dbConn = null;
+
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "UPDATE policeman SET name = ?, nic = ?, mobile_number = ?, email = ?, rank = ?, police_station = ? WHERE police_id = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, policeman.getName());
+            preparedStatement.setString(2, policeman.getNic());
+            preparedStatement.setString(3, policeman.getMobile_number());
+            preparedStatement.setString(4, policeman.getEmail());
+            preparedStatement.setString(5, policeman.getRank());
+            preparedStatement.setString(6, policeman.getPolice_station());
+            preparedStatement.setString(7, policeman.getPolice_id());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
 
 
 

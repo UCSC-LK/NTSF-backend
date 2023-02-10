@@ -28,6 +28,16 @@ public class Policeman {
     {
 
     }
+
+    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station){
+        this.name = name;
+        this.police_id = police_id;
+        this.nic = nic;
+        this.mobile_number = mobile_number;
+        this.email = email;
+        this.rank = rank;
+        this.police_station = police_station;
+    }
     //getters
     public String getPolice_station() {
         return police_station;
@@ -143,6 +153,25 @@ public class Policeman {
         PolicemanDAO policemanDAO = new PolicemanDAO();
         boolean policemanLoginUsernameCheckResult  = policemanDAO.getPolicemanLoginUsernameCheckResult(police_id);
         return policemanLoginUsernameCheckResult;
+    }
+
+    public boolean deletePolicemanDetails(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        boolean deletePolicemanDetailsResult  = policemanDAO.deletePoliceman(police_id);
+        return deletePolicemanDetailsResult;
+    }
+
+    public JSONArray fetchPolicemanDetails(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        JSONArray fetchedPolicemanDetailsList = policemanDAO.fetchPolicemanDetailsList(police_id);
+        return fetchedPolicemanDetailsList;
+
+    }
+
+
+    public void policemanEdited() {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        policemanDAO.updatePoliceman(this);
     }
 }
 
