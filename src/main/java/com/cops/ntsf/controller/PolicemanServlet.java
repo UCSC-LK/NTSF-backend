@@ -227,6 +227,9 @@ public class PolicemanServlet extends HttpServlet {
             Policeman policeman = new Policeman();
             jsonObject.put("alert",  policeman.deletePolicemanDetails(police_id));
 
+            out.write(jsonObject.toString());
+            out.close();
+
         }catch (Exception e){
             e.printStackTrace();
         }

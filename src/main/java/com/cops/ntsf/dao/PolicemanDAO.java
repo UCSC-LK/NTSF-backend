@@ -152,7 +152,7 @@ public class PolicemanDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return alert;
+        return true;
     }
     public boolean getPolicemanPolice_IDCheckResult(String police_idCheck) {
         Connection dbConn = null;
