@@ -46,7 +46,7 @@ public class ComplaintServlet extends HttpServlet {
         Complaint complaint = new Complaint(user_id, title, description, complaint_no);
         complaint.complaintAdded();
 
-        out.write(jsonObject.toString());
+        out.write(new Gson().toJson(complaint));
         out.close();
     }
 

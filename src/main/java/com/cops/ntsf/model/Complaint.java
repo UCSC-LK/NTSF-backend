@@ -18,8 +18,8 @@ public class Complaint {
         this.complaint_no = complaint_no;
     }
 
-    public Complaint(String complaint_no) {
-        this.complaint_no = complaint_no;
+    public Complaint(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getUser_id() {

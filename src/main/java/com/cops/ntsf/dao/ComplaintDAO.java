@@ -90,7 +90,7 @@ public class ComplaintDAO {
         while (resultSet.next()) {
             Complaint nextComplaint;
             nextComplaint = new Complaint(complaint.getUser_id());
-            nextComplaint.setComplaint_no(String.valueOf(Integer.valueOf(resultSet.getString("complaint_no"))));
+            nextComplaint.setComplaint_no(resultSet.getString("complaint_no"));
             nextComplaint.setTitle(resultSet.getString("title"));
             nextComplaint.setDescription(resultSet.getString("description"));
 
