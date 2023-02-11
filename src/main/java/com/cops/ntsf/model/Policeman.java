@@ -118,6 +118,13 @@ public class Policeman {
         return policemanDetailsList;
     }
 
+    public JSONArray getPoliceStationOptions()
+    {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        JSONArray policeStationOptionsList = policemanDAO.getPoliceStationOptionsList();
+        return policeStationOptionsList;
+    }
+
     public boolean policemanPolice_IDCheck(String police_id) {
         PolicemanDAO policemanDAO = new PolicemanDAO();
         boolean policemanPolice_IDCheckResult  = policemanDAO.getPolicemanPolice_IDCheckResult(police_id);
@@ -173,5 +180,7 @@ public class Policeman {
         PolicemanDAO policemanDAO = new PolicemanDAO();
         policemanDAO.updatePoliceman(this);
     }
+
+
 }
 
