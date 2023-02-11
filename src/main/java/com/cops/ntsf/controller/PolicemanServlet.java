@@ -154,7 +154,7 @@ public class PolicemanServlet extends HttpServlet {
             jsonObject.put("serverResponse", "Allowed");
 
             Policeman policeman = new Policeman();
-            JSONArray policeStationOptionsList = policeman.getPoliceStationOptionsList();
+            JSONArray policeStationOptionsList = policeman.getPoliceStationOptions();
 
             jsonObject.put("List", policeStationOptionsList );
 
