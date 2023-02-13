@@ -6,8 +6,8 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Email {
-    private final String username = "educlickorg@gmail.com";
-    private final String password = "oumpnrpmenvekbil";
+    private final String username = "myEmail@gmail.com";
+    private final String password = "myPassword";
     private Session session = null;
 
     public Email(){
