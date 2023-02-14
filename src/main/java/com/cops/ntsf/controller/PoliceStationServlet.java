@@ -57,6 +57,28 @@ public class PoliceStationServlet extends HttpServlet {
     }
     }
 
+    protected void loadPoliceStationOptionsList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession(false);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            PoliceStation policeStation = new PoliceStation();
+            JSONArray policeStationOptionsList = policeStation.getPoliceStationOptions();
+
+            jsonObject.put("List", policeStationOptionsList );
+
+            out.write(jsonObject.toString());
+            out.close();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
     protected void viewPoliceStation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -79,6 +101,9 @@ public class PoliceStationServlet extends HttpServlet {
         String action = request.getParameter("action");
         if (action.equals("addPoliceStation")) {
             addPoliceStation(request, response);
+        }
+        else if (action.equals("loadPoliceStationOptionsList")) {
+            loadPoliceStationOptionsList(request, response);
         }
         else if (action.equals("viewPoliceStation")) {
             viewPoliceStation(request, response);
