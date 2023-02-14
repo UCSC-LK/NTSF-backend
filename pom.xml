@@ -56,6 +56,13 @@
       <artifactId>gson</artifactId>
       <version>2.10</version>
     </dependency>
+
+    <!--java mail for google SMTP server-->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.6.2</version>
+    </dependency>
   </dependencies>
 
   <build>

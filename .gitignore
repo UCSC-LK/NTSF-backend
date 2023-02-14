@@ -49,3 +49,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+#ignore the environment file
+.env

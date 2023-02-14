@@ -142,6 +142,29 @@ public class PolicemanServlet extends HttpServlet {
         out.close();
 
     }
+
+    protected void loadPoliceStationOptionsList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            HttpSession session = request.getSession(false);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            Policeman policeman = new Policeman();
+            JSONArray policeStationOptionsList = policeman.getPoliceStationOptions();
+
+            jsonObject.put("List", policeStationOptionsList );
+
+            out.write(jsonObject.toString());
+            out.close();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
     protected void fetchPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try{
             PrintWriter out = response.getWriter();
@@ -226,6 +249,9 @@ public class PolicemanServlet extends HttpServlet {
 
             Policeman policeman = new Policeman();
             jsonObject.put("alert",  policeman.deletePolicemanDetails(police_id));
+
+            out.write(jsonObject.toString());
+            out.close();
 
         }catch (Exception e){
             e.printStackTrace();
@@ -345,6 +371,10 @@ public class PolicemanServlet extends HttpServlet {
         else if(action.equals("addPoliceman")) {
             addPoliceman(request, response);
         }
+        else if(action.equals("loadPoliceStationOptionsList"))
+        {
+            loadPoliceStationOptionsList(request, response);
+        }
         else if (action.equals("viewPoliceman"))
         {
             viewPoliceman(request, response);
@@ -382,7 +412,6 @@ public class PolicemanServlet extends HttpServlet {
             System.out.println("Hi from Email Checking servelet");
         }
     }
-
     private boolean checkValidations(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
         boolean flagName = false; //flag = true means name validation is passed
         boolean flagPolice_ID = false; //flag = true means Police ID validation is passed
@@ -534,6 +563,5 @@ public class PolicemanServlet extends HttpServlet {
         return encoded;
     }
 
-
-
+    
 }
