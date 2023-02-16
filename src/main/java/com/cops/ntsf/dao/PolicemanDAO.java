@@ -384,7 +384,14 @@ public class PolicemanDAO {
 
         try {
             dbConn = Database.getConnection();
-
+            System.out.println("Came until the update  DAO");
+            System.out.println(policeman.getName());
+            System.out.println(policeman.getNic());
+            System.out.println(policeman.getMobile_number());
+            System.out.println(policeman.getEmail());
+            System.out.println(policeman.getRank());
+            System.out.println(policeman.getPolice_station());
+            System.out.println(policeman.getPolice_id());
             String sql = "UPDATE policeman SET name = ?, nic = ?, mobile_number = ?, email = ?, rank = ?, police_station = ? WHERE police_id = ?";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, policeman.getName());
@@ -395,6 +402,8 @@ public class PolicemanDAO {
             preparedStatement.setString(6, policeman.getPolice_station());
             preparedStatement.setString(7, policeman.getPolice_id());
 
+            System.out.println("Came until the update  DAO 2");
+
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
@@ -402,7 +411,6 @@ public class PolicemanDAO {
             e.printStackTrace();
         }
     }
-
 
 }
 

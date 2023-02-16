@@ -169,6 +169,7 @@ public class Policeman {
 
 
     public void policemanEdited() {
+        System.out.println("Came until the update model");
         PolicemanDAO policemanDAO = new PolicemanDAO();
         policemanDAO.updatePoliceman(this);
     }
