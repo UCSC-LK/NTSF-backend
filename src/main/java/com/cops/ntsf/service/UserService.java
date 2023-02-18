@@ -12,30 +12,62 @@ public class UserService {
 
         String userId = user.getUserId();
 
-        if (userId != null) {
+        if (nic != null) {
             Auth auth = new Auth(userId, password);
             auth.setAuthInfo();
+//            switch (userType) {
+//                case DRIVER:
+//                    Driver driver = new Driver(nic, loginId);
+//                    driver.setDriverInfo();
+//                    return user;
+//                case PEDESTRIAN:
+//                    Pedestrian pedestrian = new Pedestrian(nic, loginId);
+//                    pedestrian.setPedestrianInfo();
+//                    return pedestrian;
+//                case VEHICLE:
+//                    Vehicle vehicle = new Vehicle(nic, loginId);
+//                    vehicle.setVehicleInfo();
+//                    return user;
+//                default:
+//                    throw new RuntimeException();
+//            }
         }
         return user;
     }
 
-    public User getUserInfo(String userId,
+    public User getUserInfo(String nic,
                             UserType userType) {
-        User user = new User(userId, userType);
+        User user = new User(nic, userType);
         user.getUserInfo();
 
-        userId = user.getUserId();
+        nic = user.getUserId();
 
-        if (userId != null) {
-            switch (userType) {
-                case DRIVER:
-                    Driver driver = new Driver(userId, userType);
-                    driver.getDriverInfo();
-                    return user;
-                default:
-                    throw new RuntimeException();
-            }
+        if (nic != null) {
+//            switch (userType) {
+//                case DRIVER:
+            Driver driver = new Driver(nic);
+            driver.getDriverInfo();
+            Vehicle vehicle = new Vehicle(nic);
+            vehicle.getVehicleInfo();
+            People people = new People(nic);
+            people.getCivilInfo();
+//            return user;
+////                default:
+////                    throw new RuntimeException();
+////            }
+//        }
         }
         return user;
     }
+
+//    public User updateUserInfo(String nic,
+//                               String mobileNo,
+//                               String email,
+//                               String name,
+//                               String address) {
+//        User user = new User(nic, mobileNo, email, name, address);
+//        user.updateUserInfo();
+//
+//        return user;
+//    }
 }
