@@ -9,6 +9,10 @@ public class Driver extends User {
     public Driver() {
         super();
     }
+    
+    public Driver(String nic) {
+        super();
+    }
 
     public Driver(String userId, String licenseNo) {
         super(userId);
