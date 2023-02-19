@@ -1,6 +1,5 @@
 package com.cops.ntsf.service;
 
-import com.cops.ntsf.constants.UserType;
 import com.cops.ntsf.model.*;
 
 public class UserService {
@@ -35,12 +34,11 @@ public class UserService {
         return user;
     }
 
-    public User getUserInfo(String nic,
-                            UserType userType) {
-        User user = new User(nic, userType);
+    public User getUserInfo(String userId) {
+        User user = new User(userId);
         user.getUserInfo();
 
-        nic = user.getUserId();
+        String nic = user.getNic();
 
         if (nic != null) {
 //            switch (userType) {
