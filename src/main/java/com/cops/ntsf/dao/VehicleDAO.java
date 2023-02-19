@@ -45,4 +45,25 @@ public class VehicleDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void getVehicleFromNic(Vehicle vehicle) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "SELECT * FROM vehicle WHERE nic = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, vehicle.getNic());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                // driver.setLicenceExpiryDate(LocalDate.parse(resultSet.getString("licence_expire_date")));
+                // driver.setLicenceIssueDate(LocalDate.parse(resultSet.getString("licence_issue_date")));
+                vehicle.setUserId(resultSet.getString("user_id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
