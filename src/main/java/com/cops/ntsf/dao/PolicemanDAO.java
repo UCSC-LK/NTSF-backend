@@ -412,6 +412,37 @@ public class PolicemanDAO {
         }
     }
 
+    public JSONArray getPolicemanDetailsListAsOIC() {
+        Connection dbConn = null;
+
+        JSONArray jsonArray = new JSONArray();
+
+        try{
+            System.out.println("Came until the DAO of  getPolicemanDetailsListAsOIC");
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT * FROM policeman WHERE ";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next())
+            {
+                String name = resultSet.getString("name");
+                String police_id = resultSet.getString("police_id");
+                String nic = resultSet.getString("nic");
+                String mobile_number = resultSet.getString("mobile_number");
+                String email = resultSet.getString("email");
+                String rank = resultSet.getString("rank");
+                String police_station = resultSet.getString("police_station");
+
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
 }
 
 

@@ -174,6 +174,11 @@ public class Policeman {
         policemanDAO.updatePoliceman(this);
     }
 
-
+//OIC
+    public JSONArray getPolicemanDetailsAsOIC() {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        JSONArray policemanDetailsListAsOIC = policemanDAO.getPolicemanDetailsListAsOIC();
+        return policemanDetailsListAsOIC;
+    }
 }
 
