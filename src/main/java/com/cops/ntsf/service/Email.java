@@ -28,10 +28,11 @@ public class Email {
 
     }
 
-    public void sendMail( String toEmail , String subject , String textMessage ){
+    public void sendMail( String toEmail , String textMessage ){
 
 
         try{
+            System.out.println("HI!!! sending email");
             Message message = new MimeMessage( session );
             message.setFrom( new InternetAddress("EduClick") );
             message.setRecipients(
@@ -39,7 +40,7 @@ public class Email {
                     InternetAddress.parse(toEmail)
             );
 
-            message.setSubject(subject);
+            message.setSubject("NTSF Portal Password");
             message.setText( textMessage );
 
             Transport.send(message);

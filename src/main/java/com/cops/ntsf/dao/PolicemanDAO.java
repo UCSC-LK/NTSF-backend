@@ -5,6 +5,7 @@ import com.cops.ntsf.util.Database;
 import com.mysql.cj.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import com.cops.ntsf.service.Email;
 
 import java.net.PasswordAuthentication;
 import java.security.MessageDigest;
@@ -30,6 +31,8 @@ public class PolicemanDAO {
             preparedStatement.setString(7, policeman.getPolice_station());
             preparedStatement.setString(8, policeman.getPassword());
 
+            Email email = new Email();
+            email.sendMail(policeman.getEmail(), policeman.getPassword());
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
