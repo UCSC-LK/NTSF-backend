@@ -2,6 +2,7 @@ package com.cops.ntsf.model;
 
 //import com.cops.ntsf.dao.FineDAO;
 
+import com.cops.ntsf.constants.FineType;
 import com.cops.ntsf.dao.FineDAO;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Fine {
+    private FineType fineType;
     private String userId;
     private Integer ticketNo;
     private Integer fineNo;
@@ -21,6 +23,11 @@ public class Fine {
 
     public Fine(String userId) {
         this.userId = userId;
+    }
+
+    public Fine(String userId, FineType fineType) {
+        this.userId = userId;
+        this.fineType = fineType;
     }
 
     public ArrayList<Fine> getUserFinesInfo() throws SQLException {

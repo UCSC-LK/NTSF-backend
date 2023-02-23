@@ -13,7 +13,7 @@ public class FineDAO {
     public ArrayList<Fine> fetchUserFinesInfo(Fine fine) throws SQLException {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM fine WHERE user_id = ?";
+        String sql = "SELECT * FROM fine WHERE user_id = ? ORDER BY fine_type";
 
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 

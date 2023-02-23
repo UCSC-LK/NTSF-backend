@@ -1,5 +1,6 @@
 package com.cops.ntsf.controller;
 
+import com.cops.ntsf.constants.FineType;
 import com.cops.ntsf.model.Fine;
 import com.google.gson.Gson;
 
@@ -18,10 +19,18 @@ public class FineServlet extends HttpServlet {
 
         // Get request parameters
         String userId = req.getParameter("user_id");
+        FineType fineType = FineType.valueOf(req.getParameter("fine_type"));
         ArrayList<Fine> finesList;
 
 //        UserService userService = new UserService();
-        Fine fine = new Fine(userId);
+//        Fine fine = new Fine(userId);
+//        try {
+//            finesList = fine.getUserFinesInfo();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+
+        Fine fine = new Fine(userId, fineType);
         try {
             finesList = fine.getUserFinesInfo();
         } catch (SQLException e) {
