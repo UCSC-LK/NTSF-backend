@@ -1,16 +1,16 @@
 package com.cops.ntsf.model;
 
-import com.cops.ntsf.constants.UserType;
+import com.cops.ntsf.constants.FineType;
 import com.cops.ntsf.dao.UserDAO;
 
 public class User {
     private String userId;
     private String name;
-//    private String address;
+    //    private String address;
     private String nic;
     private String email;
     private String mobileNo;
-    private UserType userType;
+    private FineType fineType;
     // private Blob profilePicture;
 
     public User(String nic, String email) {
@@ -18,9 +18,9 @@ public class User {
         this.email = email;
     }
 
-    public User(String userId, UserType userType) {
+    public User(String userId, FineType fineType) {
         this.userId = userId;
-        this.userType = userType;
+        this.fineType = fineType;
     }
 
     public User(String userId) {
@@ -54,12 +54,12 @@ public class User {
         this.email = email;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public FineType getFineType() {
+        return fineType;
     }
 
-    public void setUserType(String userType) {
-        this.userType = UserType.valueOf(userType);
+    public void setFineType(String fineType) {
+        this.fineType = FineType.valueOf(fineType);
     }
 
     public void setUserInfo() {
