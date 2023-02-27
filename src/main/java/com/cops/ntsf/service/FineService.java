@@ -7,8 +7,8 @@ import com.cops.ntsf.model.Fine;
 import java.sql.Date;
 
 public class FineService {
-    public Fine insertFineInfo(String ticketNo,
-                               String fineNo,
+    public Fine insertFineInfo(Integer ticketNo,
+                               Integer fineNo,
                                Date date,
                                Date dueDate,
                                String fineAmount,
