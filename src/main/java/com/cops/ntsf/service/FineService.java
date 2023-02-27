@@ -1,12 +1,22 @@
-//package com.cops.ntsf.service;
-//
-////public class FineService {
-////
-////    public Fine insertFineInfo(Integer fineNo, String fineType, String userId, Integer fineAmount, String paymentStatus, String policeId) throws ParseException {
-////
-////        Fine fine = new Fine(fineNo, fineType, userId, fineAmount, paymentStatus, policeId, fineType);
-////        fine.setFineInfo();
-////
-////        return fine;
-////    }
-////}
+package com.cops.ntsf.service;
+
+import com.cops.ntsf.constants.FineType;
+import com.cops.ntsf.constants.PaymentStatus;
+import com.cops.ntsf.model.Fine;
+
+import java.sql.Date;
+
+public class FineService {
+    public Fine insertFineInfo(String ticketNo,
+                               String fineNo,
+                               Date date,
+                               Date dueDate,
+                               String fineAmount,
+                               PaymentStatus paymentStatus,
+                               FineType fineType) {
+        Fine fine = new Fine(ticketNo, fineNo, date, dueDate, fineAmount, paymentStatus, fineType);
+        fine.setFineInfo();
+
+        return fine;
+    }
+}
