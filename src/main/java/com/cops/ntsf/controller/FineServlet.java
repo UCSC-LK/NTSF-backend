@@ -53,8 +53,8 @@ public class FineServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doPost(req, resp);
         // Get request parameters
-        String ticketNo = req.getParameter("ticket_no");
-        String fineNo = req.getParameter("fine_no");
+        Integer ticketNo = Integer.valueOf(req.getParameter("ticket_no"));
+        Integer fineNo = Integer.valueOf(req.getParameter("fine_no"));
         Date date = Date.valueOf(req.getParameter("date"));
         Date dueDate = Date.valueOf(req.getParameter("due_date"));
         String fineAmount = req.getParameter("fine_amount");
