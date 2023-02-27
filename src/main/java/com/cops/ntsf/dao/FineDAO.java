@@ -1,5 +1,6 @@
 package com.cops.ntsf.dao;
 
+import com.cops.ntsf.constants.FineType;
 import com.cops.ntsf.constants.PaymentStatus;
 import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.util.Database;
@@ -18,7 +19,7 @@ public class FineDAO {
 
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-        preparedStatement.setString(1, fine.getUserId());
+        preparedStatement.setString(1, String.valueOf(fine.getUserId()));
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -27,12 +28,13 @@ public class FineDAO {
         while (resultSet.next()) {
             Fine nextFine;
             nextFine = new Fine(fine.getUserId());
-            nextFine.setTicketNo(resultSet.getString("ticket_no"));
-            nextFine.setFineNo(resultSet.getString("fine_no"));
+            nextFine.setTicketNo(Integer.valueOf(resultSet.getString("ticket_no")));
+            nextFine.setFineNo(Integer.valueOf(resultSet.getString("fine_no")));
             nextFine.setDate(resultSet.getDate("date"));
             nextFine.setDueDate(resultSet.getDate("due_date"));
             nextFine.setFineAmount(resultSet.getString("fine_amount"));
             nextFine.setPaymentStatus(PaymentStatus.valueOf(resultSet.getString("payment_status")));
+            nextFine.setFineType(FineType.valueOf(resultSet.getString("fine_type")));
 
             finesList.add(nextFine);
         }
@@ -46,8 +48,8 @@ public class FineDAO {
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setString(1, fine.getTicketNo());
-            preparedStatement.setString(2, fine.getFineNo());
+            preparedStatement.setString(1, String.valueOf(fine.getTicketNo()));
+            preparedStatement.setString(2, String.valueOf(fine.getFineNo()));
             preparedStatement.setString(3, String.valueOf(fine.getDate()));
             preparedStatement.setString(4, String.valueOf(fine.getDueDate()));
             preparedStatement.setString(5, fine.getFineAmount());
@@ -55,7 +57,7 @@ public class FineDAO {
             preparedStatement.setString(1, String.valueOf(fine.getFineType()));
 
             preparedStatement.executeUpdate();
-            
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
