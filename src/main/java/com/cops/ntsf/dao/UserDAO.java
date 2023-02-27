@@ -52,7 +52,7 @@ public class UserDAO {
             else
                 preparedStatement.setString(1, user.getUserId());
 
-            preparedStatement.setString(2, user.getUserType().toString());
+            preparedStatement.setString(2, user.getFineType().toString());
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -62,7 +62,7 @@ public class UserDAO {
                 user.setNic(resultSet.getString("nic"));
                 user.setEmail(resultSet.getString("email"));
                 user.setMobileNo(resultSet.getString("mobile_no"));
-                user.setUserType(resultSet.getString("user_type"));
+//                user.setUserType(resultSet.getString("user_type"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
