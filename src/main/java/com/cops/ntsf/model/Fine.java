@@ -1,11 +1,9 @@
 package com.cops.ntsf.model;
 
-//import com.cops.ntsf.dao.FineDAO;
-
 import com.cops.ntsf.constants.FineType;
+import com.cops.ntsf.constants.PaymentStatus;
 import com.cops.ntsf.dao.FineDAO;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,26 +11,19 @@ import java.util.ArrayList;
 public class Fine {
     private FineType fineType;
     private String userId;
-    private Integer ticketNo;
-    private Integer fineNo;
+    private String ticketNo;
+    private String fineNo;
     private Date date;
     private Date dueDate;
-    private BigDecimal fineAmount;
-    private String paymentStatus;
+    private String fineAmount;
+    private PaymentStatus paymentStatus;
 
-
-    public Fine(String userId) {
-        this.userId = userId;
+    public FineType getFineType() {
+        return fineType;
     }
 
-    public Fine(String userId, FineType fineType) {
-        this.userId = userId;
+    public void setFineType(FineType fineType) {
         this.fineType = fineType;
-    }
-
-    public ArrayList<Fine> getUserFinesInfo() throws SQLException {
-        FineDAO fineDAO = new FineDAO();
-        return fineDAO.fetchUserFinesInfo(this);
     }
 
     public String getUserId() {
@@ -43,19 +34,19 @@ public class Fine {
         this.userId = userId;
     }
 
-    public Integer getTicketNo() {
+    public String getTicketNo() {
         return ticketNo;
     }
 
-    public void setTicketNo(Integer ticketNo) {
+    public void setTicketNo(String ticketNo) {
         this.ticketNo = ticketNo;
     }
 
-    public Integer getFineNo() {
+    public String getFineNo() {
         return fineNo;
     }
 
-    public void setFineNo(Integer fineNo) {
+    public void setFineNo(String fineNo) {
         this.fineNo = fineNo;
     }
 
@@ -75,26 +66,49 @@ public class Fine {
         this.dueDate = dueDate;
     }
 
-    public BigDecimal getFineAmount() {
+    public String getFineAmount() {
         return fineAmount;
     }
 
-    public void setFineAmount(BigDecimal fineAmount) {
+    public void setFineAmount(String fineAmount) {
         this.fineAmount = fineAmount;
     }
 
-    public String getPaymentStatus() {
+    public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
-//    public Fine getUserFinesInfo(String userId) throws SQLException {
-//        Fine fine = new Fine(userId);
-//        fine.getUserFinesInfo();
-//
-//        return fine;
-//    }
+    public Fine(String userId) {
+        this.userId = userId;
+    }
+
+    public Fine(String userId, FineType fineType) {
+        this.userId = userId;
+        this.fineType = fineType;
+    }
+
+    public Fine(String ticketNo, String fineNo, Date date, Date dueDate, String fineAmount, PaymentStatus paymentStatus, FineType fineType) {
+        this.ticketNo = ticketNo;
+        this.fineNo = fineNo;
+        this.date = date;
+        this.dueDate = dueDate;
+        this.fineAmount = fineAmount;
+        this.paymentStatus = paymentStatus;
+        this.fineType = fineType;
+
+    }
+
+    public ArrayList<Fine> getUserFinesInfo() throws SQLException {
+        FineDAO fineDAO = new FineDAO();
+        return fineDAO.fetchUserFinesInfo(this);
+    }
+
+    public void setFineInfo() {
+        FineDAO fineDAO = new FineDAO();
+        fineDAO.insertFineInfo(this);
+    }
 }
