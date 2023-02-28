@@ -21,60 +21,66 @@ import java.util.Random;
 
 public class PolicemanServlet extends HttpServlet {
 
-    protected void login(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException{
-        try{
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
+//    protected void login(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException{
+//        try{
+//            PrintWriter out = response.getWriter();
+//            response.setContentType("text/html");
+//
+//            HttpSession session = request.getSession();
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put("serverResponse", "Allowed");
+//
+//            String police_id = request.getParameter("username");
+//            String password = request.getParameter("password");
+//
+//            String hashedPassword = hashingPassword(password);
+//
+//            System.out.println("Works until login servlet");
+//
+//            System.out.println(police_id);
+//            System.out.println(password);
+//            System.out.println(hashedPassword);
+//            Policeman policeman = new Policeman();
+//            JSONArray loginResponse = policeman.login(police_id, hashedPassword);
+//
+//            /*Generating JWT token*/
+//            //Setting the payload
+////            Claims claims = Jwts.claims().setSubject(police_id);
+//
+//
+//
+//            jsonObject.put("loginResponse", loginResponse);
+//
+//            out.write(jsonObject.toString());
+//            out.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            HttpSession session = request.getSession();
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("serverResponse", "Allowed");
-
-            String police_id = request.getParameter("username");
-            String password = request.getParameter("password");
-
-            String hashedPassword = hashingPassword(password);
-
-            System.out.println("Works until login servlet");
-
-            System.out.println(police_id);
-            System.out.println(password);
-            System.out.println(hashedPassword);
-            Policeman policeman = new Policeman();
-            JSONArray loginResponse = policeman.login(police_id, hashedPassword);
-
-            jsonObject.put("loginResponse", loginResponse);
-
-            out.write(jsonObject.toString());
-            out.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void checkLoginUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        try{
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
-
-            HttpSession session = request.getSession();
-            JSONObject jsonObject = new JSONObject();
-
-            String police_id = request.getParameter("username");
-            System.out.println(police_id);
-            System.out.println("Came until checkLoginUsername duplication in servlet");
-
-            Policeman policeman = new Policeman();
-            jsonObject.put("alert",  policeman.LoginUsernameCheck(police_id));
-
-            out.write(jsonObject.toString());
-            out.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    protected void checkLoginUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+//        try{
+//            PrintWriter out = response.getWriter();
+//            response.setContentType("text/html");
+//
+//            HttpSession session = request.getSession();
+//            JSONObject jsonObject = new JSONObject();
+//
+//            String police_id = request.getParameter("username");
+//            System.out.println(police_id);
+//            System.out.println("Came until checkLoginUsername duplication in servlet");
+//
+//            Policeman policeman = new Policeman();
+//            jsonObject.put("alert",  policeman.LoginUsernameCheck(police_id));
+//
+//            out.write(jsonObject.toString());
+//            out.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try
     {
@@ -147,8 +153,8 @@ public class PolicemanServlet extends HttpServlet {
         try{
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
-
             HttpSession session = request.getSession(false);
+
 
             String police_id = request.getParameter("police_id");
 
@@ -339,14 +345,14 @@ public class PolicemanServlet extends HttpServlet {
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-
-        if (action.equals("login")) {
-            login(request, response);
-        }
-        else if (action.equals("checkLoginUsername")){
-            checkLoginUsername(request, response);
-        }
-        else if(action.equals("addPoliceman")) {
+//
+//        if (action.equals("login")) {
+//            login(request, response);
+////        }
+//         if (action.equals("checkLoginUsername")){
+//            checkLoginUsername(request, response);
+//        }
+        if(action.equals("addPoliceman")) {
             addPoliceman(request, response);
         }
         else if (action.equals("viewPoliceman"))

@@ -83,4 +83,12 @@
         <servlet-name>complaint</servlet-name>
         <url-pattern>/complaint</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PolicemanLogin</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PolicemanLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PolicemanLogin</servlet-name>
+        <url-pattern>/policeman_login</url-pattern>
+    </servlet>
 </web-app>
