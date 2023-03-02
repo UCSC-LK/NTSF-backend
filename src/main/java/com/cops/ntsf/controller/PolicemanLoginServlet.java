@@ -55,10 +55,11 @@ public class PolicemanLoginServlet extends HttpServlet {
             System.out.println("Printing the loginResponse in the servlet\n");
             System.out.println(loginResponse);
 
-            boolean loginStatus = loginResponse.getJSONObject(0).getBoolean("loginStatus");
+            boolean loginStatus = loginResponse.getJSONObject(0).getBoolean("authorization");
+            System.out.println(loginStatus);
 
-            if (loginStatus){
-
+            if (loginStatus == true) {
+                System.out.println("Login Successful and jwt token is being generated\n");
                 /*Generating JWT token*/
                 //Creating the header
                 JSONObject header = new JSONObject();
@@ -86,9 +87,14 @@ public class PolicemanLoginServlet extends HttpServlet {
 
                 //Concatenate the encoded header, payload and signature with a period ("."):
                 String jwt = base64UrlHeaderAndPayload + "." + signature;
-
+                System.out.println("JWT token is generated\n");
+                System.out.println(jwt);
                 jsonObject.put("jwt", jwt); //Adding the jwt token to the json object
 
+            }
+            else {
+                System.out.println("Login Unsuccessful");
+                jsonObject.put("jwt", "LoginUnsuccessful"); //To redirect to the login page at front end
             }
 
             out.write(jsonObject.toString());
