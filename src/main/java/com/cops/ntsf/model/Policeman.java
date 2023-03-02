@@ -30,7 +30,7 @@ public class Policeman {
     }
 
     public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station){
-        this.name = name;
+        this.name = name; //instead setters can be called here //setname(name);
         this.police_id = police_id;
         this.nic = nic;
         this.mobile_number = mobile_number;

@@ -288,6 +288,7 @@ public class PolicemanDAO {
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("authorization", true);
+                jsonObject.put("police_id", police_id);
                 jsonObject.put("rank", rank);
 
                 jsonArray.put(jsonObject);

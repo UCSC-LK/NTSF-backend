@@ -90,5 +90,5 @@
     <servlet-mapping>
         <servlet-name>PolicemanLogin</servlet-name>
         <url-pattern>/policeman_login</url-pattern>
-    </servlet>
+    </servlet-mapping>
 </web-app>
