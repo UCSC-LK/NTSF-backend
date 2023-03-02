@@ -14,7 +14,7 @@ public class OffenceDAO {
     public void setOffenceInfo(Offence offence) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "INSERT INTO offence(offence_no, offence_type,description,point_weight,amount) VALUES (?, ?,?,?,?)";
+        String sql = "INSERT INTO offence(offence_no, offence_type, description, point_weight, amount) VALUES (?, ?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -30,7 +30,6 @@ public class OffenceDAO {
         }
 
     }
-
 
     public static int updateOffenceInfo(Offence offence) {
         Connection dbConn = Database.getConnection();
@@ -67,19 +66,18 @@ public class OffenceDAO {
         }
     }
 
-
-    public static List<Offence> getAllOffences(){
-        List<Offence> list=new ArrayList<Offence>();
+    public static List<Offence> getAllOffences() {
+        List<Offence> list = new ArrayList<Offence>();
 
         String sql = "select * from offence";
 
-        try{
+        try {
             Connection dbConn = Database.getConnection();
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-            ResultSet resultSet=preparedStatement.executeQuery();
-            while(resultSet.next()){
-                Offence offence=new Offence();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Offence offence = new Offence();
                 offence.setOffenceNo(resultSet.getInt(1));
                 offence.setOffenceType(resultSet.getString(2));
                 offence.setDescription(resultSet.getString(4));
@@ -89,11 +87,10 @@ public class OffenceDAO {
 
             }
             dbConn.close();
-        }catch(Exception offence){offence.printStackTrace();}
+        } catch (Exception offence) {
+            offence.printStackTrace();
+        }
 
         return list;
     }
-
-
-
 }

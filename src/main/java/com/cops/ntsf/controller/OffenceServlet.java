@@ -75,9 +75,9 @@ public class OffenceServlet extends HttpServlet {
 
         Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
         String offenceType = req.getParameter("offence_type");
-        Integer pointWeight = Integer.valueOf(req.getParameter("point_weight"));
+        int pointWeight = Integer.parseInt(req.getParameter("point_weight"));
         String description = req.getParameter("description");
-        Integer amount = Integer.valueOf(req.getParameter("amount"));
+        int amount = Integer.parseInt(req.getParameter("amount"));
 
 
         Offence offence = new Offence();
