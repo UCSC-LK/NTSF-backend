@@ -13,8 +13,9 @@ public class FineService {
                                Date dueDate,
                                String Amount,
                                PaymentStatus paymentStatus,
-                               OffenceType offenceType) {
-        Fine fine = new Fine(ticketNo, fineNo, date, dueDate, Amount, paymentStatus, offenceType);
+                               OffenceType offenceType,
+                               Integer pointWeight) {
+        Fine fine = new Fine(ticketNo, fineNo, date, dueDate, Amount, paymentStatus, offenceType, pointWeight);
         fine.setFineInfo();
 
         return fine;

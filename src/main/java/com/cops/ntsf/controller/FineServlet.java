@@ -22,7 +22,7 @@ public class FineServlet extends HttpServlet {
 
         // Get request parameters
         String userId = req.getParameter("user_id");
-        OffenceType offenceType = OffenceType.valueOf(req.getParameter("fine_type"));
+        OffenceType offenceType = OffenceType.valueOf(req.getParameter("offence_type"));
         ArrayList<Fine> finesList;
 
 //        UserService userService = new UserService();
@@ -62,11 +62,11 @@ public class FineServlet extends HttpServlet {
         PaymentStatus paymentStatus = PaymentStatus.valueOf(req.getParameter("payment_status"));
 //        OffenceType offenceType = OffenceType.valueOf(req.getParameter("fine_type"));
         OffenceType offenceType = OffenceType.valueOf(req.getParameter("offence_type"));
-//        Integer pointWeight = Integer.valueOf(req.getParameter("point_weight"));
+        Integer pointWeight = Integer.valueOf(req.getParameter("point_weight"));
 
         FineService fineService = new FineService();
 //        Fine fine = fineService.insertFineInfo(ticketNo, fineNo, date, dueDate, Amount, paymentStatus, offenceType);
-        Fine fine = fineService.insertFineInfo(ticketNo, fineNo, date, dueDate, Amount, paymentStatus, offenceType);
+        Fine fine = fineService.insertFineInfo(ticketNo, fineNo, date, dueDate, Amount, paymentStatus, offenceType, pointWeight);
 
         // Output response
         PrintWriter out = resp.getWriter();

@@ -55,6 +55,7 @@ public class FineDAO {
             preparedStatement.setString(5, fine.getAmount());
             preparedStatement.setString(6, String.valueOf(fine.getPaymentStatus()));
             preparedStatement.setString(7, String.valueOf(fine.getOffenceType()));
+            preparedStatement.setString(8, String.valueOf(fine.getPointWeight()));
 
             preparedStatement.executeUpdate();
 

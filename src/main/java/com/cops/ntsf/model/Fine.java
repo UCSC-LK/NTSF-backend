@@ -17,6 +17,11 @@ public class Fine {
     private Date dueDate;
     private String amount;
     private PaymentStatus paymentStatus;
+    private Integer pointWeight;
+
+    public Fine(String amount, OffenceType offenceType) {
+        this.userId = userId;
+    }
 
     public Fine(Integer userId) {
         this.userId = userId;
@@ -96,7 +101,7 @@ public class Fine {
 ////        this.offenceType = offenceType;
 //    }
 
-    public Fine(String userId, OffenceType offenceType) {
+    public Fine(Integer ticketNo, Integer fineNo, Date date, Date dueDate, String userId, PaymentStatus paymentStatus, OffenceType offenceType, Integer pointWeight) {
         this.userId = Integer.valueOf(userId);
         this.offenceType = offenceType;
     }
@@ -131,5 +136,9 @@ public class Fine {
 
     public String getAmount() {
         return amount;
+    }
+
+    public Integer getPointWeight() {
+        return pointWeight;
     }
 }
