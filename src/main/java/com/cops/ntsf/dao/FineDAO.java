@@ -15,7 +15,7 @@ public class FineDAO {
     public ArrayList<Fine> fetchUserFinesInfo(Fine fine) throws SQLException {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM fine WHERE user_id = ? ORDER BY fine_type";
+        String sql = "SELECT * FROM fine WHERE user_id = ? ORDER BY offence_type";
 
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
@@ -34,7 +34,7 @@ public class FineDAO {
             nextFine.setDueDate(resultSet.getDate("due_date"));
             nextFine.setFineAmount(resultSet.getString("fine_amount"));
             nextFine.setPaymentStatus(PaymentStatus.valueOf(resultSet.getString("payment_status")));
-            nextFine.setOffenceType(OffenceType.valueOf(resultSet.getString("fine_type")));
+            nextFine.setOffenceType(OffenceType.valueOf(resultSet.getString("offence_type")));
 
             finesList.add(nextFine);
         }
@@ -44,7 +44,7 @@ public class FineDAO {
     public void insertFineInfo(Fine fine) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "INSERT INTO fine (ticket_no, fine_no, date, due_date, fine_amount, payment_status, offence_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO fine (ticket_no, fine_no, date, due_date, amount, payment_status, offence_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -52,7 +52,7 @@ public class FineDAO {
             preparedStatement.setString(2, String.valueOf(fine.getFineNo()));
             preparedStatement.setString(3, String.valueOf(fine.getDate()));
             preparedStatement.setString(4, String.valueOf(fine.getDueDate()));
-            preparedStatement.setString(5, fine.getFineAmount());
+            preparedStatement.setString(5, fine.getAmount());
             preparedStatement.setString(6, String.valueOf(fine.getPaymentStatus()));
             preparedStatement.setString(7, String.valueOf(fine.getOffenceType()));
 

@@ -11,10 +11,10 @@ public class FineService {
                                Integer fineNo,
                                Date date,
                                Date dueDate,
-                               String fineAmount,
+                               String Amount,
                                PaymentStatus paymentStatus,
                                OffenceType offenceType) {
-        Fine fine = new Fine(ticketNo, fineNo, date, dueDate, fineAmount, paymentStatus, offenceType);
+        Fine fine = new Fine(ticketNo, fineNo, date, dueDate, Amount, paymentStatus, offenceType);
         fine.setFineInfo();
 
         return fine;

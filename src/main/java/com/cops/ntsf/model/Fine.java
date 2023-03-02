@@ -15,7 +15,7 @@ public class Fine {
     private Integer fineNo;
     private Date date;
     private Date dueDate;
-    private String fineAmount;
+    private String amount;
     private PaymentStatus paymentStatus;
 
     public Fine(Integer userId) {
@@ -70,12 +70,12 @@ public class Fine {
         this.dueDate = dueDate;
     }
 
-    public String getFineAmount() {
-        return fineAmount;
-    }
+//    public String getFineAmount() {
+//        return amount;
+//    }
 
-    public void setFineAmount(String fineAmount) {
-        this.fineAmount = fineAmount;
+    public void setFineAmount(String amount) {
+        this.amount = amount;
     }
 
     public PaymentStatus getPaymentStatus() {
@@ -86,27 +86,27 @@ public class Fine {
         this.paymentStatus = paymentStatus;
     }
 
-    public Fine(Integer ticketNo, Integer fineNo, Date date, Date dueDate, String fineAmount, PaymentStatus paymentStatus, OffenceType offenceType) {
-        this.ticketNo = ticketNo;
-        this.fineNo = fineNo;
-        this.date = date;
-        this.dueDate = dueDate;
-        this.fineAmount = fineAmount;
-        this.paymentStatus = paymentStatus;
-//        this.offenceType = offenceType;
-    }
+//    public Fine(Integer ticketNo, Integer fineNo, Date date, Date dueDate, String amount, PaymentStatus paymentStatus, OffenceType offenceType) {
+//        this.ticketNo = ticketNo;
+//        this.fineNo = fineNo;
+//        this.date = date;
+//        this.dueDate = dueDate;
+//        this.amount = amount;
+//        this.paymentStatus = paymentStatus;
+////        this.offenceType = offenceType;
+//    }
 
     public Fine(String userId, OffenceType offenceType) {
         this.userId = Integer.valueOf(userId);
         this.offenceType = offenceType;
     }
 
-    public Fine(String ticketNo, String fineNo, Date date, Date dueDate, String fineAmount, PaymentStatus paymentStatus, OffenceType offenceType) {
+    public Fine(String ticketNo, String fineNo, Date date, Date dueDate, String amount, PaymentStatus paymentStatus, OffenceType offenceType) {
         this.ticketNo = Integer.valueOf(ticketNo);
         this.fineNo = Integer.valueOf(fineNo);
         this.date = date;
         this.dueDate = dueDate;
-        this.fineAmount = fineAmount;
+        this.amount = amount;
         this.paymentStatus = paymentStatus;
         this.offenceType = offenceType;
     }
@@ -127,5 +127,9 @@ public class Fine {
 
     public void setOffenceType(OffenceType offenceType) {
         this.offenceType = offenceType;
+    }
+
+    public String getAmount() {
+        return amount;
     }
 }
