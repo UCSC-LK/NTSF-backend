@@ -1,6 +1,6 @@
 package com.cops.ntsf.dao;
 
-import com.cops.ntsf.constants.FineType;
+import com.cops.ntsf.constants.OffenceType;
 import com.cops.ntsf.constants.PaymentStatus;
 import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.util.Database;
@@ -34,7 +34,7 @@ public class FineDAO {
             nextFine.setDueDate(resultSet.getDate("due_date"));
             nextFine.setFineAmount(resultSet.getString("fine_amount"));
             nextFine.setPaymentStatus(PaymentStatus.valueOf(resultSet.getString("payment_status")));
-            nextFine.setFineType(FineType.valueOf(resultSet.getString("fine_type")));
+            nextFine.setOffenceType(OffenceType.valueOf(resultSet.getString("fine_type")));
 
             finesList.add(nextFine);
         }
@@ -44,7 +44,7 @@ public class FineDAO {
     public void insertFineInfo(Fine fine) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "INSERT INTO fine (ticket_no, fine_no, date, due_date, fine_amount, payment_status, fine_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO fine (ticket_no, fine_no, date, due_date, fine_amount, payment_status, offence_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class FineDAO {
             preparedStatement.setString(4, String.valueOf(fine.getDueDate()));
             preparedStatement.setString(5, fine.getFineAmount());
             preparedStatement.setString(6, String.valueOf(fine.getPaymentStatus()));
-            preparedStatement.setString(1, String.valueOf(fine.getFineType()));
+            preparedStatement.setString(7, String.valueOf(fine.getOffenceType()));
 
             preparedStatement.executeUpdate();
 

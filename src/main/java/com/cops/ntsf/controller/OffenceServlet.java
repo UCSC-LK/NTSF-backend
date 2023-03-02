@@ -38,8 +38,8 @@ public class OffenceServlet extends HttpServlet {
         out.write(new Gson().toJson(offence));
         out.close();
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             System.out.println("req" + request);
             System.out.println("res" + response);
@@ -51,8 +51,8 @@ public class OffenceServlet extends HttpServlet {
 
             List<Offence> list = OffenceDAO.getAllOffences();
             for (Offence offence : list) {
-                System.out.println(""+offence.getOffenceNo());
-                          }
+                System.out.println("" + offence.getOffenceNo());
+            }
             out.print("<table border='1' width='100%'");
 
 
@@ -63,16 +63,15 @@ public class OffenceServlet extends HttpServlet {
             out.print("</table>");
 
             out.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("text/html");
-        PrintWriter out=resp.getWriter();
+        PrintWriter out = resp.getWriter();
 
         Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
         String offenceType = req.getParameter("offence_type");
@@ -81,37 +80,26 @@ public class OffenceServlet extends HttpServlet {
         Integer amount = Integer.valueOf(req.getParameter("amount"));
 
 
-        Offence offence=new Offence();
+        Offence offence = new Offence();
         offence.setOffenceNo(offenceNo);
         offence.setOffenceType(offenceType);
         offence.setPointWeight(pointWeight);
         offence.setDescription(description);
         offence.setAmount(amount);
 
-        int status= OffenceDAO.updateOffenceInfo(offence);
-        if(status>0){
-            doGet(req,resp);
-        }else{
+        int status = OffenceDAO.updateOffenceInfo(offence);
+        if (status > 0) {
+            doGet(req, resp);
+        } else {
             out.println("Sorry! unable to update record");
         }
         out.close();
     }
-
-
 
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
         OffenceDAO.deleteOffenceInfo(Integer.parseInt(String.valueOf(offenceNo)));
         resp.sendRedirect("this");
     }
-
-
-
-
-
-
-
-
-
 }
 

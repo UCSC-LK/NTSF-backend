@@ -1,6 +1,6 @@
 package com.cops.ntsf.model;
 
-import com.cops.ntsf.constants.FineType;
+import com.cops.ntsf.constants.OffenceType;
 import com.cops.ntsf.constants.PaymentStatus;
 import com.cops.ntsf.dao.FineDAO;
 
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Fine {
-    private FineType fineType;
+    private OffenceType offenceType;
     private Integer userId;
     private Integer ticketNo;
     private Integer fineNo;
@@ -22,13 +22,13 @@ public class Fine {
         this.userId = userId;
     }
 
-    public FineType getFineType() {
-        return fineType;
-    }
-
-    public void setFineType(FineType fineType) {
-        this.fineType = fineType;
-    }
+//    public FineType getFineType() {
+//        return offenceType;
+//    }
+//
+//    public void setFineType(FineType offenceType) {
+//        this.offenceType = offenceType;
+//    }
 
     public Integer getUserId() {
         return userId;
@@ -86,29 +86,29 @@ public class Fine {
         this.paymentStatus = paymentStatus;
     }
 
-    public Fine(Integer ticketNo, Integer fineNo, Date date, Date dueDate, String fineAmount, PaymentStatus paymentStatus, FineType fineType) {
+    public Fine(Integer ticketNo, Integer fineNo, Date date, Date dueDate, String fineAmount, PaymentStatus paymentStatus, OffenceType offenceType) {
         this.ticketNo = ticketNo;
         this.fineNo = fineNo;
         this.date = date;
         this.dueDate = dueDate;
         this.fineAmount = fineAmount;
         this.paymentStatus = paymentStatus;
-        this.fineType = fineType;
+//        this.offenceType = offenceType;
     }
 
-    public Fine(String userId, FineType fineType) {
+    public Fine(String userId, OffenceType offenceType) {
         this.userId = Integer.valueOf(userId);
-        this.fineType = fineType;
+        this.offenceType = offenceType;
     }
 
-    public Fine(String ticketNo, String fineNo, Date date, Date dueDate, String fineAmount, PaymentStatus paymentStatus, FineType fineType) {
+    public Fine(String ticketNo, String fineNo, Date date, Date dueDate, String fineAmount, PaymentStatus paymentStatus, OffenceType offenceType) {
         this.ticketNo = Integer.valueOf(ticketNo);
         this.fineNo = Integer.valueOf(fineNo);
         this.date = date;
         this.dueDate = dueDate;
         this.fineAmount = fineAmount;
         this.paymentStatus = paymentStatus;
-        this.fineType = fineType;
+        this.offenceType = offenceType;
     }
 
     public ArrayList<Fine> getUserFinesInfo() throws SQLException {
@@ -119,5 +119,13 @@ public class Fine {
     public void setFineInfo() {
         FineDAO fineDAO = new FineDAO();
         fineDAO.insertFineInfo(this);
+    }
+
+    public OffenceType getOffenceType() {
+        return offenceType;
+    }
+
+    public void setOffenceType(OffenceType offenceType) {
+        this.offenceType = offenceType;
     }
 }

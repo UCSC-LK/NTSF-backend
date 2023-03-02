@@ -1,6 +1,6 @@
 package com.cops.ntsf.service;
 
-import com.cops.ntsf.constants.FineType;
+import com.cops.ntsf.constants.OffenceType;
 import com.cops.ntsf.constants.PaymentStatus;
 import com.cops.ntsf.model.Fine;
 
@@ -13,8 +13,8 @@ public class FineService {
                                Date dueDate,
                                String fineAmount,
                                PaymentStatus paymentStatus,
-                               FineType fineType) {
-        Fine fine = new Fine(ticketNo, fineNo, date, dueDate, fineAmount, paymentStatus, fineType);
+                               OffenceType offenceType) {
+        Fine fine = new Fine(ticketNo, fineNo, date, dueDate, fineAmount, paymentStatus, offenceType);
         fine.setFineInfo();
 
         return fine;
