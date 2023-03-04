@@ -4,6 +4,8 @@ import com.cops.ntsf.dao.PolicemanDAO;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -345,13 +347,39 @@ public class PolicemanServlet extends HttpServlet {
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-//
-//        if (action.equals("login")) {
-//            login(request, response);
-////        }
-//         if (action.equals("checkLoginUsername")){
-//            checkLoginUsername(request, response);
-//        }
+        String contentType = request.getHeader("Content-type");
+        String authorizationHeader = request.getHeader("Authorization");
+
+        String jwt = null;
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            jwt = authorizationHeader.substring(7); //Extracts the jwt token removing the word Bearer prefix
+            System.out.println(jwt);
+
+            String[] jwtParts = jwt.split("\\.");
+            String headerJson = new String(Base64.getUrlDecoder().decode(jwtParts[0]));
+            String payloadJson = new String(Base64.getUrlDecoder().decode(jwtParts[1]));
+            System.out.println(headerJson);
+            System.out.println(payloadJson);
+
+
+            String signature = jwtParts[2];
+            String unsignedJwt = jwtParts[0] + "." + jwtParts[1];
+            byte[] hmacData = null;
+            try {
+                Mac mac = Mac.getInstance("HmacSHA256");
+                mac.init(new SecretKeySpec("mysecret".getBytes(), "HmacSHA256"));
+                hmacData = mac.doFinal(unsignedJwt.getBytes());
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to calculate HMAC: " + e.getMessage());
+            }
+            String calculatedSignature = Base64.getUrlEncoder().withoutPadding().encodeToString(hmacData);
+            if (!signature.equals(calculatedSignature)) {
+                throw new RuntimeException("JWT signature verification failed");
+            }
+
+        }
+
+
         if(action.equals("addPoliceman")) {
             addPoliceman(request, response);
         }

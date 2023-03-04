@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -97,6 +98,8 @@ public class PolicemanLoginServlet extends HttpServlet {
                 jsonObject.put("jwt", "LoginUnsuccessful"); //To redirect to the login page at front end
             }
 
+            System.out.println("Finally Printing the json object in the servlet\n");
+            System.out.println(jsonObject);
             out.write(jsonObject.toString());
             out.close();
 
