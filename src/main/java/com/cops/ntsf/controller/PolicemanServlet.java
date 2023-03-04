@@ -346,9 +346,13 @@ public class PolicemanServlet extends HttpServlet {
 
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Came until the doPOST in Policeman Servlet");
         String action = request.getParameter("action");
         String contentType = request.getHeader("Content-type");
         String authorizationHeader = request.getHeader("Authorization");
+        System.out.println("Authorization Header: " + authorizationHeader);
+        System.out.println("Content Type: " + contentType);
+        System.out.println("Action: " + action);
 
         String jwt = null;
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -364,61 +368,54 @@ public class PolicemanServlet extends HttpServlet {
 
             String signature = jwtParts[2];
             String unsignedJwt = jwtParts[0] + "." + jwtParts[1];
-            byte[] hmacData = null;
+
+            String calculatedSignature;
             try {
-                Mac mac = Mac.getInstance("HmacSHA256");
-                mac.init(new SecretKeySpec("mysecret".getBytes(), "HmacSHA256"));
-                hmacData = mac.doFinal(unsignedJwt.getBytes());
+                Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+                SecretKeySpec secret_key = new SecretKeySpec("mysecret".getBytes(), "HmacSHA256");
+                sha256_HMAC.init(secret_key);
+
+                calculatedSignature = Base64.getUrlEncoder().encodeToString(sha256_HMAC.doFinal(unsignedJwt.getBytes()));
+
             } catch (Exception e) {
                 throw new RuntimeException("Failed to calculate HMAC: " + e.getMessage());
             }
-            String calculatedSignature = Base64.getUrlEncoder().withoutPadding().encodeToString(hmacData);
+
             if (!signature.equals(calculatedSignature)) {
-                throw new RuntimeException("JWT signature verification failed");
+                throw new RuntimeException("JWT signature verification failed as the signature is not matching");
+            } else {
+                System.out.println("JWT signature verification success");
+
+                if (action.equals("addPoliceman")) {
+                    addPoliceman(request, response);
+                } else if (action.equals("viewPoliceman")) {
+                    System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
+                    viewPoliceman(request, response);
+                } else if (action.equals("fetchPoliceman")) {
+                    fetchPoliceman(request, response);
+                } else if (action.equals("updatePoliceman")) {
+                    editPoliceman(request, response);
+                } else if (action.equals("deletePoliceman")) {
+                    removePoliceman(request, response);
+                } else if (action.equals("checkPoliceman_ID")) {
+                    checkPolicemanPolice_ID(request, response);
+                    System.out.println("Hi");
+                } else if (action.equals("checkNIC")) {
+                    checkPolicemanNic(request, response);
+                    System.out.println("Hi from NIC Checking servelet");
+                } else if (action.equals("checkMobile_Number")) {
+                    checkPolicemanMobile_Number(request, response);
+                    System.out.println("Hi from Mobile Number Checking servelet");
+                } else if (action.equals("checkEmail")) {
+                    checkPolicemanEmail(request, response);
+                    System.out.println("Hi from Email Checking servelet");
+                }
             }
-
+        }
+        else {
+            System.out.println("JWT signature verification failed");
         }
 
-
-        if(action.equals("addPoliceman")) {
-            addPoliceman(request, response);
-        }
-        else if (action.equals("viewPoliceman"))
-        {
-            viewPoliceman(request, response);
-        }
-        else if (action.equals("fetchPoliceman"))
-        {
-            fetchPoliceman(request, response);
-        }
-        else if (action.equals("updatePoliceman"))
-        {
-            editPoliceman(request, response);
-        }
-        else if (action.equals("deletePoliceman"))
-        {
-            removePoliceman(request, response);
-        }
-        else if (action.equals("checkPoliceman_ID"))
-        {
-            checkPolicemanPolice_ID(request, response);
-            System.out.println("Hi");
-        }
-        else if (action.equals("checkNIC"))
-        {
-            checkPolicemanNic(request, response);
-            System.out.println("Hi from NIC Checking servelet");
-        }
-        else if (action.equals("checkMobile_Number"))
-        {
-            checkPolicemanMobile_Number(request, response);
-            System.out.println("Hi from Mobile Number Checking servelet");
-        }
-        else if (action.equals("checkEmail"))
-        {
-            checkPolicemanEmail(request, response);
-            System.out.println("Hi from Email Checking servelet");
-        }
     }
     private boolean checkValidations(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
         boolean flagName = false; //flag = true means name validation is passed
