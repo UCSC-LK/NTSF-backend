@@ -2,18 +2,13 @@ package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.util.Database;
-import com.mysql.cj.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.cops.ntsf.service.Email;
 
-import java.net.PasswordAuthentication;
-import java.security.MessageDigest;
 import java.sql.*;
-import java.util.Base64;
-import java.util.Properties;
 
-public class PolicemanDAO {
+public class IgpDAO {
     public String createPoliceman(Policeman policeman)
     {
         Connection dbConn = null;

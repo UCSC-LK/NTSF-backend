@@ -1,7 +1,6 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.PoliceStationDAO;
-import com.cops.ntsf.dao.PolicemanDAO;
 import org.json.JSONArray;
 
 public class PoliceStation {
