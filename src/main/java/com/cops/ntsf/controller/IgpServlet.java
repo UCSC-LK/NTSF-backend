@@ -313,32 +313,39 @@ public class IgpServlet extends HttpServlet {
                 throw new RuntimeException("JWT signature verification failed as the signature is not matching");
             } else {
                 System.out.println("JWT signature verification success");
-
-                if (action.equals("addPoliceman")) {
-                    addPoliceman(request, response);
-                } else if (action.equals("viewPoliceman")) {
-                    System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
-                    viewPoliceman(request, response);
-                } else if (action.equals("fetchPoliceman")) {
-                    fetchPoliceman(request, response);
-                } else if (action.equals("updatePoliceman")) {
-                    editPoliceman(request, response);
-                } else if (action.equals("deletePoliceman")) {
-                    removePoliceman(request, response);
-                } else if (action.equals("checkPoliceman_ID")) {
-                    checkPolicemanPolice_ID(request, response);
-                    System.out.println("Hi");
-                } else if (action.equals("checkNIC")) {
-                    checkPolicemanNic(request, response);
-                    System.out.println("Hi from NIC Checking servelet");
-                } else if (action.equals("checkMobile_Number")) {
-                    checkPolicemanMobile_Number(request, response);
-                    System.out.println("Hi from Mobile Number Checking servelet");
-                } else if (action.equals("checkEmail")) {
-                    checkPolicemanEmail(request, response);
-                    System.out.println("Hi from Email Checking servelet");
+                JSONObject payloadJsonObject = new JSONObject(payloadJson);
+                String authorizedRank = payloadJsonObject.getString("rank");
+                if (authorizedRank == "igp") {
+                    if (action.equals("addPoliceman")) {
+                        addPoliceman(request, response);
+                    } else if (action.equals("viewPoliceman")) {
+                        System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
+                        viewPoliceman(request, response);
+                    } else if (action.equals("fetchPoliceman")) {
+                        fetchPoliceman(request, response);
+                    } else if (action.equals("updatePoliceman")) {
+                        editPoliceman(request, response);
+                    } else if (action.equals("deletePoliceman")) {
+                        removePoliceman(request, response);
+                    } else if (action.equals("checkPoliceman_ID")) {
+                        checkPolicemanPolice_ID(request, response);
+                        System.out.println("Hi");
+                    } else if (action.equals("checkNIC")) {
+                        checkPolicemanNic(request, response);
+                        System.out.println("Hi from NIC Checking servelet");
+                    } else if (action.equals("checkMobile_Number")) {
+                        checkPolicemanMobile_Number(request, response);
+                        System.out.println("Hi from Mobile Number Checking servelet");
+                    } else if (action.equals("checkEmail")) {
+                        checkPolicemanEmail(request, response);
+                        System.out.println("Hi from Email Checking servelet");
+                    }
+                }
+                else {
+                    System.out.println("You are not authorized to access this page");
                 }
             }
+
         }
         else {
             System.out.println("JWT signature verification failed");
