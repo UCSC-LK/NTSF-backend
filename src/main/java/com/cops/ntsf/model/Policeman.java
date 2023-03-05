@@ -1,6 +1,7 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.IgpDAO;
+import com.cops.ntsf.dao.OicDAO;
 import org.json.JSONArray;
 
 public class Policeman {
@@ -175,8 +176,8 @@ public class Policeman {
 
 //OIC
     public JSONArray getPolicemanDetailsAsOIC() {
-        IgpDAO igpDAO = new IgpDAO();
-        JSONArray policemanDetailsListAsOIC = igpDAO.getPolicemanDetailsListAsOIC();
+        OicDAO oicDAO = new OicDAO();
+        JSONArray policemanDetailsListAsOIC = oicDAO.getPolicemanDetailsList();
         return policemanDetailsListAsOIC;
     }
 }
