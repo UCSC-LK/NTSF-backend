@@ -46,7 +46,7 @@ public class FineDAO {
     public void insertFineInfo(Fine fine) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "INSERT INTO fine (ticket_no, fine_no, date, due_date, amount, payment_status, offence_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO fine (nic, ticket_no, fine_no, date, due_date, amount, payment_status, offence_type, point_weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
