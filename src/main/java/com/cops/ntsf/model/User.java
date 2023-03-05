@@ -2,6 +2,7 @@ package com.cops.ntsf.model;
 
 //import com.cops.ntsf.constants.FineType;
 
+import com.cops.ntsf.constants.OffenceType;
 import com.cops.ntsf.dao.UserDAO;
 
 public class User {
@@ -11,6 +12,7 @@ public class User {
     private String nic;
     private String email;
     private String mobileNo;
+    private OffenceType offenceType;
 //    private FineType fineType;
     // private Blob profilePicture;
 
@@ -105,5 +107,9 @@ public class User {
     public void getUserFromNic() {
         UserDAO userDAO = new UserDAO();
         userDAO.getUserFromNic(this);
+    }
+
+    public OffenceType getOffenceType() {
+        return offenceType;
     }
 }

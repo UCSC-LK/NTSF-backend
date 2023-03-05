@@ -1,6 +1,7 @@
 package com.cops.ntsf.model;
 
-import com.cops.ntsf.constants.FineType;
+//import com.cops.ntsf.constants.FineType;
+
 import com.cops.ntsf.dao.DriverDAO;
 
 public class Driver extends User {
@@ -19,9 +20,9 @@ public class Driver extends User {
         this.licenceNo = licenseNo;
     }
 
-    public Driver(String userId, FineType fineType) {
-        super(userId, String.valueOf(fineType));
-    }
+//    public Driver(String userId, FineType fineType) {
+//        super(userId, String.valueOf(fineType));
+//    }
 
     public String getLicenceNo() {
         return licenceNo;

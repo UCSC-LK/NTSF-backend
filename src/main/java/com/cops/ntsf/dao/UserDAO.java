@@ -52,7 +52,7 @@ public class UserDAO {
             else
                 preparedStatement.setString(1, user.getUserId());
 
-            preparedStatement.setString(2, user.getFineType().toString());
+            preparedStatement.setString(2, user.getOffenceType().toString());
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
