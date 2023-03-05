@@ -1,27 +1,23 @@
 package com.cops.ntsf.controller;
 import com.cops.ntsf.model.Policeman;
-import com.cops.ntsf.dao.PolicemanDAO;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.security.MessageDigest;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Random;
 
-public class PolicemanServlet extends HttpServlet {
+public class IgpServlet extends HttpServlet {
 
 //    protected void login(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException{
 //        try{

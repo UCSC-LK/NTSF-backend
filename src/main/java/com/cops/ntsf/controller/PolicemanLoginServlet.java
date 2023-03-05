@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Base64;
 
-import static com.cops.ntsf.controller.PolicemanServlet.hashingPassword;
+import static com.cops.ntsf.controller.IgpServlet.hashingPassword;
 
 public class PolicemanLoginServlet extends HttpServlet {
 
