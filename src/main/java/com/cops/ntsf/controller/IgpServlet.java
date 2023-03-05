@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 
 import java.security.MessageDigest;
 import java.util.Base64;
+import java.util.Objects;
 import java.util.Random;
 
 public class IgpServlet extends HttpServlet {
@@ -70,8 +71,6 @@ public class IgpServlet extends HttpServlet {
     protected void viewPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
-
-        HttpSession session = request.getSession(false);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("serverResponse", "Allowed");
@@ -315,7 +314,8 @@ public class IgpServlet extends HttpServlet {
                 System.out.println("JWT signature verification success");
                 JSONObject payloadJsonObject = new JSONObject(payloadJson);
                 String authorizedRank = payloadJsonObject.getString("rank");
-                if (authorizedRank == "igp") {
+                System.out.println(authorizedRank);
+                if (authorizedRank.equals("igp")) {
                     if (action.equals("addPoliceman")) {
                         addPoliceman(request, response);
                     } else if (action.equals("viewPoliceman")) {

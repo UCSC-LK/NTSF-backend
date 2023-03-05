@@ -140,29 +140,41 @@ public class PoliceStationServlet extends HttpServlet {
             } else {
                 System.out.println("JWT signature verification success");
 
-                if (action.equals("addPoliceStation")) {
-                    addPoliceStation(request, response);
-                }
-                else if (action.equals("loadPoliceStationOptionsList")) {
-                    loadPoliceStationOptionsList(request, response);
-                }
-                else if (action.equals("viewPoliceStation")) {
-                    viewPoliceStation(request, response);
-                }
-                else if (action.equals("checkBranch_Name"))
+                JSONObject payLoadJsonObject = new JSONObject(payloadJson);
+                String authorizedRank = payLoadJsonObject.getString("rank");
+
+                if (authorizedRank == "igp")
                 {
-                    checkPoliceStationBranch_Name(request, response);
-                    System.out.println("doPost > checkpoliceStationBranch_Name");
+
+                    if (action.equals("addPoliceStation")) {
+                        addPoliceStation(request, response);
+                    }
+                    else if (action.equals("loadPoliceStationOptionsList")) {
+                        loadPoliceStationOptionsList(request, response);
+                    }
+                    else if (action.equals("viewPoliceStation"))
+                    {
+                        viewPoliceStation(request, response);
+                    }
+                    else if (action.equals("checkBranch_Name"))
+                    {
+                        checkPoliceStationBranch_Name(request, response);
+                        System.out.println("doPost > checkpoliceStationBranch_Name");
+                    }
+                    else if (action.equals("checkEmail"))
+                    {
+                        checkPoliceStationEmail(request, response);
+                        System.out.println("doPost > checkpoliceStationEmail");
+                    }
+                    else if (action.equals("checkContact_Number"))
+                    {
+                        checkPoliceStationContact_Number(request, response);
+                        System.out.println("doPost > checkpoliceStationContact_Number");
+                    }
                 }
-                else if (action.equals("checkEmail"))
+                else
                 {
-                    checkPoliceStationEmail(request, response);
-                    System.out.println("doPost > checkpoliceStationEmail");
-                }
-                else if (action.equals("checkContact_Number"))
-                {
-                    checkPoliceStationContact_Number(request, response);
-                    System.out.println("doPost > checkpoliceStationContact_Number");
+                    System.out.println("You are not authorized to access this page");
                 }
             }
         }
