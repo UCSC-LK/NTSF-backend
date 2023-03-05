@@ -11,6 +11,9 @@ public class Offence {
 
     }
 
+    public Offence(String speeding, int i, int i1) {
+    }
+
     public void setOffenceNo(Integer offenceNo) {
         this.offenceNo = offenceNo;
     }
