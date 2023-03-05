@@ -143,7 +143,7 @@ public class PoliceStationServlet extends HttpServlet {
                 JSONObject payLoadJsonObject = new JSONObject(payloadJson);
                 String authorizedRank = payLoadJsonObject.getString("rank");
 
-                if (authorizedRank == "igp")
+                if (authorizedRank.equals("igp"))
                 {
 
                     if (action.equals("addPoliceStation")) {
