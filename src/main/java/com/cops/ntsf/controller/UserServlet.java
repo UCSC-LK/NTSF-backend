@@ -18,10 +18,12 @@ public class UserServlet extends HttpServlet {
         // Get request parameters
 //        UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
         String userId = req.getParameter("user_id");
+        String nic = req.getParameter("nic");
 //        String nic = req.getParameter("nic");
 
         UserService userService = new UserService();
-        User user = userService.getUserInfo(userId);
+//        User user = userService.getUserInfo(userId);
+        User user = userService.getUserInfo(nic);
 
         // Output response
         PrintWriter out = resp.getWriter();
