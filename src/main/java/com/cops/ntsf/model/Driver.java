@@ -4,8 +4,15 @@ package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.DriverDAO;
 
+import java.sql.Date;
+
 public class Driver extends User {
     private String licenceNo;
+    private Date issueDate;
+    private Date expireDate;
+    private String administrativeNo;
+    private String holdersSignature;
+
 
     public Driver() {
         super();
@@ -37,13 +44,46 @@ public class Driver extends User {
         driverDAO.getDriverFromLicense(this);
     }
 
-    public void setDriverInfo() {
-        DriverDAO driverDAO = new DriverDAO();
-        driverDAO.insertDriverInfo(this);
-    }
+//    public void setDriverInfo() {
+//        DriverDAO driverDAO = new DriverDAO();
+//        driverDAO.insertDriverInfo(this);
+//    }
 
     public void getDriverInfo() {
         DriverDAO driverDAO = new DriverDAO();
-        driverDAO.fetchDriverLicence(this);
+        driverDAO.fetchDriverInfo(this);
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
+
+    }
+
+    public void setAdministrativeNo(String administrativeNo) {
+        this.administrativeNo = administrativeNo;
+    }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public String getAdministrativeNo() {
+        return administrativeNo;
+    }
+
+    public void setHoldersSignature(String holdersSignature) {
+        this.holdersSignature = holdersSignature;
+    }
+
+    public String getHoldersSignature() {
+        return holdersSignature;
     }
 }
