@@ -23,18 +23,10 @@ public class FineServlet extends HttpServlet {
         // Get request parameters
         String userId = req.getParameter("user_id");
         String nic = req.getParameter("nic");
-        OffenceType offenceType = OffenceType.valueOf(req.getParameter("offence_type"));
+        
         ArrayList<Fine> finesList;
 
-//        UserService userService = new UserService();
-//        Fine fine = new Fine(userId);
-//        try {
-//            finesList = fine.getUserFinesInfo();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-
-        Fine fine = new Fine(userId, offenceType);
+        Fine fine = new Fine(userId);
         try {
             finesList = fine.getUserFinesInfo();
         } catch (SQLException e) {
@@ -54,20 +46,18 @@ public class FineServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doPost(req, resp);
         // Get request parameters
+        String nic = req.getParameter("nic");
         Integer ticketNo = Integer.valueOf(req.getParameter("ticket_no"));
         Integer fineNo = Integer.valueOf(req.getParameter("fine_no"));
         Date date = Date.valueOf(req.getParameter("date"));
         Date dueDate = Date.valueOf(req.getParameter("due_date"));
-//        String fineAmount = req.getParameter("fine_amount");
-        String amount = req.getParameter("amount");
         PaymentStatus paymentStatus = PaymentStatus.valueOf(req.getParameter("payment_status"));
-//        OffenceType offenceType = OffenceType.valueOf(req.getParameter("fine_type"));
         OffenceType offenceType = OffenceType.valueOf(req.getParameter("offence_type"));
+        String amount = req.getParameter("amount");
         Integer pointWeight = Integer.valueOf(req.getParameter("point_weight"));
 
         FineService fineService = new FineService();
-//        Fine fine = fineService.insertFineInfo(ticketNo, fineNo, date, dueDate, amount, paymentStatus, offenceType);
-        Fine fine = fineService.insertFineInfo(ticketNo, fineNo, date, dueDate, amount, paymentStatus, offenceType, pointWeight);
+        Fine fine = fineService.insertFineInfo(nic, ticketNo, fineNo, date, dueDate, paymentStatus, offenceType, amount, pointWeight);
 
         // Output response
         PrintWriter out = resp.getWriter();
