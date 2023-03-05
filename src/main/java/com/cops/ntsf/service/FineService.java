@@ -7,15 +7,16 @@ import com.cops.ntsf.model.Fine;
 import java.sql.Date;
 
 public class FineService {
-    public Fine insertFineInfo(Integer ticketNo,
+    public Fine insertFineInfo(String nic,
+                               Integer ticketNo,
                                Integer fineNo,
                                Date date,
                                Date dueDate,
-                               String Amount,
                                PaymentStatus paymentStatus,
                                OffenceType offenceType,
+                               String Amount,
                                Integer pointWeight) {
-        Fine fine = new Fine(ticketNo, fineNo, date, dueDate, Amount, paymentStatus, offenceType, pointWeight);
+        Fine fine = new Fine(nic, ticketNo, fineNo, date, dueDate, paymentStatus, offenceType, Amount, pointWeight);
         fine.setFineInfo();
 
         return fine;
