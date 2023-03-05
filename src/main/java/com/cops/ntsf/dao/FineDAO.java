@@ -15,7 +15,7 @@ public class FineDAO {
     public ArrayList<Fine> fetchUserFinesInfo(Fine fine) throws SQLException {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM fine WHERE user_id = ? ORDER BY offence_type";
+        String sql = "SELECT * FROM fine WHERE user_id = ?";
 
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
@@ -32,9 +32,11 @@ public class FineDAO {
             nextFine.setFineNo(Integer.valueOf(resultSet.getString("fine_no")));
             nextFine.setDate(resultSet.getDate("date"));
             nextFine.setDueDate(resultSet.getDate("due_date"));
-            nextFine.setFineAmount(resultSet.getString("fine_amount"));
+//            nextFine.setFineAmount(resultSet.getString("fine_amount"));
             nextFine.setPaymentStatus(PaymentStatus.valueOf(resultSet.getString("payment_status")));
             nextFine.setOffenceType(OffenceType.valueOf(resultSet.getString("offence_type")));
+            nextFine.setAmount(resultSet.getString("amount"));
+
 
             finesList.add(nextFine);
         }
