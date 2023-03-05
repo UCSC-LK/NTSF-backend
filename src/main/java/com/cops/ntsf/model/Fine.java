@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Fine {
+    private String nic;
     private OffenceType offenceType;
     private Integer userId;
     private Integer ticketNo;
@@ -19,21 +20,25 @@ public class Fine {
     private PaymentStatus paymentStatus;
     private Integer pointWeight;
 
-    public Fine(String amount, OffenceType offenceType) {
-        this.userId = userId;
-    }
-
     public Fine(Integer userId) {
         this.userId = userId;
     }
 
-//    public FineType getFineType() {
-//        return offenceType;
-//    }
-//
-//    public void setFineType(FineType offenceType) {
-//        this.offenceType = offenceType;
-//    }
+    public Fine(String userId) {
+        this.userId = Integer.valueOf(userId);
+    }
+
+    public Fine(String nic, Integer ticketNo, Integer fineNo, Date date, Date dueDate, PaymentStatus paymentStatus, OffenceType offenceType, String amount, Integer pointWeight) {
+        this.nic = nic;
+        this.ticketNo = ticketNo;
+        this.fineNo = fineNo;
+        this.date = date;
+        this.dueDate = dueDate;
+        this.paymentStatus = paymentStatus;
+        this.offenceType = offenceType;
+        this.amount = amount;
+        this.pointWeight = pointWeight;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -75,45 +80,12 @@ public class Fine {
         this.dueDate = dueDate;
     }
 
-//    public String getFineAmount() {
-//        return amount;
-//    }
-
-    public void setFineAmount(String amount) {
-        this.amount = amount;
-    }
-
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
     public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
-    }
-
-//    public Fine(Integer ticketNo, Integer fineNo, Date date, Date dueDate, String amount, PaymentStatus paymentStatus, OffenceType offenceType) {
-//        this.ticketNo = ticketNo;
-//        this.fineNo = fineNo;
-//        this.date = date;
-//        this.dueDate = dueDate;
-//        this.amount = amount;
-//        this.paymentStatus = paymentStatus;
-////        this.offenceType = offenceType;
-//    }
-
-    public Fine(Integer ticketNo, Integer fineNo, Date date, Date dueDate, String userId, PaymentStatus paymentStatus, OffenceType offenceType, Integer pointWeight) {
-        this.userId = Integer.valueOf(userId);
-        this.offenceType = offenceType;
-    }
-
-    public Fine(String ticketNo, String fineNo, Date date, Date dueDate, String amount, PaymentStatus paymentStatus, OffenceType offenceType) {
-        this.ticketNo = Integer.valueOf(ticketNo);
-        this.fineNo = Integer.valueOf(fineNo);
-        this.date = date;
-        this.dueDate = dueDate;
-        this.amount = amount;
-        this.paymentStatus = paymentStatus;
-        this.offenceType = offenceType;
     }
 
     public ArrayList<Fine> getUserFinesInfo() throws SQLException {
@@ -140,5 +112,22 @@ public class Fine {
 
     public Integer getPointWeight() {
         return pointWeight;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public Fine(Integer userId, String nic, Integer ticketNo, Integer fineNo, Date date, Date dueDate, PaymentStatus paymentStatus, OffenceType offenceType, String amount, Integer pointWeight) {
+        this.userId = userId;
+        this.nic = nic;
+        this.ticketNo = ticketNo;
+        this.fineNo = fineNo;
+        this.date = date;
+        this.dueDate = dueDate;
+        this.paymentStatus = paymentStatus;
+        this.offenceType = offenceType;
+        this.amount = amount;
+        this.pointWeight = pointWeight;
     }
 }
