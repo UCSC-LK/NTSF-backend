@@ -19,73 +19,12 @@ import java.util.Random;
 
 public class IgpServlet extends HttpServlet {
 
-//    protected void login(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException{
-//        try{
-//            PrintWriter out = response.getWriter();
-//            response.setContentType("text/html");
-//
-//            HttpSession session = request.getSession();
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put("serverResponse", "Allowed");
-//
-//            String police_id = request.getParameter("username");
-//            String password = request.getParameter("password");
-//
-//            String hashedPassword = hashingPassword(password);
-//
-//            System.out.println("Works until login servlet");
-//
-//            System.out.println(police_id);
-//            System.out.println(password);
-//            System.out.println(hashedPassword);
-//            Policeman policeman = new Policeman();
-//            JSONArray loginResponse = policeman.login(police_id, hashedPassword);
-//
-//            /*Generating JWT token*/
-//            //Setting the payload
-////            Claims claims = Jwts.claims().setSubject(police_id);
-//
-//
-//
-//            jsonObject.put("loginResponse", loginResponse);
-//
-//            out.write(jsonObject.toString());
-//            out.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    protected void checkLoginUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-//        try{
-//            PrintWriter out = response.getWriter();
-//            response.setContentType("text/html");
-//
-//            HttpSession session = request.getSession();
-//            JSONObject jsonObject = new JSONObject();
-//
-//            String police_id = request.getParameter("username");
-//            System.out.println(police_id);
-//            System.out.println("Came until checkLoginUsername duplication in servlet");
-//
-//            Policeman policeman = new Policeman();
-//            jsonObject.put("alert",  policeman.LoginUsernameCheck(police_id));
-//
-//            out.write(jsonObject.toString());
-//            out.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try
     {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
 
-        HttpSession session = request.getSession();
         JSONObject jsonObject = new JSONObject();
 
         String name = request.getParameter("name");
@@ -210,8 +149,6 @@ public class IgpServlet extends HttpServlet {
 
             }
 
-            
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -221,7 +158,6 @@ public class IgpServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
-            HttpSession session = request.getSession();
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("serverResponse", "Allowed");
 
@@ -245,7 +181,6 @@ public class IgpServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
 
-//        HttpSession session = request.getSession();
         JSONObject jsonObject = new JSONObject();
 
         String police_id = request.getParameter("police_id");
@@ -269,7 +204,6 @@ public class IgpServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
-//        HttpSession session = request.getSession();
             JSONObject jsonObject = new JSONObject();
 
             String nic = request.getParameter("nic");
@@ -295,7 +229,6 @@ public class IgpServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
-//        HttpSession session = request.getSession();
             JSONObject jsonObject = new JSONObject();
 
             String mobile_number = request.getParameter("mobile_number");
@@ -321,7 +254,6 @@ public class IgpServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
-//        HttpSession session = request.getSession();
             JSONObject jsonObject = new JSONObject();
 
             String email = request.getParameter("email");
