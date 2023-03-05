@@ -17,7 +17,7 @@ public class UserServlet extends HttpServlet {
 
         // Get request parameters
 //        UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
-        String userId = req.getParameter("user_id");
+//        String userId = req.getParameter("user_id");
         String nic = req.getParameter("nic");
 //        String nic = req.getParameter("nic");
 
