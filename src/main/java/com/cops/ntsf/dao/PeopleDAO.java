@@ -21,15 +21,14 @@ public class PeopleDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                people.setNic(resultSet.getString("nic"));
+                people.setIssueDate(resultSet.getDate("issue_date"));
                 people.setName(resultSet.getString("name"));
                 people.setAddress(resultSet.getString("address"));
                 people.setBod(resultSet.getDate("bod"));
                 people.setGender(resultSet.getString("gender"));
                 people.setBirthPlace(resultSet.getString("birth_place"));
-                people.setNic(resultSet.getString("nic"));
-                people.setIssueDate(resultSet.getDate("issue_date"));
                 people.setJob(resultSet.getString("job"));
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
