@@ -21,12 +21,13 @@ public class FineServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Get request parameters
-        String userId = req.getParameter("user_id");
+//        String userId = req.getParameter("user_id");
         String nic = req.getParameter("nic");
-        
+
         ArrayList<Fine> finesList;
 
-        Fine fine = new Fine(userId);
+//        Fine fine = new Fine(userId);
+        Fine fine = new Fine(nic);
         try {
             finesList = fine.getUserFinesInfo();
         } catch (SQLException e) {

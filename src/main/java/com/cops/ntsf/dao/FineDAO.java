@@ -15,7 +15,7 @@ public class FineDAO {
     public ArrayList<Fine> fetchUserFinesInfo(Fine fine) throws SQLException {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM fine WHERE user_id = ?";
+        String sql = "SELECT * FROM fine WHERE nic = ?";
 
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
