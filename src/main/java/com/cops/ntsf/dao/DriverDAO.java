@@ -64,6 +64,9 @@ public class DriverDAO {
                 driver.setAdministrativeNo(resultSet.getString("administrative_no"));
                 driver.setHoldersSignature(resultSet.getString("holders_signature"));
                 driver.setAdministrativeNo(resultSet.getString("vehicle_categories"));
+                driver.setName(resultSet.getString("name"));
+                driver.setDob(resultSet.getDate("dob"));
+                driver.setAddress(resultSet.getString("address"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
