@@ -20,9 +20,9 @@ public class Fine {
     private PaymentStatus paymentStatus;
     private Integer pointWeight;
 
-    public Fine(Integer userId) {
-        this.userId = userId;
-    }
+//    public Fine(Integer userId) {
+//        this.userId = userId;
+//    }
 
     public Fine(String userId) {
         this.userId = Integer.valueOf(userId);
@@ -118,16 +118,20 @@ public class Fine {
         this.amount = amount;
     }
 
-    public Fine(Integer userId, String nic, Integer ticketNo, Integer fineNo, Date date, Date dueDate, PaymentStatus paymentStatus, OffenceType offenceType, String amount, Integer pointWeight) {
-        this.userId = userId;
-        this.nic = nic;
-        this.ticketNo = ticketNo;
-        this.fineNo = fineNo;
-        this.date = date;
-        this.dueDate = dueDate;
-        this.paymentStatus = paymentStatus;
-        this.offenceType = offenceType;
-        this.amount = amount;
-        this.pointWeight = pointWeight;
+//    public Fine(Integer userId, String nic, Integer ticketNo, Integer fineNo, Date date, Date dueDate, PaymentStatus paymentStatus, OffenceType offenceType, String amount, Integer pointWeight) {
+//        this.userId = userId;
+//        this.nic = nic;
+//        this.ticketNo = ticketNo;
+//        this.fineNo = fineNo;
+//        this.date = date;
+//        this.dueDate = dueDate;
+//        this.paymentStatus = paymentStatus;
+//        this.offenceType = offenceType;
+//        this.amount = amount;
+//        this.pointWeight = pointWeight;
+//    }
+
+    public String getNic() {
+        return nic;
     }
 }
