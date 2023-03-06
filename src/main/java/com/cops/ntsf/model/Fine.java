@@ -24,8 +24,12 @@ public class Fine {
 //        this.userId = userId;
 //    }
 
-    public Fine(String userId) {
-        this.userId = Integer.valueOf(userId);
+//    public Fine(String userId) {
+//        this.userId = Integer.valueOf(userId);
+//    }
+
+    public Fine(String nic) {
+        this.nic = nic;
     }
 
     public Fine(String nic, Integer ticketNo, Integer fineNo, Date date, Date dueDate, PaymentStatus paymentStatus, OffenceType offenceType, String amount, Integer pointWeight) {
