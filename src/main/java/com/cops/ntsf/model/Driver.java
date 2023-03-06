@@ -1,7 +1,5 @@
 package com.cops.ntsf.model;
 
-//import com.cops.ntsf.constants.FineType;
-
 import com.cops.ntsf.dao.DriverDAO;
 
 import java.sql.Date;
@@ -12,7 +10,8 @@ public class Driver extends User {
     private Date expireDate;
     private String administrativeNo;
     private String holdersSignature;
-
+    private Date dob;
+    private String address;
 
     public Driver() {
         super();
@@ -85,5 +84,21 @@ public class Driver extends User {
 
     public String getHoldersSignature() {
         return holdersSignature;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }
