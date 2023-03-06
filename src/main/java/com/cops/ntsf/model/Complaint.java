@@ -62,4 +62,9 @@ public class Complaint {
         return ComplaintDetails;
     }
 
+    public JSONArray getComplaintsDetailsAsInvestigationOfficer() {
+        ComplaintDAO complaintDAO = new ComplaintDAO();
+        JSONArray ComplaintDetails = complaintDAO.viewComplaintDetailsAsInvestigationOfficer();
+        return ComplaintDetails;
+    }
 }

@@ -145,7 +145,6 @@ public class PoliceStationServlet extends HttpServlet {
 
                 if (authorizedRank.equals("igp"))
                 {
-
                     if (action.equals("addPoliceStation")) {
                         addPoliceStation(request, response);
                     }

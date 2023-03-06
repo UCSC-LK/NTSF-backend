@@ -280,11 +280,13 @@ public class IgpDAO {
             while (resultSet.next())
             {
                 String rank = resultSet.getString("rank");
+                String position = resultSet.getString("position");
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("authorization", true);
                 jsonObject.put("police_id", police_id);
                 jsonObject.put("rank", rank);
+                jsonObject.put("position", position);
 
                 jsonArray.put(jsonObject);
                 System.out.println(rank);

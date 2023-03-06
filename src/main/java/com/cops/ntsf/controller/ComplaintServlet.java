@@ -2,6 +2,8 @@ package com.cops.ntsf.controller;
 import com.cops.ntsf.model.Complaint;
 import com.cops.ntsf.dao.ComplaintDAO;
 
+import com.cops.ntsf.model.Policeman;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
@@ -47,6 +49,22 @@ public class ComplaintServlet extends HttpServlet {
 
         Complaint complaint = new Complaint(user_id, title, description, complaint_no);
         complaint.complaintAdded();
+
+        out.write(jsonObject.toString());
+        out.close();
+    }
+
+    protected void viewComplaintsAsInvestigationOfficer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("serverResponse", "Allowed");
+
+        Complaint complaint = new Complaint();
+        JSONArray complaintListasInvestigationOfficer = complaint.getComplaintsDetailsAsInvestigationOfficer();
+
+        jsonObject.put("List", complaintListasInvestigationOfficer );
 
         out.write(jsonObject.toString());
         out.close();
