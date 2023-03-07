@@ -18,6 +18,7 @@ public class Fine {
     private String amount;
     private PaymentStatus paymentStatus;
     private Integer pointWeight;
+    private Integer userId;
 
     public Fine(String nic) {
         this.nic = nic;
@@ -112,5 +113,13 @@ public class Fine {
 
     public String getNic() {
         return nic;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getUserId() {
+        return userId;
     }
 }

@@ -19,7 +19,6 @@ public class FineDAO {
 
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-//        preparedStatement.setString(1, String.valueOf(fine.getUserId()));
         preparedStatement.setString(1, fine.getNic());
         preparedStatement.setString(2, String.valueOf(fine.getOffenceType()));
 
@@ -29,13 +28,13 @@ public class FineDAO {
 
         while (resultSet.next()) {
             Fine nextFine;
-//            nextFine = new Fine(fine.getUserId());
+
             nextFine = new Fine(fine.getNic());
+            nextFine.setUserId(Integer.valueOf(resultSet.getString("user_id")));
             nextFine.setTicketNo(Integer.valueOf(resultSet.getString("ticket_no")));
             nextFine.setFineNo(Integer.valueOf(resultSet.getString("fine_no")));
             nextFine.setDate(resultSet.getDate("date"));
             nextFine.setDueDate(resultSet.getDate("due_date"));
-//            nextFine.setFineAmount(resultSet.getString("fine_amount"));
             nextFine.setPaymentStatus(PaymentStatus.valueOf(resultSet.getString("payment_status")));
             nextFine.setOffenceType(OffenceType.valueOf(resultSet.getString("offence_type")));
             nextFine.setAmount(resultSet.getString("amount"));
