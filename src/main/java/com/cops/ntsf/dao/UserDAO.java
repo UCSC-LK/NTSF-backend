@@ -20,7 +20,6 @@ public class UserDAO {
     public void insertUserInfo(User user) {
         Connection dbConn = Database.getConnection();
 
-//        String sql = "INSERT INTO user (nic, email, mobile_no, user_type) VALUES (?, ?, ?, ?)";
         String sql = "INSERT INTO user (nic, email) VALUES (?, ?)";
 
         try {
@@ -29,56 +28,16 @@ public class UserDAO {
             preparedStatement.setString(4, user.getEmail());
 
             preparedStatement.executeUpdate();
-
-            this.fetchUserInfo(user, true);
+            
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void fetchUserInfo(User user, boolean isFromMobileNo) {
+    public void fetchUserInfo(User user) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM user WHERE user_id = ? && offence_type = ?";
-
-        if (isFromMobileNo)
-            sql = "SELECT * FROM user WHERE mobile_no = ? && offence_type = ?";
-
-        try {
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-
-            if (isFromMobileNo)
-                preparedStatement.setString(1, user.getMobileNo());
-            else
-                preparedStatement.setString(1, user.getUserId());
-
-            preparedStatement.setString(2, user.getOffenceType());
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                user.setUserId(resultSet.getString("user_id"));
-                user.setName(resultSet.getString("name"));
-//                user.setAddress(resultSet.getString("address"));
-                user.setNic(resultSet.getString("nic"));
-                user.setEmail(resultSet.getString("email"));
-                user.setMobileNo(resultSet.getString("mobile_no"));
-//                user.setUserType(resultSet.getString("user_type"));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updateUserInfo(User user) {
-        Connection dbConn = Database.getConnection();
-
-        String sql = "UPDATE user WHERE user_id = ? && userType = ?";
-    }
-
-    public void getUserFromNic(User user) {
-        Connection dbConn = Database.getConnection();
-
-        String sql = "SELECT * FROM user WHERE nic = ?";
+        String sql = "SELECT * FROM user WHERE nic=?";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -87,6 +46,9 @@ public class UserDAO {
 
             while (resultSet.next()) {
                 user.setUserId(resultSet.getString("user_id"));
+                user.setNic(resultSet.getString("nic"));
+                user.setEmail(resultSet.getString("email"));
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

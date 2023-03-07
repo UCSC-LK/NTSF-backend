@@ -63,7 +63,7 @@ public class User {
 
     public void getUserInfo() {
         UserDAO userDAO = new UserDAO();
-        userDAO.fetchUserInfo(this, false);
+        userDAO.fetchUserInfo(this);
     }
 
     public String getName() {
@@ -72,11 +72,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void getUserFromNic() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.getUserFromNic(this);
     }
 
     public String getOffenceType() {
