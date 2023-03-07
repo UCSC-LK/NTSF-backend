@@ -1,7 +1,5 @@
 package com.cops.ntsf.model;
 
-//import com.cops.ntsf.constants.FineType;
-
 import com.cops.ntsf.constants.OffenceType;
 import com.cops.ntsf.dao.UserDAO;
 
@@ -13,21 +11,14 @@ public class User {
     private String email;
     private String mobileNo;
     private OffenceType offenceType;
-//    private FineType fineType;
-    // private Blob profilePicture;
 
     public User(String nic, String email) {
         this.nic = nic;
         this.email = email;
     }
 
-//    public User(String userId, FineType fineType) {
-//        this.userId = userId;
-//        this.fineType = fineType;
-//    }
-
-    public User(String userId) {
-        this.userId = userId;
+    public User(String nic) {
+        this.nic = nic;
     }
 
     public User() {
@@ -57,14 +48,6 @@ public class User {
         this.email = email;
     }
 
-//    public FineType getFineType() {
-//        return fineType;
-//    }
-
-//    public void setFineType(String fineType) {
-//        this.fineType = FineType.valueOf(fineType);
-//    }
-
     public void setUserInfo() {
         UserDAO userDAO = new UserDAO();
         userDAO.insertUserInfo(this);
@@ -91,25 +74,12 @@ public class User {
         this.name = name;
     }
 
-//    public String getAddress() {
-//        return address;
-//    }
-
-//    public void setAddress(String address) {
-//        this.address = address;
-//    }
-
-//    public void updateUserInfo() {
-//        UserDAO userDAO = new UserDAO();
-//        userDAO.updateUserInfo(this);
-//    }
-
     public void getUserFromNic() {
         UserDAO userDAO = new UserDAO();
         userDAO.getUserFromNic(this);
     }
 
-    public OffenceType getOffenceType() {
-        return offenceType;
+    public String getOffenceType() {
+        return String.valueOf(offenceType);
     }
 }

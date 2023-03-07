@@ -3,7 +3,6 @@ package com.cops.ntsf.model;
 import com.cops.ntsf.dao.VehicleDAO;
 
 public class Vehicle extends User {
-
     private String vehicleNo;
     private String registerNo;
     private String chassisNo;
@@ -149,5 +148,4 @@ public class Vehicle extends User {
         VehicleDAO vehicleDAO = new VehicleDAO();
         vehicleDAO.fetchVehicleInfo(this);
     }
-
 }
