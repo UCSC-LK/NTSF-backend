@@ -21,14 +21,12 @@ public class FineServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Get request parameters
-//        String userId = req.getParameter("user_id");
         String nic = req.getParameter("nic");
         String offenceType = req.getParameter("offence_type");
 
         ArrayList<Fine> finesList;
 
-//        Fine fine = new Fine(userId);
-        Fine fine = new Fine(nic);
+        Fine fine = new Fine(nic, offenceType);
         try {
             finesList = fine.getUserFinesInfo();
         } catch (SQLException e) {
@@ -46,7 +44,6 @@ public class FineServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doPost(req, resp);
         // Get request parameters
         String nic = req.getParameter("nic");
         Integer ticketNo = Integer.valueOf(req.getParameter("ticket_no"));
