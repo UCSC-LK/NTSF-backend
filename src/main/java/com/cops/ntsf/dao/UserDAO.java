@@ -39,10 +39,10 @@ public class UserDAO {
     public void fetchUserInfo(User user, boolean isFromMobileNo) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM user WHERE user_id = ? && user_type = ?";
+        String sql = "SELECT * FROM user WHERE user_id = ? && offence_type = ?";
 
         if (isFromMobileNo)
-            sql = "SELECT * FROM user WHERE mobile_no = ? && user_type = ?";
+            sql = "SELECT * FROM user WHERE mobile_no = ? && offence_type = ?";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -52,7 +52,7 @@ public class UserDAO {
             else
                 preparedStatement.setString(1, user.getUserId());
 
-            preparedStatement.setString(2, user.getOffenceType().toString());
+            preparedStatement.setString(2, user.getOffenceType());
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
