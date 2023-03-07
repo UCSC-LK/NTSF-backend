@@ -1,13 +1,13 @@
 package com.cops.ntsf.model;
 
-public class UserProfileInformation {
+public class Profile {
 
     private final User user;
     private final Driver driver;
     private final Vehicle vehicle;
     private final People people;
 
-    public UserProfileInformation(User user, Driver driver, Vehicle vehicle, People people) {
+    public Profile(User user, Driver driver, Vehicle vehicle, People people) {
         this.user = user;
         this.driver = driver;
         this.vehicle = vehicle;

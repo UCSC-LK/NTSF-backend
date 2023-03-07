@@ -18,7 +18,7 @@ public class UserService {
         return user;
     }
 
-    public UserProfileInformation getUserInfo(String nic) {
+    public Profile getProfileInfo(String nic) {
         User user = new User(nic);
         user.getUserInfo();
 
@@ -31,6 +31,6 @@ public class UserService {
         People people = new People(nic);
         people.getCivilInfo();
 
-        return new UserProfileInformation(user, driver, vehicle, people);
+        return new Profile(user, driver, vehicle, people);
     }
 }
