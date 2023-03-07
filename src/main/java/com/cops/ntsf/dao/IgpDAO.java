@@ -49,7 +49,7 @@ public class IgpDAO {
         try {
             dbConn = Database.getConnection();
 
-            String sql = "SELECT * from policeman";
+            String sql = "SELECT * from policeman where active = 1";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
@@ -131,7 +131,7 @@ public class IgpDAO {
         boolean alert = false;
         try{
             dbConn = Database.getConnection();
-            String sql = "DELETE from policeman where police_id = ?";
+            String sql = "UPDATE policeman set  active = 0 WHERE police_id = ?";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, police_id);
@@ -272,7 +272,7 @@ public class IgpDAO {
             dbConn = Database.getConnection();
             System.out.println("police_id: " + police_id);
             System.out.println("password: " + password);
-            String sql = "SELECT rank, position, police_station from policeman where police_id =  ? and password = ?";
+            String sql = "SELECT rank, position, police_station from policeman where police_id =  ? and password = ? and active = 1";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, police_id);
@@ -430,7 +430,7 @@ public class IgpDAO {
             System.out.println("Came until the DAO of  getPolicemanDetailsListAsOIC");
             dbConn = Database.getConnection();
 
-            String sql = "SELECT * FROM policeman WHERE ";
+            String sql = "SELECT * FROM policeman WHERE active = 1 ";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
