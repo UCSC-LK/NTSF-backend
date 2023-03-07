@@ -13,22 +13,9 @@ public class Driver extends User {
     private Date dob;
     private String address;
 
-    public Driver() {
-        super();
-    }
-
     public Driver(String nic) {
-        super();
+        super(nic);
     }
-
-    public Driver(String userId, String licenseNo) {
-        super(userId);
-        this.licenceNo = licenseNo;
-    }
-
-//    public Driver(String userId, FineType fineType) {
-//        super(userId, String.valueOf(fineType));
-//    }
 
     public String getLicenceNo() {
         return licenceNo;
@@ -42,11 +29,6 @@ public class Driver extends User {
         DriverDAO driverDAO = new DriverDAO();
         driverDAO.getDriverFromLicense(this);
     }
-
-//    public void setDriverInfo() {
-//        DriverDAO driverDAO = new DriverDAO();
-//        driverDAO.insertDriverInfo(this);
-//    }
 
     public void getDriverInfo() {
         DriverDAO driverDAO = new DriverDAO();

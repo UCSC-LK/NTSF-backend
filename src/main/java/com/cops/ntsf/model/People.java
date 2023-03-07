@@ -4,14 +4,13 @@ import com.cops.ntsf.dao.PeopleDAO;
 
 import java.sql.Date;
 
-public class People {
+public class People extends User {
 
     private String name;
     private String address;
     private Date bod;
     private String gender;
     private String birthPlace;
-    private String nic;
     private Date issueDate;
     private String job;
 
@@ -55,14 +54,6 @@ public class People {
         this.birthPlace = birthPlace;
     }
 
-    public String getNic() {
-        return nic;
-    }
-
-    public void setNic(String nic) {
-        this.nic = nic;
-    }
-
     public Date getIssueDate() {
         return issueDate;
     }
@@ -80,6 +71,7 @@ public class People {
     }
 
     public People(String nic) {
+        super(nic);
     }
 
     public void getCivilInfo() {

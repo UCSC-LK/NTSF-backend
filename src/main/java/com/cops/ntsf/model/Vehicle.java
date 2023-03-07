@@ -123,12 +123,8 @@ public class Vehicle extends User {
         this.previousOwners = previousOwners;
     }
 
-    public Vehicle(String userId) {
-        super(userId);
-    }
-
-    public Vehicle() {
-        super();
+    public Vehicle(String nic) {
+        super(nic);
     }
 
     public void getVehicleFromVehicleNo() {
