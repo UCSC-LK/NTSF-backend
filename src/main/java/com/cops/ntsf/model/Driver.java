@@ -83,4 +83,7 @@ public class Driver extends User {
     public String getAddress() {
         return address;
     }
+
+    public void setName(String name) {
+    }
 }

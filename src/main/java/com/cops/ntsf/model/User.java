@@ -1,15 +1,12 @@
 package com.cops.ntsf.model;
 
-import com.cops.ntsf.constants.OffenceType;
 import com.cops.ntsf.dao.UserDAO;
 
 public class User {
     private String userId;
-    private String name;
     private String nic;
     private String email;
     private String mobileNo;
-    private OffenceType offenceType;
 
     public User(String nic, String email, String mobileNo) {
         this.nic = nic;
@@ -57,24 +54,8 @@ public class User {
         return mobileNo;
     }
 
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
-    }
-
     public void getUserInfo() {
         UserDAO userDAO = new UserDAO();
         userDAO.fetchUserInfo(this);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getOffenceType() {
-        return String.valueOf(offenceType);
     }
 }
