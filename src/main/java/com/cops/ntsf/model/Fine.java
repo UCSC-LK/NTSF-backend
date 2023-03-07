@@ -32,6 +32,11 @@ public class Fine {
         this.nic = nic;
     }
 
+    public Fine(String nic, OffenceType offenceType) {
+        this.nic = nic;
+        this.offenceType = offenceType;
+    }
+
     public Fine(String nic, Integer ticketNo, Integer fineNo, Date date, Date dueDate, PaymentStatus paymentStatus, OffenceType offenceType, String amount, Integer pointWeight) {
         this.nic = nic;
         this.ticketNo = ticketNo;
