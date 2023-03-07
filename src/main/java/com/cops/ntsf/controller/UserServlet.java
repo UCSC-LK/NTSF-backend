@@ -1,6 +1,6 @@
 package com.cops.ntsf.controller;
 
-import com.cops.ntsf.model.User;
+import com.cops.ntsf.model.UserProfileInformation;
 import com.cops.ntsf.service.UserService;
 import com.google.gson.Gson;
 
@@ -19,14 +19,14 @@ public class UserServlet extends HttpServlet {
         String nic = req.getParameter("nic");
 
         UserService userService = new UserService();
-        User user = userService.getUserInfo(nic);
+        UserProfileInformation userProfileInformation = userService.getUserInfo(nic);
 
         // Output response
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-        out.write(new Gson().toJson(user));
+        out.write(new Gson().toJson(userProfileInformation));
         out.close();
     }
 }
