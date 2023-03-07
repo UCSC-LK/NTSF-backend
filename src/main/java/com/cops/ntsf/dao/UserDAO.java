@@ -16,12 +16,13 @@ public class UserDAO {
     public void insertUserInfo(User user) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "INSERT INTO user (nic, email) VALUES (?, ?)";
+        String sql = "INSERT INTO user (nic, email, mobileNo) VALUES (?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setString(3, user.getNic());
-            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(1, user.getNic());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getMobileNo());
 
             preparedStatement.executeUpdate();
 

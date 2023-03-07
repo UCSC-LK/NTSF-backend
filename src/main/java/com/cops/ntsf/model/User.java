@@ -11,9 +11,10 @@ public class User {
     private String mobileNo;
     private OffenceType offenceType;
 
-    public User(String nic, String email) {
+    public User(String nic, String email, String mobileNo) {
         this.nic = nic;
         this.email = email;
+        this.mobileNo = mobileNo;
     }
 
     public User(String nic) {
