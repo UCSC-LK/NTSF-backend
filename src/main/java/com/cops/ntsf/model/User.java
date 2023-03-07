@@ -6,7 +6,6 @@ import com.cops.ntsf.dao.UserDAO;
 public class User {
     private String userId;
     private String name;
-    //    private String address;
     private String nic;
     private String email;
     private String mobileNo;

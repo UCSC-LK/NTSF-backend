@@ -7,13 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-//import java.time.LocalDate;
 
 @SuppressWarnings("ALL")
 public class UserDAO {
-    private String userId;
-    private String licenceNo;
-
     /**
      * Function to insert data into user table
      */
@@ -28,7 +24,7 @@ public class UserDAO {
             preparedStatement.setString(4, user.getEmail());
 
             preparedStatement.executeUpdate();
-            
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -37,7 +33,7 @@ public class UserDAO {
     public void fetchUserInfo(User user) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM user WHERE nic=?";
+        String sql = "SELECT * FROM user WHERE nic = ?";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
