@@ -18,18 +18,19 @@ public class UserService {
         return user;
     }
 
-    public User getUserInfo(String nic) {
+    public UserProfileInformation getUserInfo(String nic) {
         User user = new User(nic);
         user.getUserInfo();
 
-        if (nic != null) {
-            Driver driver = new Driver(nic);
-            driver.getDriverInfo();
-            Vehicle vehicle = new Vehicle(nic);
-            vehicle.getVehicleInfo();
-            People people = new People(nic);
-            people.getCivilInfo();
-        }
-        return user;
+        Driver driver = new Driver(nic);
+        driver.getDriverInfo();
+
+        Vehicle vehicle = new Vehicle(nic);
+        vehicle.getVehicleInfo();
+
+        People people = new People(nic);
+        people.getCivilInfo();
+
+        return new UserProfileInformation(user, driver, vehicle, people);
     }
 }
