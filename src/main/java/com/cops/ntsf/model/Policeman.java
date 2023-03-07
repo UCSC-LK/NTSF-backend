@@ -180,5 +180,11 @@ public class Policeman {
         JSONArray policemanDetailsListAsOIC = oicDAO.getPolicemanDetailsList(police_station);
         return policemanDetailsListAsOIC;
     }
+
+    public void positionEdited(String position, String policeman_id) {
+        System.out.println("Came until the update Position in the Policeman model");
+        OicDAO oicDAO = new OicDAO();
+        oicDAO.editPosition(position, policeman_id);
+    }
 }
 

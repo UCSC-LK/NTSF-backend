@@ -50,4 +50,23 @@ public class OicDAO {
         }
         return jsonArray;
     }
+
+    public void editPosition(String position, String policeman_id) {
+        Connection dbConn = null;
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "UPDATE policeman SET position = ? WHERE police_id = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, position);
+            preparedStatement.setString(2, policeman_id);
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 }

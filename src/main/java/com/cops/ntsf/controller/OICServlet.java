@@ -66,6 +66,12 @@ public class OICServlet extends HttpServlet {
                        System.out.println("Police Station: " + request.getParameter("police_station"));
                        viewPoliceman(request, response);
                    }
+                   else if (action.equals("updatePosition"))
+                   {
+                       System.out.println("Redirecting to editPosition in OIC Servlet");
+                       System.out.println("Position: " + request.getParameter("position"));
+                       updatePosition(request, response);
+                   }
                 }
                 else {
                     System.out.println("You are not authorized to access this page");
@@ -75,6 +81,32 @@ public class OICServlet extends HttpServlet {
         }
         else {
             System.out.println("JWT signature verification failed");
+        }
+
+    }
+
+    private void updatePosition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            System.out.println("Came until the editPosition method in OIC Servlet");
+            String position = request.getParameter("position");
+            String policeman_id = request.getParameter("policeman_id");
+            System.out.println("Position: " + position);
+            System.out.println("Policeman ID: " + policeman_id);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            Policeman policeman = new Policeman();
+            policeman.positionEdited(position, policeman_id);
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
