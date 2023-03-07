@@ -29,22 +29,6 @@ public class DriverDAO {
             throw new RuntimeException(e);
         }
     }
-//
-//    public void insertDriverInfo(Driver driver) {
-//        Connection dbConn = Database.getConnection();
-//
-//        String sql = "INSERT INTO driver(user_id, licence_no) VALUES (?, ?)";
-//
-//        try {
-//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-//            preparedStatement.setString(1, driver.getUserId());
-//            preparedStatement.setString(2, driver.getLicenceNo());
-//
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     public void fetchDriverInfo(Driver driver) {
         Connection dbConn = Database.getConnection();
