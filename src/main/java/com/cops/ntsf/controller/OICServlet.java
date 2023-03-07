@@ -92,15 +92,15 @@ public class OICServlet extends HttpServlet {
 
             System.out.println("Came until the editPosition method in OIC Servlet");
             String position = request.getParameter("position");
-            String policeman_id = request.getParameter("policeman_id");
+            String police_id = request.getParameter("police_id");
             System.out.println("Position: " + position);
-            System.out.println("Policeman ID: " + policeman_id);
+            System.out.println("Policeman ID: " + police_id);
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("serverResponse", "Allowed");
 
             Policeman policeman = new Policeman();
-            policeman.positionEdited(position, policeman_id);
+            policeman.positionEdited(position, police_id);
 
             out.write(jsonObject.toString());
             out.close();

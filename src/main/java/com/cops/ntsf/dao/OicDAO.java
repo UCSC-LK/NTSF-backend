@@ -51,7 +51,7 @@ public class OicDAO {
         return jsonArray;
     }
 
-    public void editPosition(String position, String policeman_id) {
+    public void editPosition(String position, String police_id) {
         Connection dbConn = null;
 
         try{
@@ -60,7 +60,7 @@ public class OicDAO {
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, position);
-            preparedStatement.setString(2, policeman_id);
+            preparedStatement.setString(2, police_id);
             preparedStatement.executeUpdate();
 
             preparedStatement.close();

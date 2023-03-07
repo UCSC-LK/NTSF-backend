@@ -181,10 +181,10 @@ public class Policeman {
         return policemanDetailsListAsOIC;
     }
 
-    public void positionEdited(String position, String policeman_id) {
+    public void positionEdited(String position, String police_id) {
         System.out.println("Came until the update Position in the Policeman model");
         OicDAO oicDAO = new OicDAO();
-        oicDAO.editPosition(position, policeman_id);
+        oicDAO.editPosition(position, police_id);
     }
 }
 
