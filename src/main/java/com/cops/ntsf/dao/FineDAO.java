@@ -15,12 +15,13 @@ public class FineDAO {
     public ArrayList<Fine> fetchUserFinesInfo(Fine fine) throws SQLException {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM fine WHERE nic = ?";
+        String sql = "SELECT * FROM fine WHERE nic = ? AND offence_type=?";
 
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
 //        preparedStatement.setString(1, String.valueOf(fine.getUserId()));
         preparedStatement.setString(1, fine.getNic());
+        preparedStatement.setString(2, String.valueOf(fine.getOffenceType()));
 
         ResultSet resultSet = preparedStatement.executeQuery();
 

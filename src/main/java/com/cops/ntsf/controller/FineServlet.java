@@ -23,6 +23,7 @@ public class FineServlet extends HttpServlet {
         // Get request parameters
 //        String userId = req.getParameter("user_id");
         String nic = req.getParameter("nic");
+        String offenceType = req.getParameter("offence_type");
 
         ArrayList<Fine> finesList;
 
