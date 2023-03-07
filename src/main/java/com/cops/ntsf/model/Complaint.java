@@ -16,7 +16,11 @@ public class Complaint {
         this.description = description;
         this.complaint_no = complaint_no;
     }
-    
+
+    public Complaint()
+    {
+
+    }
     public String getUser_id() {
         return user_id;
     }

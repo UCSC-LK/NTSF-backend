@@ -71,6 +71,7 @@ public class PolicemanLoginServlet extends HttpServlet {
                 payload.put("police_id", loginResponse.getJSONObject(0).getString("police_id"));
                 payload.put("rank", loginResponse.getJSONObject(0).getString("rank"));
                 payload.put("position", loginResponse.getJSONObject(0).getString("position"));
+                payload.put("police_station", loginResponse.getJSONObject(0).getString("police_station"));
 
                 //Encoding the header and payload objects into base64url format
                 String base64UrlHeader = Base64.getUrlEncoder().encodeToString(header.toString().getBytes());

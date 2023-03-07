@@ -264,29 +264,37 @@ public class IgpDAO {
     }
 
     public JSONArray getPolicemanLoginResult(String police_id, String password) {
+        System.out.println("Hi from Login DAO");
         Connection dbConn = null;
         JSONArray jsonArray = new JSONArray();
 
         try {
             dbConn = Database.getConnection();
-
-            String sql = "SELECT rank from policeman where police_id =  ? and password = ?";
+            System.out.println("police_id: " + police_id);
+            System.out.println("password: " + password);
+            String sql = "SELECT rank, position, police_station from policeman where police_id =  ? and password = ?";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, police_id);
             preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println(resultSet);
             while (resultSet.next())
             {
+                System.out.println(resultSet.getString("rank"));
+                System.out.println(resultSet.getString("position"));
+                System.out.println("This is where error is coming from");
                 String rank = resultSet.getString("rank");
                 String position = resultSet.getString("position");
+                String police_station = resultSet.getString("police_station");
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("authorization", true);
                 jsonObject.put("police_id", police_id);
                 jsonObject.put("rank", rank);
                 jsonObject.put("position", position);
+                jsonObject.put("police_station", police_station);
 
                 jsonArray.put(jsonObject);
                 System.out.println(rank);

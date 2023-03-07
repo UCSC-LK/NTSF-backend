@@ -9,14 +9,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class OicDAO {
-    public JSONArray getPolicemanDetailsList() {
+    public JSONArray getPolicemanDetailsList(String oic_police_station){
         Connection dbConn = null;
         JSONArray jsonArray = new JSONArray();
         try{
             dbConn = Database.getConnection();
-            String sql = "SELECT * FROM policeman";
+            String sql = "SELECT * FROM policeman where police_station = ? and rank = 'policeman'";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, oic_police_station);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
@@ -26,7 +27,8 @@ public class OicDAO {
                 String mobile_number = resultSet.getString("mobile_number");
                 String email = resultSet.getString("email");
                 String rank = resultSet.getString("rank");
-                String police_station = resultSet.getString("police_station");
+                String position = resultSet.getString("position");
+//                String police_station = resultSet.getString("police_station");
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("name", name);
@@ -35,7 +37,8 @@ public class OicDAO {
                 jsonObject.put("mobile_number", mobile_number);
                 jsonObject.put("email", email);
                 jsonObject.put("rank", rank);
-                jsonObject.put("police_station", police_station);
+                jsonObject.put("position", position);
+//                jsonObject.put("police_station", police_station);
 
                 jsonArray.put(jsonObject);
             }

@@ -175,9 +175,9 @@ public class Policeman {
     }
 
 //OIC
-    public JSONArray getPolicemanDetailsAsOIC() {
+    public JSONArray getPolicemanDetailsAsOIC(String police_station) {
         OicDAO oicDAO = new OicDAO();
-        JSONArray policemanDetailsListAsOIC = oicDAO.getPolicemanDetailsList();
+        JSONArray policemanDetailsListAsOIC = oicDAO.getPolicemanDetailsList(police_station);
         return policemanDetailsListAsOIC;
     }
 }
