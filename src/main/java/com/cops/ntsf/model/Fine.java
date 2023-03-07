@@ -9,9 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Fine {
-    private String nic;
+    private final String nic;
     private OffenceType offenceType;
-    private Integer userId;
     private Integer ticketNo;
     private Integer fineNo;
     private Date date;
@@ -20,21 +19,13 @@ public class Fine {
     private PaymentStatus paymentStatus;
     private Integer pointWeight;
 
-//    public Fine(Integer userId) {
-//        this.userId = userId;
-//    }
-
-//    public Fine(String userId) {
-//        this.userId = Integer.valueOf(userId);
-//    }
-
     public Fine(String nic) {
         this.nic = nic;
     }
 
-    public Fine(String nic, OffenceType offenceType) {
+    public Fine(String nic, String offenceType) {
         this.nic = nic;
-        this.offenceType = offenceType;
+        this.offenceType = OffenceType.valueOf(offenceType);
     }
 
     public Fine(String nic, Integer ticketNo, Integer fineNo, Date date, Date dueDate, PaymentStatus paymentStatus, OffenceType offenceType, String amount, Integer pointWeight) {
@@ -49,12 +40,9 @@ public class Fine {
         this.pointWeight = pointWeight;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public Fine(String nic, OffenceType offenceType) {
+        this.nic = nic;
+        this.offenceType = offenceType;
     }
 
     public Integer getTicketNo() {
@@ -126,19 +114,6 @@ public class Fine {
     public void setAmount(String amount) {
         this.amount = amount;
     }
-
-//    public Fine(Integer userId, String nic, Integer ticketNo, Integer fineNo, Date date, Date dueDate, PaymentStatus paymentStatus, OffenceType offenceType, String amount, Integer pointWeight) {
-//        this.userId = userId;
-//        this.nic = nic;
-//        this.ticketNo = ticketNo;
-//        this.fineNo = fineNo;
-//        this.date = date;
-//        this.dueDate = dueDate;
-//        this.paymentStatus = paymentStatus;
-//        this.offenceType = offenceType;
-//        this.amount = amount;
-//        this.pointWeight = pointWeight;
-//    }
 
     public String getNic() {
         return nic;
