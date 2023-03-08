@@ -14,8 +14,7 @@ public class Offence {
     {
 
     }
-public Offence(int offence_no, String offence_type, String offence_name, String description, int amount, int demerit_points) {
-        this.offence_no = offence_no;
+public Offence(String offence_type, String description, int amount, int demerit_points) {
         this.offence_type = offence_type;
         this.description = description;
         this.amount = amount;

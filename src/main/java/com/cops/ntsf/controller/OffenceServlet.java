@@ -25,10 +25,20 @@ public class OffenceServlet extends HttpServlet {
             JSONObject jsonObject = new JSONObject();
 
 //            int Offence_no = Integer.parseInt(request.getParameter("Offence_no"));
-            String offence_noString = request.getParameter("offence_no");
-            int offence_no = 0;
-            if (offence_noString.matches("\\d+")) {
-                offence_no = Integer.parseInt(offence_noString);
+
+            String amountString = request.getParameter("amount");
+            int amount = 0;
+            if (amountString.matches("\\d+")) {
+                amount = Integer.parseInt(amountString);
+            } else {
+                // Handle the case where the parameter contains non-numeric characters
+                // e.g., show an error message to the user
+            }
+
+            String demerit_pointsString = request.getParameter("demerit_points");
+            int demerit_points = 0;
+            if (demerit_pointsString.matches("\\d+")) {
+                demerit_points = Integer.parseInt(demerit_pointsString);
             } else {
                 // Handle the case where the parameter contains non-numeric characters
                 // e.g., show an error message to the user
@@ -36,8 +46,8 @@ public class OffenceServlet extends HttpServlet {
 
             String offence_type = request.getParameter("offence_type");
             String description = request.getParameter("description");
-            int amount = Integer.parseInt(request.getParameter("amount"));
-            int demerit_points = Integer.parseInt(request.getParameter("demerit_points"));
+            amount = Integer.parseInt(request.getParameter("amount"));
+            demerit_points = Integer.parseInt(request.getParameter("demerit_points"));
 
             System.out.println("Add offence method is called in the offence servlet");
 
@@ -51,7 +61,7 @@ public class OffenceServlet extends HttpServlet {
 //                jsonObject.put("status", "success");
 //                jsonObject.put("message", "Offence added successfully");
 
-                Offence offence = new Offence(offence_no, offence_type, description, amount, demerit_points);
+                Offence offence = new Offence(offence_type, description, amount, demerit_points);
                 offence.offenceAdded();
 
             } else {
@@ -77,11 +87,7 @@ public class OffenceServlet extends HttpServlet {
 
         System.out.println("Check validations method is called in the offence servlet");
 
-        if(offence_no <= 0)
-        {
-            flagOffence_no = false;
-        }
-        else if(offence_no >= 100)
+        if(offence_no <= 0 || offence_no >= 100)
         {
             flagOffence_no = false;
         }
