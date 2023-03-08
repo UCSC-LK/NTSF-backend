@@ -4,17 +4,17 @@ import com.cops.ntsf.dao.OffenceDAO;
 import org.json.JSONArray;
 
 public class Offence {
-    private Integer offence_no;
+    private int offence_no;
     private String offence_type;
     private String description;
-    private Integer amount;
+    private int amount;
 
-    private Integer demerit_points;
+    private int demerit_points;
     public Offence()
     {
 
     }
-public Offence(Integer offence_no, String offence_type, String offence_name, String description, Integer amount) {
+public Offence(int offence_no, String offence_type, String offence_name, String description, int amount, int demerit_points) {
         this.offence_no = offence_no;
         this.offence_type = offence_type;
         this.description = description;
@@ -22,7 +22,7 @@ public Offence(Integer offence_no, String offence_type, String offence_name, Str
         this.demerit_points = demerit_points;
     }
 
-    public Integer getOffence_no() {
+    public int getOffence_no() {
         return offence_no;
     }
 
@@ -34,13 +34,13 @@ public Offence(Integer offence_no, String offence_type, String offence_name, Str
         return description;
     }
 
-    public Integer getAmount() {
+    public int getAmount() {
         return amount;
     }
-    public Integer getDemerit_points() {
+    public int getDemerit_points() {
         return demerit_points;
     }
-    public void setOffence_no(Integer offence_no) {
+    public void setOffence_no(int offence_no) {
         this.offence_no = offence_no;
     }
     public void setOffence_type(String offence_type) {
@@ -50,10 +50,10 @@ public Offence(Integer offence_no, String offence_type, String offence_name, Str
     public void setDescription(String description) {
         this.description = description;
     }
-    public void setAmount(Integer amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
-    public void setDemerit_points(Integer demerit_points) {
+    public void setDemerit_points(int demerit_points) {
         this.demerit_points = demerit_points;
     }
 
