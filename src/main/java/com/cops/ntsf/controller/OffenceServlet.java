@@ -166,7 +166,9 @@ public class OffenceServlet extends HttpServlet {
         out.close();
     }
 
+    protected void deleteOffence(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Came until the doPost method in Offence Servlet");
 
@@ -218,6 +220,12 @@ public class OffenceServlet extends HttpServlet {
                     } else if (action.equals("viewOffence")) {
                         System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
                         viewOffence(request, response);
+                    } else if (action.equals("deleteOffence")) {
+                        System.out.println("Redirecting to deleteOffence in Offence Servlet");
+                        deleteOffence(request, response);
+                    } else if (action.equals("updateOffence")) {
+                        System.out.println("Redirecting to updateOffence in Offence Servlet");
+                        //updateOffence(request, response);
                     }
                     else{
                         System.out.println("Invalid action"); //Could be changed later
@@ -234,4 +242,5 @@ public class OffenceServlet extends HttpServlet {
         }
 
     }
+
 }
