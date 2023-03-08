@@ -51,13 +51,12 @@ public class OffenceServlet extends HttpServlet {
 
             System.out.println("Add offence method is called in the offence servlet");
 
-            System.out.println(offence_no);
             System.out.println(offence_type);
             System.out.println(description);
             System.out.println(amount);
             System.out.println(demerit_points);
 
-            if (checkValidations(offence_no, offence_type, description, amount, demerit_points)) {
+            if (checkValidations( offence_type, description, amount, demerit_points)) {
 //                jsonObject.put("status", "success");
 //                jsonObject.put("message", "Offence added successfully");
 
@@ -77,8 +76,7 @@ public class OffenceServlet extends HttpServlet {
         }
     }
 
-    private boolean checkValidations(int offence_no, String offence_type, String description, int amount, int demerit_points) {
-        boolean flagOffence_no = false;
+    private boolean checkValidations(String offence_type, String description, int amount, int demerit_points) {
         boolean flagOffence_type = false;
         boolean flagDescription = false;
         boolean flagAmount = false;
@@ -86,15 +84,6 @@ public class OffenceServlet extends HttpServlet {
         boolean flag = false;
 
         System.out.println("Check validations method is called in the offence servlet");
-
-        if(offence_no <= 0 || offence_no >= 100)
-        {
-            flagOffence_no = false;
-        }
-        else
-        {
-            flagOffence_no = true;
-        }
 
         if(offence_type == null)
         {
@@ -148,7 +137,7 @@ public class OffenceServlet extends HttpServlet {
             flagDemerit_points = true;
         }
 
-        if(flagOffence_no && flagOffence_type && flagDescription && flagAmount && flagDemerit_points)
+        if(flagOffence_type && flagDescription && flagAmount && flagDemerit_points)
         {
             flag = true;
         }
