@@ -3,10 +3,10 @@ package com.cops.ntsf.model;
 public class Offence {
     private Integer offence_no;
     private String offence_type;
-    private String offence_name;
     private String description;
     private Integer amount;
 
+    private Integer demerit_points;
     public Offence()
     {
 
@@ -14,9 +14,9 @@ public class Offence {
 public Offence(Integer offence_no, String offence_type, String offence_name, String description, Integer amount) {
         this.offence_no = offence_no;
         this.offence_type = offence_type;
-        this.offence_name = offence_name;
         this.description = description;
         this.amount = amount;
+        this.demerit_points = demerit_points;
     }
 
     public Integer getOffence_no() {
@@ -27,10 +27,6 @@ public Offence(Integer offence_no, String offence_type, String offence_name, Str
         return offence_type;
     }
 
-    public String getOffence_name() {
-        return offence_name;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -38,25 +34,24 @@ public Offence(Integer offence_no, String offence_type, String offence_name, Str
     public Integer getAmount() {
         return amount;
     }
-
+    public Integer getDemerit_points() {
+        return demerit_points;
+    }
     public void setOffence_no(Integer offence_no) {
         this.offence_no = offence_no;
     }
-
     public void setOffence_type(String offence_type) {
         this.offence_type = offence_type;
-    }
-
-    public void setOffence_name(String offence_name) {
-        this.offence_name = offence_name;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
-
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+    public void setDemerit_points(Integer demerit_points) {
+        this.demerit_points = demerit_points;
     }
 
 

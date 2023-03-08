@@ -15,8 +15,10 @@ public class OffenceServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
-            JSONObject offence = new JSONObject();
+            JSONObject jsonObject = new JSONObject();
 
+            String Offence = request.getParameter("name");
+            St
 
         }catch (Exception e)
         {
