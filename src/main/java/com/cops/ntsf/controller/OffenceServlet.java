@@ -50,6 +50,10 @@ public class OffenceServlet extends HttpServlet {
             if (checkValidations(offence_no, offence_type, description, amount, demerit_points)) {
 //                jsonObject.put("status", "success");
 //                jsonObject.put("message", "Offence added successfully");
+
+                Offence offence = new Offence(offence_no, offence_type, description, amount, demerit_points);
+                offence.addOffence();
+
             } else {
 //                jsonObject.put("status", "error");
 //                jsonObject.put("message", "Error occurred while adding offence");
