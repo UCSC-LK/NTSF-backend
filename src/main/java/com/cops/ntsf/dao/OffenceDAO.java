@@ -1,5 +1,6 @@
 package com.cops.ntsf.dao;
 
+import com.cops.ntsf.model.Offence;
 import com.cops.ntsf.util.Database;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class OffenceDAO {
@@ -53,4 +55,27 @@ public class OffenceDAO {
         }
         return jsonArray;
     }
+
+    public void createOffence(Offence offence) {
+        Connection dbConn = null;
+        try{
+            dbConn = Database.getConnection();
+            String sql = "INSERT INTO offence (offence_no, offence_type, description, amount, demerit_points) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            preparedStatement.setInt(1, offence.getOffence_no());
+            preparedStatement.setString(2, offence.getOffence_type());
+            preparedStatement.setString(3, offence.getDescription());
+            preparedStatement.setInt(4, offence.getAmount());
+            preparedStatement.setInt(5, offence.getDemerit_points());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
