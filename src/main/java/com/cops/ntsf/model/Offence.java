@@ -1,5 +1,8 @@
 package com.cops.ntsf.model;
 
+import com.cops.ntsf.dao.OffenceDAO;
+import org.json.JSONArray;
+
 public class Offence {
     private Integer offence_no;
     private String offence_type;
@@ -55,4 +58,9 @@ public Offence(Integer offence_no, String offence_type, String offence_name, Str
     }
 
 
+    public JSONArray getOffenceDetails() {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        JSONArray offenceDetailslist = offenceDAO.getOffenceDetailsList();
+        return offenceDetailsList;
+    }
 }
