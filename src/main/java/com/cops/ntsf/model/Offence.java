@@ -61,6 +61,11 @@ public Offence(Integer offence_no, String offence_type, String offence_name, Str
     public JSONArray getOffenceDetails() {
         OffenceDAO offenceDAO = new OffenceDAO();
         JSONArray offenceDetailslist = offenceDAO.getOffenceDetailsList();
-        return offenceDetailsList;
+        return offenceDetailslist;
+    }
+
+    public void offenceAdded() {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        offenceDAO.createOffence(this);
     }
 }

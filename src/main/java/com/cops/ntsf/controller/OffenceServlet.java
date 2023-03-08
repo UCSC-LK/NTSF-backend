@@ -52,7 +52,7 @@ public class OffenceServlet extends HttpServlet {
 //                jsonObject.put("message", "Offence added successfully");
 
                 Offence offence = new Offence(offence_no, offence_type, description, amount, demerit_points);
-                offence.addOffence();
+                offence.offenceAdded();
 
             } else {
 //                jsonObject.put("status", "error");
