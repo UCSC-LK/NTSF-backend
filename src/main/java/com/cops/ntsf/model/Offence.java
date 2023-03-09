@@ -73,4 +73,10 @@ public Offence(String offence_type, String description, int amount, int demerit_
         boolean deleteOffenceDetailResult = offenceDAO.deleteOffence(offence_no);
         return deleteOffenceDetailResult;
     }
+
+    public boolean offenceDescriptionCheck(String description) {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        boolean offenceDescriptionCheckResult = offenceDAO.offenceDescriptionCheck(description);
+        return offenceDescriptionCheckResult;
+    }
 }
