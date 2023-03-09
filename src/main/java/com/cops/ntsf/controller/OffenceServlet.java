@@ -186,6 +186,29 @@ public class OffenceServlet extends HttpServlet {
             out.write(jsonObject.toString());
             out.close();
     }
+
+    protected void checkOffenceDescription(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+
+            String description = request.getParameter("description");
+
+            System.out.println("Check offence description method is called in the offence servlet");
+
+            System.out.println(description);
+
+            Offence offence = new Offence();
+            jsonObject.put("alert", offence.offenceDescriptionCheck(description));
+
+            out.print(jsonObject.toString());
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Came until the doPost method in Offence Servlet");
 
