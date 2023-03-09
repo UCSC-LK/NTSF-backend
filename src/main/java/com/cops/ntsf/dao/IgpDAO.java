@@ -2,17 +2,13 @@ package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.util.Database;
-import com.mysql.cj.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import com.cops.ntsf.service.Email;
 
-import java.net.PasswordAuthentication;
-import java.security.MessageDigest;
 import java.sql.*;
-import java.util.Base64;
-import java.util.Properties;
 
-public class PolicemanDAO {
+public class IgpDAO {
     public String createPoliceman(Policeman policeman)
     {
         Connection dbConn = null;
@@ -30,6 +26,8 @@ public class PolicemanDAO {
             preparedStatement.setString(7, policeman.getPolice_station());
             preparedStatement.setString(8, policeman.getPassword());
 
+            Email email = new Email();
+            email.sendMail(policeman.getEmail(), policeman.getPassword());
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
@@ -51,7 +49,7 @@ public class PolicemanDAO {
         try {
             dbConn = Database.getConnection();
 
-            String sql = "SELECT * from policeman";
+            String sql = "SELECT * from policeman where active = 1";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
@@ -94,35 +92,6 @@ public class PolicemanDAO {
         }
         return jsonArray;
     }
-
-    public JSONArray getPoliceStationOptionsList() {
-        Connection dbConn = null;
-        boolean alert = false;
-
-        JSONArray jsonArray = null;
-        try {
-            System.out.println("DAO to get the list of policestations to addPoliceman.js dynamically as an array is called");
-            dbConn = Database.getConnection();
-            String sql = "SELECT police_station FROM policeman GROUP BY police_station";
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            jsonArray = new JSONArray();
-
-            while (resultSet.next()) {
-                String police_station = resultSet.getString("police_station");
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("police_station", police_station);
-                jsonArray.put(jsonObject);
-            }
-            resultSet.close();
-            preparedStatement.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(jsonArray);
-        return jsonArray;
-    }
     public boolean updatePolicemanDetails(Policeman policeman)
     {
         Connection dbConn = null;
@@ -162,7 +131,7 @@ public class PolicemanDAO {
         boolean alert = false;
         try{
             dbConn = Database.getConnection();
-            String sql = "DELETE from policeman where police_id = ?";
+            String sql = "UPDATE policeman set  active = 0 WHERE police_id = ?";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, police_id);
@@ -295,26 +264,37 @@ public class PolicemanDAO {
     }
 
     public JSONArray getPolicemanLoginResult(String police_id, String password) {
+        System.out.println("Hi from Login DAO");
         Connection dbConn = null;
         JSONArray jsonArray = new JSONArray();
 
         try {
             dbConn = Database.getConnection();
-
-            String sql = "SELECT rank from policeman where police_id =  ? and password = ?";
+            System.out.println("police_id: " + police_id);
+            System.out.println("password: " + password);
+            String sql = "SELECT rank, position, police_station from policeman where police_id =  ? and password = ? and active = 1";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, police_id);
             preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println(resultSet);
             while (resultSet.next())
             {
+                System.out.println(resultSet.getString("rank"));
+                System.out.println(resultSet.getString("position"));
+                System.out.println("This is where error is coming from");
                 String rank = resultSet.getString("rank");
+                String position = resultSet.getString("position");
+                String police_station = resultSet.getString("police_station");
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("authorization", true);
+                jsonObject.put("police_id", police_id);
                 jsonObject.put("rank", rank);
+                jsonObject.put("position", position);
+                jsonObject.put("police_station", police_station);
 
                 jsonArray.put(jsonObject);
                 System.out.println(rank);
@@ -413,7 +393,14 @@ public class PolicemanDAO {
 
         try {
             dbConn = Database.getConnection();
-
+            System.out.println("Came until the update  DAO");
+            System.out.println(policeman.getName());
+            System.out.println(policeman.getNic());
+            System.out.println(policeman.getMobile_number());
+            System.out.println(policeman.getEmail());
+            System.out.println(policeman.getRank());
+            System.out.println(policeman.getPolice_station());
+            System.out.println(policeman.getPolice_id());
             String sql = "UPDATE policeman SET name = ?, nic = ?, mobile_number = ?, email = ?, rank = ?, police_station = ? WHERE police_id = ?";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, policeman.getName());
@@ -424,6 +411,8 @@ public class PolicemanDAO {
             preparedStatement.setString(6, policeman.getPolice_station());
             preparedStatement.setString(7, policeman.getPolice_id());
 
+            System.out.println("Came until the update  DAO 2");
+
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
@@ -432,7 +421,37 @@ public class PolicemanDAO {
         }
     }
 
+    public JSONArray getPolicemanDetailsListAsOIC() {
+        Connection dbConn = null;
 
+        JSONArray jsonArray = new JSONArray();
+
+        try{
+            System.out.println("Came until the DAO of  getPolicemanDetailsListAsOIC");
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT * FROM policeman WHERE active = 1 ";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next())
+            {
+                String name = resultSet.getString("name");
+                String police_id = resultSet.getString("police_id");
+                String nic = resultSet.getString("nic");
+                String mobile_number = resultSet.getString("mobile_number");
+                String email = resultSet.getString("email");
+                String rank = resultSet.getString("rank");
+                String police_station = resultSet.getString("police_station");
+
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
 }
 
 

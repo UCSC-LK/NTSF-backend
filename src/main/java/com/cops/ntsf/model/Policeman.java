@@ -1,8 +1,8 @@
 package com.cops.ntsf.model;
 
-import com.cops.ntsf.dao.PolicemanDAO;
+import com.cops.ntsf.dao.IgpDAO;
+import com.cops.ntsf.dao.OicDAO;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class Policeman {
     private String name;
@@ -30,7 +30,7 @@ public class Policeman {
     }
 
     public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station){
-        this.name = name;
+        this.name = name; //instead setters can be called here //setname(name);
         this.police_id = police_id;
         this.nic = nic;
         this.mobile_number = mobile_number;
@@ -107,80 +107,84 @@ public class Policeman {
 
     public void policemanAdded()
     {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        policemanDAO.createPoliceman(this);
+        IgpDAO igpDAO = new IgpDAO();
+        igpDAO.createPoliceman(this);
     }
 
     public JSONArray getPolicemanDetails()
     {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        JSONArray policemanDetailsList = policemanDAO.getPolicemanDetailsList();
+        IgpDAO igpDAO = new IgpDAO();
+        JSONArray policemanDetailsList = igpDAO.getPolicemanDetailsList();
         return policemanDetailsList;
     }
-
-    public JSONArray getPoliceStationOptions()
-    {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        JSONArray policeStationOptionsList = policemanDAO.getPoliceStationOptionsList();
-        return policeStationOptionsList;
-    }
-
     public boolean policemanPolice_IDCheck(String police_id) {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        boolean policemanPolice_IDCheckResult  = policemanDAO.getPolicemanPolice_IDCheckResult(police_id);
+        IgpDAO igpDAO = new IgpDAO();
+        boolean policemanPolice_IDCheckResult  = igpDAO.getPolicemanPolice_IDCheckResult(police_id);
         return policemanPolice_IDCheckResult;
     }
 
     public boolean policemanNicCheck(String nic) {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        boolean policemanNicCheckResult  = policemanDAO.getPolicemanNicCheckResult(nic);
+        IgpDAO igpDAO = new IgpDAO();
+        boolean policemanNicCheckResult  = igpDAO.getPolicemanNicCheckResult(nic);
         return policemanNicCheckResult;
     }
 
     public boolean policemanMobileNumberCheck(String mobile_number) {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        boolean policemanMobileNumberCheckResult  = policemanDAO.getPolicemanMobileNumberCheckResult(mobile_number);
+        IgpDAO igpDAO = new IgpDAO();
+        boolean policemanMobileNumberCheckResult  = igpDAO.getPolicemanMobileNumberCheckResult(mobile_number);
         return policemanMobileNumberCheckResult;
     }
 
     public boolean policemanEmailCheck(String email) {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        boolean policemanEmailCheckResult  = policemanDAO.getPolicemanEmailCheckResult(email);
+        IgpDAO igpDAO = new IgpDAO();
+        boolean policemanEmailCheckResult  = igpDAO.getPolicemanEmailCheckResult(email);
         return policemanEmailCheckResult;
     }
 
 
     public JSONArray login(String police_id, String password) {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        JSONArray policemanLoginResult = policemanDAO.getPolicemanLoginResult(police_id, password);
+        IgpDAO igpDAO = new IgpDAO();
+        JSONArray policemanLoginResult = igpDAO.getPolicemanLoginResult(police_id, password);
         return policemanLoginResult;
     }
 
     public boolean LoginUsernameCheck(String police_id) {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        boolean policemanLoginUsernameCheckResult  = policemanDAO.getPolicemanLoginUsernameCheckResult(police_id);
+        IgpDAO igpDAO = new IgpDAO();
+        boolean policemanLoginUsernameCheckResult  = igpDAO.getPolicemanLoginUsernameCheckResult(police_id);
         return policemanLoginUsernameCheckResult;
     }
 
     public boolean deletePolicemanDetails(String police_id) {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        boolean deletePolicemanDetailsResult  = policemanDAO.deletePoliceman(police_id);
+        IgpDAO igpDAO = new IgpDAO();
+        boolean deletePolicemanDetailsResult  = igpDAO.deletePoliceman(police_id);
         return deletePolicemanDetailsResult;
     }
 
     public JSONArray fetchPolicemanDetails(String police_id) {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        JSONArray fetchedPolicemanDetailsList = policemanDAO.fetchPolicemanDetailsList(police_id);
+        IgpDAO igpDAO = new IgpDAO();
+        JSONArray fetchedPolicemanDetailsList = igpDAO.fetchPolicemanDetailsList(police_id);
         return fetchedPolicemanDetailsList;
 
     }
 
 
     public void policemanEdited() {
-        PolicemanDAO policemanDAO = new PolicemanDAO();
-        policemanDAO.updatePoliceman(this);
+        System.out.println("Came until the update model");
+        IgpDAO igpDAO = new IgpDAO();
+        igpDAO.updatePoliceman(this);
     }
 
+//OIC
+    public JSONArray getPolicemanDetailsAsOIC(String police_station) {
+        OicDAO oicDAO = new OicDAO();
+        JSONArray policemanDetailsListAsOIC = oicDAO.getPolicemanDetailsList(police_station);
+        return policemanDetailsListAsOIC;
+    }
 
+    public void positionEdited(String position, String police_id) {
+        System.out.println("Came until the update Position in the Policeman model");
+        OicDAO oicDAO = new OicDAO();
+        oicDAO.editPosition(position, police_id);
+    }
 }
 
