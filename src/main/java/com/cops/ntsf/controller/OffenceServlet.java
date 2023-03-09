@@ -243,6 +243,9 @@ public class OffenceServlet extends HttpServlet {
                     } else if (action.equals("updateOffence")) {
                         System.out.println("Redirecting to updateOffence in Offence Servlet");
                         //updateOffence(request, response);
+                    } else if (action.equals("checkOffenceDescription")){
+                        System.out.println("Redirecting to checkOffenceDescription in Offence Servlet");
+                        checkOffenceDescription(request, response);
                     }
                     else{
                         System.out.println("Invalid action"); //Could be changed later
