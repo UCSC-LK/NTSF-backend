@@ -168,6 +168,23 @@ public class OffenceServlet extends HttpServlet {
 
     protected void deleteOffence(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+    
+            System.out.println("Delete offence method is called in the offence servlet");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String offence_type = request.getParameter("offence_type");
+            Offence offence = new Offence();
+            offence.deleteOffenceDetails(offence_type);
+
+            jsonObject.put("status", "success");
+            jsonObject.put("message", "Offence deleted successfully");
+
+            out.write(jsonObject.toString());
+            out.close();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Came until the doPost method in Offence Servlet");
