@@ -176,9 +176,9 @@ public class OffenceServlet extends HttpServlet {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("serverResponse", "Allowed");
 
-            String offence_type = request.getParameter("offence_type");
+            int offence_no = Integer.parseInt(request.getParameter("offence_no"));
             Offence offence = new Offence();
-            offence.deleteOffenceDetails(offence_type);
+            offence.deleteOffenceDetails(offence_no);
 
             jsonObject.put("status", "success");
             jsonObject.put("message", "Offence deleted successfully");
