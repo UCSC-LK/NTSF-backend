@@ -78,4 +78,29 @@ public class OffenceDAO {
         }
     }
 
+    public boolean deleteOffence(int offence_no) {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "DELETE FROM offence WHERE offence_no = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setInt(1, offence_no);
+
+            int resultSet = preparedStatement.executeUpdate();
+            if (resultSet > 0) {
+                System.out.println("Offence No: " + offence_no + " has been deleted");
+                alert = true;
+            }
+            else {
+                System.out.println("Offence No: " + offence_no + " does not exist");
+                alert = false;
+            }
+            preparedStatement.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return alert;
+    }
 }
