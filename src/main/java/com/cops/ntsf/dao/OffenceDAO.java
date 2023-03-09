@@ -103,4 +103,31 @@ public class OffenceDAO {
         }
         return alert;
     }
+
+    public boolean offenceDescriptionCheck(String description) {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "SELECT * FROM offence WHERE description = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, description);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Offence Description: " + description + " already exists");
+                alert = true;
+            }
+            else {
+                System.out.println("Offence Description: " + description + " does not exist");
+                alert = false;
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
