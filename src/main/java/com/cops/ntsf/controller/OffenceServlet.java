@@ -35,7 +35,7 @@ public class OffenceServlet extends HttpServlet {
                 // e.g., show an error message to the user
             }
 
-            String demerit_pointsString = request.getParameter("demerit_points");
+            String demerit_pointsString = request.getParameter("demerit_point");
             int demerit_points = 0;
             if (demerit_pointsString.matches("\\d+")) {
                 demerit_points = Integer.parseInt(demerit_pointsString);
@@ -47,7 +47,7 @@ public class OffenceServlet extends HttpServlet {
             String offence_type = request.getParameter("offence_type");
             String description = request.getParameter("description");
             amount = Integer.parseInt(request.getParameter("amount"));
-            demerit_points = Integer.parseInt(request.getParameter("demerit_points"));
+//            demerit_points = Integer.parseInt(request.getParameter("demerit_point"));
 
             System.out.println("Add offence method is called in the offence servlet");
 
