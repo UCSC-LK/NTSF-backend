@@ -1,4 +1,4 @@
-package com.cops.ntsf.controller;
+package com.cops.ntsf.model;
 
 import org.json.JSONObject;
 
@@ -11,10 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Base64;
 
-public class PolicemanServlet extends HttpServlet {
+public class Fine extends HttpServlet {
+    protected void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Came until the doPOST in Policeman Servlet");
+        System.out.println("Came until the doPOST in Fine Servlet");
         String action = request.getParameter("action");
         String contentType = request.getHeader("Content-type");
         String authorizationHeader = request.getHeader("Authorization");
@@ -56,30 +63,22 @@ public class PolicemanServlet extends HttpServlet {
                 JSONObject payloadJsonObject = new JSONObject(payloadJson);
                 String authorizedRank = payloadJsonObject.getString("rank");
                 String authorizedPosition = payloadJsonObject.getString("position");
-                if (authorizedRank == "policeman") {
-                    if (authorizedPosition == "trafficPolice") {
-                        if (action.equals("addFine")) {
-//                            new FineServlet().addFine(request, response);
-                        } else {
-                            System.out.println("You are not authorized to access this page, Only trafficPolice are allowed to access this page");
+                System.out.println(authorizedRank);
+                if (authorizedRank.equals("policeman")) {
+                    if(authorizedPosition.equals("trafficPolice")){
+                        if(action.equals("addFine")){
+                            addFine(request, response);
                         }
-                    } else if (authorizedPosition == "investigationOfficer") {
-                        if (action.equals("viewComplaintsAsInvestigationOfficer")) {
-                            new ComplaintServlet().viewComplaintsAsInvestigationOfficer(request, response);
-                        } else {
-                            System.out.println("You are not authorized to access this page. Only investigationOfficer are allowed to access this page");
-                        }
-                    } else if (authorizedPosition == "courtSeargent") {
-                        if (action.equals("addComplaint")) {
-//                            new ComplaintServlet().addComplaint(request, response);
-                        } else {
-                            System.out.println("You are not authorized to access this page. Only courtSeargent are allowed to access this page");
-                        }
-                    } else {
-                        System.out.println("You are not authorized to access this page. Only Policemen are allowed to access this page");
+                    }
+                    else {
+                        System.out.println("You are not authorized to access this page");
                     }
                 }
+                else {
+                    System.out.println("You are not authorized to access this page");
+                }
             }
+
         }
         else {
             System.out.println("JWT signature verification failed");

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Base64;
 
 public class FineServlet extends HttpServlet {
@@ -76,5 +77,16 @@ public class FineServlet extends HttpServlet {
         else {
             System.out.println("JWT signature verification failed");
         }
+    }
+
+    private void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+
+
+        };
     }
 }
