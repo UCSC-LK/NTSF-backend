@@ -24,8 +24,6 @@ public class OffenceServlet extends HttpServlet {
 
             JSONObject jsonObject = new JSONObject();
 
-//            int Offence_no = Integer.parseInt(request.getParameter("Offence_no"));
-
             String amountString = request.getParameter("amount");
             int amount = 0;
             if (amountString.matches("\\d+")) {
@@ -178,10 +176,8 @@ public class OffenceServlet extends HttpServlet {
 
             int offence_no = Integer.parseInt(request.getParameter("offence_no"));
             Offence offence = new Offence();
-            offence.deleteOffenceDetails(offence_no);
 
-            jsonObject.put("status", "success");
-            jsonObject.put("message", "Offence deleted successfully");
+            jsonObject.put("alert", offence.deleteOffenceDetails(offence_no));
 
             out.write(jsonObject.toString());
             out.close();
@@ -273,8 +269,15 @@ public class OffenceServlet extends HttpServlet {
                     else{
                         System.out.println("Invalid action"); //Could be changed later
                     }
-                }
-                else {
+                } else if (authorizedRank.equals("oic") || authorizedRank.equals("policeman")) {
+                    if(action.equals("viewOffence")) {
+                        System.out.println("Redirecting to viewOffence in Offence Servlet");
+                        viewOffence(request, response);
+                    }
+                    else{
+                        System.out.println("Invalid action"); //Could be changed later
+                    }
+                } else {
                     System.out.println("You are not authorized to access this page");
                 }
             }
