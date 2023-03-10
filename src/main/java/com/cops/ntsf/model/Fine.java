@@ -21,5 +21,41 @@ public class Fine {
 
     private String policeStation;
 
+    public int getFineNo() {
+        return fineNo;
+    }
+
+    public int getOffenceNo() {
+        return offenceNo;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getSpotDescription() {
+        return spotDescription;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public LocalDateTime getDueDateTime() {
+        return dueDateTime;
+    }
+
+    public int getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public String getPoliceId() {
+        return policeId;
+    }
+
+    public String getPoliceStation() {
+        return policeStation;
+    }
+
 
 }
