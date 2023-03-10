@@ -21,6 +21,9 @@ public class Fine {
 
     private String policeStation;
 
+    public Fine() {
+    }
+
     public int getFineNo() {
         return fineNo;
     }
