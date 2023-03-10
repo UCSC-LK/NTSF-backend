@@ -24,6 +24,17 @@ public class Fine {
     public Fine() {
     }
 
+    public Fine(int offenceNo, String userId, String spotDescription, LocalDateTime dateTime, LocalDateTime dueDateTime, int paymentStatus, String policeId, String policeStation) {
+        this.offenceNo = offenceNo;
+        this.userId = userId;
+        this.spotDescription = spotDescription;
+        this.dateTime = dateTime;
+        this.dueDateTime = dueDateTime;
+        this.paymentStatus = paymentStatus;
+        this.policeId = policeId;
+        this.policeStation = policeStation;
+    }
+
     public int getFineNo() {
         return fineNo;
     }
