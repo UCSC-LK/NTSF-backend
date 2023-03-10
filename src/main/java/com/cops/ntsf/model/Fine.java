@@ -57,5 +57,42 @@ public class Fine {
         return policeStation;
     }
 
+    public void setFineNo(int fineNo) {
+        this.fineNo = fineNo;
+    }
+
+    public void setOffenceNo(int offenceNo) {
+        this.offenceNo = offenceNo;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setSpotDescription(String spotDescription) {
+        this.spotDescription = spotDescription;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setDueDateTime(LocalDateTime dueDateTime) {
+        this.dueDateTime = dueDateTime;
+    }
+
+    public void setPaymentStatus(int paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public void setPoliceId(String policeId) {
+        this.policeId = policeId;
+    }
+
+    public void setPoliceStation(String policeStation) {
+        this.policeStation = policeStation;
+    }
+
+
 
 }
