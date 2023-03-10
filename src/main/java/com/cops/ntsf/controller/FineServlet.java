@@ -1,4 +1,4 @@
-package com.cops.ntsf.controller;
+package com.cops.ntsf.model;
 
 import org.json.JSONObject;
 
@@ -9,13 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Base64;
 
 public class FineServlet extends HttpServlet {
+    protected void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Came until the doPOST in Policeman Servlet");
+        System.out.println("Came until the doPOST in Fine Servlet");
         String action = request.getParameter("action");
         String contentType = request.getHeader("Content-type");
         String authorizationHeader = request.getHeader("Authorization");
@@ -56,15 +62,15 @@ public class FineServlet extends HttpServlet {
                 System.out.println("JWT signature verification success");
                 JSONObject payloadJsonObject = new JSONObject(payloadJson);
                 String authorizedRank = payloadJsonObject.getString("rank");
+                String authorizedPosition = payloadJsonObject.getString("position");
                 System.out.println(authorizedRank);
-                if (authorizedRank.equals("igp")) {
-                    if (action.equals("addPoliceman")) {
-                        addFine(request, response);
-                    } else if (action.equals("viewPoliceman")) {
-                        System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
-                        viewFine(request, response);
+                if (authorizedRank.equals("policeman")) {
+                    if(authorizedPosition.equals("trafficPolice")){
+                        if(action.equals("addFine")){
+                            addFine(request, response);
+                        }
                     }
-                    else{
+                    else {
                         System.out.println("You are not authorized to access this page");
                     }
                 }
@@ -79,14 +85,5 @@ public class FineServlet extends HttpServlet {
         }
     }
 
-    private void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
 
-            JSONObject jsonObject = new JSONObject();
-
-
-        };
-    }
 }
