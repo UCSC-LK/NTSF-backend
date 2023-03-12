@@ -3,8 +3,6 @@ package com.cops.ntsf.model;
 import com.cops.ntsf.dao.OffenceDAO;
 
 public class Offence {
-
-    //    private Integer offenceNo;
     private Integer offenceNo;
     private String offenceType;
     private Integer pointWeight;
@@ -12,7 +10,6 @@ public class Offence {
     private Integer amount;
 
     public Offence() {
-
     }
 
     public Offence(String speeding, int i, int i1) {
@@ -20,7 +17,6 @@ public class Offence {
 
     public void setOffenceNo(Integer offenceNo) {
         this.offenceNo = offenceNo;
-        // Empty constructor
     }
 
     public void setOffenceType(String offenceType) {
@@ -39,22 +35,8 @@ public class Offence {
         return offenceNo;
     }
 
-    public void setOffenceNo( offenceNo) {
-        this.offenceNo = offenceNo;
-    public void setOffenceNo(Integer offenceNo) {
-        this.offenceNo = offenceNo;
-    }
-
     public String getOffenceType() {
         return offenceType;
-    }
-
-    public void setOffenceType(String offenceType) {
-        this.offenceType = offenceType;
-    }
-
-    public Integer getPointWeight() {
-        return pointWeight;
     }
 
     public void setPointWeight(Integer pointWeight) {
@@ -83,6 +65,8 @@ public class Offence {
 
     public void setPointWeight(int pointWeight) {
         this.pointWeight = pointWeight;
+    }
+
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
@@ -93,8 +77,6 @@ public class Offence {
     }
 
     public void updateOffenceInfo() {
-        OffenceDAO offenceDAO = new OffenceDAO();
-        OffenceDAO.updateOffenceInfo(this);
         OffenceDAO offenceDAO = new OffenceDAO();
         offenceDAO.updateOffenceInfo(this);
     }
@@ -109,6 +91,4 @@ public class Offence {
                 ", amount=" + amount +
                 '}';
     }
-
-
 }

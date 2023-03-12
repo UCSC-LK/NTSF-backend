@@ -68,18 +68,18 @@ public class OffenceDAO {
     }
 
 
-    public List<Offence> getAllOffences(){
-        List<Offence> list=new ArrayList<Offence>();
+    public List<Offence> getAllOffences() {
+        List<Offence> list = new ArrayList<Offence>();
 
         String sql = "select * from offence";
 
-        try{
+        try {
             Connection dbConn = Database.getConnection();
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-            ResultSet resultSet=preparedStatement.executeQuery();
-            while(resultSet.next()){
-                Offence offence=new Offence();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Offence offence = new Offence();
                 offence.setOffenceNo(resultSet.getInt(1));
                 offence.setOffenceType(resultSet.getString(2));
                 offence.setDescription(resultSet.getString(4));
@@ -89,7 +89,7 @@ public class OffenceDAO {
 
             }
             dbConn.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -97,13 +97,6 @@ public class OffenceDAO {
     }
 
 }
-
-
-
-
-
-
-
 
 
 //package com.cops.ntsf.dao;
