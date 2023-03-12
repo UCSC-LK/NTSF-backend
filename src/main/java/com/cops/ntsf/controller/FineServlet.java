@@ -45,7 +45,7 @@ public class FineServlet extends HttpServlet {
                     String vehicleNo = request.getParameter("user_id");
 
                     if(checkVehicleNoValidations(vehicleNo)){
-                        String nic = getNICByLicenseNo(vehicleNo);
+                        String nic = getNICByVehicleNo(vehicleNo);
                         String licenseNo = "null";
                         Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
                     }
@@ -74,6 +74,14 @@ public class FineServlet extends HttpServlet {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private String getNICByVehicleNo(String vehicleNo) {
+        return "123456789V";
+    }
+
+    private String getNICByLicenseNo(String vehicleNo) {
+        return "123456789V";
     }
 
     private boolean checkNICValidations(String nic) {
