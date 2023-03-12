@@ -1,41 +1,37 @@
 package com.cops.ntsf.service;
 
-import com.cops.ntsf.constants.UserType;
 import com.cops.ntsf.model.*;
 
 public class UserService {
     public User getUserSignedUp(String nic,
                                 String email,
+                                String mobileNo,
                                 String password) {
-        User user = new User(nic, email);
+        User user = new User(nic, email, mobileNo);
         user.setUserInfo();
 
         String userId = user.getUserId();
 
-        if (userId != null) {
+        if (nic != null) {
             Auth auth = new Auth(userId, password);
             auth.setAuthInfo();
         }
         return user;
     }
 
-    public User getUserInfo(String userId,
-                            UserType userType) {
-        User user = new User(userId, userType);
+    public Profile getProfileInfo(String nic) {
+        User user = new User(nic);
         user.getUserInfo();
 
-        userId = user.getUserId();
+        Driver driver = new Driver(nic);
+        driver.getDriverInfo();
 
-        if (userId != null) {
-            switch (userType) {
-                case DRIVER:
-                    Driver driver = new Driver(userId, userType);
-                    driver.getDriverInfo();
-                    return user;
-                default:
-                    throw new RuntimeException();
-            }
-        }
-        return user;
+        Vehicle vehicle = new Vehicle(nic);
+        vehicle.getVehicleInfo();
+
+        People people = new People(nic);
+        people.getCivilInfo();
+
+        return new Profile(user, driver, vehicle, people);
     }
 }

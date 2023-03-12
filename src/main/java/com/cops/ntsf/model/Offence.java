@@ -10,15 +10,19 @@ public class Offence {
     private int amount;
 
     private int demerit_points;
-    public Offence()
-    {
+
+    public Offence() {
 
     }
-public Offence(String offence_type, String description, int amount, int demerit_points) {
+
+    public Offence(String offence_type, String description, int amount, int demerit_points) {
         this.offence_type = offence_type;
         this.description = description;
         this.amount = amount;
         this.demerit_points = demerit_points;
+    }
+
+    public Offence(String speeding, int i, int i1) {
     }
 
     public int getOffence_no() {
@@ -36,12 +40,15 @@ public Offence(String offence_type, String description, int amount, int demerit_
     public int getAmount() {
         return amount;
     }
+
     public int getDemerit_points() {
         return demerit_points;
     }
+
     public void setOffence_no(int offence_no) {
         this.offence_no = offence_no;
     }
+
     public void setOffence_type(String offence_type) {
         this.offence_type = offence_type;
     }
@@ -49,9 +56,11 @@ public Offence(String offence_type, String description, int amount, int demerit_
     public void setDescription(String description) {
         this.description = description;
     }
+
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
     public void setDemerit_points(int demerit_points) {
         this.demerit_points = demerit_points;
     }
