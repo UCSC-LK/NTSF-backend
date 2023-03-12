@@ -1,5 +1,6 @@
-package com.cops.ntsf.model;
+package com.cops.ntsf.controller;
 
+import com.cops.ntsf.model.Fine;
 import org.json.JSONObject;
 
 import javax.crypto.Mac;
@@ -18,16 +19,38 @@ public class FineServlet extends HttpServlet {
     protected void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             String fineType = request.getParameter("fineType");
-            if(fineType.equals("driver")){
-                addDriverFine(request, response);
+            //Front end sends user_id as nic/licenseNo/vehicleNo
+            String offenceNo = request.getParameter("offenceNo");
+            String spotDescription = request.getParameter("spotDescription");
+            LocalDateTime imposedDateTime = LocalDateTime.now();
+            LocalDateTime dueDateTime = imposedDateTime.plusDays(14);  //Adds 14 days to the imposed date
+            String policeId = request.getParameter("policeId");
+            String policeStation = request.getParameter("policeStation");
+
+
+            if (fineType.equals("pedestrian")){
+                String nic = request.getParameter("user_id");
+                String licenseNo  = "null";
+                String vehicleNo = "null";
+
+                Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+
+
+
             }
-            else if(fineType.equals("pedestrian")){
-                addPedestrianFine(request, response);
+            else if (fineType.equals("vehicle")){
+                String vehicleNo = request.getParameter("user_id");
+                String nic = getNICByLicenseNo(vehicleNo);
+                String licenseNo = "null";
+
             }
-            else if(fineType.equals("vehicle")){
-                addVehicleFine(request, response);
+            else if (fineType.equals("driver")){
+                String licenseNo = request.getParameter("user_id");
+                String nic = getNICByLicenseNo(licenseNo);
+                String vehicleNo = "null";
+
             }
-            else {
+            else{
                 System.out.println("Invalid fine type");
             }
 
@@ -35,35 +58,6 @@ public class FineServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
-    protected void addPedestrianFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
-
-            JSONObject jsonObject = new JSONObject();
-            String fintType = request.getParameter("fineType");
-            String offenceNo = request.getParameter("offence_no");
-            String spotDescription = request.getParameter("spotDescription");
-            String nic = request.getParameter("nic");
-            LocalDateTime imposedDateTime = LocalDateTime.now();
-            String policeId = request.getParameter("police_id");
-            String policeStation = request.getParameter("police_station");
-
-            if(checkValidations(fintType, offenceNo, spotDescription, nic, imposedDateTime, policeId, policeStation) {
-                Fine fine = new Fine();
-
-            }
-
-
-
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     private boolean checkValidations(String fintType, String offenceNo, String spotDescription, String nic, LocalDateTime imposedDateTime, String policeId, String policeStation) {
         boolean flagFineType = false;
         boolean flagOffenceNo = false;
@@ -75,6 +69,7 @@ public class FineServlet extends HttpServlet {
         boolean flag = false;
 
         System.out.println("Checking validations in FIne Sev");
+        return flag;
     }
 
 

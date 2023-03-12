@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 
 public class Fine {
     private int fineNo;
-
     private String fineType;
-    private int offenceNo;
+    private String offenceNo;
+
     private String nic;
+
     private String licenseNo;
+
     private String vehicleNo;
 
     private String spotDescription;
@@ -23,45 +25,29 @@ public class Fine {
 
     private String paymentStatus;
 
-    public Fine() {
-    }
-
-    //Constructor for pedestrian fine
-    public Fine(String nic, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
+    public Fine(String fineType, String offenceNo, String nic, String licenseNo, String vehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
+        this.fineType = fineType;
+        this.offenceNo = offenceNo;
         this.nic = nic;
-        this.spotDescription = spotDescription;
-        this.imposedDateTime = imposedDateTime;
-        this.dueDateTime = dueDateTime;
-        this.policeId = policeId;
-        this.policeStation = policeStation;
-    }
-
-    //Constructor for driver fine
-
-    public Fine(String fineType, String licenseNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
         this.licenseNo = licenseNo;
-        this.spotDescription = spotDescription;
-        this.imposedDateTime = imposedDateTime;
-        this.dueDateTime = dueDateTime;
-        this.policeId = policeId;
-        this.policeStation = policeStation;
-    }
-
-    //Constructor for vehicle fine
-    public Fine( String vehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
         this.vehicleNo = vehicleNo;
         this.spotDescription = spotDescription;
         this.imposedDateTime = imposedDateTime;
         this.dueDateTime = dueDateTime;
         this.policeId = policeId;
         this.policeStation = policeStation;
+        this.paymentStatus = "unpaid";
     }
 
     public int getFineNo() {
         return fineNo;
     }
 
-    public int getOffenceNo() {
+    public String getFineType() {
+        return fineType;
+    }
+
+    public String getOffenceNo() {
         return offenceNo;
     }
 
@@ -105,7 +91,10 @@ public class Fine {
         this.fineNo = fineNo;
     }
 
-    public void setOffenceNo(int offenceNo) {
+    public void setFineType(String fineType) {
+        this.fineType = fineType;
+    }
+    public void setOffenceNo(String offenceNo) {
         this.offenceNo = offenceNo;
     }
 
