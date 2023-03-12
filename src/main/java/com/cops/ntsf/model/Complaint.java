@@ -1,6 +1,7 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.ComplaintDAO;
+import org.json.JSONArray;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,8 +19,7 @@ public class Complaint {
         this.complaint_no = complaint_no;
     }
 
-    public Complaint()
-    {
+    public Complaint() {
 
     }
 
@@ -75,15 +75,15 @@ public class Complaint {
         return complaintDAO.fetchUserComplaintInfo(this);
     }
 
-    public String getUserId() {
-        return user_id;
-    }
+//    public String getUserId() {
+//        return userId;
+//    }
 
     public JSONArray getComplaintsDetailsAsInvestigationOfficer() {
         ComplaintDAO complaintDAO = new ComplaintDAO();
-        JSONArray ComplaintDetails = complaintDAO.viewComplaintDetailsAsInvestigationOfficer();
-        return ComplaintDetails;
+        return complaintDAO.viewComplaintDetailsAsInvestigationOfficer();
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
