@@ -27,42 +27,44 @@ public class FineServlet extends HttpServlet {
             String policeId = request.getParameter("policeId");
             String policeStation = request.getParameter("policeStation");
 
+            if(checkValidations(fineType, offenceNo, spotDescription, imposedDateTime, policeId, policeStation)){
+                if (fineType.equals("pedestrian")){
 
-            if (fineType.equals("pedestrian")){
-                String nic = request.getParameter("user_id");
-                String licenseNo  = "null";
-                String vehicleNo = "null";
+                    String nic = request.getParameter("user_id");
+                    String licenseNo  = "null";
+                    String vehicleNo = "null";
 
-                Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
-
+                    Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
 
 
+
+                }
+                else if (fineType.equals("vehicle")){
+                    String vehicleNo = request.getParameter("user_id");
+                    String nic = getNICByLicenseNo(vehicleNo);
+                    String licenseNo = "null";
+
+                }
+                else if (fineType.equals("driver")){
+                    String licenseNo = request.getParameter("user_id");
+                    String nic = getNICByLicenseNo(licenseNo);
+                    String vehicleNo = "null";
+
+                }
+                else{
+                    System.out.println("Invalid fine type");
+                }
             }
-            else if (fineType.equals("vehicle")){
-                String vehicleNo = request.getParameter("user_id");
-                String nic = getNICByLicenseNo(vehicleNo);
-                String licenseNo = "null";
 
-            }
-            else if (fineType.equals("driver")){
-                String licenseNo = request.getParameter("user_id");
-                String nic = getNICByLicenseNo(licenseNo);
-                String vehicleNo = "null";
-
-            }
-            else{
-                System.out.println("Invalid fine type");
-            }
 
         } catch (Exception e){
             e.printStackTrace();
         }
     }
-    private boolean checkValidations(String fintType, String offenceNo, String spotDescription, String nic, LocalDateTime imposedDateTime, String policeId, String policeStation) {
+    private boolean checkValidations(String fineType, String offenceNo, String spotDescription, LocalDateTime imposedDateTime, String policeId, String policeStation) {
         boolean flagFineType = false;
         boolean flagOffenceNo = false;
         boolean flagSpotDescription = false;
-        boolean flagNic = false;
         boolean flagImposedDateTime = false;
         boolean flagPoliceId = false;
         boolean flagPoliceStation = false;
