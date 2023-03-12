@@ -51,8 +51,7 @@ public class FineServlet extends HttpServlet {
             String policeStation = request.getParameter("police_station");
 
             if(checkValidations(fintType, offenceNo, spotDescription, nic, imposedDateTime, policeId, policeStation) {
-                Fine fine = new Fine(fineType, offenceNo, spotDescription, nic, imposedDateTime, policeId, policeStation);
-
+                Fine fine = new Fine();
 
             }
 
@@ -75,7 +74,7 @@ public class FineServlet extends HttpServlet {
         boolean flagPoliceStation = false;
         boolean flag = false;
 
-        System.out.println("Checking validations in FIne Servlet");
+        System.out.println("Checking validations in FIne Sev");
     }
 
 

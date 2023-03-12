@@ -25,40 +25,34 @@ public class Fine {
     }
 
     //Constructor for pedestrian fine
-    public Fine(int offenceNo, String nic, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String paymentStatus) {
-        this.offenceNo = offenceNo;
+    public Fine(String nic, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
         this.nic = nic;
         this.spotDescription = spotDescription;
         this.imposedDateTime = imposedDateTime;
         this.dueDateTime = dueDateTime;
         this.policeId = policeId;
         this.policeStation = policeStation;
-        this.paymentStatus = paymentStatus;
     }
 
     //Constructor for driver fine
 
-    public Fine(int offenceNo, String licenseNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String paymentStatus) {
-        this.offenceNo = offenceNo;
+    public Fine(String licenseNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
         this.licenseNo = licenseNo;
         this.spotDescription = spotDescription;
         this.imposedDateTime = imposedDateTime;
         this.dueDateTime = dueDateTime;
         this.policeId = policeId;
         this.policeStation = policeStation;
-        this.paymentStatus = paymentStatus;
     }
 
     //Constructor for vehicle fine
-    public Fine(int offenceNo, String vehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String paymentStatus) {
-        this.offenceNo = offenceNo;
+    public Fine( String vehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
         this.vehicleNo = vehicleNo;
         this.spotDescription = spotDescription;
         this.imposedDateTime = imposedDateTime;
         this.dueDateTime = dueDateTime;
         this.policeId = policeId;
         this.policeStation = policeStation;
-        this.paymentStatus = paymentStatus;
     }
 
     public int getFineNo() {
