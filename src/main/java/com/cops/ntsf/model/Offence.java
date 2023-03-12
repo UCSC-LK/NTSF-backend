@@ -1,174 +1,82 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.OffenceDAO;
+import org.json.JSONArray;
 
 public class Offence {
-
-    private Integer offenceNo;
-    private String offenceType;
-    private Integer pointWeight;
+    private int offence_no;
+    private String offence_type;
     private String description;
-    private Integer amount;
+    private int amount;
 
-    public Offence() {
-        // Empty constructor
+    private int demerit_points;
+    public Offence()
+    {
+
     }
-
-    public Offence(Integer offenceNo, String offenceType, Integer pointWeight, String description, Integer amount) {
-        this.offenceNo = offenceNo;
-        this.offenceType = offenceType;
-        this.pointWeight = pointWeight;
+public Offence(String offence_type, String description, int amount, int demerit_points) {
+        this.offence_type = offence_type;
         this.description = description;
         this.amount = amount;
+        this.demerit_points = demerit_points;
     }
 
-    public Integer getOffenceNo() {
-        return offenceNo;
+    public int getOffence_no() {
+        return offence_no;
     }
 
-    public void setOffenceNo(Integer offenceNo) {
-        this.offenceNo = offenceNo;
-    }
-
-    public String getOffenceType() {
-        return offenceType;
-    }
-
-    public void setOffenceType(String offenceType) {
-        this.offenceType = offenceType;
-    }
-
-    public Integer getPointWeight() {
-        return pointWeight;
-    }
-
-    public void setPointWeight(Integer pointWeight) {
-        this.pointWeight = pointWeight;
+    public String getOffence_type() {
+        return offence_type;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+    public int getDemerit_points() {
+        return demerit_points;
+    }
+    public void setOffence_no(int offence_no) {
+        this.offence_no = offence_no;
+    }
+    public void setOffence_type(String offence_type) {
+        this.offence_type = offence_type;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
-
-    public void setOffenceInfo() {
-        OffenceDAO offenceDAO = new OffenceDAO();
-        offenceDAO.setOffenceInfo(this);
+    public void setDemerit_points(int demerit_points) {
+        this.demerit_points = demerit_points;
     }
 
-    public void updateOffenceInfo() {
+
+    public JSONArray getOffenceDetails() {
         OffenceDAO offenceDAO = new OffenceDAO();
-        offenceDAO.updateOffenceInfo(this);
+        JSONArray offenceDetailslist = offenceDAO.getOffenceDetailsList();
+        return offenceDetailslist;
     }
 
-    @Override
-    public String toString() {
-        return "Offence{" +
-                "offenceNo=" + offenceNo +
-                ", offenceType='" + offenceType + '\'' +
-                ", pointWeight=" + pointWeight +
-                ", description='" + description + '\'' +
-                ", amount=" + amount +
-                '}';
+    public void offenceAdded() {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        offenceDAO.createOffence(this);
+    }
+
+    public boolean deleteOffenceDetails(int offence_no) {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        boolean deleteOffenceDetailResult = offenceDAO.deleteOffence(offence_no);
+        return deleteOffenceDetailResult;
+    }
+
+    public boolean offenceDescriptionCheck(String description) {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        boolean offenceDescriptionCheckResult = offenceDAO.offenceDescriptionCheck(description);
+        return offenceDescriptionCheckResult;
     }
 }
-
-
-
-
-//package com.cops.ntsf.model;
-//
-//import com.cops.ntsf.dao.OffenceDAO;
-//
-//public class Offence {
-//
-//    private static Integer offenceNo ;
-//
-//    public Offence() {
-//
-//    }
-//
-//    public static void setOffenceNo(Integer offenceNo) {
-//        Offence.offenceNo = offenceNo;
-//    }
-//
-//    public void setOffenceType(String offenceType) {
-//        this.offenceType = offenceType;
-//    }
-//
-//    private  String offenceType;
-//
-//    private static Integer pointWeight;
-//
-//    private static String description;
-//
-//    private static Integer amount;
-//
-//    public Offence(Integer offenceNo, String offenceType, Integer pointWeight, String description, Integer amount) {
-//        this.offenceType=offenceType;
-//        this.offenceNo=offenceNo;
-//        this.pointWeight=pointWeight;
-//        this.description=description;
-//        this.amount=amount;
-//
-//    }
-//
-//    public static int getOffenceNo() {
-//        return offenceNo;
-//    }
-//
-//    public static void setOffenceNo(int offenceNo) {
-//        Offence.offenceNo = offenceNo;
-//    }
-//
-//    public static String getDescription() {
-//        return description;
-//    }
-//
-//    public static void setDescription(String description) {
-//        Offence.description = description;
-//    }
-//
-//    public static Integer getAmount() {
-//        return amount;
-//    }
-//
-//    public static void setAmount(int amount) {
-//        Offence.amount = amount;
-//    }
-//
-//    public static int getPointWeight() {
-//        return pointWeight;
-//    }
-//
-//    public static void setPointWeight(int pointWeight) {
-//        Offence.pointWeight = pointWeight;
-//    }
-//
-//    public void setOffenceInfo() {
-//        OffenceDAO offenceDAO=new OffenceDAO();
-//        offenceDAO.setOffenceInfo(this);
-//    }
-//
-//    public void updateOffenceInfo() {
-//        OffenceDAO offenceDAO=new OffenceDAO();
-//        offenceDAO.updateOffenceInfo(this);
-//    }
-//
-//    public String getOffenceType() {
-//        return offenceType;
-//    }
-//
-//
-//}

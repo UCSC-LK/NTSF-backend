@@ -1,124 +1,292 @@
 package com.cops.ntsf.controller;
 
-
-import com.cops.ntsf.dao.OffenceDAO;
 import com.cops.ntsf.model.Offence;
-import com.cops.ntsf.service.OffenceService;
-import com.google.gson.Gson;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletException;
-import javax.servlet.http .HttpServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-
+import java.rmi.server.ServerCloneException;
+import java.util.Base64;
 
 public class OffenceServlet extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // Get request parameters
-//       UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("fine_type")));
-        Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
-        String offenceType = req.getParameter("offence_type");
-        Integer pointWeight = Integer.valueOf(req.getParameter("point_weight"));
-        String description = req.getParameter("description");
-        Integer amount = Integer.valueOf(req.getParameter("amount"));
-
-        OffenceService offenceService = new OffenceService();
-        Offence offence = offenceService.insertOffenceInfo(offenceNo, offenceType, pointWeight, description, amount);
-
-        // Output response
-        PrintWriter out = resp.getWriter();
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("utf-8");
-
-        out.write(new Gson().toJson(offence));
-        out.close();
-    }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    {
+    protected void addOffence(HttpServletRequest request, HttpServletResponse response) {
         try {
-            System.out.println("req" + request);
-            System.out.println("res" + response);
-            System.out.println("1");
-            response.setContentType("text/html");
             PrintWriter out = response.getWriter();
-            out.println("<a href='index.html'>Add New Offences</a>");
-            out.println("<h1>Offence List</h1>");
+            response.setContentType("text/html");
 
-            OffenceDAO offenceDAO = new OffenceDAO();
-            List<Offence> list = offenceDAO.getAllOffences();
+            JSONObject jsonObject = new JSONObject();
 
-
-            for (Offence offence : list) {
-                System.out.println(""+offence.getOffenceNo());
-                          }
-            out.print("<table border='1' width='100%'");
-
-
-            out.print("<tr><th>OffenceNo</th><th>Offence_Type</th><th>Description</th><th>PointWeight</th><th>Amount</th> <th>Edit</th><th>Delete</th></tr>");
-            for (Offence offence : list) {
-                out.print("<tr><td>" + offence.getOffenceNo() + "</td><td>" + offence.getOffenceType() + "</td><td>" + offence.getDescription() + "</td><td>" + offence.getPointWeight() + "</td><td>" + offence.getAmount() + "</td><td><a href='OffenceServlet?offenceNo=" + offence.getOffenceNo() + "'>edit</a></td> <td><a href='DeleteServlet?id=" + offence.getOffenceNo() + "'>delete</a></td></tr>");
+            String amountString = request.getParameter("amount");
+            int amount = 0;
+            if (amountString.matches("\\d+")) {
+                amount = Integer.parseInt(amountString);
+            } else {
+                // Handle the case where the parameter contains non-numeric characters
+                // e.g., show an error message to the user
             }
-            out.print("</table>");
 
+            String demerit_pointsString = request.getParameter("demerit_point");
+            int demerit_points = 0;
+            if (demerit_pointsString.matches("\\d+")) {
+                demerit_points = Integer.parseInt(demerit_pointsString);
+            } else {
+                // Handle the case where the parameter contains non-numeric characters
+                // e.g., show an error message to the user
+            }
+
+            String offence_type = request.getParameter("offence_type");
+            String description = request.getParameter("description");
+            amount = Integer.parseInt(request.getParameter("amount"));
+//            demerit_points = Integer.parseInt(request.getParameter("demerit_point"));
+
+            System.out.println("Add offence method is called in the offence servlet");
+
+            System.out.println(offence_type);
+            System.out.println(description);
+            System.out.println(amount);
+            System.out.println(demerit_points);
+
+            if (checkValidations( offence_type, description, amount, demerit_points)) {
+//                jsonObject.put("status", "success");
+//                jsonObject.put("message", "Offence added successfully");
+
+                Offence offence = new Offence(offence_type, description, amount, demerit_points);
+                offence.offenceAdded();
+
+            } else {
+//                jsonObject.put("status", "error");
+//                jsonObject.put("message", "Error occurred while adding offence");
+            }
+
+            out.print(jsonObject.toString());
             out.close();
-        }catch(Exception e){
-            System.out.println(e);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
+    private boolean checkValidations(String offence_type, String description, int amount, int demerit_points) {
+        boolean flagOffence_type = false;
+        boolean flagDescription = false;
+        boolean flagAmount = false;
+        boolean flagDemerit_points = false;
+        boolean flag = false;
 
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        System.out.println("Check validations method is called in the offence servlet");
 
-        resp.setContentType("text/html");
-        PrintWriter out=resp.getWriter();
-
-        Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
-        String offenceType = req.getParameter("offence_type");
-        Integer pointWeight = Integer.valueOf(req.getParameter("point_weight"));
-        String description = req.getParameter("description");
-        Integer amount = Integer.valueOf(req.getParameter("amount"));
-
-        OffenceDAO offenceDAO = new OffenceDAO(); // create an instance of OffenceDAO
-        Offence offence=new Offence();
-
-        offence.setOffenceNo(offenceNo);
-        offence.setOffenceType(offenceType);
-        offence.setPointWeight(pointWeight);
-        offence.setDescription(description);
-        offence.setAmount(amount);
-
-
-        int status = offenceDAO.updateOffenceInfo(offence); // call the method on the instance
-
-        if(status>0){
-            doGet(req,resp);
-        }else{
-            out.println("Sorry! unable to update record");
+        if(offence_type == null)
+        {
+            flagOffence_type = false;
         }
+        else if(offence_type.length() > 10)
+        {
+            flagOffence_type = false;
+        }
+        else
+        {
+            flagOffence_type = true;
+        }
+
+        if (description == null)
+        {
+            flagDescription = false;
+        }
+        else if(description.length() > 200)
+        {
+            flagDescription = false;
+        }
+        else
+        {
+            flagDescription = true;
+        }
+
+        if (amount <= 0)
+        {
+            flagAmount = false;
+        }
+        else if(amount >= 100000)
+        {
+            flagAmount = false;
+        }
+        else
+        {
+            flagAmount = true;
+        }
+
+        if (demerit_points <= 0)
+        {
+            flagDemerit_points = false;
+        }
+        else if(demerit_points >= 4)
+        {
+            flagDemerit_points = false;
+        }
+        else
+        {
+            flagDemerit_points = true;
+        }
+
+        if(flagOffence_type && flagDescription && flagAmount && flagDemerit_points)
+        {
+            flag = true;
+        }
+        else
+        {
+            flag = false;
+        }
+        return flag;
+    }
+
+    protected void viewOffence(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
+
+        System.out.println("View offence method is called in the offence servlet");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("serverResponse", "Allowed");
+
+        Offence offence = new Offence();
+        JSONArray offenceList = offence.getOffenceDetails();
+
+        jsonObject.put("List", offenceList);
+        out.write(jsonObject.toString());
         out.close();
     }
 
+    protected void deleteOffence(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+    
+            System.out.println("Delete offence method is called in the offence servlet");
 
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
-        OffenceDAO offenceDAO = new OffenceDAO();
-        offenceDAO.deleteOffenceInfo(Integer.parseInt(String.valueOf(offenceNo)));
-        resp.sendRedirect("this");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            int offence_no = Integer.parseInt(request.getParameter("offence_no"));
+            Offence offence = new Offence();
+
+            jsonObject.put("alert", offence.deleteOffenceDetails(offence_no));
+
+            out.write(jsonObject.toString());
+            out.close();
     }
 
+    protected void checkOffenceDescription(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+
+            String description = request.getParameter("description");
+
+            System.out.println("Check offence description method is called in the offence servlet");
+
+            System.out.println(description);
+
+            Offence offence = new Offence();
+            jsonObject.put("alert", offence.offenceDescriptionCheck(description));
+
+            out.print(jsonObject.toString());
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Came until the doPost method in Offence Servlet");
+
+        String action = request.getParameter("action");
+        String contentType = request.getHeader("Content-type");
+        String authorizationHeader = request.getHeader("Authorization");
+        System.out.println("Authorization Header: " + authorizationHeader);
+        System.out.println("Content Type: " + contentType);
+        System.out.println("Action: " + action);
+
+        String jwt = null;
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            jwt = authorizationHeader.substring(7); //Extracts the jwt token removing the word Bearer prefix
+            System.out.println(jwt);
+
+            String[] jwtParts = jwt.split("\\.");
+            String headerJson = new String(Base64.getUrlDecoder().decode(jwtParts[0]));
+            String payloadJson = new String(Base64.getUrlDecoder().decode(jwtParts[1]));
+            System.out.println(headerJson);
+            System.out.println(payloadJson);
 
 
+            String signature = jwtParts[2];
+            String unsignedJwt = jwtParts[0] + "." + jwtParts[1];
 
+            String calculatedSignature;
+            try {
+                Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+                SecretKeySpec secret_key = new SecretKeySpec("mysecret".getBytes(), "HmacSHA256");
+                sha256_HMAC.init(secret_key);
 
+                calculatedSignature = Base64.getUrlEncoder().encodeToString(sha256_HMAC.doFinal(unsignedJwt.getBytes()));
 
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to calculate HMAC: " + e.getMessage());
+            }
 
+            if (!signature.equals(calculatedSignature)) {
+                throw new RuntimeException("JWT signature verification failed as the signature is not matching");
+            } else {
+                System.out.println("JWT signature verification success");
+                JSONObject payloadJsonObject = new JSONObject(payloadJson);
+                String authorizedRank = payloadJsonObject.getString("rank");
+                System.out.println(authorizedRank);
+                if (authorizedRank.equals("igp")) {
+                    if (action.equals("addOffence")) {
+                        System.out.println("Redirecting to addOffence in Offence Servlet");
+                        addOffence(request, response);
+                    } else if (action.equals("viewOffence")) {
+                        System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
+                        viewOffence(request, response);
+                    } else if (action.equals("deleteOffence")) {
+                        System.out.println("Redirecting to deleteOffence in Offence Servlet");
+                        deleteOffence(request, response);
+                    } else if (action.equals("updateOffence")) {
+                        System.out.println("Redirecting to updateOffence in Offence Servlet");
+                        //updateOffence(request, response);
+                    } else if (action.equals("checkOffenceDescription")){
+                        System.out.println("Redirecting to checkOffenceDescription in Offence Servlet");
+                        checkOffenceDescription(request, response);
+                    }
+                    else{
+                        System.out.println("Invalid action"); //Could be changed later
+                    }
+                } else if (authorizedRank.equals("oic") || authorizedRank.equals("policeman")) {
+                    if(action.equals("viewOffence")) {
+                        System.out.println("Redirecting to viewOffence in Offence Servlet");
+                        viewOffence(request, response);
+                    }
+                    else{
+                        System.out.println("Invalid action"); //Could be changed later
+                    }
+                } else {
+                    System.out.println("You are not authorized to access this page");
+                }
+            }
 
+        }
+        else {
+            System.out.println("JWT signature verification failed");
+        }
+
+    }
 
 }
-

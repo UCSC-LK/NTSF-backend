@@ -2,206 +2,133 @@ package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Offence;
 import com.cops.ntsf.util.Database;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ResourceBundle;
 
 public class OffenceDAO {
-    public void setOffenceInfo(Offence offence) {
-        Connection dbConn = Database.getConnection();
 
-        String sql = "INSERT INTO offence(offence_no, offence_type,description,point_weight,amount) VALUES (?, ?,?,?,?)";
+    public JSONArray getOffenceDetailsList() {
+        Connection dbConn = null;
 
-        try {
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setInt(1, offence.getOffenceNo());
-            preparedStatement.setString(2, offence.getOffenceType());
-            preparedStatement.setString(3, offence.getDescription());
-            preparedStatement.setInt(4, offence.getPointWeight());
-            preparedStatement.setInt(5, offence.getAmount());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-
-    public int updateOffenceInfo(Offence offence) {
-        Connection dbConn = Database.getConnection();
-
-        String sql = "UPDATE offence set  offence_type=?, description=?, point_weight=?, amount=? where offence_no=?";
-
-        try {
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setInt(1, offence.getOffenceNo());
-            preparedStatement.setString(2, offence.getOffenceType());
-            preparedStatement.setString(3, offence.getDescription());
-            preparedStatement.setInt(4, offence.getPointWeight());
-            preparedStatement.setInt(5, offence.getAmount());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return 0;
-    }
-
-    public void deleteOffenceInfo(int offenceN) {
-        Connection dbConn = Database.getConnection();
-
-        String sql = "delete from offence where offence_no=?";
-
-        try {
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setInt(1, offenceN);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public List<Offence> getAllOffences(){
-        List<Offence> list=new ArrayList<Offence>();
-
-        String sql = "select * from offence";
+        JSONArray jsonArray = new JSONArray();
 
         try{
-            Connection dbConn = Database.getConnection();
+            dbConn = Database.getConnection();
+            String sql = "SELECT * FROM offence";
+
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-            ResultSet resultSet=preparedStatement.executeQuery();
-            while(resultSet.next()){
-                Offence offence=new Offence();
-                offence.setOffenceNo(resultSet.getInt(1));
-                offence.setOffenceType(resultSet.getString(2));
-                offence.setDescription(resultSet.getString(4));
-                offence.setPointWeight(resultSet.getInt(3));
-                offence.setAmount(resultSet.getInt(5));
-                list.add(offence);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int offence_no = resultSet.getInt("offence_no");
+                String offence_type = resultSet.getString("offence_type");
+                String description = resultSet.getString("description");
+                int amount = resultSet.getInt("amount");
+                int demerit_points = resultSet.getInt("demerit_points");
 
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("offence_no", offence_no);
+                jsonObject.put("offence_type", offence_type);
+                jsonObject.put("description", description);
+                jsonObject.put("amount", amount);
+                jsonObject.put("demerit_points", demerit_points);
+
+                jsonArray.put(jsonObject);
+
+                System.out.println("Offence No: " + offence_no);
+                System.out.println("Offence Type: " + offence_type);
+                System.out.println("Description: " + description);
+                System.out.println("Amount: " + amount);
+                System.out.println("Demerit Points: " + demerit_points);
             }
-            dbConn.close();
-        }catch(Exception e){
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return list;
+        return jsonArray;
     }
 
+    public void createOffence(Offence offence) {
+        Connection dbConn = null;
+        try{
+            dbConn = Database.getConnection();
+            String sql = "INSERT INTO offence (offence_no, offence_type, description, amount, demerit_points) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            preparedStatement.setInt(1, offence.getOffence_no());
+            preparedStatement.setString(2, offence.getOffence_type());
+            preparedStatement.setString(3, offence.getDescription());
+            preparedStatement.setInt(4, offence.getAmount());
+            preparedStatement.setInt(5, offence.getDemerit_points());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean deleteOffence(int offence_no) {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "DELETE FROM offence WHERE offence_no = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setInt(1, offence_no);
+
+            int resultSet = preparedStatement.executeUpdate();
+            if (resultSet > 0) {
+                System.out.println("Offence No: " + offence_no + " has been deleted");
+                alert = true;
+            }
+            else {
+                System.out.println("Offence No: " + offence_no + " does not exist");
+                alert = false;
+            }
+            preparedStatement.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
+    public boolean offenceDescriptionCheck(String description) {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "SELECT * FROM offence WHERE description = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, description);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Offence Description: " + description + " already exists");
+                alert = true;
+            }
+            else {
+                System.out.println("Offence Description: " + description + " does not exist");
+                alert = false;
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return alert;
+    }
 }
-
-
-
-
-
-
-
-
-
-//package com.cops.ntsf.dao;
-//
-//import com.cops.ntsf.model.Offence;
-//import com.cops.ntsf.util.Database;
-//
-//import java.sql.Connection;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class OffenceDAO {
-//    public void setOffenceInfo(Offence offence) {
-//        Connection dbConn = Database.getConnection();
-//
-//        String sql = "INSERT INTO offence(offence_no, offence_type,description,point_weight,amount) VALUES (?, ?,?,?,?)";
-//
-//        try {
-//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-//            preparedStatement.setInt(1, offence.getOffenceNo());
-//            preparedStatement.setString(2, offence.getOffenceType());
-//            preparedStatement.setString(3, offence.getDescription());
-//            preparedStatement.setInt(4, offence.getPointWeight());
-//            preparedStatement.setInt(5, offence.getAmount());
-//
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
-//
-//
-//    public static int updateOffenceInfo(Offence offence) {
-//        Connection dbConn = Database.getConnection();
-//
-//        String sql = "UPDATE offence set  offence_type=?, description=?, point_weight=?, amount=? where offence_no=?";
-//
-//        try {
-//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-//            preparedStatement.setInt(1, offence.getOffenceNo());
-//            preparedStatement.setString(2, offence.getOffenceType());
-//            preparedStatement.setString(3, offence.getDescription());
-//            preparedStatement.setInt(4, offence.getPointWeight());
-//            preparedStatement.setInt(5, offence.getAmount());
-//
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return 0;
-//    }
-//
-//    public static void deleteOffenceInfo(int offenceN) {
-//        Connection dbConn = Database.getConnection();
-//
-//        String sql = "delete from offence where offence_no=?";
-//
-//        try {
-//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-//            preparedStatement.setInt(1, offenceN);
-//
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//
-//    public static List<Offence> getAllOffences(){
-//        List<Offence> list=new ArrayList<Offence>();
-//
-//        String sql = "select * from offence";
-//
-//        try{
-//            Connection dbConn = Database.getConnection();
-//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-//
-//            ResultSet resultSet=preparedStatement.executeQuery();
-//            while(resultSet.next()){
-//                Offence offence=new Offence();
-//                offence.setOffenceNo(resultSet.getInt(1));
-//                offence.setOffenceType(resultSet.getString(2));
-//                offence.setDescription(resultSet.getString(4));
-//                offence.setPointWeight(resultSet.getInt(3));
-//                offence.setAmount(resultSet.getInt(5));
-//                list.add(offence);
-//
-//            }
-//            dbConn.close();
-//        }catch(Exception offence){offence.printStackTrace();}
-//
-//        return list;
-//    }
-//
-//
-//
-//}
