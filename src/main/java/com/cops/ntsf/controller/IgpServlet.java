@@ -187,7 +187,7 @@ public class IgpServlet extends HttpServlet {
         System.out.println("Came until error duplication in servlet");
 
         Policeman policeman = new Policeman();
-        jsonObject.put("alert",  policeman.policemanPolice_IDCheck(police_id)); //if alert is true, deleted
+        jsonObject.put("alert",  policeman.policemanPolice_IDCheck(police_id));
 
         out.write(jsonObject.toString());
         out.close();

@@ -1,94 +1,91 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.OffenceDAO;
+import org.json.JSONArray;
 
 public class Offence {
-    private Integer offenceNo;
-    private String offenceType;
-    private Integer pointWeight;
+    private int offence_no;
+    private String offence_type;
     private String description;
-    private Integer amount;
+    private int amount;
+
+    private int demerit_points;
 
     public Offence() {
+
+    }
+
+    public Offence(String offence_type, String description, int amount, int demerit_points) {
+        this.offence_type = offence_type;
+        this.description = description;
+        this.amount = amount;
+        this.demerit_points = demerit_points;
     }
 
     public Offence(String speeding, int i, int i1) {
     }
 
-    public void setOffenceNo(Integer offenceNo) {
-        this.offenceNo = offenceNo;
+    public int getOffence_no() {
+        return offence_no;
     }
 
-    public void setOffenceType(String offenceType) {
-        this.offenceType = offenceType;
-    }
-
-    public Offence(Integer offenceNo, String offenceType, Integer pointWeight, String description, Integer amount) {
-        this.offenceType = offenceType;
-        this.offenceNo = offenceNo;
-        this.pointWeight = pointWeight;
-        this.description = description;
-        this.amount = amount;
-    }
-
-    public Integer getOffenceNo() {
-        return offenceNo;
-    }
-
-    public String getOffenceType() {
-        return offenceType;
-    }
-
-    public void setPointWeight(Integer pointWeight) {
-        this.pointWeight = pointWeight;
+    public String getOffence_type() {
+        return offence_type;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public int getAmount() {
+        return amount;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public int getDemerit_points() {
+        return demerit_points;
+    }
+
+    public void setOffence_no(int offence_no) {
+        this.offence_no = offence_no;
+    }
+
+    public void setOffence_type(String offence_type) {
+        this.offence_type = offence_type;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public int getPointWeight() {
-        return pointWeight;
+    public void setDemerit_points(int demerit_points) {
+        this.demerit_points = demerit_points;
     }
 
-    public void setPointWeight(int pointWeight) {
-        this.pointWeight = pointWeight;
-    }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    public void setOffenceInfo() {
+    public JSONArray getOffenceDetails() {
         OffenceDAO offenceDAO = new OffenceDAO();
-        offenceDAO.setOffenceInfo(this);
+        JSONArray offenceDetailslist = offenceDAO.getOffenceDetailsList();
+        return offenceDetailslist;
     }
 
-    public void updateOffenceInfo() {
+    public void offenceAdded() {
         OffenceDAO offenceDAO = new OffenceDAO();
-        offenceDAO.updateOffenceInfo(this);
+        offenceDAO.createOffence(this);
     }
 
-    @Override
-    public String toString() {
-        return "Offence{" +
-                "offenceNo=" + offenceNo +
-                ", offenceType='" + offenceType + '\'' +
-                ", pointWeight=" + pointWeight +
-                ", description='" + description + '\'' +
-                ", amount=" + amount +
-                '}';
+    public boolean deleteOffenceDetails(int offence_no) {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        boolean deleteOffenceDetailResult = offenceDAO.deleteOffence(offence_no);
+        return deleteOffenceDetailResult;
+    }
+
+    public boolean offenceDescriptionCheck(String description) {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        boolean offenceDescriptionCheckResult = offenceDAO.offenceDescriptionCheck(description);
+        return offenceDescriptionCheckResult;
     }
 }

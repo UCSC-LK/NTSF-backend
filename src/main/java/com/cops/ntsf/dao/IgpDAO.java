@@ -149,7 +149,7 @@ public class IgpDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return alert;
     }
     public boolean getPolicemanPolice_IDCheckResult(String police_idCheck) {
         Connection dbConn = null;
