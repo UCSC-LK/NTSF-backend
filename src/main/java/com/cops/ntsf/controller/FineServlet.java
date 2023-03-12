@@ -29,26 +29,40 @@ public class FineServlet extends HttpServlet {
 
             if(checkValidations(fineType, offenceNo, spotDescription, imposedDateTime, policeId, policeStation)){
                 if (fineType.equals("pedestrian")){
-
                     String nic = request.getParameter("user_id");
-                    String licenseNo  = "null";
-                    String vehicleNo = "null";
+                    if (checkNICValidations(nic))
+                    {
+                        String licenseNo  = "null";
+                        String vehicleNo = "null";
+                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
 
-                    Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
-
-
-
+                    }
+                    else {
+                        System.out.println("Invalid NIC");
+                    }
                 }
                 else if (fineType.equals("vehicle")){
                     String vehicleNo = request.getParameter("user_id");
-                    String nic = getNICByLicenseNo(vehicleNo);
-                    String licenseNo = "null";
+
+                    if(checkVehicleNoValidations(vehicleNo)){
+                        String nic = getNICByLicenseNo(vehicleNo);
+                        String licenseNo = "null";
+                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+                    }
+                    else {
+                        System.out.println("Invalid vehicle number");
+                    }
 
                 }
                 else if (fineType.equals("driver")){
                     String licenseNo = request.getParameter("user_id");
-                    String nic = getNICByLicenseNo(licenseNo);
-                    String vehicleNo = "null";
+
+                    if (checkLicenseNoValidations(licenseNo)){
+                        String nic = getNICByLicenseNo(licenseNo);
+                        String vehicleNo = "null";
+                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+
+                    }
 
                 }
                 else{
