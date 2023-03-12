@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public class Fine {
     private int fineNo;
+
+    private String fineType;
     private int offenceNo;
     private String nic;
     private String licenseNo;
@@ -36,7 +38,7 @@ public class Fine {
 
     //Constructor for driver fine
 
-    public Fine(String licenseNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
+    public Fine(String fineType, String licenseNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
         this.licenseNo = licenseNo;
         this.spotDescription = spotDescription;
         this.imposedDateTime = imposedDateTime;
