@@ -75,6 +75,20 @@ public class FineServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+    private boolean checkNICValidations(String nic) {
+        return true;
+    }
+
+    private boolean checkVehicleNoValidations(String vehicleNo) {
+        return true;
+    }
+
+    private boolean checkLicenseNoValidations(String licenseNo) {
+        return true;
+    }
+
+
     private boolean checkValidations(String fineType, String offenceNo, String spotDescription, LocalDateTime imposedDateTime, String policeId, String policeStation) {
         boolean flagFineType = false;
         boolean flagOffenceNo = false;
