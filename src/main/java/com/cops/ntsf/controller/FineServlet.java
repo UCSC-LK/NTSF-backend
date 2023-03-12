@@ -35,7 +35,7 @@ public class FineServlet extends HttpServlet {
                         String licenseNo  = "null";
                         String vehicleNo = "null";
                         Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
-
+                        fine.createFine();
                     }
                     else {
                         System.out.println("Invalid NIC");

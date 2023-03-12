@@ -1,5 +1,7 @@
 package com.cops.ntsf.model;
 
+import com.cops.ntsf.dao.FineDAO;
+
 import java.time.LocalDateTime;
 
 public class Fine {
@@ -135,4 +137,8 @@ public class Fine {
         this.paymentStatus = paymentStatus;
     }
 
+    public void createFine() {
+        FineDAO fineDAO = new FineDAO();
+        fineDAO.createFine(this);
+    }
 }
