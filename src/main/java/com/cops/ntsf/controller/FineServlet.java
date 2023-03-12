@@ -9,16 +9,75 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.Date;
 
 public class FineServlet extends HttpServlet {
     protected void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
+            String fineType = request.getParameter("fineType");
+            if(fineType.equals("driver")){
+                addDriverFine(request, response);
+            }
+            else if(fineType.equals("pedestrian")){
+                addPedestrianFine(request, response);
+            }
+            else if(fineType.equals("vehicle")){
+                addVehicleFine(request, response);
+            }
+            else {
+                System.out.println("Invalid fine type");
+            }
 
         } catch (Exception e){
             e.printStackTrace();
         }
     }
+
+    protected void addPedestrianFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+            String fintType = request.getParameter("fineType");
+            String offenceNo = request.getParameter("offence_no");
+            String spotDescription = request.getParameter("spotDescription");
+            String nic = request.getParameter("nic");
+            LocalDateTime imposedDateTime = LocalDateTime.now();
+            String policeId = request.getParameter("police_id");
+            String policeStation = request.getParameter("police_station");
+
+            if(checkValidations(fintType, offenceNo, spotDescription, nic, imposedDateTime, policeId, policeStation) {
+                Fine fine = new Fine(fineType, offenceNo, spotDescription, nic, imposedDateTime, policeId, policeStation);
+
+
+            }
+
+
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private boolean checkValidations(String fintType, String offenceNo, String spotDescription, String nic, LocalDateTime imposedDateTime, String policeId, String policeStation) {
+        boolean flagFineType = false;
+        boolean flagOffenceNo = false;
+        boolean flagSpotDescription = false;
+        boolean flagNic = false;
+        boolean flagImposedDateTime = false;
+        boolean flagPoliceId = false;
+        boolean flagPoliceStation = false;
+        boolean flag = false;
+
+        System.out.println("Checking validations in FIne Servlet");
+    }
+
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Came until the doPOST in Fine Servlet");
@@ -83,6 +142,7 @@ public class FineServlet extends HttpServlet {
         else {
             System.out.println("JWT signature verification failed");
         }
+
     }
 
 

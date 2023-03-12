@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 
 public class Fine {
     private int fineNo;
-
     private int offenceNo;
-
-    private String userId;
+    private String nic;
+    private String licenseNo;
+    private String vehicleNo;
 
     private String spotDescription;
 
@@ -24,9 +24,35 @@ public class Fine {
     public Fine() {
     }
 
-    public Fine(int offenceNo, String userId, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String paymentStatus) {
+    //Constructor for pedestrian fine
+    public Fine(int offenceNo, String nic, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String paymentStatus) {
         this.offenceNo = offenceNo;
-        this.userId = userId;
+        this.nic = nic;
+        this.spotDescription = spotDescription;
+        this.imposedDateTime = imposedDateTime;
+        this.dueDateTime = dueDateTime;
+        this.policeId = policeId;
+        this.policeStation = policeStation;
+        this.paymentStatus = paymentStatus;
+    }
+
+    //Constructor for driver fine
+
+    public Fine(int offenceNo, String licenseNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String paymentStatus) {
+        this.offenceNo = offenceNo;
+        this.licenseNo = licenseNo;
+        this.spotDescription = spotDescription;
+        this.imposedDateTime = imposedDateTime;
+        this.dueDateTime = dueDateTime;
+        this.policeId = policeId;
+        this.policeStation = policeStation;
+        this.paymentStatus = paymentStatus;
+    }
+
+    //Constructor for vehicle fine
+    public Fine(int offenceNo, String vehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String paymentStatus) {
+        this.offenceNo = offenceNo;
+        this.vehicleNo = vehicleNo;
         this.spotDescription = spotDescription;
         this.imposedDateTime = imposedDateTime;
         this.dueDateTime = dueDateTime;
@@ -43,8 +69,16 @@ public class Fine {
         return offenceNo;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getNic() {
+        return nic;
+    }
+
+    public String getLicenseNo() {
+        return licenseNo;
+    }
+
+    public String getVehicleNo() {
+        return vehicleNo;
     }
 
     public String getSpotDescription() {
@@ -79,8 +113,16 @@ public class Fine {
         this.offenceNo = offenceNo;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
+
+    public void setLicenseNo(String licenseNo) {
+        this.licenseNo = licenseNo;
+    }
+
+    public void setVehicleNo(String vehicleNo) {
+        this.vehicleNo = vehicleNo;
     }
 
     public void setSpotDescription(String spotDescription) {
