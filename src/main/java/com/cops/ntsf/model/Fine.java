@@ -11,28 +11,28 @@ public class Fine {
 
     private String spotDescription;
 
-    private LocalDateTime dateTime;
+    private LocalDateTime imposedDateTime;
 
     private LocalDateTime dueDateTime;
-
-    private int paymentStatus;
 
     private String policeId;
 
     private String policeStation;
 
+    private String paymentStatus;
+
     public Fine() {
     }
 
-    public Fine(int offenceNo, String userId, String spotDescription, LocalDateTime dateTime, LocalDateTime dueDateTime, int paymentStatus, String policeId, String policeStation) {
+    public Fine(int offenceNo, String userId, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String paymentStatus) {
         this.offenceNo = offenceNo;
         this.userId = userId;
         this.spotDescription = spotDescription;
-        this.dateTime = dateTime;
+        this.imposedDateTime = imposedDateTime;
         this.dueDateTime = dueDateTime;
-        this.paymentStatus = paymentStatus;
         this.policeId = policeId;
         this.policeStation = policeStation;
+        this.paymentStatus = paymentStatus;
     }
 
     public int getFineNo() {
@@ -51,16 +51,12 @@ public class Fine {
         return spotDescription;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDateTime getImposedDateTime() {
+        return imposedDateTime;
     }
 
     public LocalDateTime getDueDateTime() {
         return dueDateTime;
-    }
-
-    public int getPaymentStatus() {
-        return paymentStatus;
     }
 
     public String getPoliceId() {
@@ -69,6 +65,10 @@ public class Fine {
 
     public String getPoliceStation() {
         return policeStation;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
     }
 
     public void setFineNo(int fineNo) {
@@ -87,26 +87,25 @@ public class Fine {
         this.spotDescription = spotDescription;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setImposedDateTime(LocalDateTime imposedDateTime) {
+        this.imposedDateTime = imposedDateTime;
     }
 
     public void setDueDateTime(LocalDateTime dueDateTime) {
         this.dueDateTime = dueDateTime;
     }
 
-    public void setPaymentStatus(int paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
     public void setPoliceId(String policeId) {
         this.policeId = policeId;
     }
+
 
     public void setPoliceStation(String policeStation) {
         this.policeStation = policeStation;
     }
 
-
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
 }
