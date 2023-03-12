@@ -18,14 +18,17 @@ import java.util.Date;
 public class FineServlet extends HttpServlet {
     protected void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            String fineType = request.getParameter("fineType");
+            //Fine Number is auto incremented
+            String fineType = request.getParameter("fine_type");
             //Front end sends user_id as nic/licenseNo/vehicleNo
-            String offenceNo = request.getParameter("offenceNo");
-            String spotDescription = request.getParameter("spotDescription");
+            String offenceNo = request.getParameter("offence_no");
+            String spotDescription = request.getParameter("spot_description");
             LocalDateTime imposedDateTime = LocalDateTime.now();
             LocalDateTime dueDateTime = imposedDateTime.plusDays(14);  //Adds 14 days to the imposed date
-            String policeId = request.getParameter("policeId");
-            String policeStation = request.getParameter("policeStation");
+            String policeId = request.getParameter("police_id");
+            String policeStation = request.getParameter("police_station");
+            //Fine amount retrieved from the offence table using offence_no
+            //Payment status is set to unpaid by default at database level
 
             if(checkValidations(fineType, offenceNo, spotDescription, imposedDateTime, policeId, policeStation)){
                 if (fineType.equals("pedestrian")){
