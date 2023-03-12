@@ -2,6 +2,8 @@ package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Complaint;
 import com.cops.ntsf.util.Database;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -102,14 +104,13 @@ public class ComplaintDAO {
     public JSONArray viewComplaintDetailsAsInvestigationOfficer() {
         Connection dbConn = null;
         JSONArray jsonArray = new JSONArray();
-        try{
+        try {
             dbConn = Database.getConnection();
             String sql = "SELECT * from complaint where status = 'pending'";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next())
-            {
+            while (resultSet.next()) {
                 String user_id = resultSet.getString("user_id");
                 String title = resultSet.getString("title");
                 String description = resultSet.getString("description");

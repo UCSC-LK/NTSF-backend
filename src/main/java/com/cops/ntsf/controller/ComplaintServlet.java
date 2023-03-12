@@ -2,9 +2,6 @@ package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Complaint;
 import com.google.gson.Gson;
-import com.cops.ntsf.dao.ComplaintDAO;
-
-import com.cops.ntsf.model.Policeman;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -32,8 +29,7 @@ public class ComplaintServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
 
-//        HttpSession session = request.getSession();
-        JSONObject jsonObject = new JSONObject();
+//        JSONObject jsonObject = new JSONObject();
 
         String user_id = request.getParameter("user_id");
         String title = request.getParameter("title");
@@ -60,7 +56,6 @@ public class ComplaintServlet extends HttpServlet {
         String user_id = req.getParameter("user_id");
         ArrayList<Complaint> complaintList;
 
-//        UserService userService = new UserService();
         Complaint complaint = new Complaint(user_id);
         try {
             complaintList = complaint.getUserComplaintInfo();
@@ -74,7 +69,6 @@ public class ComplaintServlet extends HttpServlet {
         resp.setCharacterEncoding("utf-8");
 
         out.write(new Gson().toJson(complaintList));
-        out.write(jsonObject.toString());
         out.close();
     }
 
@@ -88,7 +82,7 @@ public class ComplaintServlet extends HttpServlet {
         Complaint complaint = new Complaint();
         JSONArray complaintListasInvestigationOfficer = complaint.getComplaintsDetailsAsInvestigationOfficer();
 
-        jsonObject.put("List", complaintListasInvestigationOfficer );
+        jsonObject.put("List", complaintListasInvestigationOfficer);
 
         out.write(jsonObject.toString());
         out.close();
