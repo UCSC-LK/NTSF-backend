@@ -6,6 +6,10 @@ public class Offence {
 
     //    private Integer offenceNo;
     private Integer offenceNo;
+    private String offenceType;
+    private Integer pointWeight;
+    private String description;
+    private Integer amount;
 
     public Offence() {
 
@@ -16,19 +20,12 @@ public class Offence {
 
     public void setOffenceNo(Integer offenceNo) {
         this.offenceNo = offenceNo;
+        // Empty constructor
     }
 
     public void setOffenceType(String offenceType) {
         this.offenceType = offenceType;
     }
-
-    private String offenceType;
-
-    private Integer pointWeight;
-
-    private String description;
-
-    private Integer amount;
 
     public Offence(Integer offenceNo, String offenceType, Integer pointWeight, String description, Integer amount) {
         this.offenceType = offenceType;
@@ -36,15 +33,32 @@ public class Offence {
         this.pointWeight = pointWeight;
         this.description = description;
         this.amount = amount;
-
     }
 
-    public int getOffenceNo() {
+    public Integer getOffenceNo() {
         return offenceNo;
     }
 
-    public void setOffenceNo(int offenceNo) {
+    public void setOffenceNo( offenceNo) {
         this.offenceNo = offenceNo;
+    public void setOffenceNo(Integer offenceNo) {
+        this.offenceNo = offenceNo;
+    }
+
+    public String getOffenceType() {
+        return offenceType;
+    }
+
+    public void setOffenceType(String offenceType) {
+        this.offenceType = offenceType;
+    }
+
+    public Integer getPointWeight() {
+        return pointWeight;
+    }
+
+    public void setPointWeight(Integer pointWeight) {
+        this.pointWeight = pointWeight;
     }
 
     public String getDescription() {
@@ -69,6 +83,8 @@ public class Offence {
 
     public void setPointWeight(int pointWeight) {
         this.pointWeight = pointWeight;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public void setOffenceInfo() {
@@ -79,10 +95,19 @@ public class Offence {
     public void updateOffenceInfo() {
         OffenceDAO offenceDAO = new OffenceDAO();
         OffenceDAO.updateOffenceInfo(this);
+        OffenceDAO offenceDAO = new OffenceDAO();
+        offenceDAO.updateOffenceInfo(this);
     }
 
-    public String getOffenceType() {
-        return offenceType;
+    @Override
+    public String toString() {
+        return "Offence{" +
+                "offenceNo=" + offenceNo +
+                ", offenceType='" + offenceType + '\'' +
+                ", pointWeight=" + pointWeight +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                '}';
     }
 
 

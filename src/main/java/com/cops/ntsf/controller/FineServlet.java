@@ -17,6 +17,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FineServlet extends HttpServlet {
+    public FineServlet() {
+        super();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -66,5 +70,8 @@ public class FineServlet extends HttpServlet {
         out.write(new Gson().toJson(fine));
         out.close();
 
+    }
+
+    public void addFine(HttpServletRequest request, HttpServletResponse response) {
     }
 }

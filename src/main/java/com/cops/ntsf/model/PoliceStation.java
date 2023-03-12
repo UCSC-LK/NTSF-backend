@@ -78,6 +78,13 @@ public class PoliceStation {
         policeStationDAO.createPoliceStation(this);
     }
 
+    public JSONArray getPoliceStationOptions()
+    {
+        PoliceStationDAO policeStationDAO = new PoliceStationDAO();
+        JSONArray policeStationOptionsList = policeStationDAO.getPoliceStationOptionsList();
+        return policeStationOptionsList;
+    }
+
     public boolean policeStationContact_NumberCheck(String contact_number) {
         PoliceStationDAO policeStationDAO = new PoliceStationDAO();
         boolean policeStationContact_NumberCheckResult = policeStationDAO.getPoliceStationContact_NumberCheckResult(contact_number);

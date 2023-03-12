@@ -2,6 +2,10 @@ package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Complaint;
 import com.google.gson.Gson;
+import com.cops.ntsf.dao.ComplaintDAO;
+
+import com.cops.ntsf.model.Policeman;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -70,6 +74,23 @@ public class ComplaintServlet extends HttpServlet {
         resp.setCharacterEncoding("utf-8");
 
         out.write(new Gson().toJson(complaintList));
+        out.write(jsonObject.toString());
+        out.close();
+    }
+
+    protected void viewComplaintsAsInvestigationOfficer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("serverResponse", "Allowed");
+
+        Complaint complaint = new Complaint();
+        JSONArray complaintListasInvestigationOfficer = complaint.getComplaintsDetailsAsInvestigationOfficer();
+
+        jsonObject.put("List", complaintListasInvestigationOfficer );
+
+        out.write(jsonObject.toString());
         out.close();
     }
 }

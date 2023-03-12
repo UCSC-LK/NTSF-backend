@@ -18,6 +18,11 @@ public class Complaint {
         this.complaint_no = complaint_no;
     }
 
+    public Complaint()
+    {
+
+    }
+
     public Complaint(String user_id) {
         this.user_id = user_id;
     }
@@ -74,6 +79,11 @@ public class Complaint {
         return user_id;
     }
 
+    public JSONArray getComplaintsDetailsAsInvestigationOfficer() {
+        ComplaintDAO complaintDAO = new ComplaintDAO();
+        JSONArray ComplaintDetails = complaintDAO.viewComplaintDetailsAsInvestigationOfficer();
+        return ComplaintDetails;
+    }
     public void setDescription(String description) {
         this.description = description;
     }
