@@ -6,14 +6,13 @@ import org.json.JSONObject;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Base64;
-import java.util.Date;
 
 public class FineServlet extends HttpServlet {
     protected void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,6 +20,7 @@ public class FineServlet extends HttpServlet {
             //Fine Number is auto incremented
             String fineType = request.getParameter("fine_type");
             //Front end sends user_id as nic/licenseNo/vehicleNo
+            String drivenVehicle = request.getParameter("driven_vehicle");
             String offenceNo = request.getParameter("offence_no");
             String spotDescription = request.getParameter("spot_description");
             LocalDateTime imposedDateTime = LocalDateTime.now();
@@ -30,7 +30,7 @@ public class FineServlet extends HttpServlet {
             //Fine amount retrieved from the offence table using offence_no
             //Payment status is set to unpaid by default at database level
 
-            if(checkValidations(fineType, offenceNo, spotDescription, imposedDateTime, policeId, policeStation)){
+            if(checkValidations(fineType, offenceNo, spotDescription, policeId, policeStation)){
                 if (fineType.equals("pedestrian")){
                     String nic = request.getParameter("user_id");
                     if (checkNICValidations(nic))
@@ -100,14 +100,52 @@ public class FineServlet extends HttpServlet {
     }
 
 
-    private boolean checkValidations(String fineType, String offenceNo, String spotDescription, LocalDateTime imposedDateTime, String policeId, String policeStation) {
-        boolean flagFineType = false;
+    private boolean checkValidations(String fineType, String offenceNo, String spotDescription, String policeId, String policeStation) {
+        boolean flagFineType = false; // flag = true means validation is passed
         boolean flagOffenceNo = false;
         boolean flagSpotDescription = false;
-        boolean flagImposedDateTime = false;
         boolean flagPoliceId = false;
         boolean flagPoliceStation = false;
         boolean flag = false;
+
+        if (fineType.equals("pedestrian") || fineType.equals("vehicle") || fineType.equals("driver")){
+            flagFineType = true;
+        }
+        else{
+            System.out.println("Invalid fine type");
+            flagFineType = false;
+        }
+
+        if (offenceNo == null){
+            flagOffenceNo = false;
+        }
+        else if (offenceNo.length() > 3)
+        {
+            flagOffenceNo = false;
+            System.out.println("Offence number should be less than or equal to 3 characters");
+        }
+        else if (!offenceNo.matches("[0-9]+")){
+            flagOffenceNo = false;
+            System.out.println("Offence number should be a number");
+        }
+        else{
+            System.out.println("Valid offence number");
+            flagOffenceNo = false;
+        }
+
+        if (spotDescription == null){
+            flagSpotDescription = false;
+        }
+        else if (spotDescription.length() > 200){
+            flagSpotDescription = false;
+            System.out.println("Spot description should be less than or equal to 200 characters");
+        }
+        else{
+            System.out.println("Valid spot description");
+            flagSpotDescription = true;
+        }
+
+
 
         System.out.println("Checking validations in FIne Sev");
         return flag;
