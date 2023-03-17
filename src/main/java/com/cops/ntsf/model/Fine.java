@@ -1,6 +1,7 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.FineDAO;
+import org.json.JSONArray;
 
 import java.time.LocalDateTime;
 
@@ -150,5 +151,12 @@ public class Fine {
     public void createFine() {
         FineDAO fineDAO = new FineDAO();
         fineDAO.createFine(this);
+    }
+
+    public JSONArray getFineListAsOIC() {
+        FineDAO fineDAO = new FineDAO();
+        JSONArray fineDetails = fineDAO.viewFineDetailsAsOIC();
+        return fineDetails;
+
     }
 }

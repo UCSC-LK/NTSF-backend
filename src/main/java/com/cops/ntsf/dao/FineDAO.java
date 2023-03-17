@@ -2,6 +2,7 @@ package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.util.Database;
+import org.json.JSONArray;
 
 import javax.xml.crypto.Data;
 import java.sql.Connection;
@@ -38,6 +39,8 @@ public class FineDAO {
     }
 
 
+    public JSONArray viewFineDetailsAsOIC() {
+    }
 }
 
 
