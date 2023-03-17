@@ -19,8 +19,7 @@ public class FineServlet extends HttpServlet {
         try{
             //Fine Number is auto incremented
             String fineType = request.getParameter("fine_type");
-            //Front end sends user_id as nic/licenseNo/vehicleNo
-            String drivenVehicle = request.getParameter("driven_vehicle");
+            //Front end sends user_id as nic/licenseNo/vehicleNo depending on the fine type
             String offenceNo = request.getParameter("offence_no");
             String spotDescription = request.getParameter("spot_description");
             LocalDateTime imposedDateTime = LocalDateTime.now();
@@ -30,6 +29,15 @@ public class FineServlet extends HttpServlet {
             //Fine amount retrieved from the offence table using offence_no
             //Payment status is set to unpaid by default at database level
 
+            System.out.println("Fine type: " + fineType);
+            System.out.println("Offence no: " + offenceNo);
+            System.out.println("Spot description: " + spotDescription);
+            System.out.println("Police id: " + policeId);
+            System.out.println("Police station: " + policeStation);
+            System.out.println("Imposed date time: " + imposedDateTime);
+            System.out.println("Due date time: " + dueDateTime);
+
+
             if(checkValidations(fineType, offenceNo, spotDescription, policeId, policeStation)){
                 if (fineType.equals("pedestrian")){
                     String nic = request.getParameter("user_id");
@@ -37,7 +45,8 @@ public class FineServlet extends HttpServlet {
                     {
                         String licenseNo  = "null";
                         String vehicleNo = "null";
-                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+                        String drivenVehicleNo = "null";
+                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
                         fine.createFine();
                     }
                     else {
@@ -50,7 +59,8 @@ public class FineServlet extends HttpServlet {
                     if(checkVehicleNoValidations(vehicleNo)){
                         String nic = getNICByVehicleNo(vehicleNo);
                         String licenseNo = "null";
-                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+                        String drivenVehicleNo = "null";
+                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
                     }
                     else {
                         System.out.println("Invalid vehicle number");
@@ -59,11 +69,13 @@ public class FineServlet extends HttpServlet {
                 }
                 else if (fineType.equals("driver")){
                     String licenseNo = request.getParameter("user_id");
+                    String drivenVehicleNo = request.getParameter("driven_vehicle");
+
 
                     if (checkLicenseNoValidations(licenseNo)){
                         String nic = getNICByLicenseNo(licenseNo);
                         String vehicleNo = "null";
-                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
 
                     }
 
@@ -104,12 +116,13 @@ public class FineServlet extends HttpServlet {
         boolean flagFineType = false; // flag = true means validation is passed
         boolean flagOffenceNo = false;
         boolean flagSpotDescription = false;
-        boolean flagPoliceId = false;
-        boolean flagPoliceStation = false;
+        boolean flagPoliceId = true; //made true temporarily ************************
+        boolean flagPoliceStation = true; //made true temporarily********************
         boolean flag = false;
 
         if (fineType.equals("pedestrian") || fineType.equals("vehicle") || fineType.equals("driver")){
             flagFineType = true;
+            System.out.println("Valid fine type");
         }
         else{
             System.out.println("Invalid fine type");
@@ -130,7 +143,7 @@ public class FineServlet extends HttpServlet {
         }
         else{
             System.out.println("Valid offence number");
-            flagOffenceNo = false;
+            flagOffenceNo = true;
         }
 
         if (spotDescription == null){
@@ -147,7 +160,14 @@ public class FineServlet extends HttpServlet {
 
 
 
-        System.out.println("Checking validations in FIne Sev");
+        System.out.println("Checking validations in FIne Servlet");
+        if (flagFineType && flagOffenceNo && flagSpotDescription && flagPoliceId && flagPoliceStation){
+            flag = true;
+            System.out.println("All Validations passed");
+        }
+        else{
+            flag = false;
+        }
         return flag;
     }
 
