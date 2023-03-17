@@ -58,9 +58,11 @@ public class FineServlet extends HttpServlet {
 
                     if(checkVehicleNoValidations(vehicleNo)){
                         String nic = getNICByVehicleNo(vehicleNo);
+                        System.out.println("NIC: " + nic);
                         String licenseNo = "null";
                         String drivenVehicleNo = "null";
                         Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+                        fine.createFine();
                     }
                     else {
                         System.out.println("Invalid vehicle number");
@@ -71,12 +73,12 @@ public class FineServlet extends HttpServlet {
                     String licenseNo = request.getParameter("user_id");
                     String drivenVehicleNo = request.getParameter("driven_vehicle");
 
-
                     if (checkLicenseNoValidations(licenseNo)){
                         String nic = getNICByLicenseNo(licenseNo);
+                        System.out.println("NIC: " + nic);
                         String vehicleNo = "null";
                         Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
-
+                        fine.createFine();
                     }
 
                 }

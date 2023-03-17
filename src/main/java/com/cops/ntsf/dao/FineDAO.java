@@ -12,6 +12,7 @@ public class FineDAO {
     public void createFine(Fine fine) {
         Connection dbConn = null;
         try{
+            System.out.println("Reached FineDAO");
             dbConn = Database.getConnection();
             String sql = "INSERT INTO fine (fine_type, offence_no, nic, license_no, vehicle_no, driven_vehicle_no,spot_description, imposed_date_time, due_date_time, police_id, police_station_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
