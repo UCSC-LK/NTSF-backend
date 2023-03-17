@@ -1,6 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Fine;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.crypto.Mac;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
@@ -114,6 +116,23 @@ public class FineServlet extends HttpServlet {
     }
 
 
+    protected void viewFineAsOIC(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("serverResponse", "Allowed");
+
+        Fine fine = new Fine();
+        JSONArray fineListAsOIC = fine.getFineListAsOIC();
+
+        jsonObject.put("List", fineListAsOIC);
+
+        out.println(jsonObject.toString());
+        out.close();
+
+    }
+
     private boolean checkValidations(String fineType, String offenceNo, String spotDescription, String policeId, String policeStation) {
         boolean flagFineType = false; // flag = true means validation is passed
         boolean flagOffenceNo = false;
@@ -172,7 +191,6 @@ public class FineServlet extends HttpServlet {
         }
         return flag;
     }
-
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Came until the doPOST in Fine Servlet");
