@@ -1,13 +1,14 @@
 package com.cops.ntsf.service;
 
-import com.cops.ntsf.model.*;
+import com.cops.ntsf.model.Auth;
+import com.cops.ntsf.model.User;
 import org.json.JSONObject;
 
 public class AuthService {
     public String getUserIdFromNic(String nic) {
         User user = new User();
         user.setNic(nic);
-        user.getUserFromNic();
+        user.getUserInfo();
         return user.getUserId();
     }
 

@@ -1,7 +1,6 @@
 package com.cops.ntsf.controller;
 
-import com.cops.ntsf.constants.UserType;
-import com.cops.ntsf.model.User;
+import com.cops.ntsf.model.Profile;
 import com.cops.ntsf.service.UserService;
 import com.google.gson.Gson;
 
@@ -17,42 +16,17 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Get request parameters
-        UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
-        String userId = req.getParameter("user_id");
+        String nic = req.getParameter("nic");
 
         UserService userService = new UserService();
-        User user = userService.getUserInfo(userId, userType);
+        Profile profile = userService.getProfileInfo(nic);
 
         // Output response
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-        out.write(new Gson().toJson(user));
+        out.write(new Gson().toJson(profile));
         out.close();
     }
-
-
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//        // Get request parameters
-//        String userId = req.getParameter("user_id");
-////        UserType userType = UserType.fromId(Integer.parseInt(req.getParameter("user_type")));
-//        String mobileNo = req.getParameter("mobile_no");
-//        String email = req.getParameter("email");
-//        String name = req.getParameter("name");
-//        String address = req.getParameter("address");
-//
-//        UserService userService = new UserService();
-//        User user = userService.updateUserInfo(userId, mobileNo, email, name, address);
-//
-//        // Output response
-//        PrintWriter out = resp.getWriter();
-//        resp.setContentType("application/json");
-//        resp.setCharacterEncoding("utf-8");
-//
-//        out.write(new Gson().toJson(user));
-//        out.close();
-//    }
 }

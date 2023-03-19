@@ -16,10 +16,11 @@ public class UserSignUpServlet extends HttpServlet {
         // Get request parameters
         String nic = req.getParameter("nic");
         String email = req.getParameter("email");
+        String mobileNo = req.getParameter("mobile_no");
         String password = req.getParameter("password");
 
         UserService userService = new UserService();
-        User user = userService.getUserSignedUp(nic, email, password);
+        User user = userService.getUserSignedUp(nic, email, mobileNo, password);
 
         // Output response
         PrintWriter out = resp.getWriter();

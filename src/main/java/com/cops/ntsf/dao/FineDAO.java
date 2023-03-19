@@ -1,5 +1,7 @@
 package com.cops.ntsf.dao;
 
+import com.cops.ntsf.constants.OffenceType;
+import com.cops.ntsf.constants.PaymentStatus;
 import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.util.Database;
 import org.json.JSONArray;
@@ -40,7 +42,6 @@ public class FineDAO {
         }
     }
 
-
     public JSONArray viewFineDetailsAsOIC() {
         Connection dbConn = null;
         JSONArray jsonArray = new JSONArray();
@@ -75,4 +76,96 @@ public class FineDAO {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//AVISHI CODE BELOW THIS LINE When Solving conflicts
+//        preparedStatement.setString(1, fine.getNic());
+//                preparedStatement.setString(2, String.valueOf(fine.getOffenceType()));
+//
+//                ResultSet resultSet = preparedStatement.executeQuery();
+//
+//                ArrayList<Fine> finesList = new ArrayList<Fine>();
+//
+//        while (resultSet.next()) {
+//        Fine nextFine;
+//
+//        nextFine = new Fine(fine.getNic());
+//        nextFine.setUserId(Integer.valueOf(resultSet.getString("user_id")));
+//        nextFine.setTicketNo(Integer.valueOf(resultSet.getString("ticket_no")));
+//        nextFine.setFineNo(Integer.valueOf(resultSet.getString("fine_no")));
+//        nextFine.setDate(resultSet.getDate("date"));
+//        nextFine.setDueDate(resultSet.getDate("due_date"));
+//        nextFine.setPaymentStatus(PaymentStatus.valueOf(resultSet.getString("payment_status")));
+//        nextFine.setOffenceType(OffenceType.valueOf(resultSet.getString("offence_type")));
+//        nextFine.setAmount(resultSet.getString("amount"));
+//
+//
+//        finesList.add(nextFine);
+
+//    public void insertFineInfo(Fine fine) {
+//        Connection dbConn = Database.getConnection();
+//
+//        String sql = "INSERT INTO fine (nic, ticket_no, fine_no, date, due_date, amount, payment_status, offence_type, point_weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//
+//        try {
+//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+//            preparedStatement.setString(1, String.valueOf(fine.getTicketNo()));
+//            preparedStatement.setString(2, String.valueOf(fine.getFineNo()));
+//            preparedStatement.setString(3, String.valueOf(fine.getDate()));
+//            preparedStatement.setString(4, String.valueOf(fine.getDueDate()));
+//            preparedStatement.setString(5, fine.getAmount());
+//            preparedStatement.setString(6, String.valueOf(fine.getPaymentStatus()));
+//            preparedStatement.setString(7, String.valueOf(fine.getOffenceType()));
+//            preparedStatement.setString(8, String.valueOf(fine.getPointWeight()));
+//
+//            preparedStatement.executeUpdate();
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+}
 

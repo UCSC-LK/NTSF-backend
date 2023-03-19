@@ -7,11 +7,9 @@ import org.json.JSONObject;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ComplaintDAO {
-    public String insert(Complaint complaint)
-    {
+    public String insert(Complaint complaint) {
         Connection dbConn = null;
         try {
             dbConn = Database.getConnection();
@@ -30,72 +28,89 @@ public class ComplaintDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-        finally {
-            if (dbConn != null) try
-            {
+        } finally {
+            if (dbConn != null) try {
                 dbConn.close();
-            } catch (Exception ignore){}
+            } catch (Exception ignore) {
+            }
         }
         return null;
     }
 
-    public JSONArray viewComplaintDetails()
-    {
-        Connection dbConn = null;
-        JSONArray jsonArray = new JSONArray();
+//    public JSONArray viewComplaintDetails() {
+//        Connection dbConn = null;
+//        JSONArray jsonArray = new JSONArray();
+//
+//        try {
+//            dbConn = Database.getConnection();
+//            String sql = "SELECT * from complaint";
+//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            while (resultSet.next()) {
+//                String user_id = resultSet.getString("user_id");
+//                String title = resultSet.getString("title");
+//                String description = resultSet.getString("description");
+//                String complaint_no = resultSet.getString("complaint_no");
+//
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put("user_id", user_id);
+//                jsonObject.put("title", title);
+//                jsonObject.put("description", description);
+//                jsonObject.put("complaint_no", complaint_no);
+//
+//                jsonArray.put(jsonObject);
+//            }
+//            resultSet.close();
+//            preparedStatement.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (dbConn != null) try {
+//                dbConn.close();
+//            } catch (Exception ignore) {
+//                ignore.printStackTrace();
+//            }
+//        }
+//        return jsonArray;
+//    }
 
-        try
-        {
-            dbConn = Database.getConnection();
-            String sql = "SELECT * from complaint";
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
+    public ArrayList<Complaint> fetchUserComplaintInfo(Complaint complaint) throws SQLException {
+        Connection dbConn = Database.getConnection();
 
-            while (resultSet.next())
-            {
-                String user_id = resultSet.getString("user_id");
-                String title = resultSet.getString("title");
-                String description = resultSet.getString("description");
-                String complaint_no = resultSet.getString("complaint_no");
+        String sql = "SELECT * FROM complaint WHERE user_id = ?";
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("user_id", user_id);
-                jsonObject.put("title", title);
-                jsonObject.put("description", description);
-                jsonObject.put("complaint_no", complaint_no);
+        PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-                jsonArray.put(jsonObject);
-            }
-            resultSet.close();
-            preparedStatement.close();
+        preparedStatement.setString(1, complaint.getUser_id());
 
-        }catch (Exception e)
-        {
-            e.printStackTrace();
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        ArrayList<Complaint> complaintsList = new ArrayList<Complaint>();
+
+        while (resultSet.next()) {
+            Complaint nextComplaint;
+            nextComplaint = new Complaint(complaint.getUser_id());
+            nextComplaint.setComplaint_no(resultSet.getString("complaint_no"));
+            nextComplaint.setTitle(resultSet.getString("title"));
+            nextComplaint.setDescription(resultSet.getString("description"));
+
+            complaintsList.add(nextComplaint);
         }
-        finally {
-            if (dbConn != null) try {
-                dbConn.close();
-            } catch (Exception ignore) {
-                ignore.printStackTrace();
-            }
-        }
-        return jsonArray;
+        return complaintsList;
     }
 
     public JSONArray viewComplaintDetailsAsInvestigationOfficer() {
         Connection dbConn = null;
         JSONArray jsonArray = new JSONArray();
-        try{
+        try {
             dbConn = Database.getConnection();
             String sql = "SELECT * from complaint where status = 'pending'";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next())
-            {
+            while (resultSet.next()) {
                 String user_id = resultSet.getString("user_id");
                 String title = resultSet.getString("title");
                 String description = resultSet.getString("description");
