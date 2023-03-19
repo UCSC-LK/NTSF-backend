@@ -3,10 +3,12 @@ package com.cops.ntsf.dao;
 import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.util.Database;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class FineDAO {
@@ -40,6 +42,36 @@ public class FineDAO {
 
 
     public JSONArray viewFineDetailsAsOIC() {
+        Connection dbConn = null;
+        JSONArray jsonArray = new JSONArray();
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "SELECT * FROM fine where police_station_name = ? and status = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("fine_type", resultSet.getString("fine_type"));
+            jsonObject.put("offence_no", resultSet.getString("offence_no"));
+            jsonObject.put("nic", resultSet.getString("nic"));
+            jsonObject.put("license_no", resultSet.getString("license_no"));
+            jsonObject.put("vehicle_no", resultSet.getString("vehicle_no"));
+            jsonObject.put("driven_vehicle_no", resultSet.getString("driven_vehicle_no"));
+            jsonObject.put("spot_description", resultSet.getString("spot_description"));
+            jsonObject.put("imposed_date_time", resultSet.getString("imposed_date_time"));
+            jsonObject.put("due_date_time", resultSet.getString("due_date_time"));
+            jsonObject.put("police_id", resultSet.getString("police_id"));
+            jsonObject.put("police_station_name", resultSet.getString("police_station_name"));
+            jsonObject.put("status", resultSet.getString("status"));
+
+            jsonArray.put(jsonObject);
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return jsonArray;
     }
 }
 
