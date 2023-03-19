@@ -30,6 +30,9 @@ public class Fine {
 
     private String paymentStatus;
 
+    public Fine() {
+    }
+
     public Fine(String fineType, String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
         this.fineType = fineType;
         this.offenceNo = offenceNo;
