@@ -67,6 +67,7 @@ public class PolicemanLoginServlet extends HttpServlet {
                 //Creating the payload
                 JSONObject payload = new JSONObject();
                 payload.put("police_id", loginResponse.getJSONObject(0).getString("police_id"));
+                payload.put("name", loginResponse.getJSONObject(0).getString("name"));
                 payload.put("rank", loginResponse.getJSONObject(0).getString("rank"));
                 payload.put("position", loginResponse.getJSONObject(0).getString("position"));
                 payload.put("police_station", loginResponse.getJSONObject(0).getString("police_station"));
