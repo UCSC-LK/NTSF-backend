@@ -29,8 +29,6 @@ public class PolicemanLoginServlet extends HttpServlet {
         }
 
     }
-
-
     protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             PrintWriter out = response.getWriter();
