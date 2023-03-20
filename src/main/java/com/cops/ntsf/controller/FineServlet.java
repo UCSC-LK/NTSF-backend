@@ -247,6 +247,11 @@ public class FineServlet extends HttpServlet {
                         System.out.println("You are not authorized to access this page");
                     }
                 }
+                else if (authorizedRank.equals("oic")){
+                    if(action.equals("viewFineAsOIC")){
+                        viewFineAsOIC(request, response);
+                    }
+                }
                 else {
                     System.out.println("You are not authorized to access this page");
                 }
