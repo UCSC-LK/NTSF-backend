@@ -41,6 +41,11 @@ public class Fine {
         this.pointWeight = pointWeight;
     }
 
+    public Fine(String nic, OffenceType offenceType) {
+        this.nic = nic;
+        this.offenceType = offenceType;
+    }
+
     public Integer getTicketNo() {
         return ticketNo;
     }

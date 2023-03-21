@@ -29,7 +29,7 @@ public class FineDAO {
         while (resultSet.next()) {
             Fine nextFine;
 
-            nextFine = new Fine(fine.getNic());
+            nextFine = new Fine(fine.getNic(), fine.getOffenceType());
             nextFine.setUserId(Integer.valueOf(resultSet.getString("user_id")));
             nextFine.setTicketNo(Integer.valueOf(resultSet.getString("ticket_no")));
             nextFine.setFineNo(Integer.valueOf(resultSet.getString("fine_no")));
