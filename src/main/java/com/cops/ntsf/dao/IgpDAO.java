@@ -272,7 +272,7 @@ public class IgpDAO {
             dbConn = Database.getConnection();
             System.out.println("police_id: " + police_id);
             System.out.println("password: " + password);
-            String sql = "SELECT rank, position, police_station from policeman where police_id =  ? and password = ? and active = 1";
+            String sql = "SELECT name, rank, position, police_station from policeman where police_id =  ? and password = ? and active = 1";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, police_id);
@@ -282,9 +282,11 @@ public class IgpDAO {
             System.out.println(resultSet);
             while (resultSet.next())
             {
+                System.out.println(resultSet.getString("name"));
                 System.out.println(resultSet.getString("rank"));
                 System.out.println(resultSet.getString("position"));
                 System.out.println("This is where error is coming from");
+                String name = resultSet.getString("name");
                 String rank = resultSet.getString("rank");
                 String position = resultSet.getString("position");
                 String police_station = resultSet.getString("police_station");
@@ -292,6 +294,7 @@ public class IgpDAO {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("authorization", true);
                 jsonObject.put("police_id", police_id);
+                jsonObject.put("name", name);
                 jsonObject.put("rank", rank);
                 jsonObject.put("position", position);
                 jsonObject.put("police_station", police_station);
