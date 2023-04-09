@@ -63,9 +63,6 @@ public class Point {
         this.minPointLimit = minPointLimit;
     }
 
-    public void setMinPointLimit(int min_point_limit) {
-    }
-
     public Integer getMaxPointLimit() {
         return maxPointLimit;
     }
