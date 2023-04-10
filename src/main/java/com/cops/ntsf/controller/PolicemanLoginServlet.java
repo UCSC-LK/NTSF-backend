@@ -64,7 +64,7 @@ public class PolicemanLoginServlet extends HttpServlet {
                 //Creating the header
                 JSONObject header = new JSONObject();
                 header.put("alg", "HS256");
-                header.put("typ", "JWT");
+                header.put("typ", "JWT");  //abc2.s23d.isg3
 
                 //Creating the payload
                 JSONObject payload = new JSONObject();

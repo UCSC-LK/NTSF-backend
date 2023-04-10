@@ -59,7 +59,7 @@ public class PolicemanServlet extends HttpServlet {
                 if (authorizedRank == "policeman") {
                     if (authorizedPosition == "trafficPolice") {
                         if (action.equals("addFine")) {
-                            new FineServlet().addFine(request, response);
+//                            new FineServlet().addFine(request, response);
                         } else {
                             System.out.println("You are not authorized to access this page, Only trafficPolice are allowed to access this page");
                         }
