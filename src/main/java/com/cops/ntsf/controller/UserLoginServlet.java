@@ -18,12 +18,12 @@ public class UserLoginServlet extends HttpServlet {
         String nic = req.getParameter("nic");
         String password = req.getParameter("password");
 
-//        String hashedPassword;
-//        try {
-//            hashedPassword = hashingPassword(password);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        String hashedPassword;
+        try {
+            hashedPassword = hashingPassword(password);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         AuthService authService = new AuthService();
 
@@ -32,7 +32,6 @@ public class UserLoginServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-//        out.write(authService.verifyLogin(nic, hashedPassword));
         out.write(authService.verifyLogin(nic, password));
         out.close();
     }
