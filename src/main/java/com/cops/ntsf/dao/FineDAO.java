@@ -99,7 +99,31 @@ public class FineDAO {
         }
         return finesList;
     }
-    // Ends here
+
+    public Fine fetchFineByFineNo(Fine fine) {
+        Connection dbConn = Database.getConnection();
+
+        // Get offence_type from offence_no
+        String sql = "SELECT * FROM fine WHERE fine_no = ? and nic = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            preparedStatement.setInt(1, fine.getFineNo());
+            preparedStatement.setString(2, fine.getNic());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                fine.setOffenceNo(resultSet.getString("offence_no"));
+                return fine;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 
