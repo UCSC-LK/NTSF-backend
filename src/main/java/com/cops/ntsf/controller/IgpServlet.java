@@ -36,16 +36,7 @@ public class IgpServlet extends HttpServlet {
         String rank = request.getParameter("rank");
         String police_station = request.getParameter("police_station");
 
-        System.out.println("Works until Policeman Servlet");
-        System.out.println(name);
-        System.out.println(police_id);
-        System.out.println(nic);
-        System.out.println(mobile_number);
-        System.out.println(email);
-        System.out.println(rank);
-        System.out.println(police_station);
-        System.out.println("Printed variables in Policeman Servlet");
-
+        System.out.println("addPoliceman method in IGPServlet invoked");
         if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
         {
             PasswordGenerator passwordGenerator = new PasswordGenerator();
