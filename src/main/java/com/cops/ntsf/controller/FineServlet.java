@@ -1,6 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Fine;
+import com.cops.ntsf.model.Offence;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -119,7 +120,8 @@ public class FineServlet extends HttpServlet {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("serverResponse", "Allowed");
 
-        Fine fine = new Fine();
+        Fine fine = null;
+        fine = new Fine(fine.getNic());
         JSONArray fineListAsOIC = fine.getFineListAsOIC();
 
         jsonObject.put("List", fineListAsOIC);
@@ -247,10 +249,16 @@ public class FineServlet extends HttpServlet {
 
         // Get request parameters
         String nic = req.getParameter("nic");
-        String offenceType = req.getParameter("offence_type");
+        String offence_no = req.getParameter("offence_no");
+
+        Offence offence = new Offence(offence_no);
+        offence.getOffenceType();
+
+        String offence_type = offence.getOffence_type();
+
         ArrayList<Fine> finesList;
 
-        Fine fine = new Fine(nic, offenceType);
+        Fine fine = new Fine(nic, offence_type);
         try {
             finesList = fine.getUserFinesInfo();
         } catch (SQLException e) {
