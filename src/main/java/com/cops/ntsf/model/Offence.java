@@ -88,4 +88,13 @@ public class Offence {
         boolean offenceDescriptionCheckResult = offenceDAO.offenceDescriptionCheck(description);
         return offenceDescriptionCheckResult;
     }
+
+    public Offence(String offence_no) {
+        this.offence_no = Integer.parseInt(offence_no);
+    }
+
+    public void getOffenceType() {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        offenceDAO.fetchOffenceType(this);
+    }
 }

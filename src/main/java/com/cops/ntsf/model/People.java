@@ -8,11 +8,11 @@ public class People extends User {
 
     private String name;
     private String address;
-    private Date bod;
     private String gender;
     private String birthPlace;
     private Date issueDate;
     private String job;
+    private Date dob;
 
     public String getName() {
         return name;
@@ -28,14 +28,6 @@ public class People extends User {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Date getBod() {
-        return bod;
-    }
-
-    public void setBod(Date bod) {
-        this.bod = bod;
     }
 
     public String getGender() {
@@ -77,5 +69,13 @@ public class People extends User {
     public void getCivilInfo() {
         PeopleDAO peopleDAO = new PeopleDAO();
         peopleDAO.fetchCivilInfo(this);
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public Date getDob() {
+        return dob;
     }
 }

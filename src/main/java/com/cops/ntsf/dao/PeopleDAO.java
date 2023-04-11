@@ -25,7 +25,7 @@ public class PeopleDAO {
                 people.setIssueDate(resultSet.getDate("issue_date"));
                 people.setName(resultSet.getString("name"));
                 people.setAddress(resultSet.getString("address"));
-                people.setBod(resultSet.getDate("bod"));
+                people.setDob(resultSet.getDate("dob"));
                 people.setGender(resultSet.getString("gender"));
                 people.setBirthPlace(resultSet.getString("birth_place"));
                 people.setJob(resultSet.getString("job"));

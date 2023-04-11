@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 public class OffenceDAO {
 
@@ -18,7 +17,7 @@ public class OffenceDAO {
 
         JSONArray jsonArray = new JSONArray();
 
-        try{
+        try {
             dbConn = Database.getConnection();
             String sql = "SELECT * FROM offence";
 
@@ -58,7 +57,7 @@ public class OffenceDAO {
 
     public void createOffence(Offence offence) {
         Connection dbConn = null;
-        try{
+        try {
             dbConn = Database.getConnection();
             String sql = "INSERT INTO offence (offence_no, offence_type, description, amount, demerit_points) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -82,7 +81,7 @@ public class OffenceDAO {
         Connection dbConn = null;
         boolean alert = false;
 
-        try{
+        try {
             dbConn = Database.getConnection();
             String sql = "DELETE FROM offence WHERE offence_no = ?";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -92,13 +91,12 @@ public class OffenceDAO {
             if (resultSet > 0) {
                 System.out.println("Offence No: " + offence_no + " has been deleted");
                 alert = true;
-            }
-            else {
+            } else {
                 System.out.println("Offence No: " + offence_no + " does not exist");
                 alert = false;
             }
             preparedStatement.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return alert;
@@ -108,7 +106,7 @@ public class OffenceDAO {
         Connection dbConn = null;
         boolean alert = false;
 
-        try{
+        try {
             dbConn = Database.getConnection();
             String sql = "SELECT * FROM offence WHERE description = ?";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -118,17 +116,35 @@ public class OffenceDAO {
             if (resultSet.next()) {
                 System.out.println("Offence Description: " + description + " already exists");
                 alert = true;
-            }
-            else {
+            } else {
                 System.out.println("Offence Description: " + description + " does not exist");
                 alert = false;
             }
             resultSet.close();
             preparedStatement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return alert;
+    }
+
+    public void fetchOffenceType(Offence offence) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "SELECT * FROM offence WHERE offence_no = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setInt(1, offence.getOffence_no());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                offence.setOffence_type(resultSet.getString("offence_type"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
