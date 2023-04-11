@@ -1,14 +1,18 @@
 //package com.cops.ntsf.service;
 //
+//import com.cops.ntsf.model.Fine;
 //import com.cops.ntsf.model.Offence;
 //
+//import java.sql.SQLException;
+//
 //public class OffenceService {
+//    public Offence getOffenceInfo(String offence_no) {
 //
-//    public Offence insertOffenceInfo(Integer offenceNo, String offenceType, Integer pointWeight, String description, Integer amount) {
-//
-//        Offence offence = new Offence(offenceNo, offenceType, pointWeight, description, amount);
-//        offence.setOffenceInfo();
-//
-//        return offence;
+//        Fine fine = new Fine(nic, offenceType);
+//        try {
+//            finesList = fine.getUserFinesInfo();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 //    }
 //}
