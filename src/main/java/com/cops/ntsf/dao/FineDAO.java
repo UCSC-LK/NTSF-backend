@@ -81,7 +81,6 @@ public class FineDAO {
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
         preparedStatement.setString(1, fine.getNic());
-        preparedStatement.setString(1, fine.getOffenceType());
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -89,12 +88,11 @@ public class FineDAO {
 
         while (resultSet.next()) {
             Fine nextFine;
-            nextFine = new Fine(fine.getNic(), fine.getOffenceType());
-//            nextFine.setTicketNo(Integer.valueOf(resultSet.getString("ticket_no")));
-            nextFine.setFineNo(Integer.valueOf(resultSet.getString("fine_no")));
-//            nextFine.setDate(resultSet.getDate("date"));
-//            nextFine.setDueDate(resultSet.getDate("due_date"));
-//            nextFine.setFineAmount(resultSet.getBigDecimal("fine_amount"));
+            nextFine = new Fine(fine.getNic());
+            nextFine.setFineNo(resultSet.getInt("fine_no"));
+            nextFine.setOffenceNo(resultSet.getString("offence_no"));
+//            nextFine.setImposedDateTime(resultSet.getDate("imposed_date_time"));
+//            nextFine.setDueDateTime(resultSet.getLocalDateTime("due_date_time"));
             nextFine.setPaymentStatus(resultSet.getString("payment_status"));
 
             finesList.add(nextFine);
