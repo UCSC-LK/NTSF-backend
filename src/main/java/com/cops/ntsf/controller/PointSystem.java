@@ -29,10 +29,19 @@ public class PointSystem extends HttpServlet {
 
     }
 
-    public void doPut(HttpServletRequest req, HttpServletResponse resp) {
+    public void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String nic = req.getParameter("nic");
         String fineNo = req.getParameter("fineNo");
 
+        PointService pointService = new PointService();
+        Point point = pointService.reducePoints(nic, fineNo);
 
+        // Output response
+        PrintWriter out = resp.getWriter();
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("utf-8");
+
+        out.write(new Gson().toJson(point));
+        out.close();
     }
 }

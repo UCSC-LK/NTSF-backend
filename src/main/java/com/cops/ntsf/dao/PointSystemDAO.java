@@ -50,7 +50,5 @@ public class PointSystemDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }
