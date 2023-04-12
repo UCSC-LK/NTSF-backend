@@ -28,4 +28,11 @@ public class PointSystem extends HttpServlet {
         out.close();
 
     }
+
+    public void doPut(HttpServletRequest req, HttpServletResponse resp) {
+        String nic = req.getParameter("nic");
+        String fineNo = req.getParameter("fineNo");
+
+
+    }
 }
