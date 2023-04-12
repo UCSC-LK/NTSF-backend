@@ -6,44 +6,23 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 public class Point {
-    private double x;
-    private double y;
     private String nic;
+
     private Integer maxPointLimit;
+
     private Integer minPointLimit;
+
     private int initialPoints;
-    private int remainingPoints;
+
+    private int currentPoints;
+
     private Date maxRecoveryDate;
 
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
-
     public Point(String nic) {
-
+        this.nic = nic;
     }
 
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public double distanceTo(Point other) {
-        double dx = this.x - other.getX();
-        double dy = this.y - other.getY();
-        return Math.sqrt(dx * dx + dy * dy);
+    public Point() {
     }
 
     public void getPointInfo() throws SQLException {
@@ -79,12 +58,12 @@ public class Point {
         return initialPoints;
     }
 
-    public void setRemainingPoints(int remainingPoints) {
-        this.remainingPoints = remainingPoints;
+    public void setRemainingPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
     }
 
     public int getRemainingPoints() {
-        return remainingPoints;
+        return currentPoints;
     }
 
     public void setMaxRecoveryDate(Date maxRecoveryDate) {
@@ -97,5 +76,18 @@ public class Point {
 
     public void setNic(String nic) {
         this.nic = nic;
+    }
+
+    public int getCurrentPoints() {
+        return currentPoints;
+    }
+
+    public void updateCurrentPoints(int currentPoints) {
+        PointSystemDAO pointSystemDAO = new PointSystemDAO();
+        pointSystemDAO.updateCurrentPoints(this);
+    }
+
+    public void setCurrentPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
     }
 }
