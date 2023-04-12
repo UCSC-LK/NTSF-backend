@@ -28,14 +28,15 @@ public class PointService {
             Point point = new Point();
             int currentPoints = point.getCurrentPoints();
 
-            // Reduce points
-            currentPoints = currentPoints - pointsToBeDone;
-
-            point.updateCurrentPoints(currentPoints);
+            if (checkCurrentPoints(currentPoints)) {
+                // Reduce points
+                currentPoints = currentPoints - pointsToBeDone;
+                point.updateCurrentPoints(currentPoints);
+            } else
+                System.out.println("Licence got declined");
 
             return point;
         }
-
 
         Point point = new Point(nic);
         try {
@@ -45,5 +46,10 @@ public class PointService {
         }
 
         return point;
+    }
+
+    // Check whether current points is less than or equal to 0
+    public boolean checkCurrentPoints(int currentPoints) {
+        return currentPoints > 0;
     }
 }
