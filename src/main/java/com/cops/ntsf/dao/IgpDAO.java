@@ -9,13 +9,14 @@ import com.cops.ntsf.service.Email;
 import java.sql.*;
 
 public class IgpDAO {
-    public String createPoliceman(Policeman policeman)
+    public boolean createPoliceman(Policeman policeman)
     {
         Connection dbConn = null;
+        boolean alert = false;
         try {
             dbConn = Database.getConnection();
             String sql = "INSERT into policeman (name, police_id, nic, mobile_number, email,  rank, police_station, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
             preparedStatement.setString(1, policeman.getName());
             preparedStatement.setString(2, policeman.getPolice_id());
@@ -28,16 +29,24 @@ public class IgpDAO {
 
             Email email = new Email();
             email.sendMail(policeman.getEmail(), policeman.getPassword());
-            preparedStatement.execute();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            int resultSet = preparedStatement.executeUpdate();
 
-            resultSet.close();
+            if(resultSet > 0)
+            {
+                System.out.println("Policeman added successfully");
+                alert = true;
+            }
+            else {
+                System.out.println("Policeman adding failed");
+                alert = false;
+            }
+
             preparedStatement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return alert;
     }
 
     public JSONArray getPolicemanDetailsList() {
