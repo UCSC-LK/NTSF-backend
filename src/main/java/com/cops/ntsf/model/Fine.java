@@ -52,6 +52,14 @@ public class Fine {
         this.paymentStatus = "unpaid";
     }
 
+    /*
+    @ Used in reducePoints function in pointService
+    * */
+    public Fine(int fineNo, String nic) {
+        this.nic = nic;
+        this.fineNo = fineNo;
+    }
+
     public Integer getFineNo() {
         return fineNo;
     }
@@ -184,6 +192,14 @@ public class Fine {
 
     public void setOffenceType(String offenceType) {
         this.offenceType = offenceType;
+    }
+
+    /*
+    @ Getting fine info by fine no
+     */
+    public Fine getFineByFineNo() {
+        FineDAO fineDAO = new FineDAO();
+        return fineDAO.fetchFineByFineNo(this);
     }
 }
 

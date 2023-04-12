@@ -52,6 +52,7 @@ public class FineServlet extends HttpServlet {
                         String drivenVehicleNo = "null";
                         Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
                         fine.createFine();
+                        System.out.println("reached");
                     } else {
                         System.out.println("Invalid NIC");
                     }
@@ -244,7 +245,9 @@ public class FineServlet extends HttpServlet {
 
     }
 
-    // View fines on user side code starts here
+    /*
+    @ View fines in user side
+    */
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         // Get request parameters
@@ -252,7 +255,7 @@ public class FineServlet extends HttpServlet {
         String offence_no = req.getParameter("offence_no");
 
         Offence offence = new Offence(offence_no);
-        offence.getOffenceType();
+//        offence.getOffenceType();
 
         String offence_type = offence.getOffence_type();
 
@@ -273,5 +276,4 @@ public class FineServlet extends HttpServlet {
         out.write(new Gson().toJson(finesList));
         out.close();
     }
-    // Ends here
 }
