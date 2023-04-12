@@ -60,6 +60,12 @@ public class Fine {
         this.fineNo = fineNo;
     }
 
+    public Fine(String nic, String fineType, Integer offenceNo) {
+        this.nic = nic;
+        this.fineType = fineType;
+        this.offenceNo = String.valueOf(offenceNo);
+    }
+
     public Integer getFineNo() {
         return fineNo;
     }
@@ -176,6 +182,9 @@ public class Fine {
         return fineDetails;
     }
 
+    /*
+    @ Fetch fine info from fine table
+    **/
     public ArrayList<Fine> getUserFinesInfo() throws SQLException {
         FineDAO fineDAO = new FineDAO();
         return fineDAO.fetchUserFinesInfo(this);

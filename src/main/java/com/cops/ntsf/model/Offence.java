@@ -25,6 +25,10 @@ public class Offence {
     public Offence(String speeding, int i, int i1) {
     }
 
+    public Offence(Integer offenceNo) {
+        this.offence_no = offenceNo;
+    }
+
     public int getOffence_no() {
         return offence_no;
     }
@@ -37,8 +41,8 @@ public class Offence {
         return description;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getAmount(int amount) {
+        return this.amount;
     }
 
     public int getDemerit_points() {
@@ -96,5 +100,9 @@ public class Offence {
     public void getOffence() {
         OffenceDAO offenceDAO = new OffenceDAO();
         offenceDAO.fetchOffenceByOffenceNo(this);
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }
