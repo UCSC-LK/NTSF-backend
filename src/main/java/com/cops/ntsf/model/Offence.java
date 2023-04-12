@@ -93,8 +93,8 @@ public class Offence {
         this.offence_no = Integer.parseInt(offence_no);
     }
 
-    public void getOffenceType() {
+    public void getOffence() {
         OffenceDAO offenceDAO = new OffenceDAO();
-        offenceDAO.fetchOffenceType(this);
+        offenceDAO.fetchOffenceByOffenceNo(this);
     }
 }
