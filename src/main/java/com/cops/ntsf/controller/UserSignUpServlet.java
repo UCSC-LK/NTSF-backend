@@ -46,7 +46,7 @@ public class UserSignUpServlet extends HttpServlet {
 
         if (nic.trim().equals("")) {
             System.out.println("NIC is empty");
-        } else if (nic.length() == 9 && nic.substring(0, 9).matches("[0-9]+") && Character.isLetter(nic.charAt(9)) && (nic.charAt(9) == 'x' || nic.charAt(9) == 'v')) {
+        } else if (nic.length() == 10 && nic.substring(0, 9).matches("[0-9]+") && !Character.isLetter(nic.charAt(9)) && (nic.charAt(9) == 'x' || nic.charAt(9) == 'v')) {
             System.out.println("NIC is valid");
             return true;
         } else if (nic.length() == 12 && nic.matches("[0-9]+")) {
