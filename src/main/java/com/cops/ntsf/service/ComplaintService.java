@@ -40,6 +40,6 @@ public class ComplaintService {
         // Simplify 'if else'
         boolean flag;
         flag = flagTitle && flagDescription;
-        return flagTitle;
+        return flag;
     }
 }
