@@ -29,22 +29,24 @@ public class ComplaintServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
 
-//        JSONObject jsonObject = new JSONObject();
-
-        String user_id = request.getParameter("user_id");
+        String complaint_no = request.getParameter("complaint_no");
         String title = request.getParameter("title");
         String description = request.getParameter("description");
-        String complaint_no = request.getParameter("complaint_no");
+        String user_id = request.getParameter("user_id");
 
         //remove later
         System.out.println("Works until Servlet");
-        System.out.println(user_id);
+        System.out.println(complaint_no);
         System.out.println(title);
         System.out.println(description);
-        System.out.println(complaint_no);
+        System.out.println(user_id);
 
-        Complaint complaint = new Complaint(user_id, title, description, complaint_no);
-        complaint.complaintAdded();
+        Complaint complaint = null;
+
+        if (checkValidations(title, description)) {
+            complaint = new Complaint(user_id, title, description, complaint_no);
+            complaint.complaintAdded();
+        }
 
         out.write(new Gson().toJson(complaint));
         out.close();
@@ -86,5 +88,47 @@ public class ComplaintServlet extends HttpServlet {
 
         out.write(jsonObject.toString());
         out.close();
+    }
+
+    /*
+    @ Check Validations function
+    * */
+    private boolean checkValidations(String title, String description) {
+
+        boolean flagTitle = false; // flag = true means title validation is passed
+        boolean flagDescription = false; // flag = true means description validation is passed
+
+        /*
+        @ Validate title
+        * */
+        if (title.trim().equals("")) {
+            System.out.println("Title is empty");
+        } else if (title.trim().length() < 3) {
+            System.out.println("Title is too short");
+        } else if (title.trim().length() > 50) {
+            System.out.println("Title is too long");
+        } else {
+            System.out.println("Title is valid");
+            flagTitle = true;
+        }
+
+        /*
+        @ Validate description
+        * */
+        if (description.trim().equals("")) {
+            System.out.println("Description is empty");
+        } else if (description.trim().length() < 10) {
+            System.out.println("Description is too short");
+        } else if (description.trim().length() > 500) {
+            System.out.println("Description is too long");
+        } else {
+            System.out.println("Description is valid");
+            flagDescription = true;
+        }
+
+        // Simplify 'if else'
+        boolean flag;
+        flag = flagTitle && flagDescription;
+        return flag;
     }
 }
