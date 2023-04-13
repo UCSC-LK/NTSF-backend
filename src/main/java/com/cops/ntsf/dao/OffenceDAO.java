@@ -12,16 +12,17 @@ import java.sql.SQLException;
 
 public class OffenceDAO {
 
-    public JSONArray getOffenceDetailsList() {
+    public JSONArray getOffenceDetailsListByType(String offenceType) {
         Connection dbConn = null;
 
         JSONArray jsonArray = new JSONArray();
 
         try {
             dbConn = Database.getConnection();
-            String sql = "SELECT * FROM offence";
+            String sql = "SELECT * FROM offence WHERE offence_type = ?";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, offenceType);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

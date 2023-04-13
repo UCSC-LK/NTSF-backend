@@ -66,10 +66,10 @@ public class Offence {
     }
 
 
-    public JSONArray getOffenceDetails() {
+    public JSONArray getOffenceDetailsByType(String offenceType) {
         OffenceDAO offenceDAO = new OffenceDAO();
-        JSONArray offenceDetailslist = offenceDAO.getOffenceDetailsList();
-        return offenceDetailslist;
+        JSONArray offenceDetailslistByType = offenceDAO.getOffenceDetailsListByType(offenceType);
+        return offenceDetailslistByType;
     }
 
     public void offenceAdded() {

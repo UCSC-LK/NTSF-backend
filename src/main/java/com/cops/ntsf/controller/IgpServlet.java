@@ -23,6 +23,8 @@ public class IgpServlet extends HttpServlet {
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     try
     {
+        boolean alert = false;
+
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
 
@@ -44,7 +46,9 @@ public class IgpServlet extends HttpServlet {
             String hashedPassword = hashingPassword(password);
             System.out.println(password);
             Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, hashedPassword);
-            policeman.policemanAdded();
+            alert = policeman.policemanAdded();
+
+            jsonObject.put("alert", alert);
         }
         else
         {
@@ -118,17 +122,6 @@ public class IgpServlet extends HttpServlet {
             String rank = request.getParameter("rank");
             String police_station = request.getParameter("police_station");
 
-            System.out.println("Came until the editPoliceman Servlet");
-
-            System.out.println(name);
-            System.out.println(police_id);
-            System.out.println(nic);
-            System.out.println(mobile_number);
-            System.out.println(email);
-            System.out.println(rank);
-            System.out.println(police_station);
-            System.out.println("Printed variables in Policeman Servlet");
-
             if (checkValidations(name, police_id, nic, mobile_number , email,  rank, police_station))
             {
                 Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station);
@@ -153,7 +146,6 @@ public class IgpServlet extends HttpServlet {
 
             String police_id = request.getParameter("police_id");
             System.out.println(police_id);
-            System.out.println("Came until deletePoliceman in servlet");
 
             Policeman policeman = new Policeman();
             jsonObject.put("alert",  policeman.deletePolicemanDetails(police_id));
@@ -175,7 +167,6 @@ public class IgpServlet extends HttpServlet {
 
         String police_id = request.getParameter("police_id");
         System.out.println(police_id);
-        System.out.println("Came until error duplication in servlet");
 
         Policeman policeman = new Policeman();
         jsonObject.put("alert",  policeman.policemanPolice_IDCheck(police_id));
@@ -198,7 +189,6 @@ public class IgpServlet extends HttpServlet {
 
             String nic = request.getParameter("nic");
             System.out.println(nic);
-            System.out.println("Came until error duplication in servlet");
 
             Policeman policeman = new Policeman();
             jsonObject.put("alert",  policeman.policemanNicCheck(nic));
@@ -223,7 +213,6 @@ public class IgpServlet extends HttpServlet {
 
             String mobile_number = request.getParameter("mobile_number");
             System.out.println(mobile_number);
-            System.out.println("Came until error duplication in servlet");
 
             Policeman policeman = new Policeman();
             jsonObject.put("alert",  policeman.policemanNicCheck(mobile_number));
@@ -248,7 +237,6 @@ public class IgpServlet extends HttpServlet {
 
             String email = request.getParameter("email");
             System.out.println(email);
-            System.out.println("Came until error duplication in servlet");
 
             Policeman policeman = new Policeman();
             jsonObject.put("alert",  policeman.policemanNicCheck(email));
@@ -264,7 +252,6 @@ public class IgpServlet extends HttpServlet {
 
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Came until the doPOST in Policeman Servlet");
         String action = request.getParameter("action");
         String contentType = request.getHeader("Content-type");
         String authorizationHeader = request.getHeader("Authorization");
@@ -352,8 +339,6 @@ public class IgpServlet extends HttpServlet {
         boolean flagRank = false; //flag = true means Rank validation is passed
         boolean flagPolice_Station = false; //flag = true means Police Station is passed
         boolean flag = false; //flag = true means all the validations are passed
-
-        System.out.println("Came until checkValidation in Policemanservlet");
 
         if(name.trim() == "")
         {

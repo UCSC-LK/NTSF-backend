@@ -146,18 +146,20 @@ public class OffenceServlet extends HttpServlet {
         return flag;
     }
 
-    protected void viewOffence(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void viewOffenceByType(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
 
         System.out.println("View offence method is called in the offence servlet");
 
+        String offenceType = request.getParameter("offence_type");
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("serverResponse", "Allowed");
 
         Offence offence = new Offence();
-        JSONArray offenceList = offence.getOffenceDetails();
+        JSONArray offenceList = offence.getOffenceDetailsByType(offenceType);
 
         jsonObject.put("List", offenceList);
         out.write(jsonObject.toString());
@@ -249,35 +251,41 @@ public class OffenceServlet extends HttpServlet {
                 JSONObject payloadJsonObject = new JSONObject(payloadJson);
                 String authorizedRank = payloadJsonObject.getString("rank");
                 System.out.println(authorizedRank);
+                System.out.println("Action: " + action);
                 if (authorizedRank.equals("igp")) {
                     if (action.equals("addOffence")) {
-                        System.out.println("Redirecting to addOffence in Offence Servlet");
                         addOffence(request, response);
-                    } else if (action.equals("viewOffence")) {
-                        System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
-                        viewOffence(request, response);
+                    } else if (action.equals("viewOffenceByType")) {
+                        viewOffenceByType(request, response);
                     } else if (action.equals("deleteOffence")) {
-                        System.out.println("Redirecting to deleteOffence in Offence Servlet");
                         deleteOffence(request, response);
                     } else if (action.equals("updateOffence")) {
-                        System.out.println("Redirecting to updateOffence in Offence Servlet");
                         //updateOffence(request, response);
                     } else if (action.equals("checkOffenceDescription")){
-                        System.out.println("Redirecting to checkOffenceDescription in Offence Servlet");
                         checkOffenceDescription(request, response);
                     }
                     else{
                         System.out.println("Invalid action"); //Could be changed later
                     }
-                } else if (authorizedRank.equals("oic") || authorizedRank.equals("policeman")) {
-                    if(action.equals("viewOffence")) {
-                        System.out.println("Redirecting to viewOffence in Offence Servlet");
-                        viewOffence(request, response);
+                } else if (authorizedRank.equals("oic")) {
+                    if(action.equals("viewOffenceByType")) {
+                        System.out.println("Redirecting to viewOffenceByType in Offence Servlet");
+                        viewOffenceByType(request, response);
                     }
                     else{
                         System.out.println("Invalid action"); //Could be changed later
                     }
-                } else {
+
+                } else if (authorizedRank.equals("policeman"))
+                {
+                    if(action.equals("viewOffenceByType")) {
+                        viewOffenceByType(request, response);
+                    }
+                    else{
+                        System.out.println("Invalid action"); //Could be changed later
+                    }
+                }
+                else {
                     System.out.println("You are not authorized to access this page");
                 }
             }
@@ -288,5 +296,4 @@ public class OffenceServlet extends HttpServlet {
         }
 
     }
-
 }
