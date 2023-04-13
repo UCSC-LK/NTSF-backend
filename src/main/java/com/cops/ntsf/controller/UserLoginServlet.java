@@ -27,6 +27,7 @@ public class UserLoginServlet extends HttpServlet {
         }
 
         AuthService authService = new AuthService();
+        checkValidations(nic, password);
 
         // Output response
         PrintWriter out = resp.getWriter();
@@ -34,7 +35,6 @@ public class UserLoginServlet extends HttpServlet {
         resp.setCharacterEncoding("utf-8");
 
         out.write(authService.verifyLogin(nic, hashedPassword));
-//        out.write(authService.verifyLogin(nic, password));
         out.close();
     }
 
@@ -45,5 +45,67 @@ public class UserLoginServlet extends HttpServlet {
         String encoded = Base64.getEncoder().encodeToString(hash);
         System.out.println("Hash: " + encoded);
         return encoded;
+    }
+
+    public void checkValidations(String nic, String password) {
+        if (checkNICValidation(nic)) {
+            checkPasswordValidation(password);
+        }
+    }
+
+    /*
+    @ Validate NIC
+    * */
+    public boolean checkNICValidation(String nic) {
+
+        boolean flagNic = false; // flag = true means title validation is passed
+
+        if (nic.trim().equals("")) {
+            System.out.println("NIC is empty");
+        } else if (nic.length() == 10 && nic.substring(0, 9).matches("[0-9]+") && !Character.isLetter(nic.charAt(9)) && (nic.charAt(9) == 'x' || nic.charAt(9) == 'v')) {
+            System.out.println("NIC is valid");
+            flagNic = true;
+        } else if (nic.length() == 12 && nic.matches("[0-9]+")) {
+            System.out.println("NIC is valid");
+            flagNic = true;
+        }
+
+        return flagNic;
+    }
+
+    /*
+    @ Validate password
+    * */
+    public boolean checkPasswordValidation(String password) {
+
+        boolean flagPassword = false; // flag = true means password validation is passed
+
+        if (password == null || password.length() < 8) {
+            System.out.println("Password is not valid");
+        }
+
+        boolean hasUppercase = false;
+        boolean hasLowercase = false;
+        boolean hasDigit = false;
+        boolean hasSpecialChar = false;
+
+        assert password != null;
+
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUppercase = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowercase = true;
+            } else if (Character.isDigit(c)) {
+                hasDigit = true;
+            } else {
+                hasSpecialChar = true;
+            }
+        }
+
+        if (!hasUppercase || !hasLowercase || !hasDigit || !hasSpecialChar) {
+            System.out.println("Password should contain at least one uppercase letter, one lowercase letter, one digit, and one special character");
+        }
+        return flagPassword;
     }
 }
