@@ -52,6 +52,9 @@ public class ComplaintServlet extends HttpServlet {
         out.close();
     }
 
+    /*
+    @ View Complaint code for user side
+    * */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Get request parameters
