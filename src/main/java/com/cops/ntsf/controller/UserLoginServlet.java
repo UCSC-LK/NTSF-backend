@@ -26,14 +26,18 @@ public class UserLoginServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        AuthService authService = new AuthService();
-        checkValidations(nic, password);
+        AuthService authService = null;
+        if (checkValidations(nic, password)) {
+            authService = new AuthService();
+        }
+
 
         // Output response
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
+        assert authService != null;
         out.write(authService.verifyLogin(nic, hashedPassword));
         out.close();
     }
@@ -47,10 +51,11 @@ public class UserLoginServlet extends HttpServlet {
         return encoded;
     }
 
-    public void checkValidations(String nic, String password) {
+    public boolean checkValidations(String nic, String password) {
         if (checkNICValidation(nic)) {
             checkPasswordValidation(password);
         }
+        return false;
     }
 
     /*
@@ -58,38 +63,32 @@ public class UserLoginServlet extends HttpServlet {
     * */
     public boolean checkNICValidation(String nic) {
 
-        boolean flagNic = false; // flag = true means title validation is passed
-
         if (nic.trim().equals("")) {
             System.out.println("NIC is empty");
         } else if (nic.length() == 10 && nic.substring(0, 9).matches("[0-9]+") && !Character.isLetter(nic.charAt(9)) && (nic.charAt(9) == 'x' || nic.charAt(9) == 'v')) {
             System.out.println("NIC is valid");
-            flagNic = true;
+            return true;
         } else if (nic.length() == 12 && nic.matches("[0-9]+")) {
             System.out.println("NIC is valid");
-            flagNic = true;
+            return true;
         }
-
-        return flagNic;
+        return false;
     }
 
     /*
     @ Validate password
     * */
-    public boolean checkPasswordValidation(String password) {
-
-        boolean flagPassword = false; // flag = true means password validation is passed
+    public void checkPasswordValidation(String password) {
 
         if (password == null || password.length() < 8) {
             System.out.println("Password is not valid");
+            return;
         }
 
         boolean hasUppercase = false;
         boolean hasLowercase = false;
         boolean hasDigit = false;
         boolean hasSpecialChar = false;
-
-        assert password != null;
 
         for (char c : password.toCharArray()) {
             if (Character.isUpperCase(c)) {
@@ -106,6 +105,5 @@ public class UserLoginServlet extends HttpServlet {
         if (!hasUppercase || !hasLowercase || !hasDigit || !hasSpecialChar) {
             System.out.println("Password should contain at least one uppercase letter, one lowercase letter, one digit, and one special character");
         }
-        return flagPassword;
     }
 }
