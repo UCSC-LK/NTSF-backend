@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class Validator {
     /*
-   @ Validate NIC
-   * */
+     * Validate NIC
+     * */
     public boolean checkNICValidation(String nic) {
 
         if (nic.trim().equals("")) {
@@ -21,8 +21,8 @@ public class Validator {
     }
 
     /*
-    @ Validate password
-    * */
+     * Validate password
+     * */
     public void checkPasswordValidation(String password) {
 
         if (password == null || password.length() < 8) {
@@ -53,8 +53,8 @@ public class Validator {
     }
 
     /*
-    @ Validate Mobile No in Sri Lankan format
-    * */
+     * Validate Mobile No in Sri Lankan format
+     * */
     public boolean checkMobileNoValidation(String mobileNo) {
         if (mobileNo == null || mobileNo.isEmpty()) {
             System.out.println("Mobile No is empty");
@@ -90,8 +90,8 @@ public class Validator {
     }
 
     /*
-    @ Validate email
-    * */
+     * Validate email
+     * */
     public boolean checkEmailValidation(String email) {
         if (email.trim().equals("")) {
             System.out.println("Email is empty");
@@ -101,6 +101,44 @@ public class Validator {
             return false;
         } else {
             System.out.println("Email is valid");
+            return true;
+        }
+    }
+
+    /*
+     * Validate complaint title
+     * */
+    public boolean checkTitleValidation(String title) {
+        if (title.trim().equals("")) {
+            System.out.println("Title is empty");
+            return false;
+        } else if (title.trim().length() < 3) {
+            System.out.println("Title is too short");
+            return false;
+        } else if (title.trim().length() > 50) {
+            System.out.println("Title is too long");
+            return false;
+        } else {
+            System.out.println("Title is valid");
+            return true;
+        }
+    }
+
+    /*
+     * Validate complaint description
+     * */
+    public boolean checkDescriptionValidation(String description) {
+        if (description.trim().equals("")) {
+            System.out.println("Description is empty");
+            return false;
+        } else if (description.trim().length() < 10) {
+            System.out.println("Description is too short");
+            return false;
+        } else if (description.trim().length() > 500) {
+            System.out.println("Description is too long");
+            return false;
+        } else {
+            System.out.println("Description is valid");
             return true;
         }
     }
