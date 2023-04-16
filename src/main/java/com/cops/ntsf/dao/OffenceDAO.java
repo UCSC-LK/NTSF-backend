@@ -148,4 +148,31 @@ public class OffenceDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public int fetchOffenceNo(String offence_type) {
+        System.out.println("Came to fetchOffenceNo method in OffenceDAO");
+        int offence_no = 0;
+        Connection dbConn = null;
+
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT MAX(offence_no) FROM offence WHERE offence_type = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, offence_type);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println("Came to fetchOffenceNo method in OffenceDAO after resultSet");
+
+            while (resultSet.next()) {
+                offence_no = resultSet.getInt("MAX(offence_no)");
+                System.out.println("Offence No: " + offence_no);
+            }
+            return offence_no;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

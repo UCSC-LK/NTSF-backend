@@ -307,10 +307,8 @@ public class IgpServlet extends HttpServlet {
                         removePoliceman(request, response);
                     } else if (action.equals("checkPoliceman_ID")) {
                         checkPolicemanPolice_ID(request, response);
-                        System.out.println("Hi");
                     } else if (action.equals("checkNIC")) {
                         checkPolicemanNic(request, response);
-                        System.out.println("Hi from NIC Checking servelet");
                     } else if (action.equals("checkMobile_Number")) {
                         checkPolicemanMobile_Number(request, response);
                         System.out.println("Hi from Mobile Number Checking servelet");
