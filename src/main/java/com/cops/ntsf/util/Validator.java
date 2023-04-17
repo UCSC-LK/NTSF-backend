@@ -61,10 +61,11 @@ public class Validator {
         return true;
     }
 
-    /*
-     * Validate Mobile No in Sri Lankan format
-     * */
-    public boolean checkMobileNoValidation(String mobileNo) {
+    /**
+     * @param mobileNo Mobile Number in Sri Lanka
+     * @return if mobile number is valid
+     */
+    public boolean validateMobileNo(String mobileNo) {
         if (mobileNo == null || mobileNo.isEmpty()) {
             System.out.println("Mobile No is empty");
             return false;
@@ -98,10 +99,11 @@ public class Validator {
         return true;
     }
 
-    /*
-     * Validate email
-     * */
-    public boolean checkEmailValidation(String email) {
+    /**
+     * @param email user email
+     * @return if email is valid
+     */
+    public boolean validateEmail(String email) {
         if (email.trim().equals("")) {
             System.out.println("Email is empty");
             return false;
@@ -114,10 +116,11 @@ public class Validator {
         }
     }
 
-    /*
-     * Validate complaint title
-     * */
-    public boolean checkTitleValidation(String title) {
+    /**
+     * @param title complaint title
+     * @return if title is valid
+     */
+    public boolean validateTitle(String title) {
         if (title.trim().equals("")) {
             System.out.println("Title is empty");
             return false;
@@ -133,10 +136,11 @@ public class Validator {
         }
     }
 
-    /*
-     * Validate complaint description
-     * */
-    public boolean checkDescriptionValidation(String description) {
+    /**
+     * @param description complaint description
+     * @return if description is valid
+     */
+    public boolean validateDescription(String description) {
         if (description.trim().equals("")) {
             System.out.println("Description is empty");
             return false;
