@@ -100,7 +100,7 @@ public class Validator {
     }
 
     /**
-     * @param email user email
+     * @param email User email
      * @return if email is valid
      */
     public boolean validateEmail(String email) {
@@ -117,7 +117,7 @@ public class Validator {
     }
 
     /**
-     * @param title complaint title
+     * @param title Complaint title
      * @return if title is valid
      */
     public boolean validateTitle(String title) {
@@ -137,7 +137,7 @@ public class Validator {
     }
 
     /**
-     * @param description complaint description
+     * @param description Complaint description
      * @return if description is valid
      */
     public boolean validateDescription(String description) {
@@ -154,5 +154,33 @@ public class Validator {
             System.out.println("Description is valid");
             return true;
         }
+    }
+
+    /**
+     * @param nic         NIC number
+     * @param password    Input password
+     * @param email       User email
+     * @param mobileNo    User mobile number
+     * @param title       Complaint title
+     * @param description Complaint description
+     * @return Status code
+     */
+    public int validateParams(String nic, String password, String email, String mobileNo, String title, String description) {
+        Validator validator = new Validator();
+
+        if (!validator.validateNIC(nic)) {
+            return 1;
+        } else if (!validator.validatePassword(password)) {
+            return 2;
+        } else if (!validator.validateEmail(email)) {
+            return 3;
+        } else if (!validator.validateMobileNo(mobileNo)) {
+            return 4;
+        } else if (!validator.validateTitle(title)) {
+            return 5;
+        } else if (!validator.validateDescription(description)) {
+            return 6;
+        }
+        return 0;
     }
 }

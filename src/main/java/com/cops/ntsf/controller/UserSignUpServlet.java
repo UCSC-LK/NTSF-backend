@@ -18,9 +18,9 @@ public class UserSignUpServlet extends HttpServlet {
 
         // Get request parameters
         String nic = req.getParameter("nic");
+        String password = req.getParameter("password");
         String email = req.getParameter("email");
         String mobileNo = req.getParameter("mobile_no");
-        String password = req.getParameter("password");
 
         String hashedPassword;
         try {
@@ -29,12 +29,13 @@ public class UserSignUpServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        int validateStatusCode = validateParams(nic, email, mobileNo, hashedPassword);
+        Validator validator = new Validator();
+        int validateStatusCode = validator.validateParams(nic, password, email, mobileNo, null, null);
 
         switch (validateStatusCode) {
             case 0:
                 UserService userService = new UserService();
-                User user = userService.getUserSignedUp(nic, email, mobileNo, password);
+                User user = userService.getUserSignedUp(nic, hashedPassword, email, mobileNo);
 
                 // Output response
                 PrintWriter out = resp.getWriter();
@@ -47,31 +48,16 @@ public class UserSignUpServlet extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect NIC Number");
                 break;
             case 2:
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Email");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Password Format");
                 break;
             case 3:
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Mobile Number");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Email");
                 break;
             case 4:
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Password Format");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Mobile Number");
                 break;
             default:
                 break;
         }
-    }
-
-    private int validateParams(String nic, String email, String mobileNo, String password) {
-        Validator validator = new Validator();
-
-        if (!validator.validateNIC(nic)) {
-            return 1;
-        } else if (!validator.validateEmail(email)) {
-            return 2;
-        } else if (!validator.validateMobileNo(mobileNo)) {
-            return 3;
-        } else if (!validator.validatePassword(password)) {
-            return 4;
-        }
-        return 0;
     }
 }

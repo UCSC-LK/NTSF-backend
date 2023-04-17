@@ -25,7 +25,8 @@ public class UserLoginServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        int validateStatusCode = validateParams(nic, password);
+        Validator validator = new Validator();
+        int validateStatusCode = validator.validateParams(nic, password, null, null, null, null);
 
         switch (validateStatusCode) {
             case 0:
@@ -48,16 +49,5 @@ public class UserLoginServlet extends HttpServlet {
             default:
                 break;
         }
-    }
-
-    public int validateParams(String nic, String password) {
-        Validator validator = new Validator();
-
-        if (!validator.validateNIC(nic)) {
-            return 1;
-        } else if (!validator.validatePassword(password)) {
-            return 2;
-        }
-        return 0;
     }
 }
