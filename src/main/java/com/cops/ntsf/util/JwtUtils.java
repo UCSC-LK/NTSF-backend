@@ -12,11 +12,20 @@ import java.util.Base64;
 public class JwtUtils {
     private AuthType authType = AuthType.USER;
 
-    private final JSONArray loginResponse;
+    private JSONArray loginResponse;
+
+    private String authorizationHeader;
+
+    public JwtUtils() {
+    }
 
     public JwtUtils(AuthType authType, JSONArray loginResponse) {
         this.authType = authType;
         this.loginResponse = loginResponse;
+    }
+
+    public JwtUtils(String authorizationHeader) {
+        this.authorizationHeader = authorizationHeader;
     }
 
     /**
@@ -91,7 +100,73 @@ public class JwtUtils {
 
             return Base64.getUrlEncoder().encodeToString(sha256_HMAC.doFinal(base64UrlHeaderAndPayload.getBytes()));
         } catch (Exception e) {
+            System.out.println("Failed to calculate HMAC: " + e.getMessage());
             throw new RuntimeException();
         }
+    }
+
+    /**
+     * Verifies jwt authentication.
+     *
+     * @return if jwt authentication is correct
+     */
+    public boolean verifyJwtAuthentication() {
+        String[] jwtSegments = getJwtSegmentsFromAuthHeader();
+
+        if (jwtSegments != null && jwtSegments.length == 3) {
+            String header = new String(Base64.getUrlDecoder().decode(jwtSegments[0]));
+            String payload = new String(Base64.getUrlDecoder().decode(jwtSegments[1]));
+            System.out.println(header);
+            System.out.println(payload);
+
+            String signature = jwtSegments[2];
+            String base64UrlHeaderAndPayload = jwtSegments[0] + "." + jwtSegments[1];
+            String calculatedSignature = generateJwtSignature(base64UrlHeaderAndPayload);
+
+            if (!signature.equals(calculatedSignature)) {
+                System.out.println("JWT signature verification failed as the signature is not matching");
+                return false;
+            }
+        } else {
+            System.out.println("Invalid authorization header");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get jwt authorization payload from header
+     *
+     * @return authorization payload
+     * <pre>
+     * Example - {@code {
+     * "rank": "oic",
+     * "police_station": "Dehiwala",
+     * "position": "null",
+     * "authType": "POLICEMAN",
+     * "police_id": "2022922111"
+     * }}
+     * </pre>
+     */
+    public JSONObject getAuthPayload() {
+        String[] jwtSegments = getJwtSegmentsFromAuthHeader();
+
+        return new JSONObject(new String(Base64.getUrlDecoder().decode(jwtSegments[1])));
+    }
+
+    /**
+     * Verifies jwt segments from authentication header.
+     *
+     * @return if jwt authentication is correct
+     */
+    private String[] getJwtSegmentsFromAuthHeader() {
+        String[] jwtSegments = null;
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String jwt = authorizationHeader.substring(7); // Extracts the jwt token removing the word Bearer prefix
+            System.out.println(jwt);
+
+            jwtSegments = jwt.split("\\.");
+        }
+        return jwtSegments;
     }
 }
