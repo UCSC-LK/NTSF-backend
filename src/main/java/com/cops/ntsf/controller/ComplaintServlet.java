@@ -27,35 +27,45 @@ public class ComplaintServlet extends HttpServlet {
 
     protected void createComplaint(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
+//        PrintWriter out = response.getWriter();
+//        response.setContentType("text/html");
 
         String complaint_no = request.getParameter("complaint_no");
         String title = request.getParameter("title");
         String description = request.getParameter("description");
-        String user_id = request.getParameter("user_id");
+        String userId = request.getParameter("user_id");
 
-        //remove later
-        System.out.println("Works until Servlet");
-        System.out.println(complaint_no);
-        System.out.println(title);
-        System.out.println(description);
-        System.out.println(user_id);
+//        Complaint complaint = null;
 
-        Complaint complaint = null;
+        Validator validator = new Validator();
+        int validateStatusCode = validator.validateParams(null, null, null, null, title, description);
 
-        if (checkValidations(title, description)) {
-            complaint = new Complaint(user_id, title, description, complaint_no);
-            complaint.complaintAdded();
+        switch (validateStatusCode) {
+            case 0:
+                Complaint complaint = new Complaint(userId, title, description, complaint_no);
+                complaint.complaintAdded();
+
+                // Output response
+                PrintWriter out = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("utf-8");
+
+                out.write(new Gson().toJson(complaint));
+                out.close();
+            case 5:
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Title");
+                break;
+            case 6:
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Description");
+                break;
+            default:
+                break;
         }
-
-        out.write(new Gson().toJson(complaint));
-        out.close();
     }
 
-    /*
-    @ View Complaint code for user side
-    * */
+    /**
+     * View complaint in user side
+     */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Get request parameters
@@ -93,19 +103,4 @@ public class ComplaintServlet extends HttpServlet {
         out.write(jsonObject.toString());
         out.close();
     }
-
-    /*
-     * Check validations function
-     * */
-    private boolean checkValidations(String title, String description) {
-
-        Validator validator = new Validator();
-
-        if (validator.checkTitleValidation(title)) {
-            validator.checkDescriptionValidation(description);
-            return true;
-        }
-        return false;
-    }
-
 }

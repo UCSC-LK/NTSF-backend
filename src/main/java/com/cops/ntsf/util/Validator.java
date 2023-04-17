@@ -61,10 +61,11 @@ public class Validator {
         return true;
     }
 
-    /*
-     * Validate Mobile No in Sri Lankan format
-     * */
-    public boolean checkMobileNoValidation(String mobileNo) {
+    /**
+     * @param mobileNo Mobile Number in Sri Lanka
+     * @return if mobile number is valid
+     */
+    public boolean validateMobileNo(String mobileNo) {
         if (mobileNo == null || mobileNo.isEmpty()) {
             System.out.println("Mobile No is empty");
             return false;
@@ -98,10 +99,11 @@ public class Validator {
         return true;
     }
 
-    /*
-     * Validate email
-     * */
-    public boolean checkEmailValidation(String email) {
+    /**
+     * @param email User email
+     * @return if email is valid
+     */
+    public boolean validateEmail(String email) {
         if (email.trim().equals("")) {
             System.out.println("Email is empty");
             return false;
@@ -114,10 +116,11 @@ public class Validator {
         }
     }
 
-    /*
-     * Validate complaint title
-     * */
-    public boolean checkTitleValidation(String title) {
+    /**
+     * @param title Complaint title
+     * @return if title is valid
+     */
+    public boolean validateTitle(String title) {
         if (title.trim().equals("")) {
             System.out.println("Title is empty");
             return false;
@@ -133,10 +136,11 @@ public class Validator {
         }
     }
 
-    /*
-     * Validate complaint description
-     * */
-    public boolean checkDescriptionValidation(String description) {
+    /**
+     * @param description Complaint description
+     * @return if description is valid
+     */
+    public boolean validateDescription(String description) {
         if (description.trim().equals("")) {
             System.out.println("Description is empty");
             return false;
@@ -150,5 +154,33 @@ public class Validator {
             System.out.println("Description is valid");
             return true;
         }
+    }
+
+    /**
+     * @param nic         NIC number
+     * @param password    Input password
+     * @param email       User email
+     * @param mobileNo    User mobile number
+     * @param title       Complaint title
+     * @param description Complaint description
+     * @return Status code
+     */
+    public int validateParams(String nic, String password, String email, String mobileNo, String title, String description) {
+        Validator validator = new Validator();
+
+        if (!validator.validateNIC(nic)) {
+            return 1;
+        } else if (!validator.validatePassword(password)) {
+            return 2;
+        } else if (!validator.validateEmail(email)) {
+            return 3;
+        } else if (!validator.validateMobileNo(mobileNo)) {
+            return 4;
+        } else if (!validator.validateTitle(title)) {
+            return 5;
+        } else if (!validator.validateDescription(description)) {
+            return 6;
+        }
+        return 0;
     }
 }
