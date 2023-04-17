@@ -39,12 +39,12 @@ public class UserSignUpServlet extends HttpServlet {
 
         Validator validator = new Validator();
 
-        if (validator.checkNICValidation(nic)) {
+        if (validator.validateNIC(nic)) {
             validator.checkEmailValidation(email);
             {
                 validator.checkMobileNoValidation(mobileNo);
                 {
-                    validator.checkPasswordValidation(password);
+                    validator.validatePassword(password);
                 }
             }
             return true;
