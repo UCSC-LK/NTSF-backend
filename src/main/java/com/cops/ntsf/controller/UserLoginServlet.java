@@ -27,20 +27,28 @@ public class UserLoginServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        AuthService authService = null;
-        if (checkValidations(nic, password)) {
-            authService = new AuthService();
+        int validateStatusCode = validateParams(nic, password);
+        switch (validateStatusCode) {
+            case 0:
+                AuthService authService = new AuthService();
+
+                // Output response
+                PrintWriter out = resp.getWriter();
+                resp.setContentType("application/json");
+                resp.setCharacterEncoding("utf-8");
+
+                out.write(authService.verifyLogin(nic, hashedPassword));
+                out.close();
+                break;
+            case 1:
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect NIC Number");
+                break;
+            case 2:
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Password Format");
+                break;
+            default:
+                break;
         }
-
-
-        // Output response
-        PrintWriter out = resp.getWriter();
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("utf-8");
-
-        assert authService != null;
-        out.write(authService.verifyLogin(nic, hashedPassword));
-        out.close();
     }
 
     public static String hashingPassword(String password) throws Exception {
@@ -52,14 +60,14 @@ public class UserLoginServlet extends HttpServlet {
         return encoded;
     }
 
-    public boolean checkValidations(String nic, String password) {
-
+    public int validateParams(String nic, String password) {
         Validator validator = new Validator();
 
-        if (validator.checkNICValidation(nic)) {
-            validator.checkPasswordValidation(password);
-            return true;
+        if (!validator.validateNIC(nic)) {
+            return 1;
+        } else if (!validator.validatePassword(password)) {
+            return 2;
         }
-        return false;
+        return 0;
     }
 }
