@@ -170,6 +170,8 @@ public class PoliceStationServlet extends HttpServlet {
                         viewPoliceStation(request, response);
                     } else if (action.equals("fetchPoliceStation")) {
                         fetchPoliceStation(request, response);
+                    } else if (action.equals("deletePoliceStation")) {
+                        deletePoliceStation(request, response);
                     } else if (action.equals("checkBranch_Name")) {
                         checkPoliceStationBranch_Name(request, response);
                         System.out.println("doPost > checkpoliceStationBranch_Name");
