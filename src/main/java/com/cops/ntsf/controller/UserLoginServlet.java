@@ -1,6 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.service.AuthService;
+import com.cops.ntsf.util.PasswordHashUtil;
 import com.cops.ntsf.util.Validator;
 
 import javax.servlet.http.HttpServlet;
@@ -8,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.util.Base64;
 
 public class UserLoginServlet extends HttpServlet {
     @Override
@@ -22,7 +20,7 @@ public class UserLoginServlet extends HttpServlet {
 
         String hashedPassword;
         try {
-            hashedPassword = hashingPassword(password);
+            hashedPassword = PasswordHashUtil.hashingPassword(password);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -49,15 +47,6 @@ public class UserLoginServlet extends HttpServlet {
             default:
                 break;
         }
-    }
-
-    public static String hashingPassword(String password) throws Exception {
-        System.out.println("Original String to hash: " + password);
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-        String encoded = Base64.getEncoder().encodeToString(hash);
-        System.out.println("Hash: " + encoded);
-        return encoded;
     }
 
     public int validateParams(String nic, String password) {
