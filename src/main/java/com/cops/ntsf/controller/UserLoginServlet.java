@@ -26,6 +26,7 @@ public class UserLoginServlet extends HttpServlet {
         }
 
         int validateStatusCode = validateParams(nic, password);
+
         switch (validateStatusCode) {
             case 0:
                 AuthService authService = new AuthService();
