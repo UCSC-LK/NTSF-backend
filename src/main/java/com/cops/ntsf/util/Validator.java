@@ -3,14 +3,18 @@ package com.cops.ntsf.util;
 import java.util.Arrays;
 
 public class Validator {
-    /*
-     * Validate NIC
-     * */
-    public boolean checkNICValidation(String nic) {
+    /**
+     * Validates the NIC
+     *
+     * @param inputNic NIC Number
+     * @return if NIC is valid
+     */
+    public boolean validateNIC(String inputNic) {
+        String nic = inputNic.toLowerCase();
 
         if (nic.trim().equals("")) {
             System.out.println("NIC is empty");
-        } else if (nic.length() == 10 && nic.substring(0, 9).matches("[0-9]+") && !Character.isLetter(nic.charAt(9)) && (nic.charAt(9) == 'x' || nic.charAt(9) == 'v')) {
+        } else if (nic.length() == 10 && nic.substring(0, 9).matches("[0-9]+") && Character.isLetter(nic.charAt(9)) && (nic.charAt(9) == 'x' || nic.charAt(9) == 'v')) {
             System.out.println("NIC is valid");
             return true;
         } else if (nic.length() == 12 && nic.matches("[0-9]+")) {
@@ -20,14 +24,17 @@ public class Validator {
         return false;
     }
 
-    /*
-     * Validate password
-     * */
-    public void checkPasswordValidation(String password) {
+    /**
+     * Validates the user input password
+     *
+     * @param password Input password
+     * @return if input password is valid
+     */
+    public boolean validatePassword(String password) {
 
         if (password == null || password.length() < 8) {
             System.out.println("Password is not valid");
-            return;
+            return false;
         }
 
         boolean hasUppercase = false;
@@ -49,7 +56,9 @@ public class Validator {
 
         if (!hasUppercase || !hasLowercase || !hasDigit || !hasSpecialChar) {
             System.out.println("Password should contain at least one uppercase letter, one lowercase letter, one digit, and one special character");
+            return false;
         }
+        return true;
     }
 
     /*
