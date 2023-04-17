@@ -78,8 +78,7 @@ public class PoliceStation {
         policeStationDAO.createPoliceStation(this);
     }
 
-    public JSONArray getPoliceStationOptions()
-    {
+    public JSONArray getPoliceStationOptions() {
         PoliceStationDAO policeStationDAO = new PoliceStationDAO();
         JSONArray policeStationOptionsList = policeStationDAO.getPoliceStationOptionsList();
         return policeStationOptionsList;
@@ -107,5 +106,11 @@ public class PoliceStation {
         PoliceStationDAO policeStationDAO = new PoliceStationDAO();
         JSONArray policeStationDetailsList = policeStationDAO.getPoliceStationDetailsList();
         return policeStationDetailsList;
+    }
+
+    public JSONArray fetchPoliceStationDetails(String branch_name) {
+        PoliceStationDAO policeStationDAO = new PoliceStationDAO();
+        JSONArray fetchedpoliceStationDetailsList = policeStationDAO.fetchPoliceStationDetailsList(branch_name);
+        return fetchedpoliceStationDetailsList;
     }
 }

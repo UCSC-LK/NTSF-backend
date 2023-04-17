@@ -61,6 +61,7 @@ public class PoliceStationDAO {
         System.out.println(jsonArray);
         return jsonArray;
     }
+
     public JSONArray getPoliceStationDetailsList() {
         Connection dbConn = null;
 
@@ -75,8 +76,7 @@ public class PoliceStationDAO {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next())
-            {
+            while (resultSet.next()) {
                 String branch_name = resultSet.getString("branch_name");
                 String address = resultSet.getString("address");
                 String district = resultSet.getString("district");
@@ -195,5 +195,52 @@ public class PoliceStationDAO {
         return alert;
     }
 
+    public JSONArray fetchPoliceStationDetailsList(String branch_name) {
+        Connection dbConn = null;
 
+        JSONArray jsonArray = new JSONArray();
+
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT * from police_station WHERE branch_name = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, branch_name);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String branch_name1 = resultSet.getString("branch_name");
+                String address = resultSet.getString("address");
+                String district = resultSet.getString("district");
+                String province = resultSet.getString("province");
+                String contact_number = resultSet.getString("contact_number");
+                String email = resultSet.getString("email");
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("branch_name", branch_name1);
+                jsonObject.put("address", address);
+                jsonObject.put("district", district);
+                jsonObject.put("province", province);
+                jsonObject.put("contact_number", contact_number);
+                jsonObject.put("email", email);
+
+                jsonArray.put(jsonObject);
+
+                System.out.println(branch_name1);
+                System.out.println(address);
+                System.out.println(district);
+                System.out.println(province);
+                System.out.println(contact_number);
+                System.out.println(email);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
 }
