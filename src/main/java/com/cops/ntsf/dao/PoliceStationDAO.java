@@ -274,4 +274,23 @@ public class PoliceStationDAO {
             e.printStackTrace();
         }
     }
+
+    public boolean deletePoliceStation(String branch_name) {
+        Connection dbConn = null;
+        boolean alert = false;
+        try {
+            dbConn = Database.getConnection();
+            String sql = "DELETE from police_station WHERE branch_name = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, branch_name);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            alert = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+
+    }
 }
