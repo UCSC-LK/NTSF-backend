@@ -120,4 +120,10 @@ public class PoliceStation {
         policeStationDAO.updatePoliceStationDetails(this);
 
     }
+
+    public boolean deletePoliceStationDetails(String branch_name) {
+        PoliceStationDAO policeStationDAO = new PoliceStationDAO();
+        boolean deletePoliceStationDetailsResult = policeStationDAO.deletePoliceStation(branch_name);
+        return deletePoliceStationDetailsResult;
+    }
 }

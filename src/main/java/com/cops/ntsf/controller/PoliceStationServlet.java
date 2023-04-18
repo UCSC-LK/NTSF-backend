@@ -210,7 +210,7 @@ public class PoliceStationServlet extends HttpServlet {
                         System.out.println("doPost > updatePoliceStation");
                         editPoliceStation(request, response);
                     } else if (action.equals("deletePoliceStation")) {
-                        deletePoliceStation(request, response);
+                        removePoliceStation(request, response);
                     } else if (action.equals("checkBranch_Name")) {
                         checkPoliceStationBranch_Name(request, response);
                         System.out.println("doPost > checkpoliceStationBranch_Name");
@@ -230,7 +230,7 @@ public class PoliceStationServlet extends HttpServlet {
         }
     }
 
-    private void deletePoliceStation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void removePoliceStation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection dbConn = null;
 
         try {
