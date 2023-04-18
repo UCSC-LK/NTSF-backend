@@ -2,7 +2,7 @@ package com.cops.ntsf.controller;
 
 
 import com.cops.ntsf.model.PoliceStation;
-import com.cops.ntsf.util.Database;
+import com.cops.ntsf.model.Policeman;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -233,10 +233,22 @@ public class PoliceStationServlet extends HttpServlet {
 
     private void deletePoliceStation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection dbConn = null;
-        boolean alert = false;
 
         try {
-            dbConn = Database.getConnection();
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String branch_name = request.getParameter("branch_name");
+            System.out.println(branch_name);
+
+            Policeman policeman = new Policeman();
+            jsonObject.put("alert", policeman.deletePolicemanDetails(branch_name));
+
+            out.write(jsonObject.toString());
+            out.close();
 
         } catch (Exception e) {
             e.printStackTrace();
