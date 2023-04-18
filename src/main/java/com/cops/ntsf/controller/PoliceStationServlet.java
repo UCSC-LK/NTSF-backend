@@ -2,7 +2,6 @@ package com.cops.ntsf.controller;
 
 
 import com.cops.ntsf.model.PoliceStation;
-import com.cops.ntsf.model.Policeman;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -244,8 +243,8 @@ public class PoliceStationServlet extends HttpServlet {
             String branch_name = request.getParameter("branch_name");
             System.out.println(branch_name);
 
-            Policeman policeman = new Policeman();
-            jsonObject.put("alert", policeman.deletePolicemanDetails(branch_name));
+            PoliceStation policeStation = new PoliceStation();
+            jsonObject.put("alert", policeStation.deletePoliceStationDetails(branch_name));
 
             out.write(jsonObject.toString());
             out.close();
@@ -254,7 +253,6 @@ public class PoliceStationServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
 
     private void checkPoliceStationContact_Number(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
