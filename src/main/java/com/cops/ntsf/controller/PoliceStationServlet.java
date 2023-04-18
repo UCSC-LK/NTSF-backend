@@ -2,6 +2,7 @@ package com.cops.ntsf.controller;
 
 
 import com.cops.ntsf.model.PoliceStation;
+import com.cops.ntsf.util.Database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.util.Base64;
 
 public class PoliceStationServlet extends HttpServlet {
@@ -98,6 +100,7 @@ public class PoliceStationServlet extends HttpServlet {
 
     public void fetchPoliceStation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            System.out.println("Came until the fetchPoliceStation in Policeman Servlet");
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
@@ -119,7 +122,7 @@ public class PoliceStationServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Came until the doPOST in Policeman Servlet");
+        System.out.println("Came until the doPOST in Police Station  Servlet");
         String action = request.getParameter("action");
         String contentType = request.getHeader("Content-type");
         String authorizationHeader = request.getHeader("Authorization");
@@ -169,7 +172,10 @@ public class PoliceStationServlet extends HttpServlet {
                     } else if (action.equals("viewPoliceStation")) {
                         viewPoliceStation(request, response);
                     } else if (action.equals("fetchPoliceStation")) {
+                        System.out.println("doPost > fetchPoliceStation");
                         fetchPoliceStation(request, response);
+                    } else if (action.equals("updatePoliceStation")) {
+                        updatePoliceStation(request, response);
                     } else if (action.equals("deletePoliceStation")) {
                         deletePoliceStation(request, response);
                     } else if (action.equals("checkBranch_Name")) {
@@ -188,6 +194,18 @@ public class PoliceStationServlet extends HttpServlet {
             }
         } else {
             System.out.println("JWT signature verification failed");
+        }
+    }
+
+    private void deletePoliceStation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try {
+            dbConn = Database.getConnection();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
