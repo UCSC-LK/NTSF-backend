@@ -4,6 +4,7 @@ package com.cops.ntsf.controller;
 import com.cops.ntsf.model.PoliceStation;
 import com.cops.ntsf.util.Database;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.crypto.Mac;
@@ -121,6 +122,37 @@ public class PoliceStationServlet extends HttpServlet {
         }
     }
 
+    public void editPoliceStation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String branch_name = request.getParameter("branch_name");
+            String address = request.getParameter("address");
+            String district = request.getParameter("district");
+            String province = request.getParameter("province");
+            String contact_number = request.getParameter("contact_number");
+            String email = request.getParameter("email");
+
+            if (checkValidations(branch_name, address, district, province, contact_number, email)) {
+                PoliceStation policeStation = new PoliceStation(branch_name, address, district, province, contact_number, email);
+                policeStation.updatePoliceStation();
+            } else {
+
+            }
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Came until the doPOST in Police Station  Servlet");
         String action = request.getParameter("action");
@@ -175,7 +207,7 @@ public class PoliceStationServlet extends HttpServlet {
                         System.out.println("doPost > fetchPoliceStation");
                         fetchPoliceStation(request, response);
                     } else if (action.equals("updatePoliceStation")) {
-                        updatePoliceStation(request, response);
+                        editPoliceStation(request, response);
                     } else if (action.equals("deletePoliceStation")) {
                         deletePoliceStation(request, response);
                     } else if (action.equals("checkBranch_Name")) {
