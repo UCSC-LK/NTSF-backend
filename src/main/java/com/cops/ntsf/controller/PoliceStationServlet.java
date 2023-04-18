@@ -124,6 +124,7 @@ public class PoliceStationServlet extends HttpServlet {
 
     public void editPoliceStation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            System.out.println("Came until the editPoliceStation in Policeman Servlet");
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
@@ -207,6 +208,7 @@ public class PoliceStationServlet extends HttpServlet {
                         System.out.println("doPost > fetchPoliceStation");
                         fetchPoliceStation(request, response);
                     } else if (action.equals("updatePoliceStation")) {
+                        System.out.println("doPost > updatePoliceStation");
                         editPoliceStation(request, response);
                     } else if (action.equals("deletePoliceStation")) {
                         deletePoliceStation(request, response);

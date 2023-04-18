@@ -243,4 +243,35 @@ public class PoliceStationDAO {
         }
         return jsonArray;
     }
+
+    public void updatePoliceStationDetails(PoliceStation policeStation) {
+        Connection dbConn = null;
+        System.out.println("updatePoliceStationDetails in DAO");
+
+        try {
+            System.out.println("updatePoliceStationDetails in DAO try");
+            System.out.println(policeStation.getBranch_name());
+            System.out.println(policeStation.getAddress());
+            System.out.println(policeStation.getDistrict());
+            System.out.println(policeStation.getProvince());
+            System.out.println(policeStation.getContact_number());
+            System.out.println(policeStation.getEmail());
+            dbConn = Database.getConnection();
+            String sql = "UPDATE police_station SET address = ?, district = ?, province = ?, contact_number = ?, email = ? WHERE branch_name = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, policeStation.getAddress());
+            preparedStatement.setString(2, policeStation.getDistrict());
+            preparedStatement.setString(3, policeStation.getProvince());
+            preparedStatement.setString(4, policeStation.getContact_number());
+            preparedStatement.setString(5, policeStation.getEmail());
+            preparedStatement.setString(6, policeStation.getBranch_name());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            System.out.println("updatePoliceStationDetails in DAO try end");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
