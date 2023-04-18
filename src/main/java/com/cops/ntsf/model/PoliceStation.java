@@ -113,4 +113,11 @@ public class PoliceStation {
         JSONArray fetchedpoliceStationDetailsList = policeStationDAO.fetchPoliceStationDetailsList(branch_name);
         return fetchedpoliceStationDetailsList;
     }
+
+    public void updatePoliceStation() {
+        System.out.println("updatePoliceStation() in PoliceStation.java is called");
+        PoliceStationDAO policeStationDAO = new PoliceStationDAO();
+        policeStationDAO.updatePoliceStationDetails(this);
+
+    }
 }
