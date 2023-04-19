@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class Fine {
     private String offenceType;
     private int fineNo;
-    private String fineType;
     private String offenceNo;
 
     private String nic;
@@ -37,8 +36,7 @@ public class Fine {
         this.nic = nic;
     }
 
-    public Fine(String fineType, String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
-        this.fineType = fineType;
+    public Fine(String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
         this.offenceNo = offenceNo;
         this.nic = nic;
         this.licenseNo = licenseNo;
@@ -56,8 +54,8 @@ public class Fine {
         return fineNo;
     }
 
-    public String getFineType() {
-        return fineType;
+    public String getOffenceType() {
+        return offenceType;
     }
 
     public String getOffenceNo() {
@@ -108,8 +106,8 @@ public class Fine {
         this.fineNo = fineNo;
     }
 
-    public void setFineType(String fineType) {
-        this.fineType = fineType;
+    public void setOffenceType(String offenceType) {
+        this.offenceType = offenceType;
     }
 
     public void setOffenceNo(String offenceNo) {
@@ -178,12 +176,6 @@ public class Fine {
         this.offenceType = offenceType;
     }
 
-    public String getOffenceType() {
-        return offenceType;
-    }
 
-    public void setOffenceType(String offenceType) {
-        this.offenceType = offenceType;
-    }
 }
 

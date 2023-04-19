@@ -23,7 +23,7 @@ public class FineServlet extends HttpServlet {
     protected void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             //Fine Number is auto incremented
-            String fineType = request.getParameter("fine_type");
+            String offenceType = request.getParameter("offence_type");
             //Front end sends user_id as nic/licenseNo/vehicleNo depending on the fine type
             String offenceNo = request.getParameter("offence_no");
             String spotDescription = request.getParameter("spot_description");
@@ -34,7 +34,7 @@ public class FineServlet extends HttpServlet {
             //Fine amount retrieved from the offence table using offence_no
             //Payment status is set to unpaid by default at database level
 
-            System.out.println("Fine type: " + fineType);
+            System.out.println("Offence Type: " + offenceType);
             System.out.println("Offence no: " + offenceNo);
             System.out.println("Spot description: " + spotDescription);
             System.out.println("Police id: " + policeId);
@@ -43,46 +43,46 @@ public class FineServlet extends HttpServlet {
             System.out.println("Due date time: " + dueDateTime);
 
 
-            if (checkValidations(fineType, offenceNo, spotDescription, policeId, policeStation)) {
-                if (fineType.equals("pedestrian")) {
+            if (checkValidations(offenceType, offenceNo, spotDescription, policeId, policeStation)) {
+                if (offenceType.equals("pedestrian")) {
                     String nic = request.getParameter("user_id");
                     if (checkNICValidations(nic)) {
-                        String licenseNo = "null";
-                        String vehicleNo = "null";
-                        String drivenVehicleNo = "null";
-                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+                        String licenseNo = null;
+                        String vehicleNo = null;
+                        String drivenVehicleNo = null;
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
                         fine.createFine();
                     } else {
                         System.out.println("Invalid NIC");
                     }
-                } else if (fineType.equals("vehicle")) {
+                } else if (offenceType.equals("vehicle")) {
                     String vehicleNo = request.getParameter("user_id");
 
                     if (checkVehicleNoValidations(vehicleNo)) {
                         String nic = getNICByVehicleNo(vehicleNo);
                         System.out.println("NIC: " + nic);
-                        String licenseNo = "null";
-                        String drivenVehicleNo = "null";
-                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+                        String licenseNo = null;
+                        String drivenVehicleNo = null;
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
                         fine.createFine();
                     } else {
                         System.out.println("Invalid vehicle number");
                     }
 
-                } else if (fineType.equals("driver")) {
+                } else if (offenceType.equals("driver")) {
                     String licenseNo = request.getParameter("user_id");
                     String drivenVehicleNo = request.getParameter("driven_vehicle");
 
                     if (checkLicenseNoValidations(licenseNo)) {
                         String nic = getNICByLicenseNo(licenseNo);
                         System.out.println("NIC: " + nic);
-                        String vehicleNo = "null";
-                        Fine fine = new Fine(fineType, offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
+                        String vehicleNo = null;
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
                         fine.createFine();
                     }
 
                 } else {
-                    System.out.println("Invalid fine type");
+                    System.out.println("Invalid offence type");
                 }
             }
 
@@ -131,20 +131,20 @@ public class FineServlet extends HttpServlet {
 
     }
 
-    private boolean checkValidations(String fineType, String offenceNo, String spotDescription, String policeId, String policeStation) {
-        boolean flagFineType = false; // flag = true means validation is passed
+    private boolean checkValidations(String offenceType, String offenceNo, String spotDescription, String policeId, String policeStation) {
+        boolean flagOffenceType = false; // flag = true means validation is passed
         boolean flagOffenceNo = false;
         boolean flagSpotDescription = false;
         boolean flagPoliceId = true; //made true temporarily ************************
         boolean flagPoliceStation = true; //made true temporarily********************
         boolean flag = false;
 
-        if (fineType.equals("pedestrian") || fineType.equals("vehicle") || fineType.equals("driver")) {
-            flagFineType = true;
-            System.out.println("Valid fine type");
+        if (offenceType.equals("pedestrian") || offenceType.equals("vehicle") || offenceType.equals("driver")) {
+            flagOffenceType = true;
+            System.out.println("Valid offence type");
         } else {
-            System.out.println("Invalid fine type");
-            flagFineType = false;
+            System.out.println("Invalid offence type");
+            flagOffenceType = false;
         }
 
         if (offenceNo == null) {
@@ -172,7 +172,7 @@ public class FineServlet extends HttpServlet {
 
 
         System.out.println("Checking validations in FIne Servlet");
-        if (flagFineType && flagOffenceNo && flagSpotDescription && flagPoliceId && flagPoliceStation) {
+        if (flagOffenceType && flagOffenceNo && flagSpotDescription && flagPoliceId && flagPoliceStation) {
             flag = true;
             System.out.println("All Validations passed");
         } else {
@@ -233,13 +233,11 @@ public class FineServlet extends HttpServlet {
                     } else {
                         System.out.println("You are not authorized to access this page");
                     }
-                }
-                else if (authorizedRank.equals("oic")){
-                    if(action.equals("viewFineAsOIC")){
+                } else if (authorizedRank.equals("oic")) {
+                    if (action.equals("viewFineAsOIC")) {
                         viewFineAsOIC(request, response);
                     }
-                }
-                else {
+                } else {
                     System.out.println("You are not authorized to access this page");
                 }
             }
