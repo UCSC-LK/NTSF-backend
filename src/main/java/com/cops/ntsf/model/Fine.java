@@ -58,9 +58,9 @@ public class Fine {
         this.fineNo = fineNo;
     }
 
-    public Fine(String nic, String fineType, Integer offenceNo) {
+    public Fine(String nic, String offenceType, Integer offenceNo) {
         this.nic = nic;
-        this.fineType = fineType;
+        this.offenceType = offenceType;
         this.offenceNo = String.valueOf(offenceNo);
     }
 
