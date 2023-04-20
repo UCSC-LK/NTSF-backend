@@ -51,10 +51,6 @@ public class Complaint {
         this.title = title;
     }
 
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
-
     public void setComplaint_no(String complaint_no) {
         this.complaint_no = complaint_no;
     }
@@ -64,20 +60,10 @@ public class Complaint {
         complaintDAO.insert(this);
     }
 
-//    public JSONArray getComplaintDetails() {
-//        ComplaintDAO complaintDAO = new ComplaintDAO();
-//        JSONArray ComplaintDetails = complaintDAO.viewComplaintDetails();
-//        return ComplaintDetails;
-//    }
-
     public ArrayList<Complaint> getUserComplaintInfo() throws SQLException {
         ComplaintDAO complaintDAO = new ComplaintDAO();
         return complaintDAO.fetchUserComplaintInfo(this);
     }
-
-//    public String getUserId() {
-//        return userId;
-//    }
 
     public JSONArray getComplaintsDetailsAsInvestigationOfficer() {
         ComplaintDAO complaintDAO = new ComplaintDAO();

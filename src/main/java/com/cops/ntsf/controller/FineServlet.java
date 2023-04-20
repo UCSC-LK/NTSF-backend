@@ -1,7 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Fine;
-import com.cops.ntsf.model.Offence;
+import com.cops.ntsf.service.FineService;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -52,6 +52,7 @@ public class FineServlet extends HttpServlet {
                         String drivenVehicleNo = null;
                         Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
                         fine.createFine();
+                        System.out.println("reached");
                     } else {
                         System.out.println("Invalid NIC");
                     }
@@ -248,26 +249,31 @@ public class FineServlet extends HttpServlet {
 
     }
 
-    // View fines on user side code starts here
+    /*
+    @ View fines in user side
+    */
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         // Get request parameters
         String nic = req.getParameter("nic");
-        String offence_no = req.getParameter("offence_no");
+        String fineType = req.getParameter("fine_type");
+        Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
 
-        Offence offence = new Offence(offence_no);
-        offence.getOffenceType();
+//        ArrayList<Fine> finesList;
 
-        String offence_type = offence.getOffence_type();
-
-        ArrayList<Fine> finesList;
-
-        Fine fine = new Fine(nic, offence_type);
+        FineService fineService = new FineService();
+        ArrayList<Fine> finesList = null;
         try {
-            finesList = fine.getUserFinesInfo();
+            finesList = fineService.getFinesInfo(nic, offenceNo);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+//        try {
+//            finesList = fine.getUserFinesInfo();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 
         // Output response
         PrintWriter out = resp.getWriter();
@@ -277,5 +283,4 @@ public class FineServlet extends HttpServlet {
         out.write(new Gson().toJson(finesList));
         out.close();
     }
-    // Ends here
 }

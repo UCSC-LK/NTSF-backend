@@ -130,7 +130,7 @@ public class OffenceDAO {
         return alert;
     }
 
-    public void fetchOffenceType(Offence offence) {
+    public void fetchOffenceByOffenceNo(Offence offence) {
         Connection dbConn = Database.getConnection();
 
         String sql = "SELECT * FROM offence WHERE offence_no = ?";
@@ -143,6 +143,9 @@ public class OffenceDAO {
 
             while (resultSet.next()) {
                 offence.setOffence_type(resultSet.getString("offence_type"));
+                offence.setDescription(resultSet.getString("description"));
+                offence.getAmount(resultSet.getInt("amount"));
+                offence.setDemerit_points(resultSet.getInt("demerit_points"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

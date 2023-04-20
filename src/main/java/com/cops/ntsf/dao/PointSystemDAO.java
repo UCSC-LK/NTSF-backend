@@ -30,4 +30,25 @@ public class PointSystemDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void updateCurrentPoints(Point point) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "UPDATE point_system SET current_points = ? WHERE nic = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            preparedStatement.setInt(1, point.getCurrentPoints());
+            preparedStatement.setString(2, point.getNic());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                point.setCurrentPoints(resultSet.getInt("current_points"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Complaint;
+import com.cops.ntsf.util.Validator;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,30 +27,45 @@ public class ComplaintServlet extends HttpServlet {
 
     protected void createComplaint(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
+//        PrintWriter out = response.getWriter();
+//        response.setContentType("text/html");
 
-//        JSONObject jsonObject = new JSONObject();
-
-        String user_id = request.getParameter("user_id");
+        String complaint_no = request.getParameter("complaint_no");
         String title = request.getParameter("title");
         String description = request.getParameter("description");
-        String complaint_no = request.getParameter("complaint_no");
+        String userId = request.getParameter("user_id");
 
-        //remove later
-        System.out.println("Works until Servlet");
-        System.out.println(user_id);
-        System.out.println(title);
-        System.out.println(description);
-        System.out.println(complaint_no);
+//        Complaint complaint = null;
 
-        Complaint complaint = new Complaint(user_id, title, description, complaint_no);
-        complaint.complaintAdded();
+        Validator validator = new Validator();
+        int validateStatusCode = validator.validateParams(null, null, null, null, title, description);
 
-        out.write(new Gson().toJson(complaint));
-        out.close();
+        switch (validateStatusCode) {
+            case 0:
+                Complaint complaint = new Complaint(userId, title, description, complaint_no);
+                complaint.complaintAdded();
+
+                // Output response
+                PrintWriter out = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("utf-8");
+
+                out.write(new Gson().toJson(complaint));
+                out.close();
+            case 5:
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Title");
+                break;
+            case 6:
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Description");
+                break;
+            default:
+                break;
+        }
     }
 
+    /**
+     * View complaint in user side
+     */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Get request parameters

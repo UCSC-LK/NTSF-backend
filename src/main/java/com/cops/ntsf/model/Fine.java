@@ -50,6 +50,20 @@ public class Fine {
         this.paymentStatus = "unpaid";
     }
 
+    /*
+    @ Used in reducePoints function in pointService
+    * */
+    public Fine(int fineNo, String nic) {
+        this.nic = nic;
+        this.fineNo = fineNo;
+    }
+
+    public Fine(String nic, String fineType, Integer offenceNo) {
+        this.nic = nic;
+        this.fineType = fineType;
+        this.offenceNo = String.valueOf(offenceNo);
+    }
+
     public Integer getFineNo() {
         return fineNo;
     }
@@ -166,6 +180,9 @@ public class Fine {
         return fineDetails;
     }
 
+    /*
+    @ Fetch fine info from fine table
+    **/
     public ArrayList<Fine> getUserFinesInfo() throws SQLException {
         FineDAO fineDAO = new FineDAO();
         return fineDAO.fetchUserFinesInfo(this);
@@ -176,6 +193,12 @@ public class Fine {
         this.offenceType = offenceType;
     }
 
-
+    /*
+    @ Getting fine info by fine no
+     */
+    public Fine getFineByFineNo() {
+        FineDAO fineDAO = new FineDAO();
+        return fineDAO.fetchFineByFineNo(this);
+    }
 }
 

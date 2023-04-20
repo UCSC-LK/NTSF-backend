@@ -1,11 +1,10 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Policeman;
+import com.cops.ntsf.util.JwtUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,15 +46,11 @@ public class IgpServlet extends HttpServlet {
 
                 jsonObject.put("alert", alert);
             } else {
-
-            }
-
             out.write(jsonObject.toString());
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     protected void viewPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -249,72 +244,42 @@ public class IgpServlet extends HttpServlet {
         System.out.println("Content Type: " + contentType);
         System.out.println("Action: " + action);
 
-        String jwt = null;
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7); //Extracts the jwt token removing the word Bearer prefix
-            System.out.println(jwt);
+        JwtUtils jwtUtils = new JwtUtils(authorizationHeader);
 
-            String[] jwtParts = jwt.split("\\.");
-            String headerJson = new String(Base64.getUrlDecoder().decode(jwtParts[0]));
-            String payloadJson = new String(Base64.getUrlDecoder().decode(jwtParts[1]));
-            System.out.println(headerJson);
-            System.out.println(payloadJson);
-
-
-            String signature = jwtParts[2];
-            String unsignedJwt = jwtParts[0] + "." + jwtParts[1];
-
-            String calculatedSignature;
-            try {
-                Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-                SecretKeySpec secret_key = new SecretKeySpec("mysecret".getBytes(), "HmacSHA256");
-                sha256_HMAC.init(secret_key);
-
-                calculatedSignature = Base64.getUrlEncoder().encodeToString(sha256_HMAC.doFinal(unsignedJwt.getBytes()));
-
-            } catch (Exception e) {
-                throw new RuntimeException("Failed to calculate HMAC: " + e.getMessage());
-            }
-
-            if (!signature.equals(calculatedSignature)) {
-                throw new RuntimeException("JWT signature verification failed as the signature is not matching");
-            } else {
-                System.out.println("JWT signature verification success");
-                JSONObject payloadJsonObject = new JSONObject(payloadJson);
-                String authorizedRank = payloadJsonObject.getString("rank");
-                System.out.println(authorizedRank);
-                if (authorizedRank.equals("igp")) {
-                    if (action.equals("addPoliceman")) {
-                        addPoliceman(request, response);
-                    } else if (action.equals("viewPoliceman")) {
-                        System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
-                        viewPoliceman(request, response);
-                    } else if (action.equals("fetchPoliceman")) {
-                        fetchPoliceman(request, response);
-                    } else if (action.equals("updatePoliceman")) {
-                        editPoliceman(request, response);
-                    } else if (action.equals("deletePoliceman")) {
-                        removePoliceman(request, response);
-                    } else if (action.equals("checkPoliceman_ID")) {
-                        checkPolicemanPolice_ID(request, response);
-                    } else if (action.equals("checkNIC")) {
-                        checkPolicemanNic(request, response);
-                    } else if (action.equals("checkMobile_Number")) {
-                        checkPolicemanMobile_Number(request, response);
-                        System.out.println("Hi from Mobile Number Checking servelet");
-                    } else if (action.equals("checkEmail")) {
-                        checkPolicemanEmail(request, response);
-                        System.out.println("Hi from Email Checking servelet");
-                    }
-                } else {
-                    System.out.println("You are not authorized to access this page");
+        if (jwtUtils.verifyJwtAuthentication()) {
+            String authorizedRank = jwtUtils.getAuthPayload().getString("rank");
+            System.out.println(authorizedRank);
+            if (authorizedRank.equals("igp")) {
+                if (action.equals("addPoliceman")) {
+                    addPoliceman(request, response);
+                } else if (action.equals("viewPoliceman")) {
+                    System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
+                    viewPoliceman(request, response);
+                } else if (action.equals("fetchPoliceman")) {
+                    fetchPoliceman(request, response);
+                } else if (action.equals("updatePoliceman")) {
+                    editPoliceman(request, response);
+                } else if (action.equals("deletePoliceman")) {
+                    removePoliceman(request, response);
+                } else if (action.equals("checkPoliceman_ID")) {
+                    checkPolicemanPolice_ID(request, response);
+                    System.out.println("Hi");
+                } else if (action.equals("checkNIC")) {
+                    checkPolicemanNic(request, response);
+                    System.out.println("Hi from NIC Checking servelet");
+                } else if (action.equals("checkMobile_Number")) {
+                    checkPolicemanMobile_Number(request, response);
+                    System.out.println("Hi from Mobile Number Checking servelet");
+                } else if (action.equals("checkEmail")) {
+                    checkPolicemanEmail(request, response);
+                    System.out.println("Hi from Email Checking servelet");
                 }
+            } else {
+                System.out.println("You are not authorized to access this page");
             }
-
         } else {
             System.out.println("JWT signature verification failed");
         }
-
     }
 
     private boolean checkValidations(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
@@ -435,6 +400,5 @@ public class IgpServlet extends HttpServlet {
         System.out.println("Hash: " + encoded);
         return encoded;
     }
-
 
 }
