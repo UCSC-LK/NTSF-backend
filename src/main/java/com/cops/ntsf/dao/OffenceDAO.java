@@ -12,16 +12,17 @@ import java.sql.SQLException;
 
 public class OffenceDAO {
 
-    public JSONArray getOffenceDetailsList() {
+    public JSONArray getOffenceDetailsListByType(String offenceType) {
         Connection dbConn = null;
 
         JSONArray jsonArray = new JSONArray();
 
         try {
             dbConn = Database.getConnection();
-            String sql = "SELECT * FROM offence";
+            String sql = "SELECT * FROM offence WHERE offence_type = ?";
 
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, offenceType);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -146,6 +147,33 @@ public class OffenceDAO {
                 offence.getAmount(resultSet.getInt("amount"));
                 offence.setDemerit_points(resultSet.getInt("demerit_points"));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int fetchOffenceNo(String offence_type) {
+        System.out.println("Came to fetchOffenceNo method in OffenceDAO");
+        int offence_no = 0;
+        Connection dbConn = null;
+
+        try {
+            dbConn = Database.getConnection();
+
+            String sql = "SELECT MAX(offence_no) FROM offence WHERE offence_type = ?";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, offence_type);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println("Came to fetchOffenceNo method in OffenceDAO after resultSet");
+
+            while (resultSet.next()) {
+                offence_no = resultSet.getInt("MAX(offence_no)");
+                System.out.println("Offence No: " + offence_no);
+            }
+            return offence_no;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static com.cops.ntsf.controller.IgpServlet.hashingPassword;
+import static com.cops.ntsf.util.PasswordHashUtil.hashingPassword;
 
 public class PolicemanLoginServlet extends HttpServlet {
 

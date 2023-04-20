@@ -105,10 +105,11 @@ public class Policeman {
         this.password = password;
     }
 
-    public void policemanAdded()
+    public boolean policemanAdded()
     {
         IgpDAO igpDAO = new IgpDAO();
-        igpDAO.createPoliceman(this);
+        boolean policemanAddedResult = igpDAO.createPoliceman(this);
+        return policemanAddedResult;
     }
 
     public JSONArray getPolicemanDetails()
