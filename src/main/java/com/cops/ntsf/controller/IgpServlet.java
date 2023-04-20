@@ -46,8 +46,9 @@ public class IgpServlet extends HttpServlet {
 
                 jsonObject.put("alert", alert);
             } else {
-            out.write(jsonObject.toString());
-            out.close();
+                out.write(jsonObject.toString());
+                out.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
