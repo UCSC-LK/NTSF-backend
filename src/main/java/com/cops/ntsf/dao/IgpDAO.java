@@ -17,7 +17,7 @@ public class IgpDAO {
         boolean alert = false;
         try {
             dbConn = Database.getConnection();
-            String sql = "INSERT into policeman (name, police_id, nic, mobile_number, email,  rank, police_station, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT into policeman (name, police_id, nic, mobile_number, email,  rank, police_station, password, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
             preparedStatement.setString(1, policeman.getName());
@@ -28,6 +28,7 @@ public class IgpDAO {
             preparedStatement.setString(6, policeman.getRank());
             preparedStatement.setString(7, policeman.getPolice_station());
             preparedStatement.setString(8, policeman.getPassword());
+            preparedStatement.setString(9, policeman.getProfile_picture());
 
             Email email = new Email();
             email.sendMail(policeman.getEmail(), policeman.getPassword());

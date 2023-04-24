@@ -6,17 +6,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.http.*;
+import java.io.*;
 import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.Random;
 
 public class IgpServlet extends HttpServlet {
+    /*Profile Picture upload*/
+    private static final String UPLOAD_DIRECTORY = "src/main/webapp/images/profile_pictures ";
 
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -35,13 +33,47 @@ public class IgpServlet extends HttpServlet {
             String rank = request.getParameter("rank");
             String police_station = request.getParameter("police_station");
 
+            /*Profile picture upload*/
+            Part filePart = request.getPart("profile_picture");
+            InputStream fileContent = filePart.getInputStream();
+            String fileName = filePart.getSubmittedFileName();
+//            InputStream fileContent = filePart.getInputStream(); //input stream of the upload file
+//            byte[] fileBytes = fileContent.readAllBytes(); //convert the input stream to byte array
+//
+//            String jsonStr = new String(fileBytes); //convert the byte array to string
+//            System.out.println(jsonStr);
+//            JSONObject jsonObject1 = new JSONObject(jsonStr); //convert the byte array to json object
+//
+//            String fileName = jsonObject1.getString("name"); //get the file name
+            String renamedFileName = renameProfilePicture(police_id, fileName); //rename the file name
+            String filePath = UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
+
+            // Create the directory if it doesn't exist
+            File directory = new File(UPLOAD_DIRECTORY);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            //Store the file to the specified file path
+            OutputStream outputStream = new FileOutputStream(filePath);
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ((bytesRead = fileContent.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.close();
+            fileContent.close();
+
+            System.out.println("filePath: " + filePath);
+
             System.out.println("addPoliceman method in IGPServlet invoked");
             if (checkValidations(name, police_id, nic, mobile_number, email, rank, police_station)) {
                 PasswordGenerator passwordGenerator = new PasswordGenerator();
                 String password = passwordGenerator.generatePassword();
                 String hashedPassword = hashingPassword(password);
                 System.out.println(password);
-                Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, hashedPassword);
+                Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, hashedPassword, filePath);
                 alert = policeman.policemanAdded();
 
                 jsonObject.put("alert", alert);
@@ -402,4 +434,13 @@ public class IgpServlet extends HttpServlet {
         return encoded;
     }
 
+    public static String renameProfilePicture(String police_id, String profile_picture) throws Exception {
+
+        System.out.println("Profile Picture Name before change: " + profile_picture);
+        String[] parts = profile_picture.split("\\.");
+        String extension = parts[1];
+        String new_profile_picture = police_id + "." + extension;
+        System.out.println("Profile Picture Name after change: " + new_profile_picture);
+        return new_profile_picture;
+    }
 }
