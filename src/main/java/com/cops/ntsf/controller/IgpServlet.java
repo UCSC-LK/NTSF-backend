@@ -6,19 +6,30 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 import java.io.*;
 import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.Random;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1MB
+        maxFileSize = 20 * 1024 * 1024, // 20MB
+        maxRequestSize = 400 * 1024 * 1024 // 400MB
+)
 public class IgpServlet extends HttpServlet {
     /*Profile Picture upload*/
-    private static final String UPLOAD_DIRECTORY = "src/main/webapp/images/profile_pictures ";
+//    private final String UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures"; //working properly
+    private final String UPLOAD_DIRECTORY = "../../../../D:/project/NTSF-backend/src/main/webapp/images/profile_pictures"; //working properly
 
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             boolean alert = false;
+
+            String currentDir = System.getProperty("user.dir");
+            System.out.println("Current directory: " + currentDir);
+
 
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
@@ -35,24 +46,27 @@ public class IgpServlet extends HttpServlet {
 
             /*Profile picture upload*/
             Part filePart = request.getPart("profile_picture");
+            System.out.println("filePart: " + filePart);
             InputStream fileContent = filePart.getInputStream();
+            System.out.println("fileContent: " + fileContent);
             String fileName = filePart.getSubmittedFileName();
-//            InputStream fileContent = filePart.getInputStream(); //input stream of the upload file
-//            byte[] fileBytes = fileContent.readAllBytes(); //convert the input stream to byte array
-//
-//            String jsonStr = new String(fileBytes); //convert the byte array to string
-//            System.out.println(jsonStr);
-//            JSONObject jsonObject1 = new JSONObject(jsonStr); //convert the byte array to json object
-//
-//            String fileName = jsonObject1.getString("name"); //get the file name
-            String renamedFileName = renameProfilePicture(police_id, fileName); //rename the file name
-            String filePath = UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
+            System.out.println("name: " + name);
+            System.out.println("police_id: " + police_id);
+            System.out.println("nic: " + nic);
+            System.out.println("mobile_number: " + mobile_number);
+            System.out.println("email: " + email);
+            System.out.println("rank: " + rank);
+            System.out.println("police_station: " + police_station);
+            System.out.println("fileName: " + fileName);
 
+            String renamedFileName = renameProfilePicture(police_id, fileName); //rename the file name
+//            String filePath = UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
+            String filePath = fileName; //create the file path
             // Create the directory if it doesn't exist
-            File directory = new File(UPLOAD_DIRECTORY);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
+//            File directory = new File(UPLOAD_DIRECTORY);
+//            if (!directory.exists()) {
+//                directory.mkdirs();
+//            }
 
             //Store the file to the specified file path
             OutputStream outputStream = new FileOutputStream(filePath);
@@ -61,6 +75,13 @@ public class IgpServlet extends HttpServlet {
 
             while ((bytesRead = fileContent.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
+                System.out.println("buffer: " + buffer);
+                System.out.println("bytesRead: " + bytesRead);
+                System.out.println("outputStream: " + outputStream);
+                System.out.println("fileContent: " + fileContent);
+                System.out.println("filePath: " + filePath);
+                System.out.println("fileName: " + fileName);
+                System.out.println("renamedFileName: " + renamedFileName);
             }
             outputStream.close();
             fileContent.close();
@@ -270,6 +291,7 @@ public class IgpServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String action = request.getParameter("action");
         String contentType = request.getHeader("Content-type");
         String authorizationHeader = request.getHeader("Authorization");
