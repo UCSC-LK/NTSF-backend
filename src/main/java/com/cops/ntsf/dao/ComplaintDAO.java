@@ -100,7 +100,7 @@ public class ComplaintDAO {
     }
 
     /*
-      Suraif's code foe view complaints
+      Suraif's code for view complaints
      */
     //    public JSONArray viewComplaintDetails() {
 //        Connection dbConn = null;
