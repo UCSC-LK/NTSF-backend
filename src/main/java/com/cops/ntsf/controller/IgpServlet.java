@@ -7,7 +7,10 @@ import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.*;
 import java.security.MessageDigest;
 import java.util.Base64;
@@ -20,8 +23,7 @@ import java.util.Random;
 )
 public class IgpServlet extends HttpServlet {
     /*Profile Picture upload*/
-//    private final String UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures"; //working properly
-    private final String UPLOAD_DIRECTORY = "../../../../D:/project/NTSF-backend/src/main/webapp/images/profile_pictures"; //working properly
+    private final String UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures"; //working properly
 
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -60,13 +62,13 @@ public class IgpServlet extends HttpServlet {
             System.out.println("fileName: " + fileName);
 
             String renamedFileName = renameProfilePicture(police_id, fileName); //rename the file name
-//            String filePath = UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
-            String filePath = fileName; //create the file path
-            // Create the directory if it doesn't exist
-//            File directory = new File(UPLOAD_DIRECTORY);
-//            if (!directory.exists()) {
-//                directory.mkdirs();
-//            }
+            String filePath = UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
+
+            // Create the directory if it doesn't exist - Remove this snippet if not necessary
+            File directory = new File(UPLOAD_DIRECTORY);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
 
             //Store the file to the specified file path
             OutputStream outputStream = new FileOutputStream(filePath);
@@ -128,8 +130,6 @@ public class IgpServlet extends HttpServlet {
         try {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
-            HttpSession session = request.getSession(false);
-
 
             String police_id = request.getParameter("police_id");
 
@@ -457,7 +457,6 @@ public class IgpServlet extends HttpServlet {
     }
 
     public static String renameProfilePicture(String police_id, String profile_picture) throws Exception {
-
         System.out.println("Profile Picture Name before change: " + profile_picture);
         String[] parts = profile_picture.split("\\.");
         String extension = parts[1];
