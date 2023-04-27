@@ -200,19 +200,6 @@ public class Fine {
         return fineDAO.fetchUserFinesInfo(this);
     }
 
-//    public Fine(String nic, String offenceType) {
-//        this.nic = nic;
-//        this.offenceType = offenceType;
-//    }
-//
-//    public String getOffenceType() {
-//        return offenceType;
-//    }
-//
-//    public void setOffenceType(String offenceType) {
-//        this.offenceType = offenceType;
-//    }
-
     /*
     @ Getting fine info by fine no
      */
