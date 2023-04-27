@@ -30,7 +30,7 @@ public class ComplaintServlet extends HttpServlet {
 //        PrintWriter out = response.getWriter();
 //        response.setContentType("text/html");
 
-        String complaint_no = request.getParameter("complaint_no");
+//        String complaint_no = request.getParameter("complaint_no");
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String userId = request.getParameter("user_id");
@@ -42,7 +42,7 @@ public class ComplaintServlet extends HttpServlet {
 
         switch (validateStatusCode) {
             case 0:
-                Complaint complaint = new Complaint(userId, title, description, complaint_no);
+                Complaint complaint = new Complaint(title, description, userId);
                 complaint.complaintAdded();
 
                 // Output response

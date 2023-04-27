@@ -15,10 +15,10 @@ public class ComplaintDAO {
             dbConn = Database.getConnection();
             String sql = "INSERT into complaint (user_id, title, description, complaint_no) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, complaint.getUser_id());
+            preparedStatement.setString(1, complaint.getUserId());
             preparedStatement.setString(2, complaint.getTitle());
             preparedStatement.setString(3, complaint.getDescription());
-            preparedStatement.setString(4, complaint.getComplaint_no());
+            preparedStatement.setString(4, complaint.getComplaintNo());
 
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -37,45 +37,6 @@ public class ComplaintDAO {
         return null;
     }
 
-//    public JSONArray viewComplaintDetails() {
-//        Connection dbConn = null;
-//        JSONArray jsonArray = new JSONArray();
-//
-//        try {
-//            dbConn = Database.getConnection();
-//            String sql = "SELECT * from complaint";
-//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                String user_id = resultSet.getString("user_id");
-//                String title = resultSet.getString("title");
-//                String description = resultSet.getString("description");
-//                String complaint_no = resultSet.getString("complaint_no");
-//
-//                JSONObject jsonObject = new JSONObject();
-//                jsonObject.put("user_id", user_id);
-//                jsonObject.put("title", title);
-//                jsonObject.put("description", description);
-//                jsonObject.put("complaint_no", complaint_no);
-//
-//                jsonArray.put(jsonObject);
-//            }
-//            resultSet.close();
-//            preparedStatement.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (dbConn != null) try {
-//                dbConn.close();
-//            } catch (Exception ignore) {
-//                ignore.printStackTrace();
-//            }
-//        }
-//        return jsonArray;
-//    }
-
     public ArrayList<Complaint> fetchUserComplaintInfo(Complaint complaint) throws SQLException {
         Connection dbConn = Database.getConnection();
 
@@ -83,7 +44,7 @@ public class ComplaintDAO {
 
         PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
-        preparedStatement.setString(1, complaint.getUser_id());
+        preparedStatement.setString(1, complaint.getUserId());
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -91,8 +52,8 @@ public class ComplaintDAO {
 
         while (resultSet.next()) {
             Complaint nextComplaint;
-            nextComplaint = new Complaint(complaint.getUser_id());
-            nextComplaint.setComplaint_no(resultSet.getString("complaint_no"));
+            nextComplaint = new Complaint(complaint.getUserId());
+            nextComplaint.setComplaintNo(resultSet.getString("complaint_no"));
             nextComplaint.setTitle(resultSet.getString("title"));
             nextComplaint.setDescription(resultSet.getString("description"));
 
@@ -137,5 +98,47 @@ public class ComplaintDAO {
         }
         return jsonArray;
     }
+
+    /*
+      Suraif's code foe view complaints
+     */
+    //    public JSONArray viewComplaintDetails() {
+//        Connection dbConn = null;
+//        JSONArray jsonArray = new JSONArray();
+//
+//        try {
+//            dbConn = Database.getConnection();
+//            String sql = "SELECT * from complaint";
+//            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            while (resultSet.next()) {
+//                String user_id = resultSet.getString("user_id");
+//                String title = resultSet.getString("title");
+//                String description = resultSet.getString("description");
+//                String complaint_no = resultSet.getString("complaint_no");
+//
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put("user_id", user_id);
+//                jsonObject.put("title", title);
+//                jsonObject.put("description", description);
+//                jsonObject.put("complaint_no", complaint_no);
+//
+//                jsonArray.put(jsonObject);
+//            }
+//            resultSet.close();
+//            preparedStatement.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (dbConn != null) try {
+//                dbConn.close();
+//            } catch (Exception ignore) {
+//                ignore.printStackTrace();
+//            }
+//        }
+//        return jsonArray;
+//    }
 
 }
