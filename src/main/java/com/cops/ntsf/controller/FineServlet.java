@@ -2,8 +2,7 @@ package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.service.FineService;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.cops.ntsf.util.ParseJSON;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 
 public class FineServlet extends HttpServlet {
@@ -249,20 +249,17 @@ public class FineServlet extends HttpServlet {
 
     }
 
-    /**
-     * @param req  HttpServlet request
-     * @param resp HttpServlet response
-     * @throws IOException Exception is thrown
-     */
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         // Get request parameters
         String nic = req.getParameter("nic");
 
         FineService fineService = new FineService();
-        FineService.FinesInfo finesInfo = null;
+
+        ArrayList<Fine> finesList = null;
+
         try {
-            finesInfo = fineService.getFinesInfo(nic);
+            finesList = fineService.getFinesInfo(nic);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -272,41 +269,7 @@ public class FineServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-        // Create a JSON object to represent the fines information
-        JsonObject finesJsonObject = new JsonObject();
-        finesJsonObject.addProperty("offenceType", finesInfo.getOffenceType());
-        finesJsonObject.addProperty("amount", finesInfo.getAmount());
-        finesJsonObject.add("fines", new Gson().toJsonTree(finesInfo.getFines()));
-
-        // Write the fines information to the response
-        out.write(finesJsonObject.toString());
+        out.write(ParseJSON.parseToJSONString(finesList));
         out.close();
     }
-
-
-//    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//
-//        // Get request parameters
-//        String nic = req.getParameter("nic");
-//
-//        FineService fineService = new FineService();
-//        ArrayList<Fine> finesList = null;
-//        try {
-//            finesList = fineService.getFinesInfo(nic);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        Offence offence = new Offence();
-//        Object offenceNo = fineService.getOffenceNo(nic);
-//
-//
-//        // Output response
-//        PrintWriter out = resp.getWriter();
-//        resp.setContentType("application/json");
-//        resp.setCharacterEncoding("utf-8");
-//
-//        out.write(new Gson().toJson(finesList, offenceType));
-//        out.close();
-//    }
 }
