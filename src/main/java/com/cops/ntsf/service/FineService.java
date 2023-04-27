@@ -8,13 +8,18 @@ import java.util.ArrayList;
 
 public class FineService {
 
-    public class FinesInfo {
-        private ArrayList<Fine> fines;
-        private String offenceType;
+    /**
+     * Made the function static and variables final
+     */
+    public static class FinesInfo {
+        private final ArrayList<Fine> fines;
+        private final String offenceType;
+        private final String amount;
 
-        public FinesInfo(ArrayList<Fine> fines, String offenceType) {
+        public FinesInfo(ArrayList<Fine> fines, String offenceType, String amount) {
             this.fines = fines;
             this.offenceType = offenceType;
+            this.amount = amount;
         }
 
         public ArrayList<Fine> getFines() {
@@ -23,6 +28,10 @@ public class FineService {
 
         public String getOffenceType() {
             return offenceType;
+        }
+
+        public String getAmount() {
+            return amount;
         }
     }
 
@@ -34,10 +43,11 @@ public class FineService {
 
         Offence offence = new Offence(offenceNo);
         String offenceType = offence.getOffence_type();
+        String amount = String.valueOf(offence.getAmount());
 
         ArrayList<Fine> fines = new ArrayList<>();
         fines.add(fine);
 
-        return new FinesInfo(fines, offenceType);
+        return new FinesInfo(fines, offenceType, amount);
     }
 }

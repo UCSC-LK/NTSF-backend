@@ -275,6 +275,7 @@ public class FineServlet extends HttpServlet {
         // Create a JSON object to represent the fines information
         JsonObject finesJsonObject = new JsonObject();
         finesJsonObject.addProperty("offenceType", finesInfo.getOffenceType());
+        finesJsonObject.addProperty("amount", finesInfo.getAmount());
         finesJsonObject.add("fines", new Gson().toJsonTree(finesInfo.getFines()));
 
         // Write the fines information to the response
