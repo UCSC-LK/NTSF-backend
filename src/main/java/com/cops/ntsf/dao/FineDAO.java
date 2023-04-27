@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class FineDAO {
@@ -86,6 +87,7 @@ public class FineDAO {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         ArrayList<Fine> finesList = new ArrayList<Fine>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         while (resultSet.next()) {
             Fine nextFine;
@@ -97,8 +99,8 @@ public class FineDAO {
             nextFine.setLicenseNo(resultSet.getString("licence_no"));
             nextFine.setVehicleNo(resultSet.getString("vehicle_no"));
             nextFine.setDrivenVehicleNo(resultSet.getString("driven_vehicle_no"));
-            nextFine.setImposedDateTime(LocalDateTime.parse(resultSet.getString("imposed_date_time")));
-            nextFine.setDueDateTime(LocalDateTime.parse(resultSet.getString("due_date_time")));
+            nextFine.setImposedDateTime(LocalDateTime.parse(resultSet.getString("imposed_date_time"), formatter));
+            nextFine.setDueDateTime(LocalDateTime.parse(resultSet.getString("due_date_time"), formatter));
             nextFine.setPoliceId(resultSet.getString("police_id"));
             nextFine.setPoliceStation(resultSet.getString("police_station_name"));
             nextFine.setPaymentStatus(resultSet.getString("payment_status"));
