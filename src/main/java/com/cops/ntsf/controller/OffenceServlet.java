@@ -381,8 +381,8 @@ public class OffenceServlet extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Came until the doGet method in Offence Servlet");
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Came until the doPut method in Offence Servlet");
 
         String action = request.getParameter("action");
         String contentType = request.getHeader("Content-type");
@@ -426,7 +426,7 @@ public class OffenceServlet extends HttpServlet {
                 System.out.println(authorizedRank);
                 System.out.println("Action: " + action);
                 if (authorizedRank.equals("igp")) {
-                    if (action.equals("fetchOffence")) {
+                    if (action.equals("updateOffence")) {
                         fetchOffence(request, response);
                     } else {
                         System.out.println("Invalid action"); //Could be changed later
