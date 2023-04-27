@@ -157,15 +157,45 @@ public class Validator {
     }
 
     /**
-     * @param nic         NIC number
-     * @param password    Input password
-     * @param email       User email
-     * @param mobileNo    User mobile number
+     * @param nic      NIC number
+     * @param password Input password
+     * @return If NIC or password is valid
+     */
+    public int validateParams(String nic, String password) {
+        Validator validator = new Validator();
+
+        if (!validator.validateNIC(nic)) {
+            return 1;
+        } else if (!validator.validatePassword(password)) {
+            return 2;
+        }
+        return 0;
+    }
+
+    /**
      * @param title       Complaint title
      * @param description Complaint description
-     * @return Status code
+     * @return If complaint title or description is valid
      */
-    public int validateParams(String nic, String password, String email, String mobileNo, String title, String description) {
+    public int validateParamsComplaint(String title, String description) {
+        Validator validator = new Validator();
+
+        if (!validator.validateNIC(title)) {
+            return 1;
+        } else if (!validator.validatePassword(description)) {
+            return 2;
+        }
+        return 0;
+    }
+
+    /**
+     * @param nic      NIC number
+     * @param password Input password
+     * @param email    Email
+     * @param mobileNo Mobile number
+     * @return If NIC, password, email or mobileNo is valid
+     */
+    public int validateParams(String nic, String password, String email, String mobileNo) {
         Validator validator = new Validator();
 
         if (!validator.validateNIC(nic)) {
@@ -176,10 +206,6 @@ public class Validator {
             return 3;
         } else if (!validator.validateMobileNo(mobileNo)) {
             return 4;
-        } else if (!validator.validateTitle(title)) {
-            return 5;
-        } else if (!validator.validateDescription(description)) {
-            return 6;
         }
         return 0;
     }
