@@ -26,7 +26,7 @@ public class UserLoginServlet extends HttpServlet {
         }
 
         Validator validator = new Validator();
-        int validateStatusCode = validator.validateParams(nic, password, null, null, null, null);
+        int validateStatusCode = validator.validateParams(nic, password);
 
         switch (validateStatusCode) {
             case 0:
