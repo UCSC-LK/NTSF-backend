@@ -7,13 +7,37 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FineService {
-    public ArrayList<Fine> getFinesInfo(String nic, Integer offenceNo) throws SQLException {
+
+    public class FinesInfo {
+        private ArrayList<Fine> fines;
+        private String offenceType;
+
+        public FinesInfo(ArrayList<Fine> fines, String offenceType) {
+            this.fines = fines;
+            this.offenceType = offenceType;
+        }
+
+        public ArrayList<Fine> getFines() {
+            return fines;
+        }
+
+        public String getOffenceType() {
+            return offenceType;
+        }
+    }
+
+    public FinesInfo getFinesInfo(String nic) throws SQLException {
         Fine fine = new Fine(nic);
         fine.getUserFinesInfo();
 
-        Offence offence = new Offence(offenceNo);
-        offence.getOffence();
+        String offenceNo = fine.getOffenceNo();
 
-        return new ArrayList<>();
+        Offence offence = new Offence(offenceNo);
+        String offenceType = offence.getOffence_type();
+
+        ArrayList<Fine> fines = new ArrayList<>();
+        fines.add(fine);
+
+        return new FinesInfo(fines, offenceType);
     }
 }
