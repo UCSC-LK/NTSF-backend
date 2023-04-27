@@ -182,9 +182,10 @@ public class Fine {
         return fineDetails;
     }
 
-    /*
-    @ Fetch fine info from fine table
-    **/
+    /**
+     * @return ArrayList including fines
+     * @throws SQLException Exception is thrown
+     */
     public ArrayList<Fine> getUserFinesInfo() throws SQLException {
         FineDAO fineDAO = new FineDAO();
         return fineDAO.fetchUserFinesInfo(this);
