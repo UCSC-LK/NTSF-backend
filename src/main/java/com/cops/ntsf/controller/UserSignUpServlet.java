@@ -30,7 +30,7 @@ public class UserSignUpServlet extends HttpServlet {
         }
 
         Validator validator = new Validator();
-        int validateStatusCode = validator.validateParams(nic, password, email, mobileNo, null, null);
+        int validateStatusCode = validator.validateParams(nic, password, email, mobileNo);
 
         switch (validateStatusCode) {
             case 0:
