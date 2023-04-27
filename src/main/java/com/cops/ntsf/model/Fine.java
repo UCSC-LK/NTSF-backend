@@ -8,7 +8,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Fine {
-    private String offenceType;
+    public Offence getOffence() {
+        return offence;
+    }
+
+    public void setOffence(Offence offence) {
+        this.offence = offence;
+    }
+
+    private Offence offence;
+
     private int fineNo;
     private String fineType;
     private String offenceNo;
@@ -191,18 +200,18 @@ public class Fine {
         return fineDAO.fetchUserFinesInfo(this);
     }
 
-    public Fine(String nic, String offenceType) {
-        this.nic = nic;
-        this.offenceType = offenceType;
-    }
-
-    public String getOffenceType() {
-        return offenceType;
-    }
-
-    public void setOffenceType(String offenceType) {
-        this.offenceType = offenceType;
-    }
+//    public Fine(String nic, String offenceType) {
+//        this.nic = nic;
+//        this.offenceType = offenceType;
+//    }
+//
+//    public String getOffenceType() {
+//        return offenceType;
+//    }
+//
+//    public void setOffenceType(String offenceType) {
+//        this.offenceType = offenceType;
+//    }
 
     /*
     @ Getting fine info by fine no
