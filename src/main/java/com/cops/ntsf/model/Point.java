@@ -1,33 +1,93 @@
 package com.cops.ntsf.model;
 
+import com.cops.ntsf.dao.PointSystemDAO;
+
+import java.sql.Date;
+import java.sql.SQLException;
+
 public class Point {
-    private double x;
-    private double y;
+    private String nic;
 
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
+    private Integer maxPointLimit;
+
+    private Integer minPointLimit;
+
+    private int initialPoints;
+
+    private int currentPoints;
+
+    private Date maxRecoveryDate;
+
+    public Point(String nic) {
+        this.nic = nic;
     }
 
-    public double getX() {
-        return x;
+    public Point() {
     }
 
-    public double getY() {
-        return y;
+    public void getPointInfo() throws SQLException {
+        PointSystemDAO pointSystemDAO = new PointSystemDAO();
+        pointSystemDAO.getPointInfo(this);
     }
 
-    public void setX(double x) {
-        this.x = x;
+    public String getNic() {
+        return nic;
     }
 
-    public void setY(double y) {
-        this.y = y;
+    public void setMaxPointLimit(Integer maxPointLimit) {
+        this.maxPointLimit = maxPointLimit;
     }
 
-    public double distanceTo(Point other) {
-        double dx = this.x - other.getX();
-        double dy = this.y - other.getY();
-        return Math.sqrt(dx * dx + dy * dy);
+    public void setMinPointLimit(Integer minPointLimit) {
+        this.minPointLimit = minPointLimit;
+    }
+
+    public Integer getMaxPointLimit() {
+        return maxPointLimit;
+    }
+
+    public Integer getMinPointLimit() {
+        return minPointLimit;
+    }
+
+    public void setInitialPoints(int initialPoints) {
+        this.initialPoints = initialPoints;
+    }
+
+    public int getInitialPoints() {
+        return initialPoints;
+    }
+
+    public void setRemainingPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
+    }
+
+    public int getRemainingPoints() {
+        return currentPoints;
+    }
+
+    public void setMaxRecoveryDate(Date maxRecoveryDate) {
+        this.maxRecoveryDate = maxRecoveryDate;
+    }
+
+    public Date getMaxRecoveryDate() {
+        return maxRecoveryDate;
+    }
+
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
+
+    public int getCurrentPoints() {
+        return currentPoints;
+    }
+
+    public void updateCurrentPoints(int currentPoints) {
+        PointSystemDAO pointSystemDAO = new PointSystemDAO();
+        pointSystemDAO.updateCurrentPoints(this);
+    }
+
+    public void setCurrentPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
     }
 }
