@@ -7,28 +7,33 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Complaint {
-    private String user_id;
+    private String userId;
     private String title;
     private String description;
-    private String complaint_no;
+    private String complaintNo;
 
-    public Complaint(String user_id, String title, String description, String complaint_no) {
-        this.user_id = user_id;
+    public Complaint(String userId, String title, String description, String complaintNo) {
+        this.userId = userId;
         this.title = title;
         this.description = description;
-        this.complaint_no = complaint_no;
+        this.complaintNo = complaintNo;
     }
 
     public Complaint() {
-
     }
 
-    public Complaint(String user_id) {
-        this.user_id = user_id;
+    public Complaint(String userId) {
+        this.userId = userId;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public Complaint(String title, String description, String userId) {
+        this.title = title;
+        this.description = description;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public String getTitle() {
@@ -39,20 +44,20 @@ public class Complaint {
         return description;
     }
 
-    public String getComplaint_no() {
-        return complaint_no;
+    public String getComplaintNo() {
+        return complaintNo;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setComplaint_no(String complaint_no) {
-        this.complaint_no = complaint_no;
+    public void setComplaintNo(String complaintNo) {
+        this.complaintNo = complaintNo;
     }
 
     public void complaintAdded() {

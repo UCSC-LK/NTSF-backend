@@ -2,7 +2,7 @@ package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.service.FineService;
-import com.google.gson.Gson;
+import com.cops.ntsf.util.ParseJSON;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -249,38 +249,27 @@ public class FineServlet extends HttpServlet {
 
     }
 
-    /*
-    @ View fines in user side
-    */
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         // Get request parameters
         String nic = req.getParameter("nic");
-        String fineType = req.getParameter("fine_type");
-        Integer offenceNo = Integer.valueOf(req.getParameter("offence_no"));
-
-//        ArrayList<Fine> finesList;
 
         FineService fineService = new FineService();
+
         ArrayList<Fine> finesList = null;
+
         try {
-            finesList = fineService.getFinesInfo(nic, offenceNo);
+            finesList = fineService.getFinesInfo(nic);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-//        try {
-//            finesList = fine.getUserFinesInfo();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
 
         // Output response
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
-        out.write(new Gson().toJson(finesList));
+        out.write(ParseJSON.parseToJSONString(finesList));
         out.close();
     }
 }

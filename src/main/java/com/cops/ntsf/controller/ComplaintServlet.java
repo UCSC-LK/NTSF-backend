@@ -30,7 +30,7 @@ public class ComplaintServlet extends HttpServlet {
 //        PrintWriter out = response.getWriter();
 //        response.setContentType("text/html");
 
-        String complaint_no = request.getParameter("complaint_no");
+//        String complaint_no = request.getParameter("complaint_no");
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String userId = request.getParameter("user_id");
@@ -38,11 +38,11 @@ public class ComplaintServlet extends HttpServlet {
 //        Complaint complaint = null;
 
         Validator validator = new Validator();
-        int validateStatusCode = validator.validateParams(null, null, null, null, title, description);
+        int validateStatusCode = validator.validateParamsComplaint(title, description);
 
         switch (validateStatusCode) {
             case 0:
-                Complaint complaint = new Complaint(userId, title, description, complaint_no);
+                Complaint complaint = new Complaint(title, description, userId);
                 complaint.complaintAdded();
 
                 // Output response
@@ -52,10 +52,10 @@ public class ComplaintServlet extends HttpServlet {
 
                 out.write(new Gson().toJson(complaint));
                 out.close();
-            case 5:
+            case 1:
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Title");
                 break;
-            case 6:
+            case 2:
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect Description");
                 break;
             default:
