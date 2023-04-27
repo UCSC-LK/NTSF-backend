@@ -120,4 +120,10 @@ public class Offence {
         JSONArray fetchedOffenceDetailsList = offenceDAO.fetchOffenceDetailsList(offence_no);
         return fetchedOffenceDetailsList;
     }
+
+    public boolean offenceEdited() {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        boolean offenceEditedResult = offenceDAO.editOffence(this);
+        return offenceEditedResult;
+    }
 }

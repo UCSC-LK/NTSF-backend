@@ -256,8 +256,8 @@ public class OffenceServlet extends HttpServlet {
             System.out.println(demerit_points);
 
             if (checkValidations(offence_no, offence_type, description, amount, demerit_points)) {
-                Offence offence = new Offence();
-                jsonObject.put("alert", offence.updateOffenceDetails(offence_no, offence_type, description, amount, demerit_points));
+                Offence offence = new Offence(offence_no, offence_type, description, amount, demerit_points);
+                jsonObject.put("alert", offence.offenceEdited());
             } else {
                 jsonObject.put("alert", "Invalid Input");
             }
