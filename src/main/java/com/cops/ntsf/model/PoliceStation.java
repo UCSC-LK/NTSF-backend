@@ -78,8 +78,7 @@ public class PoliceStation {
         policeStationDAO.createPoliceStation(this);
     }
 
-    public JSONArray getPoliceStationOptions()
-    {
+    public JSONArray getPoliceStationOptions() {
         PoliceStationDAO policeStationDAO = new PoliceStationDAO();
         JSONArray policeStationOptionsList = policeStationDAO.getPoliceStationOptionsList();
         return policeStationOptionsList;
@@ -107,5 +106,24 @@ public class PoliceStation {
         PoliceStationDAO policeStationDAO = new PoliceStationDAO();
         JSONArray policeStationDetailsList = policeStationDAO.getPoliceStationDetailsList();
         return policeStationDetailsList;
+    }
+
+    public JSONArray fetchPoliceStationDetails(String branch_name) {
+        PoliceStationDAO policeStationDAO = new PoliceStationDAO();
+        JSONArray fetchedpoliceStationDetailsList = policeStationDAO.fetchPoliceStationDetailsList(branch_name);
+        return fetchedpoliceStationDetailsList;
+    }
+
+    public void updatePoliceStation() {
+        System.out.println("updatePoliceStation() in PoliceStation.java is called");
+        PoliceStationDAO policeStationDAO = new PoliceStationDAO();
+        policeStationDAO.updatePoliceStationDetails(this);
+
+    }
+
+    public boolean deletePoliceStationDetails(String branch_name) {
+        PoliceStationDAO policeStationDAO = new PoliceStationDAO();
+        boolean deletePoliceStationDetailsResult = policeStationDAO.deletePoliceStation(branch_name);
+        return deletePoliceStationDetailsResult;
     }
 }
