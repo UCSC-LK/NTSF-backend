@@ -106,11 +106,18 @@ public class Offence {
     public int getAmount() {
         return amount;
     }
+
     public int OffenceNoGet(String offence_type) {
         System.out.println("Came to OffenceNoGet in Offence mOdel");
         System.out.println("Offence Type: " + offence_type);
         OffenceDAO offenceDAO = new OffenceDAO();
         int offenceNo = offenceDAO.fetchOffenceNo(offence_type);
         return offenceNo;
+    }
+
+    public JSONArray fetchOffenceDetails(int offence_no) {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        JSONArray fetchedOffenceDetailsList = offenceDAO.fetchOffenceDetailsList(offence_no);
+        return fetchedOffenceDetailsList;
     }
 }
