@@ -233,6 +233,43 @@ public class OffenceServlet extends HttpServlet {
         }
     }
 
+    private void updateOffence(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            System.out.println("Update offence method is called in the offence servlet");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String offence_type = request.getParameter("offence_type");
+            int offence_no = Integer.parseInt(request.getParameter("offence_no"));
+            String description = request.getParameter("description");
+            int amount = Integer.parseInt(request.getParameter("amount"));
+            int demerit_points = Integer.parseInt(request.getParameter("demerit_points"));
+
+            System.out.println(offence_type);
+            System.out.println(offence_no);
+            System.out.println(description);
+            System.out.println(amount);
+            System.out.println(demerit_points);
+
+            if (checkValidations(offence_no, offence_type, description, amount, demerit_points)) {
+                Offence offence = new Offence();
+                jsonObject.put("alert", offence.updateOffenceDetails(offence_no, offence_type, description, amount, demerit_points));
+            } else {
+                jsonObject.put("alert", "Invalid Input");
+            }
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Came until the doPost method in Offence Servlet");
 
@@ -427,7 +464,7 @@ public class OffenceServlet extends HttpServlet {
                 System.out.println("Action: " + action);
                 if (authorizedRank.equals("igp")) {
                     if (action.equals("updateOffence")) {
-                        fetchOffence(request, response);
+                        updateOffence(request, response);
                     } else {
                         System.out.println("Invalid action"); //Could be changed later
                     }
