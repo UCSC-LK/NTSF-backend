@@ -6,14 +6,14 @@ public class UserService {
     public User getUserSignedUp(String nic,
                                 String email,
                                 String mobileNo,
-                                String password) {
+                                String hashedPassword) {
         User user = new User(nic, email, mobileNo);
         user.setUserInfo();
 
         String userId = user.getUserId();
 
         if (nic != null) {
-            Auth auth = new Auth(userId, password);
+            Auth auth = new Auth(userId, hashedPassword);
             auth.setAuthInfo();
         }
         return user;
