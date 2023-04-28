@@ -4,15 +4,15 @@ import com.cops.ntsf.dao.AuthDAO;
 
 public class Auth {
     private String userId;
-    private String password;
-    private String policeId;
+    private String hashedPassword;
 
-    public Auth(){
+    public Auth() {
 
     }
-    public Auth(String userId, String password) {
+
+    public Auth(String userId, String hashedPassword) {
         this.userId = userId;
-        this.password = password;
+        this.hashedPassword = hashedPassword;
     }
 
     public String getUserId() {
@@ -24,11 +24,11 @@ public class Auth {
     }
 
     public String getPassword() {
-        return password;
+        return hashedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 
     public void getAuthFromUserId() {
@@ -39,18 +39,5 @@ public class Auth {
     public void setAuthInfo() {
         AuthDAO authDAO = new AuthDAO();
         authDAO.insertAuth(this);
-    }
-
-    public void setPoliceAuthInfo() {
-        AuthDAO authDAO = new AuthDAO();
-        authDAO.insertPoliceAuth(this);
-    }
-
-    public String getPoliceId() {
-        return policeId;
-    }
-
-    public void setPoliceId(String policeId) {
-        this.policeId = policeId;
     }
 }
