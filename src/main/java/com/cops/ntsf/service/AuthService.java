@@ -17,7 +17,7 @@ public class AuthService {
     public String verifyLogin(String nic, String inputPassword) {
         String userId = this.getUserIdFromNic(nic);
 
-        Auth auth = new Auth();
+        Auth auth = new Auth(userId, inputPassword);
         auth.setUserId(userId);
         auth.getAuthFromUserId();
 

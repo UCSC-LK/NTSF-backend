@@ -4,15 +4,14 @@ import com.cops.ntsf.dao.AuthDAO;
 
 public class Auth {
     private String userId;
-    private String hashedPassword;
+    private String password;
 
-    public Auth() {
-
+    public Auth(String userId, String inputPassword) {
     }
 
-    public Auth(String userId, String hashedPassword) {
-        this.userId = userId;
-        this.hashedPassword = hashedPassword;
+    public Auth(Integer userId, String password) {
+        this.userId = String.valueOf(userId);
+        this.password = password;
     }
 
     public String getUserId() {
@@ -24,11 +23,11 @@ public class Auth {
     }
 
     public String getPassword() {
-        return hashedPassword;
+        return password;
     }
 
-    public void setPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void getAuthFromUserId() {
