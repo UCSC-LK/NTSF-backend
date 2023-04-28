@@ -10,7 +10,7 @@ public class UserService {
         User user = new User(nic, email, mobileNo);
         user.setUserInfo();
 
-        String userId = user.getUserIdFromNic(nic);
+        Integer userId = user.getUserIdFromNic(nic);
 
         if (nic != null) {
             Auth auth = new Auth(userId, hashedPassword);

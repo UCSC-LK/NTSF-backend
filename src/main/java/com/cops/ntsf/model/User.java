@@ -59,7 +59,7 @@ public class User {
         userDAO.fetchUserInfo(this);
     }
 
-    public String getUserIdFromNic(String nic) {
+    public Integer getUserIdFromNic(String nic) {
         UserDAO userDAO = new UserDAO();
         return userDAO.fetchUserIdFromNic(this);
     }
