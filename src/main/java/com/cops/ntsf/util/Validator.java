@@ -85,7 +85,7 @@ public class Validator {
 
         // Declares a String array named validOperatorCodes
         // Initializes it with five valid network operator codes in Sri Lanka
-        String[] validOperatorCodes = {"071", "072", "075", "077", "078"};
+        String[] validOperatorCodes = {"070", "071", "072", "074", "075", "076", "077", "078"};
 
         // Extracts the first 3 digits of the phone number and assigns them to a new String variable named operatorCode
         String operatorCode = mobileNo.substring(0, 3);
