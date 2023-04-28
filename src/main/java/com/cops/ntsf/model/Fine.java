@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Fine {
+
     public Offence getOffence() {
         return offence;
     }
@@ -46,8 +47,8 @@ public class Fine {
         this.nic = nic;
     }
 
-    public Fine(String fineType, String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
-        this.fineType = fineType;
+    // Removed fineType from constructor
+    public Fine(String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
         this.offenceNo = offenceNo;
         this.nic = nic;
         this.licenseNo = licenseNo;
