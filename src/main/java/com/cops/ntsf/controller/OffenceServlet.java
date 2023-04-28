@@ -323,7 +323,7 @@ public class OffenceServlet extends HttpServlet {
                     } else if (action.equals("deleteOffence")) {
                         deleteOffence(request, response);
                     } else if (action.equals("updateOffence")) {
-                        //updateOffence(request, response);
+                        updateOffence(request, response);
                     } else if (action.equals("checkOffenceDescription")) {
                         checkOffenceDescription(request, response);
                     } else if (action.equals("getOffenceNo")) {
