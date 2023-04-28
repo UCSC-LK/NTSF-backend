@@ -221,4 +221,34 @@ public class OffenceDAO {
         return jsonArray;
     }
 
+    public boolean editOffence(Offence offence) {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try {
+            dbConn = Database.getConnection();
+            String sql = "UPDATE offence SET description = ?, amount = ?, demerit_points = ? WHERE offence_no = ?"; //servlet has offence_type included. fix it later
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, offence.getDescription());
+            preparedStatement.setInt(2, offence.getAmount());
+            preparedStatement.setInt(3, offence.getDemerit_points());
+            preparedStatement.setInt(4, offence.getOffence_no());
+
+            int resultSet = preparedStatement.executeUpdate();
+            if (resultSet > 0) {
+                System.out.println("Offence No: " + offence.getOffence_no() + " has been updated");
+                alert = true;
+            } else {
+                System.out.println("Offence No: " + offence.getOffence_no() + " does not exist");
+                alert = false;
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return alert;
+
+    }
 }
