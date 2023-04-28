@@ -33,7 +33,7 @@ public class AuthDAO {
     public void insertAuth(Auth auth) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "INSERT INTO auth(user_id, hashed_password) VALUES(?, ?)";
+        String sql = "INSERT INTO auth(user_id, password) VALUES(?, ?)";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);

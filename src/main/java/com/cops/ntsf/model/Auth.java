@@ -6,9 +6,23 @@ public class Auth {
     private String userId;
     private String password;
 
+    /**
+     * Used for login process
+     *
+     * @param userId        User Id in Auth
+     * @param inputPassword User input password
+     */
     public Auth(String userId, String inputPassword) {
+        this.userId = userId;
+        this.password = inputPassword;
     }
 
+    /**
+     * Used for sign up process
+     *
+     * @param userId   User Id in Auth
+     * @param password Input password
+     */
     public Auth(Integer userId, String password) {
         this.userId = String.valueOf(userId);
         this.password = password;
