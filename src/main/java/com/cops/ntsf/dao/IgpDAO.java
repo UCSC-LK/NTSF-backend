@@ -31,7 +31,7 @@ public class IgpDAO {
             preparedStatement.setString(9, policeman.getProfile_picture());
 
             Email email = new Email();
-            email.sendMail(policeman.getEmail(), policeman.getPassword());
+            email.sendMail(policeman.getEmail(), "National Traffic Spot Fine System Password", policeman.getPassword());
             int resultSet = preparedStatement.executeUpdate();
 
             if (resultSet > 0) {
