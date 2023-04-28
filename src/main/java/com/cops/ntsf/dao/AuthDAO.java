@@ -10,10 +10,9 @@ import java.sql.SQLException;
 
 public class AuthDAO {
     /**
-     *
      * Function to query auth table with user id
      */
-    public void getAuthFromUserId(Auth auth){
+    public void getAuthFromUserId(Auth auth) {
         Connection dbConn = Database.getConnection();
 
         String sql = "SELECT * FROM auth WHERE user_id = ?";
@@ -23,11 +22,10 @@ public class AuthDAO {
             preparedStatement.setString(1, auth.getUserId());
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 auth.setPassword(resultSet.getString("password"));
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -35,27 +33,11 @@ public class AuthDAO {
     public void insertAuth(Auth auth) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "INSERT INTO auth(user_id, password) VALUES(?, ?)";
+        String sql = "INSERT INTO auth(user_id, hashed_password) VALUES(?, ?)";
 
-        try{
+        try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, auth.getUserId());
-            preparedStatement.setString(2, auth.getPassword());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void insertPoliceAuth(Auth auth) {
-        Connection dbConn = Database.getConnection();
-
-        String sql = "INSERT INTO auth(police_id, password) VALUES(?, ?)";
-
-        try{
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setString(1, auth.getPoliceId());
             preparedStatement.setString(2, auth.getPassword());
 
             preparedStatement.executeUpdate();
