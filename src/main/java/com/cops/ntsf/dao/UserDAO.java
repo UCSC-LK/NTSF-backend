@@ -53,7 +53,7 @@ public class UserDAO {
         }
     }
 
-    public String fetchUserIdFromUser(User user) {
+    public String fetchUserIdFromNic(User user) {
         Connection dbConn = Database.getConnection();
 
         String sql = "SELECT * FROM user WHERE nic = ?";
