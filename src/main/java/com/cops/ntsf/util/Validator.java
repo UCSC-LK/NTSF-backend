@@ -77,14 +77,14 @@ public class Validator {
         }
 
         // Check length and format
-        if (mobileNo.length() != 9 || !mobileNo.matches("\\d{9}")) {
+        if (mobileNo.length() != 10 || !mobileNo.matches("\\d{10}")) {
             return false;
         }
 
         // Check for valid network operator codes
 
         // Declares a String array named validOperatorCodes
-        // Initializes it with five valid network operator codes in Sri Lanka
+        // Initializes it with eight valid network operator codes in Sri Lanka
         String[] validOperatorCodes = {"070", "071", "072", "074", "075", "076", "077", "078"};
 
         // Extracts the first 3 digits of the phone number and assigns them to a new String variable named operatorCode
