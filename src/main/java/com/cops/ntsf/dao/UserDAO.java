@@ -53,10 +53,10 @@ public class UserDAO {
         }
     }
 
-    public String fetchUserIdFromNic(User user) {
+    public Integer fetchUserIdFromNic(User user) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM user WHERE nic = ?";
+        String sql = "SELECT user_id FROM user WHERE nic = ?";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -69,6 +69,6 @@ public class UserDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return sql;
+        return Integer.valueOf(user.getUserId());
     }
 }
