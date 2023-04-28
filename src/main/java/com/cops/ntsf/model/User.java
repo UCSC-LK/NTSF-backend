@@ -59,9 +59,9 @@ public class User {
         userDAO.fetchUserInfo(this);
     }
 
-    public String getUserIdFromUser() {
+    public String getUserIdFromNic(String nic) {
         UserDAO userDAO = new UserDAO();
-        return userDAO.fetchUserIdFromUser(this);
+        return userDAO.fetchUserIdFromNic(this);
     }
 
     public void setMobileNo(String mobileNo) {
