@@ -127,4 +127,9 @@
         <servlet-name>PointSystem</servlet-name>
         <url-pattern>/point_system</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>com.cops.ntsf.util.DBBackup</listener-class>
+    </listener>
+
 </web-app>
