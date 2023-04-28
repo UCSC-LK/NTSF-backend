@@ -173,22 +173,6 @@ public class Validator {
     }
 
     /**
-     * @param title       Complaint title
-     * @param description Complaint description
-     * @return If complaint title or description is valid
-     */
-    public int validateParamsComplaint(String title, String description) {
-        Validator validator = new Validator();
-
-        if (!validator.validateNIC(title)) {
-            return 1;
-        } else if (!validator.validatePassword(description)) {
-            return 2;
-        }
-        return 0;
-    }
-
-    /**
      * @param nic      NIC number
      * @param password Input password
      * @param email    Email
@@ -206,6 +190,22 @@ public class Validator {
             return 3;
         } else if (!validator.validateMobileNo(mobileNo)) {
             return 4;
+        }
+        return 0;
+    }
+
+    /**
+     * @param title       Complaint title
+     * @param description Complaint description
+     * @return If complaint title or description is valid
+     */
+    public int validateParamsComplaint(String title, String description) {
+        Validator validator = new Validator();
+
+        if (!validator.validateTitle(title)) {
+            return 1;
+        } else if (!validator.validateDescription(description)) {
+            return 2;
         }
         return 0;
     }
