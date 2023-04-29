@@ -54,4 +54,5 @@ build/
 .env
 
 #ignore secrets.java file containing sensitive information
-secrets.java
+src/main/java/com/cops/ntsf/util/secrets.java
+
