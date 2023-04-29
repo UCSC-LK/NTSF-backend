@@ -55,3 +55,4 @@ build/
 
 #ignore secrets.java file containing sensitive information
 src/main/java/com/cops/ntsf/util/secrets.java
+
