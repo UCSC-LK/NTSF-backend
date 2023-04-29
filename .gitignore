@@ -52,3 +52,6 @@ build/
 
 #ignore the environment file
 .env
+
+#ignore secrets.java file containing sensitive information
+secrets.java
