@@ -7,16 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Complaint {
+    private String fineNo;
     private String userId;
     private String title;
     private String description;
     private String complaintNo;
 
-    public Complaint(String userId, String title, String description, String complaintNo) {
+    public Complaint(String fineNo, String userId, String title, String description) {
+        this.fineNo = fineNo;
         this.userId = userId;
         this.title = title;
         this.description = description;
-        this.complaintNo = complaintNo;
     }
 
     public Complaint() {
@@ -77,5 +78,13 @@ public class Complaint {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getFineNo() {
+        return fineNo;
+    }
+
+    public void setFineNo(String fineNo) {
+        this.fineNo = fineNo;
     }
 }

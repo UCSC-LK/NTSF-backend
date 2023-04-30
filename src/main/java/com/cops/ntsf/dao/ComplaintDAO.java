@@ -13,12 +13,12 @@ public class ComplaintDAO {
         Connection dbConn = null;
         try {
             dbConn = Database.getConnection();
-            String sql = "INSERT into complaint (user_id, title, description, complaint_no) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT into complaint (fine_no, user_id, title, description) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(4, complaint.getFineNo());
             preparedStatement.setString(1, complaint.getUserId());
             preparedStatement.setString(2, complaint.getTitle());
             preparedStatement.setString(3, complaint.getDescription());
-            preparedStatement.setString(4, complaint.getComplaintNo());
 
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -54,6 +54,7 @@ public class ComplaintDAO {
             Complaint nextComplaint;
             nextComplaint = new Complaint(complaint.getUserId());
             nextComplaint.setComplaintNo(resultSet.getString("complaint_no"));
+            nextComplaint.setFineNo(resultSet.getString("fine_no"));
             nextComplaint.setTitle(resultSet.getString("title"));
             nextComplaint.setDescription(resultSet.getString("description"));
 
