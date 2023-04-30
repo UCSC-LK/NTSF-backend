@@ -15,12 +15,12 @@ public class ComplaintDAO {
             dbConn = Database.getConnection();
             String sql = "INSERT into complaint (fine_no, user_id, title, description) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(4, complaint.getFineNo());
-            preparedStatement.setString(1, complaint.getUserId());
-            preparedStatement.setString(2, complaint.getTitle());
-            preparedStatement.setString(3, complaint.getDescription());
+            preparedStatement.setString(1, complaint.getFineNo());
+            preparedStatement.setString(2, complaint.getUserId());
+            preparedStatement.setString(3, complaint.getTitle());
+            preparedStatement.setString(4, complaint.getDescription());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
             resultSet.close();
