@@ -27,11 +27,11 @@ public class Complaint {
         this.userId = userId;
     }
 
-    public Complaint(String title, String description, String userId) {
-        this.title = title;
-        this.description = description;
-        this.userId = userId;
-    }
+//    public Complaint(String title, String description, String userId) {
+//        this.title = title;
+//        this.description = description;
+//        this.userId = userId;
+//    }
 
     public String getUserId() {
         return userId;
