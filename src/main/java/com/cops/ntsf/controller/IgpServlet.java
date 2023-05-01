@@ -45,6 +45,7 @@ public class IgpServlet extends HttpServlet {
             String email = request.getParameter("email");
             String rank = request.getParameter("rank");
             String police_station = request.getParameter("police_station");
+            String grade = request.getParameter("grade");
 
             /*Profile picture upload*/
             Part filePart = request.getPart("profile_picture");
@@ -59,6 +60,7 @@ public class IgpServlet extends HttpServlet {
             System.out.println("email: " + email);
             System.out.println("rank: " + rank);
             System.out.println("police_station: " + police_station);
+            System.out.println("grade: " + grade);
             System.out.println("fileName: " + fileName);
 
             String renamedFileName = renameProfilePicture(police_id, fileName); //rename the file name
