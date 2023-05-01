@@ -100,9 +100,19 @@ public class IgpServlet extends HttpServlet {
                 System.out.println(password);
                 Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, grade, filePath);
                 PolicemanAuth policemanAuth = new PolicemanAuth(police_id, hashedPassword);
-                alert = policeman.policemanAdded();
+                boolean alertPoliceman = policeman.policemanAdded();
+                boolean alertPoliceAuth = policemanAuth.policemanAuthAdded();
 
-                jsonObject.put("alert", alert);
+                if (alertPoliceman == true && alertPoliceAuth == true) {
+                    alert = true;
+                    jsonObject.put("serverResponse", "Allowed"); //might change later
+                    jsonObject.put("alert", alert);
+                } else {
+                    alert = false;
+                    jsonObject.put("serverResponse", "Not Allowed");
+                    jsonObject.put("alert", alert);
+                }
+
             } else {
                 out.write(jsonObject.toString());
                 out.close();
