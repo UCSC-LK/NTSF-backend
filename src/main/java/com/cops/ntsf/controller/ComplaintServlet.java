@@ -27,22 +27,17 @@ public class ComplaintServlet extends HttpServlet {
 
     protected void createComplaint(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//        PrintWriter out = response.getWriter();
-//        response.setContentType("text/html");
-
-//        String complaint_no = request.getParameter("complaint_no");
+        String fineNo = request.getParameter("fine_no");
+        String userId = request.getParameter("user_id");
         String title = request.getParameter("title");
         String description = request.getParameter("description");
-        String userId = request.getParameter("user_id");
-
-//        Complaint complaint = null;
 
         Validator validator = new Validator();
         int validateStatusCode = validator.validateParamsComplaint(title, description);
 
         switch (validateStatusCode) {
             case 0:
-                Complaint complaint = new Complaint(title, description, userId);
+                Complaint complaint = new Complaint(fineNo, userId, title, description);
                 complaint.complaintAdded();
 
                 // Output response

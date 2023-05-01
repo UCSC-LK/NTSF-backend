@@ -1,6 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Fine;
+import com.cops.ntsf.model.FinesByOffenceType;
 import com.cops.ntsf.service.FineService;
 import com.cops.ntsf.util.ParseJSON;
 import org.json.JSONArray;
@@ -16,7 +17,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Base64;
 
 public class FineServlet extends HttpServlet {
@@ -256,7 +256,7 @@ public class FineServlet extends HttpServlet {
 
         FineService fineService = new FineService();
 
-        ArrayList<Fine> finesList = null;
+        FinesByOffenceType finesList = null;
 
         try {
             finesList = fineService.getFinesInfo(nic);
