@@ -1,5 +1,7 @@
 package com.cops.ntsf.model;
 
+import com.cops.ntsf.dao.IgpDAO;
+
 public class PolicemanAuth {
     private String userId;
     private String password;
@@ -50,4 +52,9 @@ public class PolicemanAuth {
         this.login_flag = login_flag;
     }
 
+    public boolean policemanAuthAdded() {
+        IgpDAO igpDAO = new IgpDAO();
+        boolean policemanAuthAddedResult = igpDAO.createPolicemanAuth(this);
+        return policemanAuthAddedResult;
+    }
 }
