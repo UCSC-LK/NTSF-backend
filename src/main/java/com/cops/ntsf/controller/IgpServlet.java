@@ -1,6 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Policeman;
+import com.cops.ntsf.model.PolicemanAuth;
 import com.cops.ntsf.util.JwtUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,7 +32,6 @@ public class IgpServlet extends HttpServlet {
 
             String currentDir = System.getProperty("user.dir");
             System.out.println("Current directory: " + currentDir);
-
 
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
@@ -98,7 +98,8 @@ public class IgpServlet extends HttpServlet {
                 String password = passwordGenerator.generatePassword();
                 String hashedPassword = hashingPassword(password);
                 System.out.println(password);
-                Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, hashedPassword, filePath);
+                Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, grade, filePath);
+                PolicemanAuth policemanAuth = new PolicemanAuth(police_id, hashedPassword);
                 alert = policeman.policemanAdded();
 
                 jsonObject.put("alert", alert);

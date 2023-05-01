@@ -13,6 +13,11 @@ public class PolicemanAuth {
         this.login_flag = login_flag;
     }
 
+    public PolicemanAuth(String userId, String password) {
+        this.userId = userId;
+        this.password = password;
+    }
+
     public String getUserId() {
         return userId;
     }
