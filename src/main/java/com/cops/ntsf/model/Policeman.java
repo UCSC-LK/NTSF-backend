@@ -12,11 +12,11 @@ public class Policeman {
     private String email;
     private String rank;
     private String police_station;
-    private String password;
+    private String grade;
 
     private String profile_picture;
 
-    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station, String password, String profile_picture) {
+    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station, String grade, String profile_picture) {
         this.name = name;
         this.police_id = police_id;
         this.nic = nic;
@@ -24,7 +24,7 @@ public class Policeman {
         this.email = email;
         this.rank = rank;
         this.police_station = police_station;
-        this.password = password;
+        this.grade = grade;
         this.profile_picture = profile_picture;
     }
 
@@ -72,7 +72,7 @@ public class Policeman {
     }
 
     public String getPassword() {
-        return password;
+        return grade;
     }
 
     public String getProfile_picture() {
@@ -109,8 +109,8 @@ public class Policeman {
         this.rank = rank;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String grade) {
+        this.grade = grade;
     }
 
     public void setProfile_picture(String profile_picture) {
@@ -154,11 +154,11 @@ public class Policeman {
     }
 
 
-    public JSONArray login(String police_id, String password) {
-        IgpDAO igpDAO = new IgpDAO();
-        JSONArray policemanLoginResult = igpDAO.getPolicemanLoginResult(police_id, password);
-        return policemanLoginResult;
-    }
+//    public JSONArray login(String police_id, String password) {
+//        IgpDAO igpDAO = new IgpDAO();
+//        JSONArray policemanLoginResult = igpDAO.getPolicemanLoginResult(police_id, password);
+//        return policemanLoginResult;
+//    }
 
     public boolean LoginUsernameCheck(String police_id) {
         IgpDAO igpDAO = new IgpDAO();
