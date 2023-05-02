@@ -43,7 +43,7 @@ public class Offence {
     }
 
     public int getAmount(int amount) {
-        return this.amount;
+        return amount;
     }
 
     public int getDemerit_points() {
@@ -106,6 +106,7 @@ public class Offence {
     public int getAmount() {
         return amount;
     }
+
     public int OffenceNoGet(String offence_type) {
         System.out.println("Came to OffenceNoGet in Offence mOdel");
         System.out.println("Offence Type: " + offence_type);
