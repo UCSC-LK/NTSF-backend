@@ -71,7 +71,7 @@ public class Policeman {
         return rank;
     }
 
-    public String getPassword() {
+    public String getGrade() {
         return grade;
     }
 
@@ -109,7 +109,7 @@ public class Policeman {
         this.rank = rank;
     }
 
-    public void setPassword(String grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 
@@ -120,6 +120,8 @@ public class Policeman {
     public boolean policemanAdded() {
         IgpDAO igpDAO = new IgpDAO();
         boolean policemanAddedResult = igpDAO.createPoliceman(this);
+        System.out.println("Hi from policemanAdded in Policeman.java");
+        System.out.println("policemanAddedResult: " + policemanAddedResult);
         return policemanAddedResult;
     }
 
@@ -197,6 +199,13 @@ public class Policeman {
         System.out.println("Came until the update Position in the Policeman model");
         OicDAO oicDAO = new OicDAO();
         oicDAO.editPosition(position, police_id);
+    }
+
+
+    public JSONArray loginFirstTime(String police_id, String hashedPassword, boolean firstTime) {
+        IgpDAO igpDAO = new IgpDAO();
+        JSONArray policemanLoginResult = igpDAO.getPolicemanLoginResult(police_id, hashedPassword, firstTime);
+        return policemanLoginResult;
     }
 }
 

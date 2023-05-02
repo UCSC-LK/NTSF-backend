@@ -1,7 +1,7 @@
 package com.cops.ntsf.dao;
 
 import com.cops.ntsf.model.Policeman;
-import com.cops.ntsf.service.Email;
+import com.cops.ntsf.model.PolicemanAuth;
 import com.cops.ntsf.util.Database;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,9 +17,9 @@ public class IgpDAO {
         boolean alert = false;
         try {
             dbConn = Database.getConnection();
-            String sql = "INSERT into policeman (name, police_id, nic, mobile_number, email,  rank, police_station, password, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT into policeman (name, police_id, nic, mobile_number, email,  rank, police_station, grade, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-
+            System.out.println("Hi from createPoliceman method in IgpDAO ");
             preparedStatement.setString(1, policeman.getName());
             preparedStatement.setString(2, policeman.getPolice_id());
             preparedStatement.setString(3, policeman.getNic());
@@ -27,11 +27,9 @@ public class IgpDAO {
             preparedStatement.setString(5, policeman.getEmail());
             preparedStatement.setString(6, policeman.getRank());
             preparedStatement.setString(7, policeman.getPolice_station());
-            preparedStatement.setString(8, policeman.getPassword());
+            preparedStatement.setString(8, policeman.getGrade());
             preparedStatement.setString(9, policeman.getProfile_picture());
 
-            Email email = new Email();
-            email.sendMail(policeman.getEmail(), "National Traffic Spot Fine System Password", policeman.getPassword());
             int resultSet = preparedStatement.executeUpdate();
 
             if (resultSet > 0) {
@@ -39,6 +37,37 @@ public class IgpDAO {
                 alert = true;
             } else {
                 System.out.println("Policeman adding failed");
+                alert = false;
+            }
+
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
+
+    public boolean createPolicemanAuth(PolicemanAuth policemanAuth) {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try {
+            dbConn = Database.getConnection();
+            String sql = "INSERT into police_auth (police_id, otp) VALUES (?, ?)";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            preparedStatement.setString(1, policemanAuth.getPolice_id());
+            preparedStatement.setString(2, policemanAuth.getOtp());
+
+            int resultSet = preparedStatement.executeUpdate();
+
+            if (resultSet > 0) {
+                System.out.println("Policeman Auth added successfully");
+                alert = true;
+            } else {
+                System.out.println("Policeman Auth adding failed");
                 alert = false;
             }
 
@@ -273,50 +302,98 @@ public class IgpDAO {
         return alert;
     }
 
-    public JSONArray getPolicemanLoginResult(String police_id, String password) {
+    public JSONArray getPolicemanLoginResult(String police_id, String password, boolean firsTimeLogin) {
         System.out.println("Hi from Login DAO");
         Connection dbConn = null;
         JSONArray jsonArray = new JSONArray();
 
-        try {
-            dbConn = Database.getConnection();
-            System.out.println("police_id: " + police_id);
-            System.out.println("password: " + password);
-            String sql = "SELECT name, rank, position, police_station from policeman where police_id =  ? and password = ? and active = 1";
+        if (firsTimeLogin == true) {
+            System.out.println("First Time Login");
+            try {
+                dbConn = Database.getConnection();
+                System.out.println("police_id: " + police_id);
+                System.out.println("password: " + password);
+                String sql = "SELECT * FROM policeman p JOIN police_auth pa ON p.police_id = pa.police_id WHERE p.active = 1 AND p.police_id = ? AND pa.otp = ?";
+                PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+                preparedStatement.setString(1, police_id);
+                preparedStatement.setString(2, password);
 
-            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setString(1, police_id);
-            preparedStatement.setString(2, password);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                System.out.println(resultSet);
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getString("name"));
+                    System.out.println(resultSet.getString("rank"));
+                    System.out.println(resultSet.getString("position"));
+                    String name = resultSet.getString("name");
+                    String rank = resultSet.getString("rank");
+                    String position = resultSet.getString("position");
+                    String police_station = resultSet.getString("police_station");
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println(resultSet);
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("name"));
-                System.out.println(resultSet.getString("rank"));
-                System.out.println(resultSet.getString("position"));
-                System.out.println("This is where error is coming from");
-                String name = resultSet.getString("name");
-                String rank = resultSet.getString("rank");
-                String position = resultSet.getString("position");
-                String police_station = resultSet.getString("police_station");
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("authorization", true);
+                    jsonObject.put("police_id", police_id);
+                    jsonObject.put("name", name);
+                    jsonObject.put("rank", rank);
+                    jsonObject.put("position", position);
+                    jsonObject.put("police_station", police_station);
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("authorization", true);
-                jsonObject.put("police_id", police_id);
-                jsonObject.put("name", name);
-                jsonObject.put("rank", rank);
-                jsonObject.put("position", position);
-                jsonObject.put("police_station", police_station);
+                    jsonArray.put(jsonObject);
+                    System.out.println(rank);
 
-                jsonArray.put(jsonObject);
-                System.out.println(rank);
+//                    String sql2 = "UPDATE police_auth SET login_flag = ? WHERE police_id = ?";
+//                    PreparedStatement preparedStatement2 = dbConn.prepareStatement(sql2);
+//                    preparedStatement2.setInt(1, 1);
+//                    preparedStatement2.setString(2, police_id);
+//                    preparedStatement2.executeUpdate();
+//                    preparedStatement2.close();
+                }
+                resultSet.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Not First Time Login");
+            try {
+                dbConn = Database.getConnection();
+                System.out.println("police_id: " + police_id);
+                System.out.println("password: " + password);
+                //String sql = "SELECT name, rank, position, police_station from policeman where police_id =  ? and password = ? and active = 1";
+                String sql = "SELECT * FROM policeman p JOIN police_auth pa ON p.police_id = pa.police_id WHERE p.active = 1 AND p.police_id = ? AND pa.password = ?";
+                PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+                preparedStatement.setString(1, police_id);
+                preparedStatement.setString(2, password);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+                System.out.println(resultSet);
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getString("name"));
+                    System.out.println(resultSet.getString("rank"));
+                    System.out.println(resultSet.getString("position"));
+                    String name = resultSet.getString("name");
+                    String rank = resultSet.getString("rank");
+                    String position = resultSet.getString("position");
+                    String police_station = resultSet.getString("police_station");
+
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("authorization", true);
+                    jsonObject.put("police_id", police_id);
+                    jsonObject.put("name", name);
+                    jsonObject.put("rank", rank);
+                    jsonObject.put("position", position);
+                    jsonObject.put("police_station", police_station);
+
+                    jsonArray.put(jsonObject);
+                    System.out.println(rank);
+                }
+
+                resultSet.close();
+                preparedStatement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
-            resultSet.close();
-            preparedStatement.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return jsonArray;
     }
@@ -461,6 +538,7 @@ public class IgpDAO {
         }
         return jsonArray;
     }
+
 }
 
 

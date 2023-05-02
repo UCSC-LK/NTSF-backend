@@ -197,7 +197,7 @@ public class OffenceDAO {
                 String description = resultSet.getString("description");
                 int amount = resultSet.getInt("amount");
                 int demerit_points = resultSet.getInt("demerit_points");
-
+                
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("offence_no", offence_no);
                 jsonObject.put("offence_type", offence_type);

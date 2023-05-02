@@ -128,11 +128,11 @@
         <url-pattern>/point_system</url-pattern>
     </servlet-mapping>
 
-    <listener>
-        <listener-class>com.cops.ntsf.util.DBBackup</listener-class>
-    </listener>
+    <!--    <listener>-->
+    <!--        <listener-class>com.cops.ntsf.util.DBBackup</listener-class>-->
+    <!--    </listener>-->
 
-    <listener>
-        <listener-class>com.cops.ntsf.service.SystemAvailableStatus.SignalIGPEmail</listener-class>
-    </listener>
+    <!--    <listener>-->
+    <!--        <listener-class>com.cops.ntsf.service.SystemAvailableStatus.SignalIGPEmail</listener-class>-->
+    <!--    </listener>-->
 </web-app>

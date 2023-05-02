@@ -2,6 +2,7 @@ package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.model.PolicemanAuth;
+import com.cops.ntsf.service.Email;
 import com.cops.ntsf.util.JwtUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -79,13 +80,13 @@ public class IgpServlet extends HttpServlet {
 
             while ((bytesRead = fileContent.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
-                System.out.println("buffer: " + buffer);
-                System.out.println("bytesRead: " + bytesRead);
-                System.out.println("outputStream: " + outputStream);
-                System.out.println("fileContent: " + fileContent);
-                System.out.println("filePath: " + filePath);
-                System.out.println("fileName: " + fileName);
-                System.out.println("renamedFileName: " + renamedFileName);
+//                System.out.println("buffer: " + buffer);
+//                System.out.println("bytesRead: " + bytesRead);
+//                System.out.println("outputStream: " + outputStream);
+//                System.out.println("fileContent: " + fileContent);
+//                System.out.println("filePath: " + filePath);
+//                System.out.println("fileName: " + fileName);
+//                System.out.println("renamedFileName: " + renamedFileName);
             }
             outputStream.close();
             fileContent.close();
@@ -102,15 +103,25 @@ public class IgpServlet extends HttpServlet {
                 PolicemanAuth policemanAuth = new PolicemanAuth(police_id, hashedPassword);
                 boolean alertPoliceman = policeman.policemanAdded();
                 boolean alertPoliceAuth = policemanAuth.policemanAuthAdded();
+                System.out.println("alertPoliceman: " + alertPoliceman);
+                System.out.println("alertPoliceAuth: " + alertPoliceAuth);
 
                 if (alertPoliceman == true && alertPoliceAuth == true) {
                     alert = true;
                     jsonObject.put("serverResponse", "Allowed"); //might change later
                     jsonObject.put("alert", alert);
+
+                    //Send email to the policeman
+                    System.out.println("Email sending to the policeman from igpServlet");
+                    Email emailPoliceman = new Email();
+                    emailPoliceman.sendMail(policeman.getEmail(), "National Traffic Spot Fine System Password", policemanAuth.getPassword());
+
+                    System.out.println("Email sent to the policeman");
                 } else {
                     alert = false;
                     jsonObject.put("serverResponse", "Not Allowed");
                     jsonObject.put("alert", alert);
+                    System.out.println("Email not sent to the policeman");
                 }
 
             } else {
@@ -380,8 +391,8 @@ public class IgpServlet extends HttpServlet {
         } else if (police_id.trim().matches("[0-9]+") == false) {
             System.out.println("Police ID should contain only digits");
             flagPolice_ID = false;
-        } else if (police_id.trim().length() != 10) {
-            System.out.println("Police ID should contain 10 digits");
+        } else if (police_id.trim().length() != 7) {
+            System.out.println("Police ID should contain 7 digits");
             flagPolice_ID = false;
         } else {
             System.out.println("Police ID is valid");
