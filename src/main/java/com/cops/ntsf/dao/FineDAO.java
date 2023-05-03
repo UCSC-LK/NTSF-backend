@@ -11,12 +11,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class FineDAO {
-    public void createFine(Fine fine) {
+    public boolean createFine(Fine fine) {
         Connection dbConn = null;
+        boolean alert = false;
         try {
             System.out.println("Reached FineDAO");
             dbConn = Database.getConnection();
-            String sql = "INSERT INTO fine (offence_no, nic, license_no, vehicle_no, driven_vehicle_no,spot_description, imposed_date_time, due_date_time, police_id, police_station_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO fine (offence_no, nic, license_no, vehicle_no, driven_vehicle_no,spot_description, imposed_date_time, due_date_time, police_id, police_station_name, footage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, fine.getOffenceNo());
@@ -29,13 +30,24 @@ public class FineDAO {
             preparedStatement.setObject(8, fine.getDueDateTime());
             preparedStatement.setString(9, fine.getPoliceId());
             preparedStatement.setString(10, fine.getPoliceStation());
+            preparedStatement.setString(11, fine.getFootage_file());
 
-            preparedStatement.execute();
+            int resultSet = preparedStatement.executeUpdate();
+
+            if (resultSet > 0){
+                System.out.println("Fine created successfully");
+                alert = true;
+            } else {
+                System.out.println("Fine creation failed");
+                alert = false;
+            }
+
             preparedStatement.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return alert;
     }
 
     public JSONArray viewFineDetailsAsOIC() {
@@ -129,6 +141,26 @@ public class FineDAO {
                 return fine;
             } else {
                 return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getCurrentFineNoForFootage() {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "SELECT MAX(fine_no) FROM fine";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                return 0;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

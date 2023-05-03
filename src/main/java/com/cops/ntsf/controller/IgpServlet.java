@@ -20,8 +20,8 @@ import java.util.Random;
 
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, // 1MB
-        maxFileSize = 20 * 1024 * 1024, // 20MB
-        maxRequestSize = 400 * 1024 * 1024 // 400MB
+        maxFileSize = 20 * 1024 * 1024, // 20MB - Sever Accepts
+        maxRequestSize = 400 * 1024 * 1024 // 400MB - Server Rejects if exceeded
 )
 public class IgpServlet extends HttpServlet {
     /*Profile Picture upload*/
@@ -30,9 +30,9 @@ public class IgpServlet extends HttpServlet {
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             boolean alert = false;
-
-            String currentDir = System.getProperty("user.dir");
-            System.out.println("Current directory: " + currentDir);
+                /*To print the current directory*/
+//            String currentDir = System.getProperty("user.dir");
+//            System.out.println("Current directory: " + currentDir);
 
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
@@ -125,9 +125,11 @@ public class IgpServlet extends HttpServlet {
                 }
 
             } else {
-                out.write(jsonObject.toString());
-                out.close();
+                System.out.println("Validations Failed");
             }
+
+            out.write(jsonObject.toString());
+            out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

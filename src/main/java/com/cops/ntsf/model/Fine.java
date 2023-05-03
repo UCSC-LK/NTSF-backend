@@ -38,17 +38,19 @@ public class Fine {
     private LocalDateTime dueDateTime;
 
     private String policeId;
-
     private String policeStation;
-
+    private String footage_file;
     private String paymentStatus;
 
+    public Fine() {
+
+    }
     public Fine(String nic) {
         this.nic = nic;
     }
 
     // Removed fineType from constructor
-    public Fine(String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
+    public Fine(String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String footage_file) {
         this.offenceNo = offenceNo;
         this.nic = nic;
         this.licenseNo = licenseNo;
@@ -60,6 +62,7 @@ public class Fine {
         this.policeId = policeId;
         this.policeStation = policeStation;
         this.paymentStatus = "unpaid";
+        this.footage_file = footage_file;
     }
 
     /*
@@ -124,6 +127,10 @@ public class Fine {
         return policeStation;
     }
 
+    public String getFootage_file() {
+        return footage_file;
+    }
+
     public String getPaymentStatus() {
         return paymentStatus;
     }
@@ -177,19 +184,30 @@ public class Fine {
         this.policeStation = policeStation;
     }
 
+    public void setFootage_file(String footage_file) {
+        this.footage_file = footage_file;
+    }
+
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
-    public void createFine() {
+    public boolean createFine() {
         FineDAO fineDAO = new FineDAO();
-        fineDAO.createFine(this);
+        boolean fineAddedResult = fineDAO.createFine(this);
+        return fineAddedResult;
+
     }
 
     public JSONArray getFineListAsOIC() {
         FineDAO fineDAO = new FineDAO();
         JSONArray fineDetails = fineDAO.viewFineDetailsAsOIC();
         return fineDetails;
+    }
+
+    public int getCurrentFineNoForFootage() {
+        FineDAO fineDAO = new FineDAO();
+        return fineDAO.getCurrentFineNoForFootage();
     }
 
     /**
