@@ -12,6 +12,7 @@ public class Driver extends User {
     private String holdersSignature;
     private Date dob;
     private String address;
+    private String vehicleCategories;
 
     public Driver(String nic) {
         super(nic);
@@ -44,8 +45,8 @@ public class Driver extends User {
 
     }
 
-    public void setAdministrativeNo(String administrativeNo) {
-        this.administrativeNo = administrativeNo;
+    public void setAdministrativeNo(String vehicleCategories) {
+        this.vehicleCategories = vehicleCategories;
     }
 
     public Date getIssueDate() {
@@ -85,5 +86,13 @@ public class Driver extends User {
     }
 
     public void setName(String name) {
+    }
+
+    public String getVehicleCategories() {
+        return vehicleCategories;
+    }
+
+    public void setVehicleCategories(String vehicleCategories) {
+        this.vehicleCategories = vehicleCategories;
     }
 }
