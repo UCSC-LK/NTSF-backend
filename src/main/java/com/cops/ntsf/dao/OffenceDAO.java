@@ -144,7 +144,7 @@ public class OffenceDAO {
             while (resultSet.next()) {
                 offence.setOffence_type(resultSet.getString("offence_type"));
                 offence.setDescription(resultSet.getString("description"));
-                offence.getAmount(resultSet.getInt("amount"));
+                offence.setAmount(resultSet.getInt("amount"));
                 offence.setDemerit_points(resultSet.getInt("demerit_points"));
             }
         } catch (SQLException e) {

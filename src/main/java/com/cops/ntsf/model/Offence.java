@@ -43,7 +43,7 @@ public class Offence {
     }
 
     public int getAmount(int amount) {
-        return this.amount;
+        return amount;
     }
 
     public int getDemerit_points() {

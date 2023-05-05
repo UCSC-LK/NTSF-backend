@@ -56,7 +56,7 @@ public class VehicleDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
- 
+
                 vehicle.setUserId(resultSet.getString("user_id"));
             }
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class VehicleDAO {
                 vehicle.setRegisterNo(resultSet.getString("register_no"));
                 vehicle.setChassisNo(resultSet.getString("chassis_no"));
                 vehicle.setCurrentOwnerName(resultSet.getString("current_owner_name"));
-                vehicle.setCurrentOwnerName(resultSet.getString("current_owner_address"));
+                vehicle.setCurrentOwnerAddress(resultSet.getString("current_owner_address"));
                 vehicle.setCurrentOwnerId(resultSet.getString("current_owner_id"));
                 vehicle.setEngineNo(resultSet.getString("engine_no"));
                 vehicle.setVehicleClass(resultSet.getString("vehicle_class"));
