@@ -16,7 +16,7 @@ public class FineDAO {
         try {
             System.out.println("Reached FineDAO");
             dbConn = Database.getConnection();
-            String sql = "INSERT INTO fine (offence_no, nic, license_no, vehicle_no, driven_vehicle_no,spot_description, imposed_date_time, due_date_time, police_id, police_station_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO fine (offence_no, nic, licence_no, vehicle_no, driven_vehicle_no,spot_description, imposed_date_time, due_date_time, police_id, police_station_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, fine.getOffenceNo());
@@ -98,7 +98,6 @@ public class FineDAO {
             nextFine.setNic(resultSet.getString("nic"));
             nextFine.setLicenseNo(resultSet.getString("licence_no"));
             nextFine.setVehicleNo(resultSet.getString("vehicle_no"));
-            nextFine.setDrivenVehicleNo(resultSet.getString("driven_vehicle_no"));
             nextFine.setImposedDateTime(LocalDateTime.parse(resultSet.getString("imposed_date_time"), formatter));
             nextFine.setDueDateTime(LocalDateTime.parse(resultSet.getString("due_date_time"), formatter));
             nextFine.setPoliceId(resultSet.getString("police_id"));
