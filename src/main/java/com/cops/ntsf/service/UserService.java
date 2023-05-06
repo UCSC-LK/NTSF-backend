@@ -4,16 +4,16 @@ import com.cops.ntsf.model.*;
 
 public class UserService {
     public User getUserSignedUp(String nic,
+                                String hashedPassword,
                                 String email,
-                                String mobileNo,
-                                String password) {
+                                String mobileNo) {
         User user = new User(nic, email, mobileNo);
         user.setUserInfo();
 
-        String userId = user.getUserId();
+        Integer userId = user.getUserIdFromNic(nic);
 
         if (nic != null) {
-            Auth auth = new Auth(userId, password);
+            Auth auth = new Auth(userId, hashedPassword);
             auth.setAuthInfo();
         }
         return user;

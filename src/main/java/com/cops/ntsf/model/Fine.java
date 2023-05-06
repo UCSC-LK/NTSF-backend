@@ -8,8 +8,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Fine {
-    private String offenceType;
+
+    public Offence getOffence() {
+        return offence;
+    }
+
+    public void setOffence(Offence offence) {
+        this.offence = offence;
+    }
+
+    private Offence offence;
+
     private int fineNo;
+    private String fineType;
     private String offenceNo;
 
     private String nic;
@@ -27,16 +38,19 @@ public class Fine {
     private LocalDateTime dueDateTime;
 
     private String policeId;
-
     private String policeStation;
-
+    private String footage_file;
     private String paymentStatus;
 
+    public Fine() {
+
+    }
     public Fine(String nic) {
         this.nic = nic;
     }
 
-    public Fine(String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation) {
+    // Removed fineType from constructor
+    public Fine(String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String footage_file) {
         this.offenceNo = offenceNo;
         this.nic = nic;
         this.licenseNo = licenseNo;
@@ -48,6 +62,7 @@ public class Fine {
         this.policeId = policeId;
         this.policeStation = policeStation;
         this.paymentStatus = "unpaid";
+        this.footage_file = footage_file;
     }
 
     /*
@@ -58,9 +73,9 @@ public class Fine {
         this.fineNo = fineNo;
     }
 
-    public Fine(String nic, String offenceType, Integer offenceNo) {
+    public Fine(String nic, String fineType, Integer offenceNo) {
         this.nic = nic;
-        this.offenceType = offenceType;
+        this.fineType = fineType;
         this.offenceNo = String.valueOf(offenceNo);
     }
 
@@ -68,8 +83,8 @@ public class Fine {
         return fineNo;
     }
 
-    public String getOffenceType() {
-        return offenceType;
+    public String getFineType() {
+        return fineType;
     }
 
     public String getOffenceNo() {
@@ -112,6 +127,10 @@ public class Fine {
         return policeStation;
     }
 
+    public String getFootage_file() {
+        return footage_file;
+    }
+
     public String getPaymentStatus() {
         return paymentStatus;
     }
@@ -120,8 +139,8 @@ public class Fine {
         this.fineNo = fineNo;
     }
 
-    public void setOffenceType(String offenceType) {
-        this.offenceType = offenceType;
+    public void setFineType(String fineType) {
+        this.fineType = fineType;
     }
 
     public void setOffenceNo(String offenceNo) {
@@ -165,13 +184,19 @@ public class Fine {
         this.policeStation = policeStation;
     }
 
+    public void setFootage_file(String footage_file) {
+        this.footage_file = footage_file;
+    }
+
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
-    public void createFine() {
+    public boolean createFine() {
         FineDAO fineDAO = new FineDAO();
-        fineDAO.createFine(this);
+        boolean fineAddedResult = fineDAO.createFine(this);
+        return fineAddedResult;
+
     }
 
     public JSONArray getFineListAsOIC() {
@@ -180,17 +205,18 @@ public class Fine {
         return fineDetails;
     }
 
-    /*
-    @ Fetch fine info from fine table
-    **/
+    public int getCurrentFineNoForFootage() {
+        FineDAO fineDAO = new FineDAO();
+        return fineDAO.getCurrentFineNoForFootage();
+    }
+
+    /**
+     * @return ArrayList including fines
+     * @throws SQLException Exception is thrown
+     */
     public ArrayList<Fine> getUserFinesInfo() throws SQLException {
         FineDAO fineDAO = new FineDAO();
         return fineDAO.fetchUserFinesInfo(this);
-    }
-
-    public Fine(String nic, String offenceType) {
-        this.nic = nic;
-        this.offenceType = offenceType;
     }
 
     /*

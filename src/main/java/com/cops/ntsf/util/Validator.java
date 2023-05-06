@@ -77,15 +77,15 @@ public class Validator {
         }
 
         // Check length and format
-        if (mobileNo.length() != 9 || !mobileNo.matches("\\d{9}")) {
+        if (mobileNo.length() != 10 || !mobileNo.matches("\\d{10}")) {
             return false;
         }
 
         // Check for valid network operator codes
 
         // Declares a String array named validOperatorCodes
-        // Initializes it with five valid network operator codes in Sri Lanka
-        String[] validOperatorCodes = {"071", "072", "075", "077", "078"};
+        // Initializes it with eight valid network operator codes in Sri Lanka
+        String[] validOperatorCodes = {"070", "071", "072", "074", "075", "076", "077", "078"};
 
         // Extracts the first 3 digits of the phone number and assigns them to a new String variable named operatorCode
         String operatorCode = mobileNo.substring(0, 3);
@@ -157,15 +157,29 @@ public class Validator {
     }
 
     /**
-     * @param nic         NIC number
-     * @param password    Input password
-     * @param email       User email
-     * @param mobileNo    User mobile number
-     * @param title       Complaint title
-     * @param description Complaint description
-     * @return Status code
+     * @param nic      NIC number
+     * @param password Input password
+     * @return If NIC or password is valid
      */
-    public int validateParams(String nic, String password, String email, String mobileNo, String title, String description) {
+    public int validateParams(String nic, String password) {
+        Validator validator = new Validator();
+
+        if (!validator.validateNIC(nic)) {
+            return 1;
+        } else if (!validator.validatePassword(password)) {
+            return 2;
+        }
+        return 0;
+    }
+
+    /**
+     * @param nic      NIC number
+     * @param password Input password
+     * @param email    Email
+     * @param mobileNo Mobile number
+     * @return If NIC, password, email or mobileNo is valid
+     */
+    public int validateParams(String nic, String password, String email, String mobileNo) {
         Validator validator = new Validator();
 
         if (!validator.validateNIC(nic)) {
@@ -176,10 +190,22 @@ public class Validator {
             return 3;
         } else if (!validator.validateMobileNo(mobileNo)) {
             return 4;
-        } else if (!validator.validateTitle(title)) {
-            return 5;
+        }
+        return 0;
+    }
+
+    /**
+     * @param title       Complaint title
+     * @param description Complaint description
+     * @return If complaint title or description is valid
+     */
+    public int validateParamsComplaint(String title, String description) {
+        Validator validator = new Validator();
+
+        if (!validator.validateTitle(title)) {
+            return 1;
         } else if (!validator.validateDescription(description)) {
-            return 6;
+            return 2;
         }
         return 0;
     }

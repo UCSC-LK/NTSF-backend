@@ -58,4 +58,13 @@ public class User {
         UserDAO userDAO = new UserDAO();
         userDAO.fetchUserInfo(this);
     }
+
+    public Integer getUserIdFromNic(String nic) {
+        UserDAO userDAO = new UserDAO();
+        return userDAO.fetchUserIdFromNic(this);
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
 }

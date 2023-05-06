@@ -2,6 +2,7 @@ package com.cops.ntsf.controller;
 
 import com.cops.ntsf.constants.AuthType;
 import com.cops.ntsf.model.Policeman;
+import com.cops.ntsf.model.PolicemanAuth;
 import com.cops.ntsf.util.JwtUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -25,10 +25,12 @@ public class PolicemanLoginServlet extends HttpServlet {
             login(request, response);
         } else if (action.equals("checkLoginUsername")) {
             checkLoginUsername(request, response);
+        } else if (action.equals("changeFirstTimePassword")) {
+            changeFirstTimePassword(request, response);
+        } else {
+            System.out.println("Invalid action");
         }
-
     }
-
 
     protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -36,6 +38,7 @@ public class PolicemanLoginServlet extends HttpServlet {
             response.setContentType("text/html");
 
             JSONObject jsonObject = new JSONObject();
+            JSONArray loginResponse = new JSONArray();
 
             String police_id = request.getParameter("username");
             String password = request.getParameter("password");
@@ -47,8 +50,19 @@ public class PolicemanLoginServlet extends HttpServlet {
             System.out.println(police_id);
             System.out.println(password);
             System.out.println(hashedPassword);
-            Policeman policeman = new Policeman();
-            JSONArray loginResponse = policeman.login(police_id, hashedPassword);
+
+            boolean firsTimeLogin = checkFirstTimeLogin(police_id);
+            if (firsTimeLogin == true) {
+                System.out.println("First time login");
+                jsonObject.put("firstTimeLogin", true);
+                Policeman policeman = new Policeman();
+                loginResponse = policeman.loginFirstTime(police_id, hashedPassword, true);
+            } else {
+                System.out.println("Not first time login");
+                jsonObject.put("firstTimeLogin", false);
+                Policeman policeman = new Policeman();
+                loginResponse = policeman.loginFirstTime(police_id, hashedPassword, false);
+            }
 
             //Printing the login response in the servlet
             System.out.println("Printing the loginResponse in the servlet\n");
@@ -82,7 +96,6 @@ public class PolicemanLoginServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
-            HttpSession session = request.getSession();
             JSONObject jsonObject = new JSONObject();
 
             String police_id = request.getParameter("username");
@@ -98,6 +111,39 @@ public class PolicemanLoginServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void changeFirstTimePassword(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+
+            String police_id = request.getParameter("username");
+            String newpassword = request.getParameter("newpassword");
+
+            String hashedPassword = hashingPassword(newpassword);
+
+            PolicemanAuth policemanAuth = new PolicemanAuth();
+            boolean alert = policemanAuth.changeFirstTimePassword(police_id, hashedPassword);
+
+            jsonObject.put("alert", alert);
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    protected boolean checkFirstTimeLogin(String police_id) {
+        PolicemanAuth policemanAuth = new PolicemanAuth();
+        System.out.println("Came until checkFirstTimeLogin in servlet");
+        System.out.println(police_id + " is the police id");
+        return policemanAuth.checkFirstLoginOrNot(police_id); //return true if it is a first time login, else false
     }
 
 }
