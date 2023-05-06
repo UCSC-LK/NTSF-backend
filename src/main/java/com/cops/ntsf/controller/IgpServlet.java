@@ -1,26 +1,38 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Policeman;
+import com.cops.ntsf.model.PolicemanAuth;
+import com.cops.ntsf.service.Email;
 import com.cops.ntsf.util.JwtUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.http.Part;
+import java.io.*;
 import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.Random;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1MB
+        maxFileSize = 20 * 1024 * 1024, // 20MB - Sever Accepts
+        maxRequestSize = 400 * 1024 * 1024 // 400MB - Server Rejects if exceeded
+)
 public class IgpServlet extends HttpServlet {
+    /*Profile Picture upload*/
+    private final String UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures"; //working properly
 
     protected void addPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             boolean alert = false;
+                /*To print the current directory*/
+//            String currentDir = System.getProperty("user.dir");
+//            System.out.println("Current directory: " + currentDir);
 
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
@@ -34,6 +46,52 @@ public class IgpServlet extends HttpServlet {
             String email = request.getParameter("email");
             String rank = request.getParameter("rank");
             String police_station = request.getParameter("police_station");
+            String grade = request.getParameter("grade");
+
+            /*Profile picture upload*/
+            Part filePart = request.getPart("profile_picture");
+            System.out.println("filePart: " + filePart);
+            InputStream fileContent = filePart.getInputStream();
+            System.out.println("fileContent: " + fileContent);
+            String fileName = filePart.getSubmittedFileName();
+            System.out.println("name: " + name);
+            System.out.println("police_id: " + police_id);
+            System.out.println("nic: " + nic);
+            System.out.println("mobile_number: " + mobile_number);
+            System.out.println("email: " + email);
+            System.out.println("rank: " + rank);
+            System.out.println("police_station: " + police_station);
+            System.out.println("grade: " + grade);
+            System.out.println("fileName: " + fileName);
+
+            String renamedFileName = renameProfilePicture(police_id, fileName); //rename the file name
+            String filePath = UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
+
+            // Create the directory if it doesn't exist - Remove this snippet if not necessary
+            File directory = new File(UPLOAD_DIRECTORY);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            //Store the file to the specified file path
+            OutputStream outputStream = new FileOutputStream(filePath);
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ((bytesRead = fileContent.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+//                System.out.println("buffer: " + buffer);
+//                System.out.println("bytesRead: " + bytesRead);
+//                System.out.println("outputStream: " + outputStream);
+//                System.out.println("fileContent: " + fileContent);
+//                System.out.println("filePath: " + filePath);
+//                System.out.println("fileName: " + fileName);
+//                System.out.println("renamedFileName: " + renamedFileName);
+            }
+            outputStream.close();
+            fileContent.close();
+
+            System.out.println("filePath: " + filePath);
 
             System.out.println("addPoliceman method in IGPServlet invoked");
             if (checkValidations(name, police_id, nic, mobile_number, email, rank, police_station)) {
@@ -41,14 +99,37 @@ public class IgpServlet extends HttpServlet {
                 String password = passwordGenerator.generatePassword();
                 String hashedPassword = hashingPassword(password);
                 System.out.println(password);
-                Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, hashedPassword);
-                alert = policeman.policemanAdded();
+                Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station, grade, filePath);
+                PolicemanAuth policemanAuth = new PolicemanAuth(police_id, hashedPassword);
+                boolean alertPoliceman = policeman.policemanAdded();
+                boolean alertPoliceAuth = policemanAuth.policemanAuthAdded();
+                System.out.println("alertPoliceman: " + alertPoliceman);
+                System.out.println("alertPoliceAuth: " + alertPoliceAuth);
 
-                jsonObject.put("alert", alert);
+                if (alertPoliceman == true && alertPoliceAuth == true) {
+                    alert = true;
+                    jsonObject.put("serverResponse", "Allowed"); //might change later
+                    jsonObject.put("alert", alert);
+
+                    //Send email to the policeman
+                    System.out.println("Email sending to the policeman from igpServlet");
+                    Email emailPoliceman = new Email();
+                    emailPoliceman.sendMail(policeman.getEmail(), "National Traffic Spot Fine System Password", policemanAuth.getPassword());
+
+                    System.out.println("Email sent to the policeman");
+                } else {
+                    alert = false;
+                    jsonObject.put("serverResponse", "Not Allowed");
+                    jsonObject.put("alert", alert);
+                    System.out.println("Email not sent to the policeman");
+                }
+
             } else {
-                out.write(jsonObject.toString());
-                out.close();
+                System.out.println("Validations Failed");
             }
+
+            out.write(jsonObject.toString());
+            out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,8 +156,6 @@ public class IgpServlet extends HttpServlet {
         try {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
-            HttpSession session = request.getSession(false);
-
 
             String police_id = request.getParameter("police_id");
 
@@ -238,6 +317,7 @@ public class IgpServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String action = request.getParameter("action");
         String contentType = request.getHeader("Content-type");
         String authorizationHeader = request.getHeader("Authorization");
@@ -313,8 +393,8 @@ public class IgpServlet extends HttpServlet {
         } else if (police_id.trim().matches("[0-9]+") == false) {
             System.out.println("Police ID should contain only digits");
             flagPolice_ID = false;
-        } else if (police_id.trim().length() != 10) {
-            System.out.println("Police ID should contain 10 digits");
+        } else if (police_id.trim().length() != 7) {
+            System.out.println("Police ID should contain 7 digits");
             flagPolice_ID = false;
         } else {
             System.out.println("Police ID is valid");
@@ -402,4 +482,12 @@ public class IgpServlet extends HttpServlet {
         return encoded;
     }
 
+    public static String renameProfilePicture(String police_id, String profile_picture) throws Exception {
+        System.out.println("Profile Picture Name before change: " + profile_picture);
+        String[] parts = profile_picture.split("\\.");
+        String extension = parts[1];
+        String new_profile_picture = police_id + "." + extension;
+        System.out.println("Profile Picture Name after change: " + new_profile_picture);
+        return new_profile_picture;
+    }
 }

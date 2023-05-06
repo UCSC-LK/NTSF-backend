@@ -114,4 +114,16 @@ public class Offence {
         int offenceNo = offenceDAO.fetchOffenceNo(offence_type);
         return offenceNo;
     }
+
+    public JSONArray fetchOffenceDetails(int offence_no) {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        JSONArray fetchedOffenceDetailsList = offenceDAO.fetchOffenceDetailsList(offence_no);
+        return fetchedOffenceDetailsList;
+    }
+
+    public boolean offenceEdited() {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        boolean offenceEditedResult = offenceDAO.editOffence(this);
+        return offenceEditedResult;
+    }
 }

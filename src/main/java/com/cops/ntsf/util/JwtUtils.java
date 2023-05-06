@@ -75,6 +75,7 @@ public class JwtUtils {
         if (authType == AuthType.POLICEMAN) {
             // TODO REFACTOR!! Using JSONArrays are not ideal in java code, use ArrayList and a proper java model
             payload.put("police_id", loginResponse.getJSONObject(0).getString("police_id"));
+            payload.put("police_name", loginResponse.getJSONObject(0).getString("name"));
             payload.put("rank", loginResponse.getJSONObject(0).getString("rank"));
             payload.put("position", loginResponse.getJSONObject(0).getString("position"));
             payload.put("police_station", loginResponse.getJSONObject(0).getString("police_station"));

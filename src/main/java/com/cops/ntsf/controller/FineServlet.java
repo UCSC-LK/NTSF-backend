@@ -4,24 +4,41 @@ import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.model.FinesByOffenceType;
 import com.cops.ntsf.service.FineService;
 import com.cops.ntsf.util.ParseJSON;
+import com.google.protobuf.Internal;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.http.Part;
+import java.io.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1MB
+        maxFileSize = 2000 * 1024 * 1024, // 2000MB
+        maxRequestSize = 4000 * 1024 * 1024 // 4000MB
+)
+
 public class FineServlet extends HttpServlet {
+
+    private final String FINE_FOOTAGE_UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\fine_footage"; ;
     protected void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+
+            boolean alert  = false;
             //Fine Number is auto incremented
             String offenceType = request.getParameter("offence_type");
             //Front end sends user_id as nic/licenseNo/vehicleNo depending on the fine type
@@ -32,6 +49,14 @@ public class FineServlet extends HttpServlet {
             String policeId = request.getParameter("police_id");
             String policeStation = request.getParameter("police_station");
             //Fine amount retrieved from the offence table using offence_no
+
+            //Fine footage is uploaded to the server
+            Part filePart = request.getPart("footage_file");
+            System.out.println("filePart: " + filePart);
+            InputStream fileContent = filePart.getInputStream();
+            System.out.println("fileContent: " + fileContent);
+            String fileName = filePart.getSubmittedFileName();
+
             //Payment status is set to unpaid by default at database level
 
             System.out.println("Offence Type: " + offenceType);
@@ -41,8 +66,36 @@ public class FineServlet extends HttpServlet {
             System.out.println("Police station: " + policeStation);
             System.out.println("Imposed date time: " + imposedDateTime);
             System.out.println("Due date time: " + dueDateTime);
+            System.out.println("File name: " + fileName);
 
+            String renamedFileName = renameProfilePicture(fileName); //rename the file name
+            String filePath = FINE_FOOTAGE_UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
 
+            // Create the directory if it doesn't exist - Remove this snippet if not necessary
+            File directory = new File(FINE_FOOTAGE_UPLOAD_DIRECTORY);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            //Store the file to the specified file path
+            OutputStream outputStream = new FileOutputStream(filePath);
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ((bytesRead = fileContent.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+//                System.out.println("buffer: " + buffer);
+//                System.out.println("bytesRead: " + bytesRead);
+//                System.out.println("outputStream: " + outputStream);
+//                System.out.println("fileContent: " + fileContent);
+//                System.out.println("filePath: " + filePath);
+//                System.out.println("fileName: " + fileName);
+//                System.out.println("renamedFileName: " + renamedFileName);
+            }
+            outputStream.close();
+            fileContent.close();
+
+            //File  not validated************
             if (checkValidations(offenceType, offenceNo, spotDescription, policeId, policeStation)) {
                 if (offenceType.equals("pedestrian")) {
                     String nic = request.getParameter("user_id");
@@ -50,8 +103,8 @@ public class FineServlet extends HttpServlet {
                         String licenseNo = null;
                         String vehicleNo = null;
                         String drivenVehicleNo = null;
-                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
-                        fine.createFine();
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName);
+                        alert = fine.createFine();
                         System.out.println("reached");
                     } else {
                         System.out.println("Invalid NIC");
@@ -64,8 +117,8 @@ public class FineServlet extends HttpServlet {
                         System.out.println("NIC: " + nic);
                         String licenseNo = null;
                         String drivenVehicleNo = null;
-                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
-                        fine.createFine();
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName);
+                        alert = fine.createFine();
                     } else {
                         System.out.println("Invalid vehicle number");
                     }
@@ -78,13 +131,26 @@ public class FineServlet extends HttpServlet {
                         String nic = getNICByLicenseNo(licenseNo);
                         System.out.println("NIC: " + nic);
                         String vehicleNo = null;
-                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation);
-                        fine.createFine();
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName);
+                        alert = fine.createFine();
                     }
 
                 } else {
                     System.out.println("Invalid offence type");
                 }
+
+                if(alert){
+                    System.out.println("Fine Added Successfully");
+                    jsonObject.put("serverResponse", "Not Allowed");
+                    jsonObject.put("alert", alert);
+                }else{
+                    System.out.println("Fine Adding Failed");
+                    jsonObject.put("serverResponse", "Allowed");
+                    jsonObject.put("alert", alert);
+                }
+
+                out.write(jsonObject.toString());
+                out.close();
             }
 
 
@@ -272,4 +338,18 @@ public class FineServlet extends HttpServlet {
         out.write(ParseJSON.parseToJSONString(finesList));
         out.close();
     }
+
+    public static String renameProfilePicture(String file_footage) throws Exception {
+
+        /*Check what the current fine number is and add 1 to it and return*/
+        Fine fine = new Fine();
+        int fineNo = fine.getCurrentFineNoForFootage() + 1;
+        System.out.println("Profile Picture Name before change: " + file_footage);
+        String[] parts = file_footage.split("\\.");
+        String extension = parts[1];
+        String new_file_footage = fineNo + "." + extension;
+        System.out.println("Profile Picture Name after change: " + new_file_footage);
+        return new_file_footage;
+    }
+
 }

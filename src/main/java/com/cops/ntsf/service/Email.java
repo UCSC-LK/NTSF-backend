@@ -10,38 +10,38 @@ public class Email {
     private final String password = "myPassword";
     private Session session = null;
 
-    public Email(){
+    public Email() {
 
         Properties properties = new Properties();
-        properties.put("mail.smtp.host" , "smtp.gmail.com");
-        properties.put("mail.smtp.port" , "587");
-        properties.put("mail.smtp.auth" , "true");
-        properties.put("mail.smtp.starttls.enable" , "true"); //TLS
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true"); //TLS
 
-        session = Session.getInstance( properties ,
-                new javax.mail.Authenticator(){
-                    protected PasswordAuthentication getPasswordAuthentication(){
-                        return new PasswordAuthentication( username , password );
+        session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
                     }
                 }
         );
 
     }
 
-    public void sendMail( String toEmail , String textMessage ){
+    public void sendMail(String toEmail, String subject, String textMessage) {
 
 
-        try{
+        try {
             System.out.println("HI!!! sending email");
-            Message message = new MimeMessage( session );
-            message.setFrom( new InternetAddress("EduClick") );
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("EduClick"));
             message.setRecipients(
                     Message.RecipientType.TO,
                     InternetAddress.parse(toEmail)
             );
 
-            message.setSubject("NTSF Portal Password");
-            message.setText( textMessage );
+            message.setSubject(subject);
+            message.setText(textMessage);
 
             Transport.send(message);
 

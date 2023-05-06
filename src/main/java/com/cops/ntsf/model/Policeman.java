@@ -12,9 +12,11 @@ public class Policeman {
     private String email;
     private String rank;
     private String police_station;
-    private String password;
+    private String grade;
 
-    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station, String password) {
+    private String profile_picture;
+
+    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station, String grade, String profile_picture) {
         this.name = name;
         this.police_id = police_id;
         this.nic = nic;
@@ -22,14 +24,15 @@ public class Policeman {
         this.email = email;
         this.rank = rank;
         this.police_station = police_station;
-        this.password = password;
+        this.grade = grade;
+        this.profile_picture = profile_picture;
     }
-    public Policeman()
-    {
+
+    public Policeman() {
 
     }
 
-    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station){
+    public Policeman(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
         this.name = name; //instead setters can be called here //setname(name);
         this.police_id = police_id;
         this.nic = nic;
@@ -38,6 +41,7 @@ public class Policeman {
         this.rank = rank;
         this.police_station = police_station;
     }
+
     //getters
     public String getPolice_station() {
         return police_station;
@@ -67,8 +71,12 @@ public class Policeman {
         return rank;
     }
 
-    public String getPassword() {
-        return password;
+    public String getGrade() {
+        return grade;
+    }
+
+    public String getProfile_picture() {
+        return profile_picture;
     }
 
     //setters
@@ -101,63 +109,68 @@ public class Policeman {
         this.rank = rank;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
-    public boolean policemanAdded()
-    {
+    public void setProfile_picture(String profile_picture) {
+        this.profile_picture = profile_picture;
+    }
+
+    public boolean policemanAdded() {
         IgpDAO igpDAO = new IgpDAO();
         boolean policemanAddedResult = igpDAO.createPoliceman(this);
+        System.out.println("Hi from policemanAdded in Policeman.java");
+        System.out.println("policemanAddedResult: " + policemanAddedResult);
         return policemanAddedResult;
     }
 
-    public JSONArray getPolicemanDetails()
-    {
+    public JSONArray getPolicemanDetails() {
         IgpDAO igpDAO = new IgpDAO();
         JSONArray policemanDetailsList = igpDAO.getPolicemanDetailsList();
         return policemanDetailsList;
     }
+
     public boolean policemanPolice_IDCheck(String police_id) {
         IgpDAO igpDAO = new IgpDAO();
-        boolean policemanPolice_IDCheckResult  = igpDAO.getPolicemanPolice_IDCheckResult(police_id);
+        boolean policemanPolice_IDCheckResult = igpDAO.getPolicemanPolice_IDCheckResult(police_id);
         return policemanPolice_IDCheckResult;
     }
 
     public boolean policemanNicCheck(String nic) {
         IgpDAO igpDAO = new IgpDAO();
-        boolean policemanNicCheckResult  = igpDAO.getPolicemanNicCheckResult(nic);
+        boolean policemanNicCheckResult = igpDAO.getPolicemanNicCheckResult(nic);
         return policemanNicCheckResult;
     }
 
     public boolean policemanMobileNumberCheck(String mobile_number) {
         IgpDAO igpDAO = new IgpDAO();
-        boolean policemanMobileNumberCheckResult  = igpDAO.getPolicemanMobileNumberCheckResult(mobile_number);
+        boolean policemanMobileNumberCheckResult = igpDAO.getPolicemanMobileNumberCheckResult(mobile_number);
         return policemanMobileNumberCheckResult;
     }
 
     public boolean policemanEmailCheck(String email) {
         IgpDAO igpDAO = new IgpDAO();
-        boolean policemanEmailCheckResult  = igpDAO.getPolicemanEmailCheckResult(email);
+        boolean policemanEmailCheckResult = igpDAO.getPolicemanEmailCheckResult(email);
         return policemanEmailCheckResult;
     }
 
 
-    public JSONArray login(String police_id, String password) {
-        IgpDAO igpDAO = new IgpDAO();
-        JSONArray policemanLoginResult = igpDAO.getPolicemanLoginResult(police_id, password);
-        return policemanLoginResult;
-    }
+//    public JSONArray login(String police_id, String password) {
+//        IgpDAO igpDAO = new IgpDAO();
+//        JSONArray policemanLoginResult = igpDAO.getPolicemanLoginResult(police_id, password);
+//        return policemanLoginResult;
+//    }
 
     public boolean LoginUsernameCheck(String police_id) {
         IgpDAO igpDAO = new IgpDAO();
-        boolean policemanLoginUsernameCheckResult  = igpDAO.getPolicemanLoginUsernameCheckResult(police_id);
+        boolean policemanLoginUsernameCheckResult = igpDAO.getPolicemanLoginUsernameCheckResult(police_id);
         return policemanLoginUsernameCheckResult;
     }
 
     public boolean deletePolicemanDetails(String police_id) {
         IgpDAO igpDAO = new IgpDAO();
-        boolean deletePolicemanDetailsResult  = igpDAO.deletePoliceman(police_id);
+        boolean deletePolicemanDetailsResult = igpDAO.deletePoliceman(police_id);
         return deletePolicemanDetailsResult;
     }
 
@@ -175,7 +188,7 @@ public class Policeman {
         igpDAO.updatePoliceman(this);
     }
 
-//OIC
+    //OIC
     public JSONArray getPolicemanDetailsAsOIC(String police_station) {
         OicDAO oicDAO = new OicDAO();
         JSONArray policemanDetailsListAsOIC = oicDAO.getPolicemanDetailsList(police_station);
@@ -186,6 +199,13 @@ public class Policeman {
         System.out.println("Came until the update Position in the Policeman model");
         OicDAO oicDAO = new OicDAO();
         oicDAO.editPosition(position, police_id);
+    }
+
+
+    public JSONArray loginFirstTime(String police_id, String hashedPassword, boolean firstTime) {
+        IgpDAO igpDAO = new IgpDAO();
+        JSONArray policemanLoginResult = igpDAO.getPolicemanLoginResult(police_id, hashedPassword, firstTime);
+        return policemanLoginResult;
     }
 }
 
