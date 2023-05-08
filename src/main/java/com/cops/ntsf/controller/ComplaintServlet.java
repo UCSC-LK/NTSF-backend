@@ -1,43 +1,64 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Complaint;
+import com.cops.ntsf.util.FileUpload;
 import com.cops.ntsf.util.Validator;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1 MB
+        maxFileSize = 20 * 1024 * 1024, // 20MB - Server accepts
+        maxRequestSize = 400 * 1024 * 1024 // 400MB - Server rejects if exceeded
+)
+
 public class ComplaintServlet extends HttpServlet {
+
+    private final String UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\user\\footage";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
         if (action.equals("createComplaint")) {
-            createComplaint(request, response);
+            try {
+                createComplaint(request, response);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
-    protected void createComplaint(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void createComplaint(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String fineNo = request.getParameter("fine_no");
         String userId = request.getParameter("user_id");
         String title = request.getParameter("title");
         String description = request.getParameter("description");
 
+        // Retrieve the file part
+        Part filePart = request.getPart("footage");
+
+        // Upload the file and get the resulting file path
+        String filePath = FileUpload.uploadFile(filePart, UPLOAD_DIRECTORY, userId);
+
         Validator validator = new Validator();
         int validateStatusCode = validator.validateParamsComplaint(title, description);
 
         switch (validateStatusCode) {
             case 0:
-                Complaint complaint = new Complaint(fineNo, userId, title, description);
+                Complaint complaint = new Complaint(fineNo, userId, title, description, filePath);
                 complaint.complaintAdded();
 
                 // Output response
@@ -97,5 +118,13 @@ public class ComplaintServlet extends HttpServlet {
 
         out.write(jsonObject.toString());
         out.close();
+    }
+
+    public static String renameFileName(String userId, String footage) throws Exception {
+        String[] parts = footage.split("\\.");
+        String extension = parts[1];
+        String new_footage = userId + "." + extension;
+        System.out.println("Profile Picture Name after change: " + new_footage);
+        return new_footage;
     }
 }
