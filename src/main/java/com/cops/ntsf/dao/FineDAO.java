@@ -34,7 +34,7 @@ public class FineDAO {
 
             int resultSet = preparedStatement.executeUpdate();
 
-            if (resultSet > 0){
+            if (resultSet > 0) {
                 System.out.println("Fine created successfully");
                 alert = true;
             } else {
@@ -108,9 +108,8 @@ public class FineDAO {
             nextFine.setOffenceNo(resultSet.getString("offence_no"));
             nextFine.setSpotDescription(resultSet.getString("spot_description"));
             nextFine.setNic(resultSet.getString("nic"));
-            nextFine.setLicenseNo(resultSet.getString("licence_no"));
+            nextFine.setLicenseNo(resultSet.getString("license_no"));
             nextFine.setVehicleNo(resultSet.getString("vehicle_no"));
-            nextFine.setDrivenVehicleNo(resultSet.getString("driven_vehicle_no"));
             nextFine.setImposedDateTime(LocalDateTime.parse(resultSet.getString("imposed_date_time"), formatter));
             nextFine.setDueDateTime(LocalDateTime.parse(resultSet.getString("due_date_time"), formatter));
             nextFine.setPoliceId(resultSet.getString("police_id"));
