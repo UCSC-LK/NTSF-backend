@@ -100,6 +100,7 @@ public class IgpDAO {
                 String mobile_number = resultSet.getString("mobile_number");
                 String email = resultSet.getString("email");
                 String rank = resultSet.getString("rank");
+                String grade = resultSet.getString("grade");
                 String police_station = resultSet.getString("police_station");
 
                 JSONObject jsonObject = new JSONObject();
@@ -109,17 +110,11 @@ public class IgpDAO {
                 jsonObject.put("mobile_number", mobile_number);
                 jsonObject.put("email", email);
                 jsonObject.put("rank", rank);
+                jsonObject.put("grade", grade);
                 jsonObject.put("police_station", police_station);
 
                 jsonArray.put(jsonObject);
 
-                System.out.println(name);
-                System.out.println(police_id);
-                System.out.println(nic);
-                System.out.println(mobile_number);
-                System.out.println(email);
-                System.out.println(rank);
-                System.out.println(police_station);
             }
 
             resultSet.close();

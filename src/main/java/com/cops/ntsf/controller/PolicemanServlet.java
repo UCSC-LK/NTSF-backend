@@ -1,5 +1,7 @@
 package com.cops.ntsf.controller;
 
+import com.cops.ntsf.model.Policeman;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.crypto.Mac;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Base64;
 
 public class PolicemanServlet extends HttpServlet {
@@ -55,8 +58,16 @@ public class PolicemanServlet extends HttpServlet {
                 System.out.println("JWT signature verification success");
                 JSONObject payloadJsonObject = new JSONObject(payloadJson);
                 String authorizedRank = payloadJsonObject.getString("rank");
+                System.out.println("Authorized Rank: " + authorizedRank);
                 String authorizedPosition = payloadJsonObject.getString("position");
-                if (authorizedRank == "policeman") {
+                System.out.println("Authorized Position: " + authorizedPosition);
+                if (authorizedRank.equals("igp") || authorizedRank.equals("oic") || authorizedRank.equals("policeman")){
+                    if (action.equals("viewProfile")) {
+                        System.out.println("CRedirecting to viewProfile in Policeman Servlet");
+                        viewProfile(request, response);
+                    }
+                }
+                else if (authorizedRank == "policeman") {
                     if (authorizedPosition == "trafficPolice") {
                         if (action.equals("addFine")) {
 //                            new FineServlet().addFine(request, response);
@@ -84,6 +95,28 @@ public class PolicemanServlet extends HttpServlet {
         else {
             System.out.println("JWT signature verification failed");
         }
+    }
+
+    protected void viewProfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("Came until the viewProfile method in Policeman Servlet");
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
+
+        String police_id = request.getParameter("police_id");
+        System.out.println("police_id: " + police_id);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("serverResponse", "Allowed");
+
+        Policeman policeman = new Policeman();
+        JSONArray profileInformation = policeman.getProfileDetails(police_id);
+
+        jsonObject.put("List", profileInformation);
+
+        out.write(jsonObject.toString());
+        out.close();
+
     }
 
 

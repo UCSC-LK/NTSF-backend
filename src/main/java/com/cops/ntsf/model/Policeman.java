@@ -215,5 +215,11 @@ public class Policeman {
         String email = policemanDAO.getEmail(police_id);
         return email;
     }
+
+    public JSONArray getProfileDetails(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        JSONArray profileDetails = policemanDAO.getProfileDetails(police_id);
+        return profileDetails;
+    }
 }
 
