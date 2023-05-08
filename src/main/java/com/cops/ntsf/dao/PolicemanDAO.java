@@ -56,6 +56,7 @@ public class PolicemanDAO {
                 String position = resultSet.getString("position");
                 String grade = resultSet.getString("grade");
                 String police_station = resultSet.getString("police_station");
+                String profile_picture = resultSet.getString("profile_picture");
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("name", name);
@@ -67,6 +68,7 @@ public class PolicemanDAO {
                 jsonObject.put("position", position);
                 jsonObject.put("grade", grade);
                 jsonObject.put("police_station", police_station);
+                jsonObject.put("profile_picture", profile_picture);
 
                 jsonArray.put(jsonObject);
 
