@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Complaint {
+    private String filePath;
     private String fineNo;
     private String userId;
     private String title;
@@ -27,11 +28,13 @@ public class Complaint {
         this.userId = userId;
     }
 
-//    public Complaint(String title, String description, String userId) {
-//        this.title = title;
-//        this.description = description;
-//        this.userId = userId;
-//    }
+    public Complaint(String fineNo, String userId, String title, String description, String filePath) {
+        this.fineNo = fineNo;
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+        this.filePath = filePath;
+    }
 
     public String getUserId() {
         return userId;
@@ -86,5 +89,9 @@ public class Complaint {
 
     public void setFineNo(String fineNo) {
         this.fineNo = fineNo;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 }
