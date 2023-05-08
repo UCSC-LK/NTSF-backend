@@ -2,6 +2,8 @@ package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.IgpDAO;
 import com.cops.ntsf.dao.OicDAO;
+import com.cops.ntsf.dao.PolicemanAuthDAO;
+import com.cops.ntsf.dao.PolicemanDAO;
 import org.json.JSONArray;
 
 public class Policeman {
@@ -206,6 +208,12 @@ public class Policeman {
         IgpDAO igpDAO = new IgpDAO();
         JSONArray policemanLoginResult = igpDAO.getPolicemanLoginResult(police_id, hashedPassword, firstTime);
         return policemanLoginResult;
+    }
+
+    public String gettingEmailForOTP(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        String email = policemanDAO.getEmail(police_id);
+        return email;
     }
 }
 

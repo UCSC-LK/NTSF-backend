@@ -72,4 +72,30 @@ public class PolicemanAuthDAO {
 
         return passwordChanged;
     }
+
+    public boolean OTPsend(String police_id, String otp) {
+        Connection dbConn = null;
+        boolean otpSent = false;
+
+        try{
+            dbConn = Database.getConnection();
+            System.out.println("Hi from OTPsend method in PolicemanAuthDAO.java");
+            System.out.println("police_id: " + police_id);
+            String sql = "UPDATE police_auth SET otp = ? WHERE police_id = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, otp);
+            preparedStatement.setString(2, police_id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                otpSent = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return otpSent;
+    }
+
+
 }

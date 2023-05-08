@@ -80,4 +80,12 @@ public class PolicemanAuth {
         System.out.println("changeFirstTimePasswordResult: " + changeFirstTimePasswordResult);
         return changeFirstTimePasswordResult;
     }
+
+    public boolean sendOTP(String police_id, String otp) {
+        PolicemanAuthDAO policemanAuthDAO = new PolicemanAuthDAO();
+        System.out.println("Hi from sendOTP method in PolicemanAuth.java");
+        boolean sendOTPResult = policemanAuthDAO.OTPsend(police_id, otp);
+        System.out.println("sendOTPResult: " + sendOTPResult);
+        return sendOTPResult;
+    }
 }

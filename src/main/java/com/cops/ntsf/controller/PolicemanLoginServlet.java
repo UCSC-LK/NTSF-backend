@@ -1,9 +1,12 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.constants.AuthType;
+import com.cops.ntsf.model.PoliceStation;
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.model.PolicemanAuth;
+import com.cops.ntsf.service.Email;
 import com.cops.ntsf.util.JwtUtils;
+import com.cops.ntsf.util.OTPGenerator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 
 import static com.cops.ntsf.util.PasswordHashUtil.hashingPassword;
 
@@ -27,10 +31,24 @@ public class PolicemanLoginServlet extends HttpServlet {
             checkLoginUsername(request, response);
         } else if (action.equals("changeFirstTimePassword")) {
             changeFirstTimePassword(request, response);
+        } else if (action.equals("sendOTP")) {
+            sendOTP(request, response);
+        } else if (action.equals("verifyOTP")) {
+            //verifyOTP(request, response);
         } else {
             System.out.println("Invalid action");
         }
     }
+
+//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String action = request.getParameter("action");
+//
+//        if (action.equals("sendOTP")) {
+//            sendOTP(request, response);
+//        } else {
+//            System.out.println("Invalid action");
+//        }
+//    }
 
     protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -145,5 +163,45 @@ public class PolicemanLoginServlet extends HttpServlet {
         System.out.println(police_id + " is the police id");
         return policemanAuth.checkFirstLoginOrNot(police_id); //return true if it is a first time login, else false
     }
+
+    protected void sendOTP(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+
+            String police_id = request.getParameter("police_id");
+
+            PolicemanAuth policemanAuth = new PolicemanAuth();
+            String otp = OTPGenerator.generateOTP();
+            System.out.println("OTP is " + otp);
+            boolean alert = policemanAuth.sendOTP(police_id, otp);
+
+            if (alert) {
+                Email email = new Email();
+                email.sendMail(getEmailForOTP(police_id), "OTP - National Traffic Spot Fine System", otp);
+            }
+            else {
+                System.out.println("OTP not sent");
+            }
+            System.out.println("Alert is " + alert);
+            jsonObject.put("serverResponse", "Allowed");
+            jsonObject.put("alert", alert);
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getEmailForOTP(String police_id) {
+        Policeman policeman = new Policeman();
+        return policeman.gettingEmailForOTP(police_id);
+    }
+
+
 
 }
