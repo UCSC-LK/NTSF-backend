@@ -31,11 +31,11 @@ public class FileUpload {
         return filePath;
     }
 
-    private static String renameFileName(String userId, String fileName) {
+    private static String renameFileName(String fineNo, String fileName) {
         System.out.println("File Name before renaming: " + fileName);
         String[] parts = fileName.split("\\.");
         String extension = parts[1];
-        String newFileName = userId + "." + extension;
+        String newFileName = fineNo + "." + extension;
         System.out.println("File Name after renaming: " + newFileName);
         return newFileName;
     }
