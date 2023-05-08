@@ -10,9 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Base64;
 
 public class PolicemanServlet extends HttpServlet {
@@ -66,22 +64,27 @@ public class PolicemanServlet extends HttpServlet {
                     if (action.equals("viewProfile")) {
                         System.out.println("CRedirecting to viewProfile in Policeman Servlet");
                         viewProfile(request, response);
+                    } else if (action.equals("viewProfilePicture")){
+                        System.out.println("CRedirecting to viewProfilePicture in Policeman Servlet");
+                        viewProfilePicture(request, response);
+                    } else {
+                        System.out.println("You are not authorized to access this page. Only Policemen are allowed to access this page");
                     }
                 }
-                else if (authorizedRank == "policeman") {
-                    if (authorizedPosition == "trafficPolice") {
+                else if (authorizedRank.equals("policeman")) {
+                    if (authorizedPosition.equals("trafficPolice")) {
                         if (action.equals("addFine")) {
 //                            new FineServlet().addFine(request, response);
                         } else {
                             System.out.println("You are not authorized to access this page, Only trafficPolice are allowed to access this page");
                         }
-                    } else if (authorizedPosition == "investigationOfficer") {
+                    } else if (authorizedPosition.equals("investigationOfficer")) {
                         if (action.equals("viewComplaintsAsInvestigationOfficer")) {
                             new ComplaintServlet().viewComplaintsAsInvestigationOfficer(request, response);
                         } else {
                             System.out.println("You are not authorized to access this page. Only investigationOfficer are allowed to access this page");
                         }
-                    } else if (authorizedPosition == "courtSeargent") {
+                    } else if (authorizedPosition.equals("courtSeargent")) {
                         if (action.equals("addComplaint")) {
 //                            new ComplaintServlet().addComplaint(request, response);
                         } else {
@@ -96,6 +99,49 @@ public class PolicemanServlet extends HttpServlet {
         else {
             System.out.println("JWT signature verification failed");
         }
+    }
+
+    protected void viewProfilePicture(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Came until the viewProfilePicture method in Policeman Servlet");
+        String police_id = request.getParameter("police_id");
+        String imagePath = request.getParameter("imagePath");
+
+//        String imagePath = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures\\1001001.jpeg"; // replace with your image path
+        File file = new File(imagePath);
+
+//        response.setContentType("image/jpeg"); // replace with your image type
+        // get the content type dynamically based on the image file extension
+        String contentType = getServletContext().getMimeType(file.getName());
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        response.setContentType(contentType);
+        response.setContentLength((int) file.length());
+
+        FileInputStream fis = new FileInputStream(file);
+        OutputStream out = response.getOutputStream();
+
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+
+        while ((bytesRead = fis.read(buffer)) != -1) {
+            out.write(buffer, 0, bytesRead);
+        }
+
+        fis.close();
+        out.flush();
+        out.close();
+    }
+
+    private String getExtension(String fileName) {
+        String extension = "";
+
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) {
+            extension = fileName.substring(i + 1);
+        }
+
+        return extension;
     }
 
     protected void viewProfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -119,6 +165,7 @@ public class PolicemanServlet extends HttpServlet {
         out.close();
 
     }
+
 
 
 }
