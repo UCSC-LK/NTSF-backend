@@ -5,11 +5,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvBuilder;
 
 public class Email {
-    Dotenv dotenv = Dotenv.load();
-    private final String username = dotenv.get("NTSF_EMAIL");
-    private final String password = dotenv.get("NTSF_PASSWORD");
+    private final String username = "ntsf.slpolice@gmail.com";
+    private final String password = "myPassword";
     private Session session = null;
 
     public Email() {
