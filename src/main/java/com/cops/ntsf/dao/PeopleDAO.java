@@ -29,6 +29,7 @@ public class PeopleDAO {
                 people.setGender(resultSet.getString("gender"));
                 people.setBirthPlace(resultSet.getString("birth_place"));
                 people.setJob(resultSet.getString("job"));
+                people.setProfilePicture(resultSet.getBlob("profile_picture"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

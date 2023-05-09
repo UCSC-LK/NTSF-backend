@@ -9,10 +9,10 @@ import java.nio.file.Paths;
 
 public class FileUpload {
 
-    public static String uploadFile(Part filePart, String uploadDirectory, String userId) throws Exception {
+    public static String uploadFile(Part filePart, String uploadDirectory, String fineNo) throws Exception {
         InputStream fileContent = filePart.getInputStream();
         String fileName = filePart.getSubmittedFileName();
-        String renamedFileName = renameFileName(userId, fileName);
+        String renamedFileName = renameFileName(fineNo, fileName);
         String filePath = uploadDirectory + File.separator + renamedFileName;
 
         OutputStream outputStream = Files.newOutputStream(Paths.get(filePath));
@@ -31,11 +31,11 @@ public class FileUpload {
         return filePath;
     }
 
-    private static String renameFileName(String userId, String fileName) {
+    private static String renameFileName(String fineNo, String fileName) {
         System.out.println("File Name before renaming: " + fileName);
         String[] parts = fileName.split("\\.");
         String extension = parts[1];
-        String newFileName = userId + "." + extension;
+        String newFileName = fineNo + "." + extension;
         System.out.println("File Name after renaming: " + newFileName);
         return newFileName;
     }

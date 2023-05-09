@@ -13,6 +13,7 @@ public class ComplaintDAO {
         Connection dbConn = null;
         try {
             dbConn = Database.getConnection();
+//            String sql = "INSERT into complaint (fine_no, user_id, title, description, footage) VALUES (?, ?, ?, ?)";
             String sql = "INSERT into complaint (fine_no, user_id, title, description, footage) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, complaint.getFineNo());

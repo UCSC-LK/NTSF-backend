@@ -5,7 +5,7 @@ import com.cops.ntsf.dao.DriverDAO;
 import java.sql.Date;
 
 public class Driver extends User {
-    private String licenceNo;
+    private String licenseNo;
     private Date issueDate;
     private Date expireDate;
     private String administrativeNo;
@@ -14,16 +14,19 @@ public class Driver extends User {
     private String address;
     private String vehicleCategories;
 
+    public Driver() {
+    }
+
     public Driver(String nic) {
         super(nic);
     }
 
     public String getLicenceNo() {
-        return licenceNo;
+        return licenseNo;
     }
 
-    public void setLicenceNo(String licenceNo) {
-        this.licenceNo = licenceNo;
+    public void setLicenceNo(String licenseNo) {
+        this.licenseNo = licenseNo;
     }
 
     public void getDriverFromLicenseNo() {
@@ -94,5 +97,18 @@ public class Driver extends User {
 
     public void setVehicleCategories(String vehicleCategories) {
         this.vehicleCategories = vehicleCategories;
+    }
+
+    public void setLicenseNo(String licenseNo) {
+        this.licenseNo = licenseNo;
+    }
+
+    public String getLicenseNo() {
+        return licenseNo;
+    }
+
+    public String getNICByLicenseNo(String licenseNo) {
+        DriverDAO driverDAO = new DriverDAO();
+        return driverDAO.fetchNICByLicenseNo(this);
     }
 }
