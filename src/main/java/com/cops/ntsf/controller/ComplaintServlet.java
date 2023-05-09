@@ -1,6 +1,7 @@
 package com.cops.ntsf.controller;
 
 import com.cops.ntsf.model.Complaint;
+import com.cops.ntsf.util.FileUpload;
 import com.cops.ntsf.util.Validator;
 import com.google.gson.Gson;
 import org.json.JSONArray;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 
 public class ComplaintServlet extends HttpServlet {
 
-//    private final String UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\user\\footage";
+    private final String UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\user\\footage";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -45,19 +47,19 @@ public class ComplaintServlet extends HttpServlet {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
 
-//        // Retrieve the file part
-//        Part filePart = request.getPart("footage");
-//
-//        // Upload the file and get the resulting file path
-//        String filePath = FileUpload.uploadFile(filePart, UPLOAD_DIRECTORY, userId);
+        // Retrieve the file part
+        Part filePart = request.getPart("footage");
+
+        // Upload the file and get the resulting file path
+        String filePath = FileUpload.uploadFile(filePart, UPLOAD_DIRECTORY, userId);
 
         Validator validator = new Validator();
         int validateStatusCode = validator.validateParamsComplaint(title, description);
 
         switch (validateStatusCode) {
             case 0:
-                Complaint complaint = new Complaint(fineNo, userId, title, description);
-//                Complaint complaint = new Complaint(fineNo, userId, title, description, filePath);
+//                Complaint complaint = new Complaint(fineNo, userId, title, description);
+                Complaint complaint = new Complaint(fineNo, userId, title, description, filePath);
                 complaint.complaintAdded();
 
                 // Output response
