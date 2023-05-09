@@ -1,10 +1,12 @@
 package com.cops.ntsf.controller;
 
+import com.cops.ntsf.model.Driver;
 import com.cops.ntsf.model.Fine;
 import com.cops.ntsf.model.FinesByOffenceType;
+import com.cops.ntsf.model.Offence;
 import com.cops.ntsf.service.FineService;
+import com.cops.ntsf.service.PointService;
 import com.cops.ntsf.util.ParseJSON;
-import com.google.protobuf.Internal;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,7 +31,9 @@ import java.util.Base64;
 
 public class FineServlet extends HttpServlet {
 
-    private final String FINE_FOOTAGE_UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\fine_footage"; ;
+    private final String FINE_FOOTAGE_UPLOAD_DIRECTORY = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\fine_footage";
+    ;
+
     protected void addFine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
@@ -38,7 +42,7 @@ public class FineServlet extends HttpServlet {
 
             JSONObject jsonObject = new JSONObject();
 
-            boolean alert  = false;
+            boolean alert = false;
             //Fine Number is auto incremented
             String offenceType = request.getParameter("offence_type");
             //Front end sends user_id as nic/licenseNo/vehicleNo depending on the fine type
@@ -104,6 +108,10 @@ public class FineServlet extends HttpServlet {
                         String vehicleNo = null;
                         String drivenVehicleNo = null;
                         Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName);
+
+                        /**
+                         * Here the creation of fines happen for pedestrian
+                         */
                         alert = fine.createFine();
                         System.out.println("reached");
                     } else {
@@ -118,6 +126,10 @@ public class FineServlet extends HttpServlet {
                         String licenseNo = null;
                         String drivenVehicleNo = null;
                         Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName);
+
+                        /**
+                         * Here the creation of fines happen for vehicle
+                         */
                         alert = fine.createFine();
                     } else {
                         System.out.println("Invalid vehicle number");
@@ -128,22 +140,39 @@ public class FineServlet extends HttpServlet {
                     String drivenVehicleNo = request.getParameter("driven_vehicle");
 
                     if (checkLicenseNoValidations(licenseNo)) {
-                        String nic = getNICByLicenseNo(licenseNo);
+                        /**
+                         * Get Nic from driver table using NIC
+                         */
+                        Driver driver = new Driver();
+                        String nic = driver.getNICByLicenseNo(licenseNo);
+
                         System.out.println("NIC: " + nic);
                         String vehicleNo = null;
                         Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName);
+
+                        /**
+                         * Here the creation of fines happen for driver
+                         */
                         alert = fine.createFine();
+
+                        // Step 1 - Getting demerit points related to current fine
+                        Offence offence = new Offence();
+                        Integer demeritPoints = offence.getDemeritPointsByOffenceNo(offenceNo);
+
+                        // Step 2 - Point Reduction
+                        PointService pointService = new PointService();
+                        pointService.reducePoints(demeritPoints, nic);
                     }
 
                 } else {
                     System.out.println("Invalid offence type");
                 }
 
-                if(alert){
+                if (alert) {
                     System.out.println("Fine Added Successfully");
                     jsonObject.put("serverResponse", "Not Allowed");
                     jsonObject.put("alert", alert);
-                }else{
+                } else {
                     System.out.println("Fine Adding Failed");
                     jsonObject.put("serverResponse", "Allowed");
                     jsonObject.put("alert", alert);
@@ -163,9 +192,10 @@ public class FineServlet extends HttpServlet {
         return "123456789V";
     }
 
-    private String getNICByLicenseNo(String vehicleNo) {
-        return "123456789V";
-    }
+//    private String getNICByLicenseNo(String licenseNo) {
+//        DriverDAO driverDAO = new DriverDAO();
+//        return driverDAO.fetchNICByLicenseNo();
+//    }
 
     private boolean checkNICValidations(String nic) {
         return true;
@@ -315,6 +345,13 @@ public class FineServlet extends HttpServlet {
 
     }
 
+    /**
+     * Get fines info of a user
+     *
+     * @param req  HTTP request
+     * @param resp HTTP response
+     * @throws IOException Exception
+     */
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         // Get request parameters
@@ -351,5 +388,4 @@ public class FineServlet extends HttpServlet {
         System.out.println("Profile Picture Name after change: " + new_file_footage);
         return new_file_footage;
     }
-
 }
