@@ -7,9 +7,11 @@ import java.util.Properties;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvBuilder;
 
+
 public class Email {
-    private final String username = "ntsf.slpolice@gmail.com";
-    private final String password = "myPassword";
+    Dotenv dotenv = Dotenv.load();
+    private final String username = dotenv.get("NTSF_EMAIL");
+    private final String password = dotenv.get("NTSF_PASSWORD");
     private Session session = null;
 
     public Email() {
