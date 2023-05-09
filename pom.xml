@@ -82,11 +82,14 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- dot env -->
+        <!-- https://mvnrepository.com/artifact/io.github.cdimascio/java-dotenv -->
         <dependency>
-            <groupId>com.stripe</groupId>
-            <artifactId>stripe-java</artifactId>
-            <version>1.14.0</version>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>java-dotenv</artifactId>
+            <version>5.2.2</version>
         </dependency>
+
     </dependencies>
 
     <build>

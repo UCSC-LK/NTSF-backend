@@ -5,6 +5,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+//require
 public class Email {
     private final String username = "ntsf.slpolice@gmail.com";
     private final String password = "myPassword";
