@@ -23,8 +23,9 @@ import static com.cops.ntsf.util.PasswordHashUtil.hashingPassword;
 public class PolicemanLoginServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Came until the doPOST in PolicemanLoginServlet");
         String action = request.getParameter("action");
-
+        System.out.println("Action: " + action);
         if (action.equals("login")) {
             login(request, response);
         } else if (action.equals("checkLoginUsername")) {
@@ -32,6 +33,7 @@ public class PolicemanLoginServlet extends HttpServlet {
         } else if (action.equals("changeFirstTimePassword")) {
             changeFirstTimePassword(request, response);
         } else if (action.equals("sendOTP")) {
+            System.out.println("Redirecting to sendOTP");
             sendOTP(request, response);
         } else if (action.equals("verifyOTP")) {
             //verifyOTP(request, response);
@@ -177,6 +179,7 @@ public class PolicemanLoginServlet extends HttpServlet {
             String otp = OTPGenerator.generateOTP();
             System.out.println("OTP is " + otp);
             boolean alert = policemanAuth.sendOTP(police_id, otp);
+            System.out.println("Alert is " + alert);
 
             if (alert) {
                 Email email = new Email();
