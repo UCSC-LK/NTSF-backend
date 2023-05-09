@@ -16,6 +16,9 @@ public class People extends User {
     private Date dob;
     private Blob profilePicture;
 
+    public People() {
+    }
+
     public String getName() {
         return name;
     }
