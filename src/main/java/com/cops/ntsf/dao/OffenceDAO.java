@@ -197,7 +197,7 @@ public class OffenceDAO {
                 String description = resultSet.getString("description");
                 int amount = resultSet.getInt("amount");
                 int demerit_points = resultSet.getInt("demerit_points");
-                
+
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("offence_no", offence_no);
                 jsonObject.put("offence_type", offence_type);
@@ -250,5 +250,24 @@ public class OffenceDAO {
         }
         return alert;
 
+    }
+
+    public void fetchDemeritPointsByOffenceNo(Offence offence) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "SELECT * FROM offence WHERE offence_no = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setInt(1, offence.getOffence_no());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                offence.setDemerit_points(resultSet.getInt("demerit_points"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

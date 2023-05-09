@@ -126,4 +126,10 @@ public class Offence {
         boolean offenceEditedResult = offenceDAO.editOffence(this);
         return offenceEditedResult;
     }
+
+    public Integer getDemeritPointsByOffenceNo(String offenceNo) {
+        OffenceDAO offenceDAO = new OffenceDAO();
+        offenceDAO.fetchDemeritPointsByOffenceNo(this);
+        return null;
+    }
 }

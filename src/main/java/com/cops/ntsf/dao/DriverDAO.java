@@ -15,7 +15,7 @@ public class DriverDAO {
     public void getDriverFromLicense(Driver driver) {
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM driver WHERE licence_no = ?";
+        String sql = "SELECT * FROM driver WHERE license_no = ?";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
@@ -42,7 +42,7 @@ public class DriverDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                driver.setLicenceNo(resultSet.getString("licence_no"));
+                driver.setLicenseNo(resultSet.getString("license_no"));
                 driver.setExpireDate(resultSet.getDate("issue_date"));
                 driver.setIssueDate(resultSet.getDate("expire_date"));
                 driver.setAdministrativeNo(resultSet.getString("administrative_no"));
@@ -55,5 +55,25 @@ public class DriverDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String fetchNICByLicenseNo(Driver driver) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "SELECT nic FROM driver WHERE license_no = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, driver.getLicenseNo());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                driver.setLicenseNo(resultSet.getString("license_no"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return driver.getLicenseNo();
     }
 }
