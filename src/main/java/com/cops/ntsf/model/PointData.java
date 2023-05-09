@@ -25,7 +25,7 @@ public class PointData {
     public PointData() {
     }
 
-    public void getPointInfo() throws SQLException {
+    public void getPointInfo(String nic) throws SQLException {
         PointSystemDAO pointSystemDAO = new PointSystemDAO();
         pointSystemDAO.getPointInfo(this);
     }

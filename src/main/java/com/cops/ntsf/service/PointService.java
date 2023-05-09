@@ -16,21 +16,15 @@ public class PointService {
         }
     }
 
-    // Check whether current point is less than or equal to 0
+    /**
+     * Check whether current point is less than or equal to 0
+     *
+     * @param currentPoints Current points
+     * @return If current points greater than 0
+     */
     public boolean checkCurrentPoints(int currentPoints) {
         return currentPoints > 0;
     }
-
-    //    public PointData getPointInfo(String nic) {
-//        PointData pointData = new PointData(nic);
-//        try {
-//            pointData.getPointInfo();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        return pointData;
-//    }
 
 //    public PointData reducePoints(String nic, String fineNo) {
 //        Fine fine = new Fine(Integer.parseInt(fineNo), nic);

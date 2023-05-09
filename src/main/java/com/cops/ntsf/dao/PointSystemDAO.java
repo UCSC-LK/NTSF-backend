@@ -23,7 +23,7 @@ public class PointSystemDAO {
                 point.setMaxPointLimit(resultSet.getInt("max_point_limit"));
                 point.setMinPointLimit(resultSet.getInt("min_point_limit"));
                 point.setInitialPoints(resultSet.getInt("initial_points"));
-                point.setRemainingPoints(resultSet.getInt("remaining_points"));
+                point.setRemainingPoints(resultSet.getInt("current_points"));
                 point.setMaxRecoveryDate(resultSet.getDate("max_recovery_date"));
             }
         } catch (SQLException e) {
