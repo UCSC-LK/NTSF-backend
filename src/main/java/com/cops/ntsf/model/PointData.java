@@ -5,7 +5,7 @@ import com.cops.ntsf.dao.PointSystemDAO;
 import java.sql.Date;
 import java.sql.SQLException;
 
-public class Point {
+public class PointData {
     private String nic;
 
     private Integer maxPointLimit;
@@ -18,11 +18,11 @@ public class Point {
 
     private Date maxRecoveryDate;
 
-    public Point(String nic) {
+    public PointData(String nic) {
         this.nic = nic;
     }
 
-    public Point() {
+    public PointData() {
     }
 
     public void getPointInfo() throws SQLException {
@@ -80,6 +80,11 @@ public class Point {
 
     public int getCurrentPoints() {
         return currentPoints;
+    }
+
+    public int getCurrentPointsByNic(String nic) {
+        PointSystemDAO pointSystemDAO = new PointSystemDAO();
+        return pointSystemDAO.fetchCurrentPointsByNic(this);
     }
 
     public void updateCurrentPoints(int currentPoints) {
