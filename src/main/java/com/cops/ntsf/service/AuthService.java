@@ -26,6 +26,7 @@ public class AuthService {
         JSONObject loginResponse = new JSONObject();
         loginResponse.put("loggedIn", verifyPassword(auth.getPassword(), inputPassword));
         loginResponse.put("userId", userId);
+        loginResponse.put("nic", nic);
 
         if (loggedIn) {
             JwtUtils jwtUtils = new JwtUtils(AuthType.USER, null);
