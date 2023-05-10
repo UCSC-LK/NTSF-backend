@@ -91,8 +91,7 @@ public class People extends User {
     }
 
     /**
-     * @return
-     * @throws SQLException
+     * Convert profile picture to base64 encoded string
      */
     public String getProfilePicture() throws SQLException {
 //        return new String(profilePicture.getBytes((long) 1, (int) profilePicture.length()));
