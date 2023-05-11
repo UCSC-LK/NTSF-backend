@@ -61,6 +61,9 @@ public class FineServlet extends HttpServlet {
             System.out.println("fileContent: " + fileContent);
             String fileName = filePart.getSubmittedFileName();
 
+            String latitude = request.getParameter("latitude");
+            String longitude = request.getParameter("longitude");
+
             //Payment status is set to unpaid by default at database level
 
             System.out.println("Offence Type: " + offenceType);
@@ -71,6 +74,8 @@ public class FineServlet extends HttpServlet {
             System.out.println("Imposed date time: " + imposedDateTime);
             System.out.println("Due date time: " + dueDateTime);
             System.out.println("File name: " + fileName);
+            System.out.println("Latitude: " + latitude);
+            System.out.println("Longitude: " + longitude);
 
             String renamedFileName = renameProfilePicture(fileName); //rename the file name
             String filePath = FINE_FOOTAGE_UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
@@ -107,7 +112,7 @@ public class FineServlet extends HttpServlet {
                         String licenseNo = null;
                         String vehicleNo = null;
                         String drivenVehicleNo = null;
-                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName);
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName, latitude, longitude);
 
                         /**
                          * Here the creation of fines happen for pedestrian
@@ -125,7 +130,7 @@ public class FineServlet extends HttpServlet {
                         System.out.println("NIC: " + nic);
                         String licenseNo = null;
                         String drivenVehicleNo = null;
-                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName);
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName, latitude, longitude);
 
                         /**
                          * Here the creation of fines happen for vehicle
@@ -148,7 +153,7 @@ public class FineServlet extends HttpServlet {
 
                         System.out.println("NIC: " + nic);
                         String vehicleNo = null;
-                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName);
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName, latitude, longitude);
 
                         /**
                          * Here the creation of fines happen for driver
@@ -216,10 +221,16 @@ public class FineServlet extends HttpServlet {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("serverResponse", "Allowed");
+        System.out.println("Reached viewFineAsOIC");
+        String policeStation = request.getParameter("police_station");
+        String offenceType = request.getParameter("offence_type");
+        String paymentStatus = request.getParameter("payment_status");
+        System.out.println("Police station is " + policeStation);
+        System.out.println("Offence Type is " + offenceType);
+        System.out.println("Payment Status is " + paymentStatus);
 
-        Fine fine = null;
-        fine = new Fine(fine.getNic());
-        JSONArray fineListAsOIC = fine.getFineListAsOIC();
+        Fine fine = new Fine();
+        JSONArray fineListAsOIC = fine.getFineListAsOIC(policeStation, offenceType, paymentStatus);
 
         jsonObject.put("List", fineListAsOIC);
 
@@ -332,6 +343,7 @@ public class FineServlet extends HttpServlet {
                     }
                 } else if (authorizedRank.equals("oic")) {
                     if (action.equals("viewFineAsOIC")) {
+                        System.out.println("Redirecting to viewFineAsOIC method");
                         viewFineAsOIC(request, response);
                     }
                 } else {
