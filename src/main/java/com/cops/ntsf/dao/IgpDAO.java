@@ -534,6 +534,67 @@ public class IgpDAO {
         return jsonArray;
     }
 
+    public JSONArray getDashboardDetails() {
+        Connection dbConn = null;
+        JSONArray jsonArray = new JSONArray();
+        try {
+            System.out.println("Came until the DAO of getDashboardDetails");
+
+            dbConn = Database.getConnection();
+
+            String sql1 = "SELECT COUNT(branch_name) AS count FROM police_station";
+            String sql2 = "SELECT COUNT(police_id) AS count FROM policeman WHERE active = 1";
+            String sql3 = "SELECT COUNT(police_id) AS count FROM policeman WHERE active = 1 AND position = 'trafficPolice'";
+            String sql4 = "SELECT SUM(amount) AS sum FROM fine JOIN offence ON fine.offence_no = offence.offence_no";
+            String sql5 = "SELECT SUM(amount) AS sum FROM fine JOIN offence ON fine.offence_no = offence.offence_no WHERE fine.payment_status = 'paid'";
+            String sql6 = "SELECT SUM(amount) AS sum FROM fine JOIN offence ON fine.offence_no = offence.offence_no WHERE fine.payment_status = 'unpaid'";
+
+            PreparedStatement preparedStatement1 = dbConn.prepareStatement(sql1);
+            PreparedStatement preparedStatement2 = dbConn.prepareStatement(sql2);
+            PreparedStatement preparedStatement3 = dbConn.prepareStatement(sql3);
+            PreparedStatement preparedStatement4 = dbConn.prepareStatement(sql4);
+            PreparedStatement preparedStatement5 = dbConn.prepareStatement(sql5);
+            PreparedStatement preparedStatement6 = dbConn.prepareStatement(sql6);
+
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
+            ResultSet resultSet3 = preparedStatement3.executeQuery();
+            ResultSet resultSet4 = preparedStatement4.executeQuery();
+            ResultSet resultSet5 = preparedStatement5.executeQuery();
+            ResultSet resultSet6 = preparedStatement6.executeQuery();
+
+            if (resultSet1.next() && resultSet2.next() && resultSet3.next() && resultSet4.next() && resultSet5.next() && resultSet6.next()) {
+                int policeStationCount = resultSet1.getInt("count");
+                int policemanCount = resultSet2.getInt("count");
+                int trafficPolicemanCount = resultSet3.getInt("count");
+                int totalFineAmount = resultSet4.getInt("sum");
+                int totalPaidFineAmount = resultSet5.getInt("sum");
+                int totalUnpaidFineAmount = resultSet6.getInt("sum");
+
+                System.out.println(policeStationCount);
+                System.out.println(policemanCount);
+                System.out.println(trafficPolicemanCount);
+                System.out.println(totalFineAmount);
+                System.out.println(totalPaidFineAmount);
+                System.out.println(totalUnpaidFineAmount);
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("policeStationCount", policeStationCount);
+                jsonObject.put("policemanCount", policemanCount);
+                jsonObject.put("trafficPolicemanCount", trafficPolicemanCount);
+                jsonObject.put("totalFineAmount", totalFineAmount);
+                jsonObject.put("totalPaidFineAmount", totalPaidFineAmount);
+                jsonObject.put("totalUnpaidFineAmount", totalUnpaidFineAmount);
+
+                jsonArray.put(jsonObject);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return jsonArray;
+    }
+
 }
 
 

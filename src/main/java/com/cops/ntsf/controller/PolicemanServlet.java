@@ -62,11 +62,14 @@ public class PolicemanServlet extends HttpServlet {
                 System.out.println("Authorized Position: " + authorizedPosition);
                 if (authorizedRank.equals("igp") || authorizedRank.equals("oic") || authorizedRank.equals("policeman")){
                     if (action.equals("viewProfile")) {
-                        System.out.println("CRedirecting to viewProfile in Policeman Servlet");
+                        System.out.println("Redirecting to viewProfile in Policeman Servlet");
                         viewProfile(request, response);
-                    } else if (action.equals("viewProfilePicture")){
-                        System.out.println("CRedirecting to viewProfilePicture in Policeman Servlet");
+                    } else if (action.equals("viewProfilePicture")) {
+                        System.out.println("Redirecting to viewProfilePicture in Policeman Servlet");
                         viewProfilePicture(request, response);
+                    } else if (action.equals("viewProfilePictureInDashboard")){
+                        System.out.println("Redirecting to viewProfilePictureInDashboard in Policeman Servlet");
+                        viewProfilePictureInDashboard(request, response);
                     } else {
                         System.out.println("You are not authorized to access this page. Only Policemen are allowed to access this page");
                     }
@@ -165,6 +168,40 @@ public class PolicemanServlet extends HttpServlet {
         out.close();
 
     }
+    protected void viewProfilePictureInDashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Came until the viewProfilePictureInDashboard method in Policeman Servlet");
+        String police_id = request.getParameter("police_id");
+
+        String imagePath = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures\\" + police_id + ".jpeg"; // Create path using police_id for dashboard
+        System.out.println("imagePath: " + imagePath);
+
+//        String imagePath = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures\\1001001.jpeg"; // replace with your image path
+        File file = new File(imagePath);
+
+//        response.setContentType("image/jpeg"); // replace with your image type
+        // get the content type dynamically based on the image file extension
+        String contentType = getServletContext().getMimeType(file.getName());
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        response.setContentType(contentType);
+        response.setContentLength((int) file.length());
+
+        FileInputStream fis = new FileInputStream(file);
+        OutputStream out = response.getOutputStream();
+
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+
+        while ((bytesRead = fis.read(buffer)) != -1) {
+            out.write(buffer, 0, bytesRead);
+        }
+
+        fis.close();
+        out.flush();
+        out.close();
+    }
+
 
 
 

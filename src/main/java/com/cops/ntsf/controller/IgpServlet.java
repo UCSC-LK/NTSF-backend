@@ -1,5 +1,6 @@
 package com.cops.ntsf.controller;
 
+import com.cops.ntsf.dao.IgpDAO;
 import com.cops.ntsf.model.Policeman;
 import com.cops.ntsf.model.PolicemanAuth;
 import com.cops.ntsf.service.Email;
@@ -316,6 +317,26 @@ public class IgpServlet extends HttpServlet {
 
     }
 
+    private void fetchDashboardDetails(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            IgpDAO igpDAO = new IgpDAO();
+            JSONArray fetchedDashboardDetails = igpDAO.getDashboardDetails();
+            jsonObject.put("List", fetchedDashboardDetails);
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String action = request.getParameter("action");
@@ -354,6 +375,11 @@ public class IgpServlet extends HttpServlet {
                 } else if (action.equals("checkEmail")) {
                     checkPolicemanEmail(request, response);
                     System.out.println("Hi from Email Checking servelet");
+                } else if (action.equals("fetchDashboardDetails")){
+                    fetchDashboardDetails(request, response);
+                    System.out.println("Redirecting to DashboardDetails servelet");
+                } else {
+                    System.out.println("Invalid action");
                 }
             } else {
                 System.out.println("You are not authorized to access this page");
@@ -362,6 +388,7 @@ public class IgpServlet extends HttpServlet {
             System.out.println("JWT signature verification failed");
         }
     }
+
 
     private boolean checkValidations(String name, String police_id, String nic, String mobile_number, String email, String rank, String police_station) {
         boolean flagName = false; //flag = true means name validation is passed
