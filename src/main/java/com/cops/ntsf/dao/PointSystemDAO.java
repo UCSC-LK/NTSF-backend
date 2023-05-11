@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PointSystemDAO {
-    public void getPointInfo(PointData pointData) throws SQLException {
+    public void getPointInfo(PointData pointData) {
         Connection dbConn = Database.getConnection();
 
         String sql = "SELECT * FROM point_system WHERE nic = ?";

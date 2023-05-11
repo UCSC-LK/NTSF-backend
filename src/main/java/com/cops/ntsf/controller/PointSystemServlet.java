@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 public class PointSystemServlet extends HttpServlet {
 
@@ -17,11 +16,8 @@ public class PointSystemServlet extends HttpServlet {
         String nic = req.getParameter("nic");
 
         PointData pointData = new PointData();
-        try {
-            pointData.getPointInfo(nic);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        
+        pointData.getPointInfo(nic);
 
         // Output response
         PrintWriter out = resp.getWriter();

@@ -3,7 +3,6 @@ package com.cops.ntsf.model;
 import com.cops.ntsf.dao.PointSystemDAO;
 
 import java.sql.Date;
-import java.sql.SQLException;
 
 public class PointData {
     private String nic;
@@ -25,7 +24,7 @@ public class PointData {
     public PointData() {
     }
 
-    public void getPointInfo(String nic) throws SQLException {
+    public void getPointInfo(String nic) {
         PointSystemDAO pointSystemDAO = new PointSystemDAO();
         pointSystemDAO.getPointInfo(this);
     }
