@@ -372,6 +372,7 @@ public class FineServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
+        // To get local date time
         out.write(ParseJSON.parseToJSONString(finesList));
         out.close();
     }

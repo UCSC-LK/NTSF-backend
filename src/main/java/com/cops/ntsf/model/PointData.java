@@ -58,7 +58,7 @@ public class PointData {
         return initialPoints;
     }
 
-    public void setRemainingPoints(int currentPoints) {
+    public void setCurrentPoints(int currentPoints) {
         this.currentPoints = currentPoints;
     }
 
@@ -90,9 +90,5 @@ public class PointData {
     public void updateCurrentPoints(int currentPoints) {
         PointSystemDAO pointSystemDAO = new PointSystemDAO();
         pointSystemDAO.updateCurrentPoints(this);
-    }
-
-    public void setCurrentPoints(int currentPoints) {
-        this.currentPoints = currentPoints;
     }
 }
