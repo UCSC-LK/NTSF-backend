@@ -16,9 +16,9 @@ public class PointSystemServlet extends HttpServlet {
         // Get request parameters
         String nic = req.getParameter("nic");
 
-        PointData pointData = new PointData();
+        PointData pointData = new PointData(nic);
 
-        pointData.getPointInfo(nic);
+        pointData.getPointInfo();
 
         // Output response
         PrintWriter out = resp.getWriter();

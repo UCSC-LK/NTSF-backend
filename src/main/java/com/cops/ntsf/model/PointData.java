@@ -24,7 +24,7 @@ public class PointData {
     public PointData() {
     }
 
-    public void getPointInfo(String nic) {
+    public void getPointInfo() {
         PointSystemDAO pointSystemDAO = new PointSystemDAO();
         pointSystemDAO.getPointInfo(this);
     }
