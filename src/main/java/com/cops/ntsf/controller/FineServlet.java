@@ -1,9 +1,7 @@
 package com.cops.ntsf.controller;
 
-import com.cops.ntsf.model.Driver;
-import com.cops.ntsf.model.Fine;
-import com.cops.ntsf.model.FinesByOffenceType;
-import com.cops.ntsf.model.Offence;
+import com.cops.ntsf.dao.VehicleDAO;
+import com.cops.ntsf.model.*;
 import com.cops.ntsf.service.FineService;
 import com.cops.ntsf.service.PointService;
 import com.cops.ntsf.util.ParseJSON;
@@ -79,6 +77,7 @@ public class FineServlet extends HttpServlet {
 
             String renamedFileName = renameProfilePicture(fileName); //rename the file name
             String filePath = FINE_FOOTAGE_UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
+            System.out.println("filePath: " + filePath);
 
             // Create the directory if it doesn't exist - Remove this snippet if not necessary
 //            File directory = new File(FINE_FOOTAGE_UPLOAD_DIRECTORY);
@@ -112,7 +111,7 @@ public class FineServlet extends HttpServlet {
                         String licenseNo = null;
                         String vehicleNo = null;
                         String drivenVehicleNo = null;
-                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName, latitude, longitude);
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, filePath, latitude, longitude);
 
                         /**
                          * Here the creation of fines happen for pedestrian
@@ -126,11 +125,12 @@ public class FineServlet extends HttpServlet {
                     String vehicleNo = request.getParameter("user_id");
 
                     if (checkVehicleNoValidations(vehicleNo)) {
-                        String nic = getNICByVehicleNo(vehicleNo);
+                        Vehicle vehicle = new Vehicle();
+                        String nic = vehicle.getNICByVehicleNo(vehicleNo);
                         System.out.println("NIC: " + nic);
                         String licenseNo = null;
                         String drivenVehicleNo = null;
-                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName, latitude, longitude);
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, filePath, latitude, longitude);
 
                         /**
                          * Here the creation of fines happen for vehicle
@@ -156,7 +156,7 @@ public class FineServlet extends HttpServlet {
 
                         System.out.println("NIC: " + nic);
                         String vehicleNo = null;
-                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, fileName, latitude, longitude);
+                        Fine fine = new Fine(offenceNo, nic, licenseNo, vehicleNo, drivenVehicleNo, spotDescription, imposedDateTime, dueDateTime, policeId, policeStation, filePath, latitude, longitude);
 
                         /**
                          * Here the creation of fines happen for driver
@@ -196,9 +196,6 @@ public class FineServlet extends HttpServlet {
         }
     }
 
-    private String getNICByVehicleNo(String vehicleNo) {
-        return "123456789V";
-    }
 
 //    private String getNICByLicenseNo(String licenseNo) {
 //        DriverDAO driverDAO = new DriverDAO();

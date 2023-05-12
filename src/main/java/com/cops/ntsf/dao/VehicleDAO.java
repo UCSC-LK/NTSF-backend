@@ -95,4 +95,25 @@ public class VehicleDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public String fetchNICByVehicleNo(String vehicleNo) {
+        Connection dbConn = Database.getConnection();
+        String nic = null;
+
+        String sql = "SELECT nic FROM vehicle WHERE register_no = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, vehicleNo);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+               nic = resultSet.getString("nic");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return nic;
+    }
 }
