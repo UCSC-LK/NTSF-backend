@@ -336,6 +336,7 @@ public class FineServlet extends HttpServlet {
                 if (authorizedRank.equals("policeman")) {
                     if (authorizedPosition.equals("trafficPolice")) {
                         if (action.equals("addFine")) {
+                            System.out.println("Redirecting to addFine method");
                             addFine(request, response);
                         }
                     } else {

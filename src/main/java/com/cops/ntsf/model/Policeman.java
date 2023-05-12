@@ -184,10 +184,11 @@ public class Policeman {
     }
 
 
-    public void policemanEdited() {
+    public boolean policemanEdited() {
         System.out.println("Came until the update model");
         IgpDAO igpDAO = new IgpDAO();
-        igpDAO.updatePoliceman(this);
+        boolean policemanUpdatedResult = igpDAO.updatePoliceman(this);
+        return policemanUpdatedResult;
     }
 
     //OIC

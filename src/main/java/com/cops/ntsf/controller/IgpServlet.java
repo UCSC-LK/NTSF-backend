@@ -178,6 +178,7 @@ public class IgpServlet extends HttpServlet {
 
     protected void editPoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            boolean alert = false;
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
@@ -191,12 +192,60 @@ public class IgpServlet extends HttpServlet {
             String email = request.getParameter("email");
             String rank = request.getParameter("rank");
             String police_station = request.getParameter("police_station");
+            String grade = request.getParameter("grade");
+
+            Part filePart = request.getPart("profile_picture");
+            System.out.println("filePart: " + filePart);
+            InputStream fileContent = filePart.getInputStream();
+            System.out.println("fileContent: " + fileContent);
+            String fileName = filePart.getSubmittedFileName();
+            System.out.println("name: " + name);
+            System.out.println("police_id: " + police_id);
+            System.out.println("nic: " + nic);
+            System.out.println("mobile_number: " + mobile_number);
+            System.out.println("email: " + email);
+            System.out.println("rank: " + rank);
+            System.out.println("police_station: " + police_station);
+            System.out.println("grade: " + grade);
+            System.out.println("fileName: " + fileName);
+
+            String renamedFileName = renameProfilePicture(police_id, fileName); //rename the file name
+            String filePath = UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
+
+            //Store the file to the specified file path
+            OutputStream outputStream = new FileOutputStream(filePath);
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ((bytesRead = fileContent.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+//                System.out.println("buffer: " + buffer);
+//                System.out.println("bytesRead: " + bytesRead);
+//                System.out.println("outputStream: " + outputStream);
+//                System.out.println("fileContent: " + fileContent);
+//                System.out.println("filePath: " + filePath);
+//                System.out.println("fileName: " + fileName);
+//                System.out.println("renamedFileName: " + renamedFileName);
+            }
+            outputStream.close();
+            fileContent.close();
+
+            System.out.println("filePath: " + filePath);
 
             if (checkValidations(name, police_id, nic, mobile_number, email, rank, police_station)) {
                 Policeman policeman = new Policeman(name, police_id, nic, mobile_number, email, rank, police_station);
-                policeman.policemanEdited();
+                alert = policeman.policemanEdited();
             } else {
+                System.out.println("Validations Failed");
+            }
 
+            if (alert == true){
+                jsonObject.put("serverResponse", "Allowed"); //might change later
+                jsonObject.put("alert", alert);
+            }
+            else{
+                jsonObject.put("serverResponse", "Not Allowed");
+                jsonObject.put("alert", alert);
             }
 
         } catch (Exception e) {

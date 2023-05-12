@@ -471,9 +471,9 @@ public class IgpDAO {
         return jsonArray;
     }
 
-    public void updatePoliceman(Policeman policeman) {
+    public boolean updatePoliceman(Policeman policeman) {
         Connection dbConn = null;
-
+        boolean alert = false;
         try {
             dbConn = Database.getConnection();
             System.out.println("Came until the update  DAO");
@@ -484,7 +484,9 @@ public class IgpDAO {
             System.out.println(policeman.getRank());
             System.out.println(policeman.getPolice_station());
             System.out.println(policeman.getPolice_id());
-            String sql = "UPDATE policeman SET name = ?, nic = ?, mobile_number = ?, email = ?, rank = ?, police_station = ? WHERE police_id = ?";
+            System.out.println(policeman.getGrade());
+            System.out.println(policeman.getProfile_picture());
+            String sql = "UPDATE policeman SET name = ?, nic = ?, mobile_number = ?, email = ?, rank = ?, police_station = ?, grade = ?, profile_picture=? WHERE police_id = ?";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
             preparedStatement.setString(1, policeman.getName());
             preparedStatement.setString(2, policeman.getNic());
@@ -493,8 +495,20 @@ public class IgpDAO {
             preparedStatement.setString(5, policeman.getRank());
             preparedStatement.setString(6, policeman.getPolice_station());
             preparedStatement.setString(7, policeman.getPolice_id());
+            preparedStatement.setString(8, policeman.getGrade());
+            preparedStatement.setString(9, policeman.getProfile_picture());
 
             System.out.println("Came until the update  DAO 2");
+
+            int resultSet = preparedStatement.executeUpdate();
+
+            if (resultSet > 0) {
+                System.out.println("Update successful!!");
+                alert = true;
+            } else {
+                System.out.println("Update unsuccessful!!");
+                alert = false;
+            }
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -502,6 +516,7 @@ public class IgpDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return alert;
     }
 
     public JSONArray getPolicemanDetailsListAsOIC() {
