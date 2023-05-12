@@ -2,6 +2,8 @@ package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.IgpDAO;
 import com.cops.ntsf.dao.OicDAO;
+import com.cops.ntsf.dao.PolicemanAuthDAO;
+import com.cops.ntsf.dao.PolicemanDAO;
 import org.json.JSONArray;
 
 public class Policeman {
@@ -182,10 +184,11 @@ public class Policeman {
     }
 
 
-    public void policemanEdited() {
+    public boolean policemanEdited() {
         System.out.println("Came until the update model");
         IgpDAO igpDAO = new IgpDAO();
-        igpDAO.updatePoliceman(this);
+        boolean policemanUpdatedResult = igpDAO.updatePoliceman(this);
+        return policemanUpdatedResult;
     }
 
     //OIC
@@ -206,6 +209,18 @@ public class Policeman {
         IgpDAO igpDAO = new IgpDAO();
         JSONArray policemanLoginResult = igpDAO.getPolicemanLoginResult(police_id, hashedPassword, firstTime);
         return policemanLoginResult;
+    }
+
+    public String gettingEmailForOTP(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        String email = policemanDAO.getEmail(police_id);
+        return email;
+    }
+
+    public JSONArray getProfileDetails(String police_id) {
+        PolicemanDAO policemanDAO = new PolicemanDAO();
+        JSONArray profileDetails = policemanDAO.getProfileDetails(police_id);
+        return profileDetails;
     }
 }
 

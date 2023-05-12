@@ -1,5 +1,7 @@
 package com.cops.ntsf.controller;
 
+import com.cops.ntsf.model.Policeman;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.crypto.Mac;
@@ -8,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
 import java.util.Base64;
 
 public class PolicemanServlet extends HttpServlet {
@@ -55,21 +57,37 @@ public class PolicemanServlet extends HttpServlet {
                 System.out.println("JWT signature verification success");
                 JSONObject payloadJsonObject = new JSONObject(payloadJson);
                 String authorizedRank = payloadJsonObject.getString("rank");
+                System.out.println("Authorized Rank: " + authorizedRank);
                 String authorizedPosition = payloadJsonObject.getString("position");
-                if (authorizedRank == "policeman") {
-                    if (authorizedPosition == "trafficPolice") {
+                System.out.println("Authorized Position: " + authorizedPosition);
+                if (authorizedRank.equals("igp") || authorizedRank.equals("oic") || authorizedRank.equals("policeman")){
+                    if (action.equals("viewProfile")) {
+                        System.out.println("Redirecting to viewProfile in Policeman Servlet");
+                        viewProfile(request, response);
+                    } else if (action.equals("viewProfilePicture")) {
+                        System.out.println("Redirecting to viewProfilePicture in Policeman Servlet");
+                        viewProfilePicture(request, response);
+                    } else if (action.equals("viewProfilePictureInDashboard")){
+                        System.out.println("Redirecting to viewProfilePictureInDashboard in Policeman Servlet");
+                        viewProfilePictureInDashboard(request, response);
+                    } else {
+                        System.out.println("You are not authorized to access this page. Only Policemen are allowed to access this page");
+                    }
+                }
+                else if (authorizedRank.equals("policeman")) {
+                    if (authorizedPosition.equals("trafficPolice")) {
                         if (action.equals("addFine")) {
 //                            new FineServlet().addFine(request, response);
                         } else {
                             System.out.println("You are not authorized to access this page, Only trafficPolice are allowed to access this page");
                         }
-                    } else if (authorizedPosition == "investigationOfficer") {
+                    } else if (authorizedPosition.equals("investigationOfficer")) {
                         if (action.equals("viewComplaintsAsInvestigationOfficer")) {
                             new ComplaintServlet().viewComplaintsAsInvestigationOfficer(request, response);
                         } else {
                             System.out.println("You are not authorized to access this page. Only investigationOfficer are allowed to access this page");
                         }
-                    } else if (authorizedPosition == "courtSeargent") {
+                    } else if (authorizedPosition.equals("courtSeargent")) {
                         if (action.equals("addComplaint")) {
 //                            new ComplaintServlet().addComplaint(request, response);
                         } else {
@@ -85,6 +103,106 @@ public class PolicemanServlet extends HttpServlet {
             System.out.println("JWT signature verification failed");
         }
     }
+
+    protected void viewProfilePicture(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Came until the viewProfilePicture method in Policeman Servlet");
+        String police_id = request.getParameter("police_id");
+        String imagePath = request.getParameter("imagePath");
+
+//        String imagePath = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures\\1001001.jpeg"; // replace with your image path
+        File file = new File(imagePath);
+
+//        response.setContentType("image/jpeg"); // replace with your image type
+        // get the content type dynamically based on the image file extension
+        String contentType = getServletContext().getMimeType(file.getName());
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        response.setContentType(contentType);
+        response.setContentLength((int) file.length());
+
+        FileInputStream fis = new FileInputStream(file);
+        OutputStream out = response.getOutputStream();
+
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+
+        while ((bytesRead = fis.read(buffer)) != -1) {
+            out.write(buffer, 0, bytesRead);
+        }
+
+        fis.close();
+        out.flush();
+        out.close();
+    }
+
+    private String getExtension(String fileName) {
+        String extension = "";
+
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) {
+            extension = fileName.substring(i + 1);
+        }
+
+        return extension;
+    }
+
+    protected void viewProfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("Came until the viewProfile method in Policeman Servlet");
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
+
+        String police_id = request.getParameter("police_id");
+        System.out.println("police_id: " + police_id);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("serverResponse", "Allowed");
+
+        Policeman policeman = new Policeman();
+        JSONArray profileInformation = policeman.getProfileDetails(police_id);
+
+        jsonObject.put("List", profileInformation);
+
+        out.write(jsonObject.toString());
+        out.close();
+
+    }
+    protected void viewProfilePictureInDashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Came until the viewProfilePictureInDashboard method in Policeman Servlet");
+        String police_id = request.getParameter("police_id");
+
+        String imagePath = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures\\" + police_id + ".jpeg"; // Create path using police_id for dashboard
+        System.out.println("imagePath: " + imagePath);
+
+//        String imagePath = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures\\1001001.jpeg"; // replace with your image path
+        File file = new File(imagePath);
+
+//        response.setContentType("image/jpeg"); // replace with your image type
+        // get the content type dynamically based on the image file extension
+        String contentType = getServletContext().getMimeType(file.getName());
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        response.setContentType(contentType);
+        response.setContentLength((int) file.length());
+
+        FileInputStream fis = new FileInputStream(file);
+        OutputStream out = response.getOutputStream();
+
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+
+        while ((bytesRead = fis.read(buffer)) != -1) {
+            out.write(buffer, 0, bytesRead);
+        }
+
+        fis.close();
+        out.flush();
+        out.close();
+    }
+
+
 
 
 }

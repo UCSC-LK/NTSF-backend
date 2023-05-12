@@ -40,6 +40,8 @@ public class Fine {
     private String policeId;
     private String policeStation;
     private String footage_file;
+    private String latitude;
+    private String longitude;
     private String paymentStatus;
 
     public Fine() {
@@ -50,7 +52,7 @@ public class Fine {
     }
 
     // Removed fineType from constructor
-    public Fine(String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String footage_file) {
+    public Fine(String offenceNo, String nic, String licenseNo, String vehicleNo, String drivenVehicleNo, String spotDescription, LocalDateTime imposedDateTime, LocalDateTime dueDateTime, String policeId, String policeStation, String footage_file, String latitude, String longitude) {
         this.offenceNo = offenceNo;
         this.nic = nic;
         this.licenseNo = licenseNo;
@@ -63,6 +65,8 @@ public class Fine {
         this.policeStation = policeStation;
         this.paymentStatus = "unpaid";
         this.footage_file = footage_file;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     /*
@@ -131,6 +135,14 @@ public class Fine {
         return footage_file;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
     public String getPaymentStatus() {
         return paymentStatus;
     }
@@ -188,6 +200,14 @@ public class Fine {
         this.footage_file = footage_file;
     }
 
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
@@ -199,9 +219,9 @@ public class Fine {
 
     }
 
-    public JSONArray getFineListAsOIC() {
+    public JSONArray getFineListAsOIC(String policeStation, String offenceType, String paymentStatus) {
         FineDAO fineDAO = new FineDAO();
-        JSONArray fineDetails = fineDAO.viewFineDetailsAsOIC();
+        JSONArray fineDetails = fineDAO.viewFineDetailsAsOIC(policeStation, offenceType, paymentStatus);
         return fineDetails;
     }
 

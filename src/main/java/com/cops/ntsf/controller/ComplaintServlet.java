@@ -58,6 +58,7 @@ public class ComplaintServlet extends HttpServlet {
 
         switch (validateStatusCode) {
             case 0:
+//                Complaint complaint = new Complaint(fineNo, userId, title, description);
                 Complaint complaint = new Complaint(fineNo, userId, title, description, filePath);
                 complaint.complaintAdded();
 

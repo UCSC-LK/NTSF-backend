@@ -2,6 +2,7 @@ package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.PeopleDAO;
 
+import java.sql.Blob;
 import java.sql.Date;
 
 public class People extends User {
@@ -13,6 +14,7 @@ public class People extends User {
     private Date issueDate;
     private String job;
     private Date dob;
+    private Blob profilePicture;
 
     public String getName() {
         return name;
@@ -77,5 +79,13 @@ public class People extends User {
 
     public Date getDob() {
         return dob;
+    }
+
+    public void setProfilePicture(Blob profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public Blob getProfilePicture() {
+        return profilePicture;
     }
 }

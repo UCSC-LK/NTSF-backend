@@ -1,6 +1,6 @@
 package com.cops.ntsf.dao;
 
-import com.cops.ntsf.model.Point;
+import com.cops.ntsf.model.PointData;
 import com.cops.ntsf.util.Database;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PointSystemDAO {
-    public void getPointInfo(Point point) throws SQLException {
+    public void getPointInfo(PointData point) throws SQLException {
         Connection dbConn = Database.getConnection();
 
         String sql = "SELECT * FROM point_system WHERE nic = ?";
@@ -23,7 +23,7 @@ public class PointSystemDAO {
                 point.setMaxPointLimit(resultSet.getInt("max_point_limit"));
                 point.setMinPointLimit(resultSet.getInt("min_point_limit"));
                 point.setInitialPoints(resultSet.getInt("initial_points"));
-                point.setRemainingPoints(resultSet.getInt("remaining_points"));
+                point.setRemainingPoints(resultSet.getInt("current_points"));
                 point.setMaxRecoveryDate(resultSet.getDate("max_recovery_date"));
             }
         } catch (SQLException e) {
@@ -31,7 +31,7 @@ public class PointSystemDAO {
         }
     }
 
-    public void updateCurrentPoints(Point point) {
+    public void updateCurrentPoints(PointData point) {
         Connection dbConn = Database.getConnection();
 
         String sql = "UPDATE point_system SET current_points = ? WHERE nic = ?";
@@ -50,5 +50,24 @@ public class PointSystemDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public int fetchCurrentPointsByNic(PointData pointData) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "SELECT current_points FROM point_system WHERE nic = ?";
+
+        try {
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, pointData.getNic());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                pointData.setCurrentPoints(resultSet.getInt("current_points"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return pointData.getCurrentPoints();
     }
 }
