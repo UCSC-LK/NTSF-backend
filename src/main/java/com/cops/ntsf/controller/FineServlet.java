@@ -148,8 +148,8 @@ public class FineServlet extends HttpServlet {
                         /**
                          * Get Nic from driver table using NIC
                          */
-                        Driver driver = new Driver();
-                        String nic = driver.getNICByLicenseNo(licenseNo);
+                        Driver driver = new Driver(licenseNo);
+                        String nic = driver.getNICByLicenseNo();
 
                         System.out.println("NIC: " + nic);
                         String vehicleNo = null;
@@ -385,6 +385,7 @@ public class FineServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
+        // To get local date time
         out.write(ParseJSON.parseToJSONString(finesList));
         out.close();
     }
