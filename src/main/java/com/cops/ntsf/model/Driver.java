@@ -14,11 +14,18 @@ public class Driver extends User {
     private String address;
     private String vehicleCategories;
 
+    @Override
+    public String getNic() {
+        return nic;
+    }
+
+    private String nic;
+
     public Driver() {
     }
 
-    public Driver(String nic) {
-        super(nic);
+    public Driver(String licenseNo) {
+        this.licenseNo = licenseNo;
     }
 
     public String getLicenceNo() {
@@ -111,4 +118,13 @@ public class Driver extends User {
         DriverDAO driverDAO = new DriverDAO();
         return driverDAO.fetchNICByLicenseNo(this);
     }
+
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
+
+//    @Override
+//    public String getNic() {
+//        return nic;
+//    }
 }
