@@ -107,7 +107,7 @@ public class Driver extends User {
         return licenseNo;
     }
 
-    public String getNICByLicenseNo(String licenseNo) {
+    public String getNICByLicenseNo() {
         DriverDAO driverDAO = new DriverDAO();
         return driverDAO.fetchNICByLicenseNo(this);
     }

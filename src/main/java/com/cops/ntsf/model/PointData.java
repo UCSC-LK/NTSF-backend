@@ -3,14 +3,13 @@ package com.cops.ntsf.model;
 import com.cops.ntsf.dao.PointSystemDAO;
 
 import java.sql.Date;
-import java.sql.SQLException;
 
 public class PointData {
     private String nic;
 
-    private Integer maxPointLimit;
+    private int maxPointLimit;
 
-    private Integer minPointLimit;
+    private int minPointLimit;
 
     private int initialPoints;
 
@@ -25,7 +24,7 @@ public class PointData {
     public PointData() {
     }
 
-    public void getPointInfo(String nic) throws SQLException {
+    public void getPointInfo() {
         PointSystemDAO pointSystemDAO = new PointSystemDAO();
         pointSystemDAO.getPointInfo(this);
     }
@@ -34,19 +33,19 @@ public class PointData {
         return nic;
     }
 
-    public void setMaxPointLimit(Integer maxPointLimit) {
+    public void setMaxPointLimit(int maxPointLimit) {
         this.maxPointLimit = maxPointLimit;
     }
 
-    public void setMinPointLimit(Integer minPointLimit) {
+    public void setMinPointLimit(int minPointLimit) {
         this.minPointLimit = minPointLimit;
     }
 
-    public Integer getMaxPointLimit() {
+    public int getMaxPointLimit() {
         return maxPointLimit;
     }
 
-    public Integer getMinPointLimit() {
+    public int getMinPointLimit() {
         return minPointLimit;
     }
 
@@ -58,11 +57,11 @@ public class PointData {
         return initialPoints;
     }
 
-    public void setRemainingPoints(int currentPoints) {
+    public void setCurrentPoints(int currentPoints) {
         this.currentPoints = currentPoints;
     }
 
-    public int getRemainingPoints() {
+    public int getCurrentPoints() {
         return currentPoints;
     }
 
@@ -78,10 +77,6 @@ public class PointData {
         this.nic = nic;
     }
 
-    public int getCurrentPoints() {
-        return currentPoints;
-    }
-
     public int getCurrentPointsByNic(String nic) {
         PointSystemDAO pointSystemDAO = new PointSystemDAO();
         return pointSystemDAO.fetchCurrentPointsByNic(this);
@@ -90,9 +85,5 @@ public class PointData {
     public void updateCurrentPoints(int currentPoints) {
         PointSystemDAO pointSystemDAO = new PointSystemDAO();
         pointSystemDAO.updateCurrentPoints(this);
-    }
-
-    public void setCurrentPoints(int currentPoints) {
-        this.currentPoints = currentPoints;
     }
 }

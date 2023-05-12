@@ -4,6 +4,8 @@ import com.cops.ntsf.dao.PeopleDAO;
 
 import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.Base64;
 
 public class People extends User {
 
@@ -15,6 +17,9 @@ public class People extends User {
     private String job;
     private Date dob;
     private Blob profilePicture;
+
+    public People() {
+    }
 
     public String getName() {
         return name;
@@ -85,7 +90,12 @@ public class People extends User {
         this.profilePicture = profilePicture;
     }
 
-    public Blob getProfilePicture() {
-        return profilePicture;
+    /**
+     * Convert profile picture to base64 encoded string
+     */
+    public String getProfilePicture() throws SQLException {
+//        return new String(profilePicture.getBytes((long) 1, (int) profilePicture.length()));
+        return new String(Base64.getEncoder().encode(profilePicture.getBytes(1, (int) profilePicture.length())));
     }
 }
+

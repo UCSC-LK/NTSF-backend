@@ -8,26 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 public class PointSystemServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Get request parameters
         String nic = req.getParameter("nic");
 
-        PointData pointData = new PointData();
-        try {
-            pointData.getPointInfo(nic);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        PointData pointData = new PointData(nic);
+
+        pointData.getPointInfo();
 
         // Output response
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
+//        out.write(ParseJSON.parseToJSONString(pointData));
         out.write(new Gson().toJson(pointData));
         out.close();
 
