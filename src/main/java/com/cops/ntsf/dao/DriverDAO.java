@@ -69,11 +69,11 @@ public class DriverDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                driver.setLicenseNo(resultSet.getString("license_no"));
+                driver.setNic(resultSet.getString("nic"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return driver.getLicenseNo();
+        return driver.getNic();
     }
 }
