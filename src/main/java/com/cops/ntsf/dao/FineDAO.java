@@ -20,6 +20,21 @@ public class FineDAO {
             String sql = "INSERT INTO fine (offence_no, nic, license_no, vehicle_no, driven_vehicle_no,spot_description, imposed_date_time, due_date_time, police_id, police_station_name, footage, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
+            System.out.println("Offence No: " + fine.getOffenceNo());
+            System.out.println("NIC: " + fine.getNic());
+            System.out.println("License No: " + fine.getLicenseNo());
+            System.out.println("Vehicle No: " + fine.getVehicleNo());
+            System.out.println("Driven Vehicle No: " + fine.getDrivenVehicleNo());
+            System.out.println("Spot Description: " + fine.getSpotDescription());
+            System.out.println("Imposed Date Time: " + fine.getImposedDateTime());
+            System.out.println("Due Date Time: " + fine.getDueDateTime());
+            System.out.println("Police ID: " + fine.getPoliceId());
+            System.out.println("Police Station: " + fine.getPoliceStation());
+            System.out.println("Footage: " + fine.getFootage_file());
+            System.out.println("Latitude: " + fine.getLatitude());
+            System.out.println("Longitude: " + fine.getLongitude());
+
+
             preparedStatement.setString(1, fine.getOffenceNo());
             preparedStatement.setString(2, fine.getNic());
             preparedStatement.setString(3, fine.getLicenseNo());
