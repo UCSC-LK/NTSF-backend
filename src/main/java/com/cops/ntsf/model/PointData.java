@@ -7,9 +7,9 @@ import java.sql.Date;
 public class PointData {
     private String nic;
 
-    private Integer maxPointLimit;
+    private int maxPointLimit;
 
-    private Integer minPointLimit;
+    private int minPointLimit;
 
     private int initialPoints;
 
@@ -33,19 +33,19 @@ public class PointData {
         return nic;
     }
 
-    public void setMaxPointLimit(Integer maxPointLimit) {
+    public void setMaxPointLimit(int maxPointLimit) {
         this.maxPointLimit = maxPointLimit;
     }
 
-    public void setMinPointLimit(Integer minPointLimit) {
+    public void setMinPointLimit(int minPointLimit) {
         this.minPointLimit = minPointLimit;
     }
 
-    public Integer getMaxPointLimit() {
+    public int getMaxPointLimit() {
         return maxPointLimit;
     }
 
-    public Integer getMinPointLimit() {
+    public int getMinPointLimit() {
         return minPointLimit;
     }
 
@@ -61,7 +61,7 @@ public class PointData {
         this.currentPoints = currentPoints;
     }
 
-    public int getRemainingPoints() {
+    public int getCurrentPoints() {
         return currentPoints;
     }
 
@@ -75,10 +75,6 @@ public class PointData {
 
     public void setNic(String nic) {
         this.nic = nic;
-    }
-
-    public int getCurrentPoints() {
-        return currentPoints;
     }
 
     public int getCurrentPointsByNic(String nic) {

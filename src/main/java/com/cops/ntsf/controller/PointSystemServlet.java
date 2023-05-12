@@ -11,12 +11,13 @@ import java.io.PrintWriter;
 
 public class PointSystemServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Get request parameters
         String nic = req.getParameter("nic");
 
         PointData pointData = new PointData();
-        
+
         pointData.getPointInfo(nic);
 
         // Output response
@@ -24,6 +25,7 @@ public class PointSystemServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("utf-8");
 
+//        out.write(ParseJSON.parseToJSONString(pointData));
         out.write(new Gson().toJson(pointData));
         out.close();
 

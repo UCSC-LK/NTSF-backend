@@ -20,6 +20,7 @@ public class PointSystemDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                pointData.setNic(resultSet.getString("nic"));
                 pointData.setMaxPointLimit(resultSet.getInt("max_point_limit"));
                 pointData.setMinPointLimit(resultSet.getInt("min_point_limit"));
                 pointData.setInitialPoints(resultSet.getInt("initial_points"));
