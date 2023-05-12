@@ -81,10 +81,10 @@ public class FineServlet extends HttpServlet {
             String filePath = FINE_FOOTAGE_UPLOAD_DIRECTORY + File.separator + renamedFileName; //create the file path
 
             // Create the directory if it doesn't exist - Remove this snippet if not necessary
-            File directory = new File(FINE_FOOTAGE_UPLOAD_DIRECTORY);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
+//            File directory = new File(FINE_FOOTAGE_UPLOAD_DIRECTORY);
+//            if (!directory.exists()) {
+//                directory.mkdirs();
+//            }
 
             //Store the file to the specified file path
             OutputStream outputStream = new FileOutputStream(filePath);
@@ -148,8 +148,11 @@ public class FineServlet extends HttpServlet {
                         /**
                          * Get Nic from driver table using NIC
                          */
-                        Driver driver = new Driver(licenseNo);
-                        String nic = driver.getNICByLicenseNo();
+//                        Driver driver = new Driver(licenseNo);
+//                        String nic = driver.getNICByLicenseNo();
+
+                        Driver driver = new Driver();
+                        String nic = driver.getNICByLicenseNo(licenseNo);
 
                         System.out.println("NIC: " + nic);
                         String vehicleNo = null;

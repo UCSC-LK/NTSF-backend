@@ -1,6 +1,7 @@
 package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.DriverDAO;
+import com.mysql.cj.protocol.x.SyncMessageSender;
 
 import java.sql.Date;
 
@@ -14,18 +15,11 @@ public class Driver extends User {
     private String address;
     private String vehicleCategories;
 
-    @Override
-    public String getNic() {
-        return nic;
-    }
-
-    private String nic;
-
     public Driver() {
     }
 
     public Driver(String licenseNo) {
-        this.licenseNo = licenseNo;
+        super(licenseNo);
     }
 
     public String getLicenceNo() {
@@ -114,17 +108,15 @@ public class Driver extends User {
         return licenseNo;
     }
 
-    public String getNICByLicenseNo() {
-        DriverDAO driverDAO = new DriverDAO();
-        return driverDAO.fetchNICByLicenseNo(this);
-    }
-
-    public void setNic(String nic) {
-        this.nic = nic;
-    }
-
-//    @Override
-//    public String getNic() {
-//        return nic;
+//    public String getNICByLicenseNo() {
+//        DriverDAO driverDAO = new DriverDAO();
+//        return driverDAO.fetchNICByLicenseNo(this);
 //    }
+
+    public String getNICByLicenseNo(String licenseNo) {
+        DriverDAO driverDAO = new DriverDAO();
+        String nicGotFromLicenseNo = driverDAO.fetchNICByLicenseNo(licenseNo);
+        System.out.println("nicGotFromLicenseNo: " + nicGotFromLicenseNo);
+        return nicGotFromLicenseNo;
+    }
 }

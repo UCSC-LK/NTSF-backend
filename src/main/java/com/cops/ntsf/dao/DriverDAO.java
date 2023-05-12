@@ -57,23 +57,24 @@ public class DriverDAO {
         }
     }
 
-    public String fetchNICByLicenseNo(Driver driver) {
+    public String fetchNICByLicenseNo(String licenseNo) {
         Connection dbConn = Database.getConnection();
-
+        String nic = null;
         String sql = "SELECT nic FROM driver WHERE license_no = ?";
 
         try {
+            System.out.println("License Number entered to Query: " + licenseNo);
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
-            preparedStatement.setString(1, driver.getLicenseNo());
+            preparedStatement.setString(1, licenseNo);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                driver.setNic(resultSet.getString("nic"));
+                nic = resultSet.getString("nic");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return driver.getNic();
+        return nic;
     }
 }
