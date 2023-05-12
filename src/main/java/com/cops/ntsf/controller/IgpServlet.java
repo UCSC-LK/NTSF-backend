@@ -125,12 +125,14 @@ public class IgpServlet extends HttpServlet {
                     System.out.println("Email not sent to the policeman");
                 }
 
+                out.write(jsonObject.toString());
+                out.close();
+
             } else {
                 System.out.println("Validations Failed");
             }
 
-            out.write(jsonObject.toString());
-            out.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -247,10 +249,14 @@ public class IgpServlet extends HttpServlet {
                 jsonObject.put("serverResponse", "Not Allowed");
                 jsonObject.put("alert", alert);
             }
+            out.write(jsonObject.toString());
+            out.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     protected void removePoliceman(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

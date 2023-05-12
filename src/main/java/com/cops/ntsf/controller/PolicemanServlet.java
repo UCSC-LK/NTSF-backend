@@ -83,7 +83,7 @@ public class PolicemanServlet extends HttpServlet {
                         }
                     } else if (authorizedPosition.equals("investigationOfficer")) {
                         if (action.equals("viewComplaintsAsInvestigationOfficer")) {
-                            new ComplaintServlet().viewComplaintsAsInvestigationOfficer(request, response);
+//                            new ComplaintServlet().viewComplaintsAsInvestigationOfficer(request, response);
                         } else {
                             System.out.println("You are not authorized to access this page. Only investigationOfficer are allowed to access this page");
                         }
