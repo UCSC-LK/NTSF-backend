@@ -9,9 +9,10 @@ import io.github.cdimascio.dotenv.DotenvBuilder;
 
 
 public class Email {
-    Dotenv dotenv = Dotenv.load();
-    private final String username = dotenv.get("NTSF_EMAIL");
-    private final String password = dotenv.get("NTSF_PASSWORD");
+//    Dotenv dotenv = Dotenv.load();
+    private final String username = "ntsf.slpolice@gmail.com";
+    private final String password = "ntsfppm123";
+
     private Session session = null;
 
     public Email() {
@@ -43,6 +44,10 @@ public class Email {
                     Message.RecipientType.TO,
                     InternetAddress.parse(toEmail)
             );
+
+            System.out.println("toEmail: " + toEmail);
+            System.out.println("subject: " + subject);
+
 
             message.setSubject(subject);
             message.setText(textMessage);

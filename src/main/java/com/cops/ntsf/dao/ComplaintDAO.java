@@ -141,6 +141,32 @@ public class ComplaintDAO {
 
     }
 
+    public boolean rejectAppealAsInvestigationOfficer(String complaint_no) {
+        Connection dbConn = null;
+
+        boolean alert = false;
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "UPDATE complaint SET status = 'rejected' WHERE complaint_no = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, complaint_no);
+
+            int result = preparedStatement.executeUpdate();
+
+            if (result > 0){
+                alert = true;
+            }
+            else {
+                alert = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
+
     /*
       Suraif's code for view complaints
      */

@@ -115,7 +115,10 @@ public class IgpServlet extends HttpServlet {
                     //Send email to the policeman
                     System.out.println("Email sending to the policeman from igpServlet");
                     Email emailPoliceman = new Email();
-                    emailPoliceman.sendMail(policeman.getEmail(), "National Traffic Spot Fine System Password", policemanAuth.getPassword());
+                    System.out.println("Email object created");
+                    System.out.println("Recipient Email: " + email);
+                    System.out.println("Sending Password: " +  password);
+                    emailPoliceman.sendMail(policeman.getEmail(), "National Traffic Spot Fine System Password", password);
 
                     System.out.println("Email sent to the policeman");
                 } else {
