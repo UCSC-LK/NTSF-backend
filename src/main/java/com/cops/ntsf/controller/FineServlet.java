@@ -164,8 +164,8 @@ public class FineServlet extends HttpServlet {
                         alert = fine.createFine();
 
                         // Step 1 - Getting demerit points related to current fine
-                        Offence offence = new Offence();
-                        Integer demeritPoints = offence.getDemeritPointsByOffenceNo(offenceNo);
+                        Offence offence = new Offence(offenceNo);
+                        Integer demeritPoints = offence.getDemeritPointsByOffenceNo();
 
                         // Step 2 - Point Reduction
                         PointService pointService = new PointService();

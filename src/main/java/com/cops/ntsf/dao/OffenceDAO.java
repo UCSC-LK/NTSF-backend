@@ -252,7 +252,7 @@ public class OffenceDAO {
 
     }
 
-    public void fetchDemeritPointsByOffenceNo(Offence offence) {
+    public Integer fetchDemeritPointsByOffenceNo(Offence offence) {
         Connection dbConn = Database.getConnection();
 
         String sql = "SELECT * FROM offence WHERE offence_no = ?";
@@ -269,5 +269,6 @@ public class OffenceDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return offence.getDemerit_points();
     }
 }

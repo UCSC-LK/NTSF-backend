@@ -127,9 +127,8 @@ public class Offence {
         return offenceEditedResult;
     }
 
-    public Integer getDemeritPointsByOffenceNo(String offenceNo) {
+    public Integer getDemeritPointsByOffenceNo() {
         OffenceDAO offenceDAO = new OffenceDAO();
-        offenceDAO.fetchDemeritPointsByOffenceNo(this);
-        return null;
+        return offenceDAO.fetchDemeritPointsByOffenceNo(this);
     }
 }
