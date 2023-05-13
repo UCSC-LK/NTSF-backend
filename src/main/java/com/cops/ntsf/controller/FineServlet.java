@@ -339,6 +339,9 @@ public class FineServlet extends HttpServlet {
                             System.out.println("Redirecting to addFine method");
                             addFine(request, response);
                         }
+                    } else if (authorizedPosition.equals("investigationOfficer")) {
+                        System.out.println("Redirecting to viewLocation method");
+                        viewLocation(request, response);
                     } else {
                         System.out.println("You are not authorized to access this page");
                     }
@@ -356,6 +359,29 @@ public class FineServlet extends HttpServlet {
             System.out.println("JWT signature verification failed");
         }
 
+    }
+
+    private void viewLocation(HttpServletRequest request, HttpServletResponse response) {
+        try{
+
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            String fine_no = request.getParameter("fine_no");
+
+            Fine fine = new Fine();
+            JSONArray locationPoints = fine.getLocation(fine_no);
+
+            jsonObject.put("List", locationPoints);
+
+            out.write(jsonObject.toString());
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

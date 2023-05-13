@@ -1,5 +1,6 @@
 package com.cops.ntsf.controller;
 
+import com.cops.ntsf.model.Complaint;
 import com.cops.ntsf.model.Policeman;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Base64;
+import java.util.function.DoubleToIntFunction;
 
 public class PolicemanServlet extends HttpServlet {
 
@@ -60,21 +62,8 @@ public class PolicemanServlet extends HttpServlet {
                 System.out.println("Authorized Rank: " + authorizedRank);
                 String authorizedPosition = payloadJsonObject.getString("position");
                 System.out.println("Authorized Position: " + authorizedPosition);
-                if (authorizedRank.equals("igp") || authorizedRank.equals("oic") || authorizedRank.equals("policeman")){
-                    if (action.equals("viewProfile")) {
-                        System.out.println("Redirecting to viewProfile in Policeman Servlet");
-                        viewProfile(request, response);
-                    } else if (action.equals("viewProfilePicture")) {
-                        System.out.println("Redirecting to viewProfilePicture in Policeman Servlet");
-                        viewProfilePicture(request, response);
-                    } else if (action.equals("viewProfilePictureInDashboard")){
-                        System.out.println("Redirecting to viewProfilePictureInDashboard in Policeman Servlet");
-                        viewProfilePictureInDashboard(request, response);
-                    } else {
-                        System.out.println("You are not authorized to access this page. Only Policemen are allowed to access this page");
-                    }
-                }
-                else if (authorizedRank.equals("policeman")) {
+
+                if (authorizedRank.equals("policeman")) {
                     if (authorizedPosition.equals("trafficPolice")) {
                         if (action.equals("addFine")) {
 //                            new FineServlet().addFine(request, response);
@@ -82,8 +71,9 @@ public class PolicemanServlet extends HttpServlet {
                             System.out.println("You are not authorized to access this page, Only trafficPolice are allowed to access this page");
                         }
                     } else if (authorizedPosition.equals("investigationOfficer")) {
-                        if (action.equals("viewComplaintsAsInvestigationOfficer")) {
+                        if (action.equals("viewAppealsAsInvestigationOfficer")) {
 //                            new ComplaintServlet().viewComplaintsAsInvestigationOfficer(request, response);
+                            viewAppealsAsInvestigationOfficer(request, response);
                         } else {
                             System.out.println("You are not authorized to access this page. Only investigationOfficer are allowed to access this page");
                         }
@@ -97,10 +87,50 @@ public class PolicemanServlet extends HttpServlet {
                         System.out.println("You are not authorized to access this page. Only Policemen are allowed to access this page");
                     }
                 }
+
+                else if (authorizedRank.equals("igp") || authorizedRank.equals("oic") || authorizedRank.equals("policeman")){
+                    if (action.equals("viewProfile")) {
+                        System.out.println("Redirecting to viewProfile in Policeman Servlet");
+                        viewProfile(request, response);
+                    } else if (action.equals("viewProfilePicture")) {
+                        System.out.println("Redirecting to viewProfilePicture in Policeman Servlet");
+                        viewProfilePicture(request, response);
+                    } else if (action.equals("viewProfilePictureInDashboard")){
+                        System.out.println("Redirecting to viewProfilePictureInDashboard in Policeman Servlet");
+                        viewProfilePictureInDashboard(request, response);
+                    } else {
+                        System.out.println("You are not authorized to access this page. Only Policemen are allowed to access this page");
+                    }
+                }
+
             }
         }
         else {
             System.out.println("JWT signature verification failed");
+        }
+    }
+
+    private void viewAppealsAsInvestigationOfficer(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json");
+
+            System.out.println("Came until the viewAppealsAsInvestigationOfficer method in Policeman Servlet");
+            String police_station = request.getParameter("police_station");
+            System.out.println("Police Station: " + police_station);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            Complaint complaint = new Complaint();
+            JSONArray appealList = complaint.fetchAppealsAsInvestigationOfficer(police_station);
+
+            jsonObject.put("List", appealList);
+            out.write(jsonObject.toString());
+            out.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 

@@ -102,6 +102,45 @@ public class ComplaintDAO {
         return jsonArray;
     }
 
+    public JSONArray getAppealsAsInvestigationOfficer(String police_station) {
+        Connection dbConn = null;
+
+        JSONArray jsonArray = new JSONArray();
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "SELECT * FROM complaint JOIN fine on complaint.fine_no = fine.fine_no WHERE fine.police_station_name = ? AND complaint.status = 'pending'";
+
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, police_station);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+
+                int complaint_no = resultSet.getInt("complaint_no");
+                String user_id = String.valueOf(resultSet.getInt("user_id"));
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+                String fine_no = resultSet.getString("fine_no");
+
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("complaint_no", complaint_no);
+                jsonObject.put("user_id", user_id);
+                jsonObject.put("title", title);
+                jsonObject.put("description", description);
+                jsonObject.put("fine_no", fine_no);
+
+                jsonArray.put(jsonObject);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+
+    }
+
     /*
       Suraif's code for view complaints
      */
