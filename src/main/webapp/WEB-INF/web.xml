@@ -22,6 +22,8 @@
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/fine/*</url-pattern>
         <url-pattern>/user/*</url-pattern>
+        <url-pattern>/point_system/*</url-pattern>
+        <url-pattern>/complaint/*</url-pattern>
     </filter-mapping>
 
 
