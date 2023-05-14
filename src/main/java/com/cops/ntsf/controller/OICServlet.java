@@ -72,6 +72,11 @@ public class OICServlet extends HttpServlet {
                        System.out.println("Position: " + request.getParameter("position"));
                        updatePosition(request, response);
                    }
+                } else if(authorizedRank.equals("policeman"))
+                {
+                    System.out.println("Redirecting to viewPoliceman in Policeman Servlet");
+                    System.out.println("Police Station: " + request.getParameter("police_station"));
+                    viewPoliceman(request, response);
                 }
                 else {
                     System.out.println("You are not authorized to access this page");
