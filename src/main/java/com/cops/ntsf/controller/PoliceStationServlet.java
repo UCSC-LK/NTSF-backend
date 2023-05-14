@@ -83,8 +83,6 @@ public class PoliceStationServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
 
-//        HttpSession session = request.getSession(false);
-
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("serverResponse", "Allowed");
 

@@ -41,14 +41,14 @@ public class PoliceStationDAO {
         try {
             System.out.println("DAO to get the list of policestations to addPoliceman.js dynamically as an array is called");
             dbConn = Database.getConnection();
-            String sql = "SELECT police_station FROM policeman GROUP BY police_station";
+            String sql = "SELECT branch_name FROM police_station";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             jsonArray = new JSONArray();
 
             while (resultSet.next()) {
-                String police_station = resultSet.getString("police_station");
+                String police_station = resultSet.getString("branch_name");
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("police_station", police_station);
                 jsonArray.put(jsonObject);

@@ -196,6 +196,32 @@ public class FineDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public JSONArray fetchLocation(String fine_no) {
+        Connection dbConn = null;
+
+        JSONArray jsonArray = new JSONArray();
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "SELECT latitude, longitude FROM fine WHERE fine_no = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, fine_no);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("latitude", resultSet.getString("latitude"));
+                jsonObject.put("longitude", resultSet.getString("longitude"));
+                jsonArray.put(jsonObject);
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
 }
 
 

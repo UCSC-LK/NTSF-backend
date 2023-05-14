@@ -22,6 +22,9 @@ public class Vehicle extends User {
         return registerNo;
     }
 
+    public Vehicle() {
+    }
+
     public void setRegisterNo(String registerNo) {
         this.registerNo = registerNo;
     }
@@ -147,5 +150,13 @@ public class Vehicle extends User {
     public void getVehicleInfo() {
         VehicleDAO vehicleDAO = new VehicleDAO();
         vehicleDAO.fetchVehicleInfo(this);
+    }
+
+    public String getNICByVehicleNo(String vehicleNo) {
+        VehicleDAO vehicleDAO = new VehicleDAO();
+        String nicGotFromVehicleNo = vehicleDAO.fetchNICByVehicleNo(vehicleNo);
+        System.out.println("nicGotFromVehicleNo" + nicGotFromVehicleNo);
+        return nicGotFromVehicleNo;
+
     }
 }

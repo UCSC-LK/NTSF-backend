@@ -246,5 +246,10 @@ public class Fine {
         FineDAO fineDAO = new FineDAO();
         return fineDAO.fetchFineByFineNo(this);
     }
+
+    public JSONArray getLocation(String fine_no) {
+        FineDAO fineDAO = new FineDAO();
+        return fineDAO.fetchLocation(fine_no);
+    }
 }
 
