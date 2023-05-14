@@ -75,6 +75,11 @@ public class FineDAO {
             dbConn = Database.getConnection();
             String sql = "SELECT f.fine_no, f.offence_no, f.spot_description, f.nic, f.license_no, f.vehicle_no, f.driven_vehicle_no, f.imposed_date_time, f.due_date_time, f.police_id, f.police_station_name, f.footage, f.latitude, f.longitude, f.payment_status, o.amount, o.description FROM fine f INNER JOIN offence o ON f.offence_no = o.offence_no WHERE f.police_station_name = ? AND o.offence_type = ? AND f.payment_status = ?;  ";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+
+            System.out.println("Police Station: " + policeStation);
+            System.out.println("Offence Type: " + offenceType);
+            System.out.println("Payment Status: " + paymentStatus);
+
             preparedStatement.setString(1, policeStation);
             preparedStatement.setString(2, offenceType);
             preparedStatement.setString(3, paymentStatus);
@@ -101,7 +106,7 @@ public class FineDAO {
                 jsonObject.put("longitude", resultSet.getString("longitude"));
                 jsonObject.put("status", resultSet.getString("payment_status"));
                 jsonObject.put("amount", resultSet.getString("amount"));
-                jsonObject.put("description", resultSet.getString("offence_description"));
+                jsonObject.put("description", resultSet.getString("description"));
 
                 jsonArray.put(jsonObject);
             }
