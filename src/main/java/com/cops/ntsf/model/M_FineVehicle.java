@@ -4,6 +4,8 @@ package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.M_FineVehicleDAO;
 
+import java.time.LocalDateTime;
+
 public class M_FineVehicle {
 
 
@@ -21,11 +23,19 @@ public class M_FineVehicle {
 
     private String vehicleNo;
 
+    LocalDateTime imposedDateTime = LocalDateTime.now();
+    LocalDateTime dueDateTime = imposedDateTime.plusDays(14);
+
+    public LocalDateTime getImposedDateTime(){return imposedDateTime;}
+
+    public LocalDateTime getDueDateTime(){return dueDateTime;}
 
 
 
-    public M_FineVehicle(String nic, String location, String fineNo, String description, String policeId, String fineType, String vehicleNo) {
-        this.nic = nic;
+
+
+    public M_FineVehicle(String location, String fineNo, String description, String policeId, String fineType, String vehicleNo) {
+//        this.nic = nic;
         this.location = location;
         this.fineNo = fineNo;
         this.descripton = description;

@@ -21,10 +21,10 @@ public class M_FinePedestrianServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nic = req.getParameter("nic");
         String location = req.getParameter("location");
-        String fineNo = req.getParameter("fine_no");
-        String description = req.getParameter("description");
+        String fineNo = req.getParameter("offence_no");
+        String description = req.getParameter("spot_description");
         String policeId = req.getParameter("police_id");
-        String fineType = req.getParameter("fine_type");
+        String fineType = req.getParameter("offence_type");
 
 
 

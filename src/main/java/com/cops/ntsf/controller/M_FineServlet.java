@@ -20,13 +20,14 @@ public class M_FineServlet extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String licenceNo = req.getParameter("licence_number");
+        String licenceNo = req.getParameter("license_number");
         String location = req.getParameter("location");
         String fineNo = req.getParameter("fine_no");
-        String description = req.getParameter("description");
+        String description = req.getParameter("spot_description");
         String policeId = req.getParameter("police_id");
-        String fineType = req.getParameter("fine_type");
-        String vehicleNo = req.getParameter("vehicle_no");
+        String fineType = req.getParameter("offence_type");
+        String vehicleNo = req.getParameter("driven_vehicle_no");
+
 
         LocalDateTime imposedDateTime = LocalDateTime.now();
         LocalDateTime dueDateTime = imposedDateTime.plusDays(14);

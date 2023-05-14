@@ -4,6 +4,8 @@ package com.cops.ntsf.model;
 
 import com.cops.ntsf.dao.M_FinePedestrianDAO;
 
+import java.time.LocalDateTime;
+
 public class M_FinePedestrian {
 
 
@@ -20,6 +22,18 @@ public class M_FinePedestrian {
     private String nic;
 
     private String vehicleNo;
+
+    LocalDateTime imposedDateTime = LocalDateTime.now();
+    LocalDateTime dueDateTime = imposedDateTime.plusDays(14);
+
+
+
+
+
+
+    public LocalDateTime getImposedDateTime(){return imposedDateTime;}
+
+    public LocalDateTime getDueDateTime(){return dueDateTime;}
 
 
 

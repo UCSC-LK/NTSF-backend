@@ -382,7 +382,7 @@ public class M_PolicemanDAO {
 
         Connection dbConn = Database.getConnection();
 
-        String sql = "SELECT * FROM policeman WHERE police_id = ?";
+        String sql = "SELECT * FROM police_auth WHERE police_id = ?";
 
         try {
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql);

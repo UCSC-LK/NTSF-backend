@@ -72,6 +72,8 @@ public class M_Fine {
         return policeId;
     }
 
+
+
     public String getVehicleNo(){
         return vehicleNo;
     }

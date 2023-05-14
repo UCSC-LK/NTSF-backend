@@ -82,9 +82,9 @@ public class M_OffenceDAO {
                 M_Offence offence=new M_Offence();
                 offence.setOffenceNo(resultSet.getString(1));
                 offence.setOffenceType(resultSet.getString(2));
-                offence.setDescription(resultSet.getString(4));
-                offence.setPointWeight(resultSet.getString(3));
-                offence.setAmount(resultSet.getString(5));
+                offence.setDescription(resultSet.getString(3));
+                offence.setPointWeight(resultSet.getString(5));
+                offence.setAmount(resultSet.getString(4));
                 list.add(offence);
 
             }
