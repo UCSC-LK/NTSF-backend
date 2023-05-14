@@ -43,8 +43,8 @@ public class DriverDAO {
 
             while (resultSet.next()) {
                 driver.setLicenseNo(resultSet.getString("license_no"));
-                driver.setExpireDate(resultSet.getDate("issue_date"));
-                driver.setIssueDate(resultSet.getDate("expire_date"));
+                driver.setIssueDate(resultSet.getDate("issue_date"));
+                driver.setExpireDate(resultSet.getDate("expire_date"));
                 driver.setAdministrativeNo(resultSet.getString("administrative_no"));
                 driver.setHoldersSignature(resultSet.getString("holders_signature"));
                 driver.setVehicleCategories(resultSet.getString("vehicle_categories"));
