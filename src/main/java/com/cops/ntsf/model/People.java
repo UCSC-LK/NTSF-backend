@@ -97,5 +97,10 @@ public class People extends User {
 //        return new String(profilePicture.getBytes((long) 1, (int) profilePicture.length()));
         return new String(Base64.getEncoder().encode(profilePicture.getBytes(1, (int) profilePicture.length())));
     }
+
+    public boolean checkingUser_IDasNIC(String nic) {
+        PeopleDAO peopleDAO = new PeopleDAO();
+        return peopleDAO.checkUser_IDasNIC(nic);
+    }
 }
 

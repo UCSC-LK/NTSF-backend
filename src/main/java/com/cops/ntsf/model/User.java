@@ -67,4 +67,6 @@ public class User {
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
     }
+
+
 }

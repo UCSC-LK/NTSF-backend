@@ -116,4 +116,29 @@ public class VehicleDAO {
         }
         return nic;
     }
+
+    public boolean checkUser_IDasVehicleNo(String vehicle_no) {
+
+        Connection dbConn = null;
+
+        boolean alert = false;
+        try{
+            dbConn = Database.getConnection();
+            String sql = "SELECT register_no FROM vehicle WHERE register_no = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, vehicle_no);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Duplicate Entry!!");
+                alert = true;
+            } else {
+                System.out.println("New Entry!!");
+                alert = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return alert;
+    }
 }

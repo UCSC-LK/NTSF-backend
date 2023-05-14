@@ -1,7 +1,6 @@
 package com.cops.ntsf.controller;
 
-import com.cops.ntsf.model.Complaint;
-import com.cops.ntsf.model.Policeman;
+import com.cops.ntsf.model.*;
 import com.cops.ntsf.service.Email;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,11 +64,24 @@ public class PolicemanServlet extends HttpServlet {
                 System.out.println("Authorized Position: " + authorizedPosition);
 
                 if (authorizedRank.equals("policeman")) {
-                    viewProfile(request, response);
-                    viewProfilePictureInDashboard(request, response);
+//                    viewProfile(request, response);
+//                    viewProfilePictureInDashboard(request, response);
                     if (authorizedPosition.equals("trafficPolice")) {
-                        if (action.equals("addFine")) {
-//                            new FineServlet().addFine(request, response);
+//                        if (action.equals("addFine")) {
+////                            new FineServlet().addFine(request, response);
+                        if (action.equals("checkUser_IDasLicenseNo")) {
+                            System.out.println("Redirecting to checkUser_IDasLicenseNo in Policeman Servlet");
+                            checkUser_IDasLicenseNo(request, response);
+                        } else if (action.equals("checkUser_IDasNIC")){
+                            System.out.println("Redirecting to checkUser_IDasNIC in Policeman Servlet");
+                            checkUser_IDasNIC(request, response);
+                        } else if (action.equals("checkUser_IDasVehicleNo")) {
+                            System.out.println("Redirecting to checkUser_IDasVehicleNo in Policeman Servlet");
+                            checkUser_IDasVehicleNo(request, response);
+                        } else if (action.equals("viewProfile")) {
+                            viewProfile(request, response);
+                        } else if (action.equals("viewProfilePictureInDashboard")){
+                            viewProfilePictureInDashboard(request, response);
                         } else {
                             System.out.println("You are not authorized to access this page, Only trafficPolice are allowed to access this page");
                         }
@@ -80,6 +92,10 @@ public class PolicemanServlet extends HttpServlet {
                         } else if(action.equals("rejectAppeal"))
                         {
                             rejectAppeal(request, response);
+                        } else if (action.equals("viewProfile")) {
+                            viewProfile(request, response);
+                        } else if (action.equals("viewProfilePictureInDashboard")){
+                            viewProfilePictureInDashboard(request, response);
                         } else
                         {
                             System.out.println("You are not authorized to access this page. Only investigationOfficer are allowed to access this page");
@@ -87,7 +103,12 @@ public class PolicemanServlet extends HttpServlet {
                     } else if (authorizedPosition.equals("courtSeargent")) {
                         if (action.equals("addComplaint")) {
 //                            new ComplaintServlet().addComplaint(request, response);
-                        } else {
+                        } else if (action.equals("viewProfile")) {
+                            viewProfile(request, response);
+                        } else if (action.equals("viewProfilePictureInDashboard")) {
+                            viewProfilePictureInDashboard(request, response);
+                        }
+                        else {
                             System.out.println("You are not authorized to access this page. Only courtSeargent are allowed to access this page");
                         }
                     } else {
@@ -240,6 +261,7 @@ public class PolicemanServlet extends HttpServlet {
     protected void viewProfilePictureInDashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Came until the viewProfilePictureInDashboard method in Policeman Servlet");
         String police_id = request.getParameter("police_id");
+        System.out.println("police_id: " + police_id);
 
         String imagePath = "D:\\project\\NTSF-backend\\src\\main\\webapp\\images\\profile_pictures\\" + police_id + ".jpeg"; // Create path using police_id for dashboard
         System.out.println("imagePath: " + imagePath);
@@ -269,6 +291,85 @@ public class PolicemanServlet extends HttpServlet {
         fis.close();
         out.flush();
         out.close();
+    }
+
+    public void checkUser_IDasLicenseNo(HttpServletRequest request, HttpServletResponse response){
+        try{
+            System.out.println("Came until the checkUser_IDasLicenseNo method in Policeman Servlet");
+
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            String license_no = request.getParameter("license_no");
+            System.out.println("license_no: " + license_no);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            Driver driver = new Driver();
+            boolean isUser_IDasLicenseNo = driver.checkingUser_IDasLicenseNo(license_no);
+            System.out.println("isUser_IDasLicenseNo: " + isUser_IDasLicenseNo);
+            jsonObject.put("alert", isUser_IDasLicenseNo);
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void checkUser_IDasNIC(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try{
+            System.out.println("Came until the checkUser_IDasNIC method in Policeman Servlet");
+
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            String nic = request.getParameter("nic");
+            System.out.println("nic: " + nic);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            People people = new People();
+            boolean isUser_IDasNIC = people.checkingUser_IDasNIC(nic);
+
+            jsonObject.put("alert", isUser_IDasNIC);
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void checkUser_IDasVehicleNo(HttpServletRequest request, HttpServletResponse response){
+        try{
+            System.out.println("Came until the checkUser_IDasVehicleNo method in Policeman Servlet");
+
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            String vehicle_no = request.getParameter("vehicle_no");
+            System.out.println("vehicle_no: " + vehicle_no);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+
+            Vehicle vehicle = new Vehicle();
+            boolean isUser_IDasVehicleNo = vehicle.checkingUser_IDasVehicleNo(vehicle_no);
+
+            jsonObject.put("alert", isUser_IDasVehicleNo);
+
+            out.write(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 

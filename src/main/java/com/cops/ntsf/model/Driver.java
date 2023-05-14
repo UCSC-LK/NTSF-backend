@@ -119,4 +119,9 @@ public class Driver extends User {
         System.out.println("nicGotFromLicenseNo: " + nicGotFromLicenseNo);
         return nicGotFromLicenseNo;
     }
+
+    public boolean checkingUser_IDasLicenseNo(String license_no) {
+        DriverDAO driverDAO = new DriverDAO();
+        return driverDAO.checkUser_IDasLicenseNo(license_no);
+    }
 }
