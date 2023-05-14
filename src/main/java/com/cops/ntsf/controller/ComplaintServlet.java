@@ -103,22 +103,6 @@ public class ComplaintServlet extends HttpServlet {
         out.close();
     }
 
-    protected void viewComplaintsAsInvestigationOfficer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("serverResponse", "Allowed");
-
-        Complaint complaint = new Complaint();
-        JSONArray complaintListasInvestigationOfficer = complaint.getComplaintsDetailsAsInvestigationOfficer();
-
-        jsonObject.put("List", complaintListasInvestigationOfficer);
-
-        out.write(jsonObject.toString());
-        out.close();
-    }
-
     public static String renameFileName(String userId, String footage) throws Exception {
         String[] parts = footage.split("\\.");
         String extension = parts[1];

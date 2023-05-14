@@ -130,6 +130,94 @@
         <url-pattern>/point_system</url-pattern>
     </servlet-mapping>
 
+
+
+
+
+
+
+
+
+<!--    Mobile-->
+    <servlet>
+        <servlet-name>M_fine</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_FineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_fine</servlet-name>
+        <url-pattern>/m_fine</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_fineVehicle</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_FineVehicleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_fineVehicle</servlet-name>
+        <url-pattern>/fineVehicle</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_finePedestrian</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_FinePedestrianServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_finePedestrian</servlet-name>
+        <url-pattern>/finePedestrian</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>M_offence</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_OffenceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_offence</servlet-name>
+        <url-pattern>/M_offence</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_offenceList</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_OffenceListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_offenceList</servlet-name>
+        <url-pattern>/offenceList</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_Policeman</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PolicemanServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_Policeman</servlet-name>
+        <url-pattern>/m_policeman</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>M_PoliceStation</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PoliceStationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_PoliceStation</servlet-name>
+        <url-pattern>/m_policeStation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_policelogin</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_PoliceLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_policelogin</servlet-name>
+        <url-pattern>/policelogin</url-pattern>
+    </servlet-mapping>
+
+
+
+
+
+
     <!--    <listener>-->
     <!--        <listener-class>com.cops.ntsf.util.DBBackup</listener-class>-->
     <!--    </listener>-->

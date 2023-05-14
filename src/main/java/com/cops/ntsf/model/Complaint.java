@@ -94,4 +94,14 @@ public class Complaint {
     public String getFilePath() {
         return filePath;
     }
+
+    public JSONArray fetchAppealsAsInvestigationOfficer(String police_station) {
+        ComplaintDAO complaintDAO = new ComplaintDAO();
+        return complaintDAO.getAppealsAsInvestigationOfficer(police_station);
+    }
+
+    public boolean rejectAppealAsInvestigationOfficer(String complaint_no) {
+        ComplaintDAO complaintDAO = new ComplaintDAO();
+        return complaintDAO.rejectAppealAsInvestigationOfficer(complaint_no);
+    }
 }

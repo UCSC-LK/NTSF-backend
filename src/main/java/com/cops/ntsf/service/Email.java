@@ -4,14 +4,14 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import io.github.cdimascio.dotenv.Dotenv;
-import io.github.cdimascio.dotenv.DotenvBuilder;
+
 
 
 public class Email {
-    Dotenv dotenv = Dotenv.load();
-    private final String username = dotenv.get("NTSF_EMAIL");
-    private final String password = dotenv.get("NTSF_PASSWORD");
+
+    private final String username = "ntsf.slpolice@gmail.com";
+    private final String password = "enngjtclwomdvzlo";
+
     private Session session = null;
 
     public Email() {
@@ -43,6 +43,10 @@ public class Email {
                     Message.RecipientType.TO,
                     InternetAddress.parse(toEmail)
             );
+
+            System.out.println("toEmail: " + toEmail);
+            System.out.println("subject: " + subject);
+
 
             message.setSubject(subject);
             message.setText(textMessage);
