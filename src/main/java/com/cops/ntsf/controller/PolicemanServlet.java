@@ -65,6 +65,8 @@ public class PolicemanServlet extends HttpServlet {
                 System.out.println("Authorized Position: " + authorizedPosition);
 
                 if (authorizedRank.equals("policeman")) {
+                    viewProfile(request, response);
+                    viewProfilePictureInDashboard(request, response);
                     if (authorizedPosition.equals("trafficPolice")) {
                         if (action.equals("addFine")) {
 //                            new FineServlet().addFine(request, response);
