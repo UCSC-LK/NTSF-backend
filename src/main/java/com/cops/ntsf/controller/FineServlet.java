@@ -342,6 +342,9 @@ public class FineServlet extends HttpServlet {
                     } else if (authorizedPosition.equals("investigationOfficer")) {
                         System.out.println("Redirecting to viewLocation method");
                         viewLocation(request, response);
+                    } else if(authorizedPosition.equals("courtSeargent")){
+                        System.out.println("Redirecting to viewFineAsCourtSeargent method");
+                        viewFineAsCourtSeargent(request, response);
                     } else {
                         System.out.println("You are not authorized to access this page");
                     }
@@ -357,6 +360,35 @@ public class FineServlet extends HttpServlet {
 
         } else {
             System.out.println("JWT signature verification failed");
+        }
+
+    }
+
+    private void viewFineAsCourtSeargent(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("serverResponse", "Allowed");
+            System.out.println("Reached viewFineAsCourtSeargent");
+            String policeStation = request.getParameter("police_station");
+            String offenceType = request.getParameter("offence_type");
+            String paymentStatus = "expired";
+            System.out.println("Police station is " + policeStation);
+            System.out.println("Offence Type is " + offenceType);
+            System.out.println("Payment Status is " + paymentStatus);
+
+            Fine fine = new Fine();
+            JSONArray fineListAsOIC = fine.getFineAsCourtSeargent(policeStation, offenceType, paymentStatus);
+
+            jsonObject.put("List", fineListAsOIC);
+
+            out.println(jsonObject.toString());
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

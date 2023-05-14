@@ -251,5 +251,10 @@ public class Fine {
         FineDAO fineDAO = new FineDAO();
         return fineDAO.fetchLocation(fine_no);
     }
+
+    public JSONArray getFineAsCourtSeargent(String policeStation, String offenceType, String paymentStatus) {
+        FineDAO fineDAO = new FineDAO();
+        return fineDAO.viewFineDetailsAsCourtSeargent(policeStation, offenceType, paymentStatus);
+    }
 }
 
