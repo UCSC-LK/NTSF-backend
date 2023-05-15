@@ -341,7 +341,14 @@ public class FineServlet extends HttpServlet {
                         }
                     } else if (authorizedPosition.equals("investigationOfficer")) {
                         System.out.println("Redirecting to viewLocation method");
-                        viewLocation(request, response);
+                        if (action.equals("viewLocation")) {
+                            viewLocation(request, response);
+                        } else if(action.equals("viewFineAsOIC")){
+                            viewFineAsOIC(request, response);
+                        } else {
+                            System.out.println("You are not authorized to access this page");
+                        }
+
                     } else if(authorizedPosition.equals("courtSeargent")){
                         System.out.println("Redirecting to viewFineAsCourtSeargent method");
                         viewFineAsCourtSeargent(request, response);
