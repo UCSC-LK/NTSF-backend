@@ -43,8 +43,8 @@ public class DriverDAO {
 
             while (resultSet.next()) {
                 driver.setLicenseNo(resultSet.getString("license_no"));
-                driver.setExpireDate(resultSet.getDate("issue_date"));
-                driver.setIssueDate(resultSet.getDate("expire_date"));
+                driver.setIssueDate(resultSet.getDate("issue_date"));
+                driver.setExpireDate(resultSet.getDate("expire_date"));
                 driver.setAdministrativeNo(resultSet.getString("administrative_no"));
                 driver.setHoldersSignature(resultSet.getString("holders_signature"));
                 driver.setVehicleCategories(resultSet.getString("vehicle_categories"));
@@ -76,5 +76,29 @@ public class DriverDAO {
             throw new RuntimeException(e);
         }
         return nic;
+    }
+
+    public boolean checkUser_IDasLicenseNo(String license_no) {
+        Connection dbConn = null;
+        boolean alert = false;
+
+        try{
+            dbConn = Database.getConnection();
+            String sql = "SELECT license_no FROM driver WHERE license_no = ?";
+            PreparedStatement preparedStatement = dbConn.prepareStatement(sql);
+            preparedStatement.setString(1, license_no);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                System.out.println("License Number already exists");
+                alert = true;
+            } else {
+                System.out.println("License Number is available");
+                alert = false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return alert;
     }
 }

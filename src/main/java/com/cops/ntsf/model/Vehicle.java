@@ -159,4 +159,10 @@ public class Vehicle extends User {
         return nicGotFromVehicleNo;
 
     }
+
+    public boolean checkingUser_IDasVehicleNo(String vehicle_no) {
+        VehicleDAO vehicleDAO = new VehicleDAO();
+        boolean isUser_IDasVehicleNo = vehicleDAO.checkUser_IDasVehicleNo(vehicle_no);
+        return isUser_IDasVehicleNo;
+    }
 }

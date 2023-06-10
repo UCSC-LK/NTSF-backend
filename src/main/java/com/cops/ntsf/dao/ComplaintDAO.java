@@ -9,11 +9,14 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ComplaintDAO {
-    public String insert(Complaint complaint) {
-        Connection dbConn = null;
+    public void insert(Complaint complaint) {
+        Connection dbConn = Database.getConnection();
+
+        String sql = "INSERT INTO complaint (fine_no, user_id, title, description) VALUES (?, ?, ?, ?)";
+//        Connection dbConn = null;
         try {
             dbConn = Database.getConnection();
-            String sql = "INSERT into complaint (fine_no, user_id, title, description, footage) VALUES (?, ?, ?, ?)";
+//            String sql = "INSERT into complaint (fine_no, user_id, title, description) VALUES (?, ?, ?, ?)";
 //            String sql = "INSERT into complaint (fine_no, user_id, title, description, footage) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = dbConn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, complaint.getFineNo());
@@ -23,20 +26,24 @@ public class ComplaintDAO {
 //            preparedStatement.setString(5, complaint.getFilePath());
 
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+//            ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
 //            resultSet.close();
 //            preparedStatement.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-//            if (dbConn != null) try {
-//                dbConn.close();
-//            } catch (Exception ignore) {
-//            }
+            throw new RuntimeException(e);
         }
-        return null;
+
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+////            if (dbConn != null) try {
+////                dbConn.close();
+////            } catch (Exception ignore) {
+////            }
+//        }
+//        return null;
     }
 
     public ArrayList<Complaint> fetchUserComplaintInfo(Complaint complaint) throws SQLException {

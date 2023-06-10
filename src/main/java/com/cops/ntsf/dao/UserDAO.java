@@ -71,4 +71,6 @@ public class UserDAO {
         }
         return Integer.valueOf(user.getUserId());
     }
+
+
 }
