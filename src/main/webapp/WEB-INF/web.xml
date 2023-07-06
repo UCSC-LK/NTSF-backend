@@ -1,0 +1,228 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+    <display-name>NTSF Backend Web Server</display-name>
+
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>com.cops.ntsf.filter.CORSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CorsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.cops.ntsf.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/fine/*</url-pattern>
+        <url-pattern>/user/*</url-pattern>
+        <!--        <url-pattern>/point_system/*</url-pattern>-->
+        <!--        <url-pattern>/complaint/*</url-pattern>-->
+    </filter-mapping>
+
+
+    <servlet>
+        <servlet-name>user_login</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.UserLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>user_login</servlet-name>
+        <url-pattern>/user_login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>user_signup</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.UserSignUpServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>user_signup</servlet-name>
+        <url-pattern>/user_signup</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>user</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>user</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>fine</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.FineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>fine</servlet-name>
+        <url-pattern>/fine</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>offence</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.OffenceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>offence</servlet-name>
+        <url-pattern>/offence</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>IGP</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.IgpServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IGP</servlet-name>
+        <url-pattern>/igp</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>oic</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.OICServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>oic</servlet-name>
+        <url-pattern>/oic</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>policeman</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PolicemanServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>policeman</servlet-name>
+        <url-pattern>/policeman</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PoliceStation</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PoliceStationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PoliceStation</servlet-name>
+        <url-pattern>/policeStation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>complaint</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.ComplaintServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>complaint</servlet-name>
+        <url-pattern>/complaint</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PolicemanLogin</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PolicemanLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PolicemanLogin</servlet-name>
+        <url-pattern>/policeman_login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PointSystem</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PointSystemServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PointSystem</servlet-name>
+        <url-pattern>/point_system</url-pattern>
+    </servlet-mapping>
+
+
+
+
+
+
+
+
+
+<!--    Mobile-->
+    <servlet>
+        <servlet-name>M_fine</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_FineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_fine</servlet-name>
+        <url-pattern>/m_fine</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_fineVehicle</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_FineVehicleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_fineVehicle</servlet-name>
+        <url-pattern>/fineVehicle</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_finePedestrian</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_FinePedestrianServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_finePedestrian</servlet-name>
+        <url-pattern>/finePedestrian</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>M_offence</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_OffenceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_offence</servlet-name>
+        <url-pattern>/M_offence</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_offenceList</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_OffenceListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_offenceList</servlet-name>
+        <url-pattern>/offenceList</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_Policeman</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PolicemanServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_Policeman</servlet-name>
+        <url-pattern>/m_policeman</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>M_PoliceStation</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.PoliceStationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_PoliceStation</servlet-name>
+        <url-pattern>/m_policeStation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>M_policelogin</servlet-name>
+        <servlet-class>com.cops.ntsf.controller.M_PoliceLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>M_policelogin</servlet-name>
+        <url-pattern>/policelogin</url-pattern>
+    </servlet-mapping>
+
+
+
+
+
+
+    <!--    <listener>-->
+    <!--        <listener-class>com.cops.ntsf.util.DBBackup</listener-class>-->
+    <!--    </listener>-->
+
+    <!--    <listener>-->
+    <!--        <listener-class>com.cops.ntsf.service.SystemAvailableStatus.SignalIGPEmail</listener-class>-->
+    <!--    </listener>-->
+</web-app>
